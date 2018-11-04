@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[])
 {
+    int test;
     QApplication a(argc, argv);
     QMainWindow window;
     ThemeWidget *widget = new ThemeWidget();
