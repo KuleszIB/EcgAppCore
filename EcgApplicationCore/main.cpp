@@ -6,12 +6,12 @@
 
 int main(int argc, char *argv[])
 {
-    int test;
     tk::spline s;
     //module1::Ecg_Baseline ecg_baseline;
     QApplication a(argc, argv);
     QMainWindow window;
     ThemeWidget *widget = new ThemeWidget();
+    //module1::Ecg_Baseline *baseline = new module1::Ecg_Baseline();
     window.setCentralWidget(widget);
     window.resize(900, 600);
     window.show();
