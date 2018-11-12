@@ -8,11 +8,13 @@ QT += charts
 requires(qtConfig(combobox))
 
 HEADERS += \
-    themewidget.h
+    themewidget.h \
+    spline.h
 
 SOURCES += \
     main.cpp \
-    themewidget.cpp
+    themewidget.cpp \
+    spline.cpp
 
 target.path = $$[QT_INSTALL_EXAMPLES]/charts/chartthemes
 INSTALLS += target
