@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Projekty/libs/quiet-dsp-win/examples/ampmodem_example.c
+stdlib.h
+-
+stdio.h
+-
+string.h
+-
+math.h
+-
+getopt.h
+-
+complex.h
+-
+liquid.h
+C:/Projekty/libs/quiet-dsp-win/examples/liquid.h
+
+C:/Projekty/libs/quiet-dsp-win/include/liquid.h
+inttypes.h
+-
+complex.h
+-
+complex
+-
+

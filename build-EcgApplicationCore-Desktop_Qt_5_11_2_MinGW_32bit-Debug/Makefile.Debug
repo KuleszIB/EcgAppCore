@@ -14,10 +14,10 @@ CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_QML_DEBUG -DQT_CHARTS_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -g -Wall -W -Wextra $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\EcgApplicationCore -I. -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtCharts -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtWidgets -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtGui -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtANGLE -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtCore -Idebug -I. -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\mkspecs\win32-g++ 
+INCPATH       = -I..\EcgApplicationCore -I. -I..\liquid-dsp\include -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtCharts -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtWidgets -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtGui -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtANGLE -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\include\QtCore -Idebug -I. -I..\..\..\Qt\Qt5.11.2\5.11.2\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LC:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libqtmaind.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Chartsd.a C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Widgetsd.a C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Guid.a C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Cored.a 
+LIBS        =        -lmingw32 -LC:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libqtmaind.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 -L"C:\Program Files (x86)\liquid-dsp\lib" -lliquid C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Chartsd.a C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Widgetsd.a C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Guid.a C:\Qt\Qt5.11.2\5.11.2\mingw53_32\lib\libQt5Cored.a 
 QMAKE         = C:\Qt\Qt5.11.2\5.11.2\mingw53_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -216,7 +216,7 @@ debug/moc_themewidget.cpp: ../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtWidg
 		../EcgApplicationCore/themewidget.h \
 		debug/moc_predefs.h \
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.11.2\5.11.2\mingw53_32\bin\moc.exe $(DEFINES) --include C:/Projekty/EcgAppCoreDADM/build-EcgApplicationCore-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/mkspecs/win32-g++ -IC:/Projekty/EcgAppCoreDADM/EcgApplicationCore -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCharts -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtGui -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.11.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.11.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\EcgApplicationCore\themewidget.h -o debug\moc_themewidget.cpp
+	C:\Qt\Qt5.11.2\5.11.2\mingw53_32\bin\moc.exe $(DEFINES) --include C:/Projekty/EcgAppCoreDADM/build-EcgApplicationCore-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/mkspecs/win32-g++ -IC:/Projekty/EcgAppCoreDADM/EcgApplicationCore -IC:/Projekty/EcgAppCoreDADM/liquid-dsp/include -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCharts -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtGui -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.11.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.11.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.11.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\EcgApplicationCore\themewidget.h -o debug\moc_themewidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -348,7 +348,6 @@ debug/main.o: ../EcgApplicationCore/main.cpp ../EcgApplicationCore/themewidget.h
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCharts/QChartGlobal \
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCharts/qchartglobal.h \
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCore/QtGlobal \
-		../EcgApplicationCore/spline.h \
 		../EcgApplicationCore/ecg_baseline.h \
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtWidgets/QApplication \
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtWidgets/qapplication.h \
@@ -576,7 +575,8 @@ debug/themewidget.o: ../EcgApplicationCore/themewidget.cpp ../EcgApplicationCore
 		../../../Qt/Qt5.11.2/5.11.2/mingw53_32/include/QtCharts/qvalueaxis.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\themewidget.o ..\EcgApplicationCore\themewidget.cpp
 
-debug/ecg_baseline.o: ../EcgApplicationCore/ecg_baseline.cpp ../EcgApplicationCore/ecg_baseline.h
+debug/ecg_baseline.o: ../EcgApplicationCore/ecg_baseline.cpp ../EcgApplicationCore/ecg_baseline.h \
+		../liquid-dsp/include/liquid/liquid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\ecg_baseline.o ..\EcgApplicationCore\ecg_baseline.cpp
 
 debug/moc_themewidget.o: debug/moc_themewidget.cpp 

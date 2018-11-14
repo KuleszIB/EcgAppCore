@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Projekty/libs/quiet-dsp-win/examples/qpacketmodem_performance_example.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+math.h
+-
+time.h
+-
+getopt.h
+-
+assert.h
+-
+liquid.h
+C:/Projekty/libs/quiet-dsp-win/examples/liquid.h
+
+C:/Projekty/libs/quiet-dsp-win/include/liquid.h
+inttypes.h
+-
+complex.h
+-
+complex
+-
+

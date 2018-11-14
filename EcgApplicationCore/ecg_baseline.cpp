@@ -1,6 +1,6 @@
 #include "ecg_baseline.h"
 #include "vector"
-
+#include "liquid/liquid.h"
 //Jak filtrujesz czy coś, to wpisuj to do pól obiektu
 
 module1::Ecg_Baseline::Ecg_Baseline()

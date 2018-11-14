@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Projekty/libs/quiet-dsp-win/include/liquid.h
+inttypes.h
+-
+complex.h
+-
+complex
+-
+
+C:/Projekty/libs/quiet-dsp-win/sandbox/firpfbch_analysis_alignment_test.c
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+string.h
+-
+liquid.h
+C:/Projekty/libs/quiet-dsp-win/sandbox/liquid.h
+

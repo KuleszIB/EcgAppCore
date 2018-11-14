@@ -1,0 +1,17 @@
+Determining if the include file sys/resource.h exists failed with the following output:
+Change Dir: C:/Projekty/EcgAppCoreDADM/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Qt/Qt5.11.2/Tools/mingw530_32/bin/mingw32-make.exe" "cmTC_2dd85/fast"
+C:/Qt/Qt5.11.2/Tools/mingw530_32/bin/mingw32-make.exe -f CMakeFiles\cmTC_2dd85.dir\build.make CMakeFiles/cmTC_2dd85.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Projekty/EcgAppCoreDADM/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2dd85.dir/CheckIncludeFile.c.obj
+C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_2dd85.dir\CheckIncludeFile.c.obj   -c C:\Projekty\EcgAppCoreDADM\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+C:\Projekty\EcgAppCoreDADM\CMakeFiles\CMakeTmp\CheckIncludeFile.c:1:26: fatal error: sys/resource.h: No such file or directory
+compilation terminated.
+CMakeFiles\cmTC_2dd85.dir\build.make:64: recipe for target 'CMakeFiles/cmTC_2dd85.dir/CheckIncludeFile.c.obj' failed
+mingw32-make.exe[1]: *** [CMakeFiles/cmTC_2dd85.dir/CheckIncludeFile.c.obj] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Projekty/EcgAppCoreDADM/CMakeFiles/CMakeTmp'
+Makefile:120: recipe for target 'cmTC_2dd85/fast' failed
+mingw32-make.exe: *** [cmTC_2dd85/fast] Error 2
+
+

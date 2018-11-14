@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Projekty/libs/quiet-dsp-win/examples/resamp2_crcf_example.c
+stdio.h
+-
+complex.h
+-
+math.h
+-
+liquid.h
+C:/Projekty/libs/quiet-dsp-win/examples/liquid.h
+
+C:/Projekty/libs/quiet-dsp-win/include/liquid.h
+inttypes.h
+-
+complex.h
+-
+complex
+-
+

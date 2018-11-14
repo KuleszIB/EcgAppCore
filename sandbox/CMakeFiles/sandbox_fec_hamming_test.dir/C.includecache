@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Projekty/libs/quiet-dsp-win/include/liquid.h
+inttypes.h
+-
+complex.h
+-
+complex
+-
+
+C:/Projekty/libs/quiet-dsp-win/include/liquid.internal.h
+config.h
+C:/Projekty/libs/quiet-dsp-win/include/config.h
+liquid.h
+C:/Projekty/libs/quiet-dsp-win/include/liquid.h
+cmath
+-
+math.h
+-
+fftw3.h
+-
+
+C:/Projekty/libs/quiet-dsp-win/sandbox/fec_hamming_test.c
+stdio.h
+-
+stdlib.h
+-
+assert.h
+-
+liquid.internal.h
+C:/Projekty/libs/quiet-dsp-win/sandbox/liquid.internal.h
+
+include/config.h
+

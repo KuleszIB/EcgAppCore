@@ -1,0 +1,4 @@
+C:/Program Files (x86)/liquid-dsp/lib/libliquid.a
+C:/Program Files (x86)/liquid-dsp/lib/libliquid.dll.a
+C:/Program Files (x86)/liquid-dsp/bin/libliquid.dll
+C:/Program Files (x86)/liquid-dsp/include/liquid/liquid.h

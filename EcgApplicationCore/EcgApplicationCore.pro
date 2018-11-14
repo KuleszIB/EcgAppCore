@@ -21,3 +21,9 @@ INSTALLS += target
 
 FORMS += \
     themewidget.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files (x86)/liquid-dsp/lib/' -lliqui
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files (x86)/liquid-dsp/lib/' -lliquid
+
+INCLUDEPATH += $$PWD/'../../../Projekty/EcgAppCoreDADM/liquid-dsp/include'
+DEPENDPATH += $$PWD/'../../../Projekty/EcgAppCoreDADM/liquid-dsp/include'

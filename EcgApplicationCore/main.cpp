@@ -2,7 +2,6 @@
 #include "ecg_baseline.h"
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-
 int main(int argc, char *argv[])
 {
     //module1::Ecg_Baseline ecg_baseline;

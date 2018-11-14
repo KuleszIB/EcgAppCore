@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Projekty/libs/quiet-dsp-win/scripts/autoscript.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+autoscript.h
+C:/Projekty/libs/quiet-dsp-win/scripts/autoscript.h
+
+C:/Projekty/libs/quiet-dsp-win/scripts/autoscript.h
+
+C:/Projekty/libs/quiet-dsp-win/scripts/main.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+autoscript.h
+C:/Projekty/libs/quiet-dsp-win/scripts/autoscript.h
+
