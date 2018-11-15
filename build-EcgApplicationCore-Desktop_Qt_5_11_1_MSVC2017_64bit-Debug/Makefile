@@ -217,6 +217,7 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro ..\..\..\..\Qt\Qt5.11.1\5
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\qt_config.prf \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds.prf \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf \
@@ -389,6 +390,7 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro ..\..\..\..\Qt\Qt5.11.1\5
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\qt_config.prf:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds.prf:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf:

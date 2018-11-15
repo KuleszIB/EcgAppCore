@@ -1,14 +1,19 @@
 #include "themewidget.h"
 #include "ecg_baseline.h"
+#include <armadillo>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
+
+using namespace arma;
+
 int main(int argc, char *argv[])
 {
-    //module1::Ecg_Baseline ecg_baseline;
+    Ecg_Baseline ecg_baseline;
+    mat A(2,3);
+    std::cout << A.n_rows << std::endl;
     QApplication a(argc, argv);
     QMainWindow window;
     ThemeWidget *widget = new ThemeWidget();
-    //module1::Ecg_Baseline *baseline = new module1::Ecg_Baseline(); // tutaj cos z deklaracja namespace mozliwe ze usuniemy to module1 ale to do sprawdzenia
     window.setCentralWidget(widget);
     window.resize(900, 600);
     window.show();

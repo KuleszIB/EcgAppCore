@@ -22,8 +22,11 @@ INSTALLS += target
 FORMS += \
     themewidget.ui
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files (x86)/liquid-dsp/lib/' -lliqui
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files (x86)/liquid-dsp/lib/' -lliquid
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../liquid-dsp/lib/' -lliqui
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../liquid-dsp/lib/' -lliquid
 
-INCLUDEPATH += $$PWD/'../../../Projekty/EcgAppCoreDADM/liquid-dsp/include'
-DEPENDPATH += $$PWD/'../../../Projekty/EcgAppCoreDADM/liquid-dsp/include'
+INCLUDEPATH += $$PWD/'../liquid-dsp/include' \
+               $$PWD/'../3rdparty/armadillo-9.200.4/include'
+
+DEPENDPATH += $$PWD/'../liquid-dsp/include' \
+              $$PWD/'../3rdparty/armadillo-9.200.4/include'

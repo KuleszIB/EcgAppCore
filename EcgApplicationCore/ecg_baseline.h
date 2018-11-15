@@ -3,12 +3,6 @@
 
 #include <vector>
 
-namespace
-{
-
-namespace module1
-{
-
 enum Filter_Type
 {
     moving_average = 0,
@@ -51,7 +45,4 @@ public:
     std::vector<double> get_time_vec();
 };
 
-} //end module1
-
-} //end namespace
 #endif // ECG_BASELINE_H
