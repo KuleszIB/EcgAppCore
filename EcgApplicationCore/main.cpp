@@ -3,6 +3,7 @@
 #include <armadillo>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
+#include "r_peaks.h"
 
 using namespace arma;
 

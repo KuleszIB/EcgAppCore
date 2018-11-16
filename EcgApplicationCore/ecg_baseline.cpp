@@ -1,7 +1,7 @@
 #include "ecg_baseline.h"
 #include "vector"
 #include "liquid/liquid.h"
-
+#include <armadillo>
 //Jak filtrujesz czy coś, to wpisuj to do pól obiektu
 
 Ecg_Baseline::Ecg_Baseline()

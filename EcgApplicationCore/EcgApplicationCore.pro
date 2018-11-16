@@ -9,12 +9,14 @@ requires(qtConfig(combobox))
 
 HEADERS += \
     themewidget.h \
-    ecg_baseline.h
+    ecg_baseline.h \
+    r_peaks.h
 
 SOURCES += \
     main.cpp \
     themewidget.cpp \
-    ecg_baseline.cpp
+    ecg_baseline.cpp \
+    r_peaks.cpp
 
 target.path = $$[QT_INSTALL_EXAMPLES]/charts/chartthemes
 INSTALLS += target
