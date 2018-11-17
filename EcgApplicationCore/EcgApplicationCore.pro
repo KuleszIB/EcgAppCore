@@ -28,7 +28,13 @@ FORMS += \
 #else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../liquid-dsp/lib/' -lliquid
 
 INCLUDEPATH += $$PWD/'../liquid-dsp/include' \
-               $$PWD/'../3rdparty/armadillo-9.200.4/include'
+               $$PWD/'../3rdparty/armadillo-9.200.4/include' \
+               $$PWD/'../3rdparty/sigpack-1.2.4/sigpack' \
+               $$PWD/'../3rdparty/wfdb-10.6.0/lib' \
+               $$PWD/'../3rdparty/DSPFilters-master/shared/DSPFilters/include'
 
 DEPENDPATH += $$PWD/'../liquid-dsp/include' \
-              $$PWD/'../3rdparty/armadillo-9.200.4/include'
+              $$PWD/'../3rdparty/armadillo-9.200.4/include' \
+              $$PWD/'../3rdparty/sigpack-1.2.4/sigpack' \
+              $$PWD/'../3rdparty/wfdb-10.6.0/lib' \
+              $$PWD/'../3rdparty/DSPFilters-master/shared/DSPFilters/include'

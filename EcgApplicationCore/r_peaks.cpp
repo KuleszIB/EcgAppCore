@@ -8,7 +8,9 @@ void find_r_peaks()
 }
 std::vector<double> get_r_peaks()
 {
+    std::vector<double> r_peaks;
 
+    return r_peaks;
 }
 void pan_tompkins()
 {
