@@ -2,10 +2,11 @@
 #include "ecg_baseline.h"
 #include "r_peaks.h"
 
-#include <armadillo>
+#include "armadillo"
 #include "sigpack.h"
 #include "wfdb.h"
 #include "Dsp.h"
+#include "SGSmooth.hpp"
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
