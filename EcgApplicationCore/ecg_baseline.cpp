@@ -3,17 +3,15 @@
 #include "liquid/liquid.h"
 #include <armadillo>
 #include "sigpack.h"
-#include "filter.h"
-#include "DSPFilters"
-#include "ChebyshevII.h"
-#include "Butterworth.h"
+#include "Dsp.h"
+#include "SGSmooth.hpp"
 #include <iostream>
 #include <fstream>
 #include "stdio.h"
 #include "stdlib.h"
 #include <math.h>
 #include <string>
-#include <sgsmooth>
+#include <conio.h>
 
 
 
@@ -30,30 +28,26 @@ Ecg_Baseline::Ecg_Baseline()
 
 Ecg_Baseline::Ecg_Baseline(vector<double> input, double fs)
 {
-	vector<double> syg = nasz_sygnal ? ? ? ? ?
-	double fs = fs;
-	int N = syg.n_rows;
-	vector<double> a = linspace<vector<double>>(0, N, 1 / fs);
+    signal_raw = input;
+    sampling_frequency = fs;
+    time_vec = calc_time_vec(input, fs);
 }
 
 
 
 vector<double> Ecg_Baseline::filter_noise(vector<double> syg_wejsciowy, double fs)
 {
-	double fc = 34;
-	double fc = fc / (fs / 2);
+    double fc = 34 / (fs / 2);
 	int M = 25;
-	vector<double> coefficient = fir1(M, fc);
-	vector<double> syg_dolno = conv(coefficient, syg_wejsciowy, "same");
+    vector<double> coeffs = fir1(M, fc);
+    vector<double> syg_dolno = conv(coeffs, syg_wejsciowy, "same");
 	return syg_dolno;
 }
 
 vector<double> Ecg_Baseline::filter_noise_bp(vector<double> syg_wejsciowy, double fs)
 {
-	double fc1 = 34;
-	double fc2 = 2;
-	double fc1 = fc1 / (fs / 2);
-	double fc2 = fc2 / (fs / 2);
+    double fc1 = 34 / (fs / 2);
+    double fc2 = 2 / (fs / 2);
 	int M = 25;	
 	vector<double> coefficient = fir1_bp(M, fc1, fc2);
 	vector<double> syg_pasmo = conv(coefficient, syg_wejsciowy, "same");
@@ -64,10 +58,14 @@ void Ecg_Baseline::filter_moving_average(vector<double> syg_wejsciowy, double fs
 {
 	vector<double> syg_dolno = filter_noise(syg_wejsciowy, fs);
 	int windowSize = 97;
-	mat A(1, windowSize);  A.ones<mat>();
-	int b[windowSize] = 1/windowSize * A;
+    Col<double> A =  ones<Col<double>>(1, windowSize);
+    vector<double> b(windowSize);
+    for (int i = 0; i<windowSize; i++)
+    {
+        b[i] = 1/windowSize * A[i];
+    }
 	//int a = 1;
-	FIR_filt coefficient;
+    FIR_filt coefficient;
 	coefficient.set_coeffs(b);
 	vector<double>syg_moving_average = coefficient.filter(syg_dolno); //albo mat
 }
@@ -164,7 +162,7 @@ void Ecg_Baseline::filter_lms(vector<double> syg_wejsciowy, double fs)
 	vector<double> syg_desired = Ecg_Baseline::filter_noise_bp(syg_wejsciowy, fs);
 	int N = syg_dolno.n_rows;
 	int M = 15;
-	double mu = 0,2 ;
+    double mu = 0.2;
 	//mat y(N, 1);  y.zeros<mat>();
 	//mat w(M, 1);  w.zeros<mat>();
 	//mat e(N, 1);  e.zeros<mat>();
@@ -185,8 +183,8 @@ void Ecg_Baseline::filter_lms(vector<double> syg_wejsciowy, double fs)
 
 	long T, n = 0;
 	double D, Y, E;
-	double W[M] = { 0.0 };
-	double X[M] = { 0.0 };
+    double W[M];
+    double X[M];
 
 
 	for (T = 0; T < N; T++)
@@ -224,11 +222,11 @@ void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
 
 }
 
-vector<double> Ecg_Baseline::get_time_vector<double>() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
+vector<double> Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
 {
-    vector<double> time_vector<double>;
+    vector<double> time_vec;
 
-    return time_vector<double>;
+    return time_vec;
 }
 
 vector<double> Ecg_Baseline::get_signal_raw()
@@ -253,32 +251,28 @@ vector<double> Ecg_Baseline::get_signal_baseline()
 }
 
 
+double* open()
+{
+    //bool s = true;
+    int N;
+    ifstream plik;
+    plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5.dat");
+    if (!plik.good() == true){
+        while (!plik.eof())
+        {
+            cin.get(plik, N);
+            cout << N << endl;
+        }
+        plik.close();
+    }
+}
+
 int main() {
 
-	void open()
-	{
-		ifstream plik;
-		plik.open("C:\Users\Laura\Desktop\Laura\semestr 9\MOJE\DADM\projekt\Prototyp Matlab\100_V5.dat");
-		if (!plik.good())
-			return false;
 
-		while (true)
-		{
-			double a;
-			if (plik.good())
-				int N = plik.n_rows;
-			double syg_wejsciowy[N];
-			for (int i = 0; i < N; i++) {
-				syg_wejsciowy[i] = plik >> a;
-			}
-			else
-				break;
-
-		}
-		return true;
-	}
-	fs = 360;
-	vector<double> syg_dolno;
+    int fs = 360;
+    vector<double> syg_dolno, syg_wejsciowy;
+    syg_wejsciowy = open();
  	Ecg_Baseline test(syg_wejsciowy, fs);
 	syg_dolno = test.filter_noise(syg_wejsciowy, fs);
 	cout << "jestem" << endl;
