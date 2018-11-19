@@ -30,34 +30,33 @@ Ecg_Baseline::Ecg_Baseline(vector<double> input, double fs)
 {
     signal_raw = input;
     sampling_frequency = fs;
-    time_vec = calc_time_vec(input, fs);
+    calc_time_vec();{time_vec = linspace<vector<double>>(0, signal_raw.size(), sampling_frequency)};
+    //filter_baseline (filter_type); gdzie to wywolujemy?
 }
 
 
 
-vector<double> Ecg_Baseline::filter_noise(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_noise()
 {
-    double fc = 34 / (fs / 2);
+    double fc = 34 / (sampling_frequency / 2);
 	int M = 25;
     vector<double> coeffs = fir1(M, fc);
-    vector<double> syg_dolno = conv(coeffs, syg_wejsciowy, "same");
-	return syg_dolno;
+    signal_filtered = conv(coeffs, signal_raw, "same");
 }
 
-vector<double> Ecg_Baseline::filter_noise_bp(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_noise_bp()
 {
-    double fc1 = 34 / (fs / 2);
-    double fc2 = 2 / (fs / 2);
+    double fc1 = 34 / (sampling_frequency / 2);
+    double fc2 = 2 / (sampling_frequency / 2);
 	int M = 25;	
-	vector<double> coefficient = fir1_bp(M, fc1, fc2);
-	vector<double> syg_pasmo = conv(coefficient, syg_wejsciowy, "same");
-	return syg_pasmo;
+    vector<double> coeffs = fir1_bp(M, fc1, fc2);
+    signal_filtered = conv(coeffs, signal_raw, "same");
 }
 
-void Ecg_Baseline::filter_moving_average(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_moving_average()
 {
-	vector<double> syg_dolno = filter_noise(syg_wejsciowy, fs);
-	int windowSize = 97;
+    filter_noise();
+    double windowSize = 97;
     Col<double> A =  ones<Col<double>>(1, windowSize);
     vector<double> b(windowSize);
     for (int i = 0; i<windowSize; i++)
@@ -67,30 +66,30 @@ void Ecg_Baseline::filter_moving_average(vector<double> syg_wejsciowy, double fs
 	//int a = 1;
     FIR_filt coefficient;
 	coefficient.set_coeffs(b);
-	vector<double>syg_moving_average = coefficient.filter(syg_dolno); //albo mat
+    signal_filtered = coefficient.filter(signal_filtered); //albo mat, i jak to zrobic zeby nie nadpisywac sygnalu? czy mam utworzyc nowa zmienna w header?
 }
 
-void Ecg_Baseline::filter_butterworth(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_butterworth()
 {	
-	vector<double> syg_dolno = filter_noise(syg_wejsciowy, fs);
+    filter_noise();
 	double w = 1,8;
-	w = w / (fs / 2);
-	int numSamples = syg_dolno.n_rows;
+    w = w / (sampling_frequency / 2);
+    int numSamples = signal_filtered.n_rows;
 	Dsp::Filter* f = new Dsp::SmoothedFilterDesign
-		<Dsp::Butterworth::Design::HighPass <1>, 2, Dsp::DirectFormII>(fs);
+        <Dsp::Butterworth::Design::HighPass <1>, 2, Dsp::DirectFormII>(sampling_frequency);
 	Dsp::Params params;
-	params[0] = fs; // sample rate
+    params[0] = sampling_frequency; // sample rate
 	params[1] = 1; // order
 	params[2] = w; // center frequency
 	f->setParams(params);
-	f->process(numSamples, syg_dolno);
+    f->process(numSamples, signal_filtered);
 
 	/*Dsp::ButterHighPass<6, 2> butter;
 	butter.Setup(w);
 	butter.Process<0>(count, stereoBuffer);*/
 }
 
-void Ecg_Baseline::filter_chebyshev(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_chebyshev()
 {
 	// Create a Chebyshev type I Band Stop filter of order 3
 // with state for processing 2 channels of audio.
@@ -101,28 +100,27 @@ void Ecg_Baseline::filter_chebyshev(vector<double> syg_wejsciowy, double fs)
 		880,  // band width
 		1);   // ripple dB
 	f.process(numSamples, arrayOfChannels);*/
-	vector<double> syg_dolno = filter_noise(syg_wejsciowy, fs);
-	int numSamples = syg_dolno.n_rows;
-	//vector<double> audioData = syg_dolno;
+    filter_noise();
+    int numSamples = signal_filtered.n_rows;
 	Dsp::Filter* f = new Dsp::FilterDesign;
 		<Dsp::ChebyshevII::Design::LowShelf <2>, 2>;
 	Dsp::Params params;
-	params[0] = fs; // sample rate
+    params[0] = sampling_frequency; // sample rate
 	params[1] = 2; // order
-	params[2] = 1/(fs/2); // corner frequency
+    params[2] = 1/(sampling_frequency/2); // corner frequency
 	params[3] = 6; // shelf gain
 	params[4] = 10; // passband ripple
 	f->setParams(params);
-	f->process(numSamples, syg_dolno);
+    f->process(numSamples, signal_filtered);
 }
 
-void Ecg_Baseline::filter_savitzky_golay(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_savitzky_golay()
 {
-	vector<double> syg_dolno = filter_noise(syg_wejsciowy, fs);
+    filter_noise();
 	int w = 17;
 	int deg = 3;
 	
-	vector<double> syg_sg = sg_smooth(syg_dolno, w, deg);
+    signal_filtered = sg_smooth(signal_filtered, w, deg);
 	/*
 		double result;
 		result = (1.0 / 5175.0) * (-253.0*syg_dolno[i - 12]
@@ -156,11 +154,10 @@ void Ecg_Baseline::filter_savitzky_golay(vector<double> syg_wejsciowy, double fs
 	return result;*/
 }
 
-void Ecg_Baseline::filter_lms(vector<double> syg_wejsciowy, double fs)
+void Ecg_Baseline::filter_lms()
 {
-	vector<double> syg_dolno = filter_noise(syg_wejsciowy, fs);
-	vector<double> syg_desired = Ecg_Baseline::filter_noise_bp(syg_wejsciowy, fs);
-	int N = syg_dolno.n_rows;
+    filter_noise_bp();
+    int N = signal_filtered.n_rows;
 	int M = 15;
     double mu = 0.2;
 	//mat y(N, 1);  y.zeros<mat>();
@@ -191,12 +188,12 @@ void Ecg_Baseline::filter_lms(vector<double> syg_wejsciowy, double fs)
 	{
 		for (int m = T; m > T - M; m--) {
 			if (m >= 0)
-				X[M + (m - T) - 1] = syg_dolno[m];	//X new input sample for 
+                X[M + (m - T) - 1] = signal_filtered[m];	//X new input sample for
 								//LMS filter
 			else break;
 		}
 
-		D = syg_desired[T];					//desired signal
+        D = signal_filtered[T];					//desired signal
 		Y = 0;						//filter’output set to zero
 
 		for (int i = 0; i < M; i++)
@@ -207,10 +204,9 @@ void Ecg_Baseline::filter_lms(vector<double> syg_wejsciowy, double fs)
 		for (int i = 0; i < M; i++)
 			W[i] = W[i] + (mu * E * X[i]);		//update filter coefficients
 
-		vector<double> syg_lms = Y[T];
+        signal_filtered[T] = Y; //signal_filtered = Y[T]
 
 	}
-
 
 }
 
@@ -219,7 +215,8 @@ void Ecg_Baseline::filter_lms(vector<double> syg_wejsciowy, double fs)
 
 void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
 {
-
+ //ustalamy ktora funkcje filtracji odpalic  i z jakimi parametrami o ile sa
+    switch (filter_params.filter_type)   //dokoncze jutro
 }
 
 vector<double> Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
@@ -251,7 +248,7 @@ vector<double> Ecg_Baseline::get_signal_baseline()
 }
 
 
-double* open()
+/*double* open()
 {
     //bool s = true;
     int N;
@@ -265,16 +262,21 @@ double* open()
         }
         plik.close();
     }
-}
+}*/
 
 int main() {
 
+    Filter_Type filter_type;
+    string filter = cin >> filter; //wiem że tak sie nie da
+    filter_type = filter ;
+
+    Filter_Params filter_params;
 
     int fs = 360;
-    vector<double> syg_dolno, syg_wejsciowy;
-    syg_wejsciowy = open();
- 	Ecg_Baseline test(syg_wejsciowy, fs);
-	syg_dolno = test.filter_noise(syg_wejsciowy, fs);
-	cout << "jestem" << endl;
+    vector<double> input;
+    input = open();
+    Ecg_Baseline test(input, fs);
+    test.filter_baseline(filter_params);
+    cout << "dziala" << endl;
 
 }

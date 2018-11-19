@@ -21,24 +21,24 @@ class Filter_Params
 class Ecg_Baseline
 {
 private: //funkcje pomocnicze, wydaje mi się, że jak to jest rozdzielone, to po prostu ładniej wygląda ;p
-    std::vector<double> calc_time_vec(std::vector<double> input, double fs){int N = input.arma::n_rows; std::vector<double> a = linspace<std::vector<double>>(0, N, 1 / fs); return a;}; //powinno to być użyte w konstruktorze
-    void filter_moving_average(std::vector<double> syg_wejsciowy, double fs);
-    void filter_butterworth(std::vector<double> syg_wejsciowy, double fs);
-    void filter_chebyshev(std::vector<double> syg_wejsciowy, double fs);
-    void filter_savitzky_golay(std::vector<double> syg_wejsciowy, double fs);
-    void filter_lms(std::vector<double> syg_wejsciowy, double fs);
+    void calc_time_vec(); //powinno to być użyte w konstruktorze
+    void filter_moving_average();
+    void filter_butterworth();
+    void filter_chebyshev();
+    void filter_savitzky_golay();
+    void filter_lms();
 
 public:
     Ecg_Baseline(); //chyba, że masz jakąś inną koncepcję
     Ecg_Baseline(std::vector<double> input, double fs);
     std::vector<double> signal_raw;
-    //std::vector<double> signal_filtered;
-    //std::vector<double> signal_baseline;
+    std::vector<double> signal_filtered;
+    std::vector<double> signal_baseline;
     double sampling_frequency;
     std::vector<double> time_vec;
 
-    std::vector<double> filter_noise(std::vector<double> syg_wejsciowy, double fs); //czy potrzebne częstotliwości odcięcia? -> informacja również ważna dla GUI
-    std::vector<double> filter_noise_bp(std::vector<double> syg_wejsciowy, double fs);
+    void filter_noise(); //czy potrzebne częstotliwości odcięcia? -> informacja również ważna dla GUI
+    void filter_noise_bp();
     void filter_baseline(Filter_Params filter_params);
     std::vector<double> get_signal_raw();
     std::vector<double> get_signal_filtered();
