@@ -1,15 +1,24 @@
 #include "ecg_baseline.h"
-#include "vector"
-#include "liquid/liquid.h"
-#include <armadillo>
+#include "armadillo"
 //Jak filtrujesz czy coś, to wpisuj to do pól obiektu
+
+Filter_Type Filter_Params::get_filter_type()
+{
+    return filter_type;
+}
 
 Ecg_Baseline::Ecg_Baseline()
 {
 
 }
 
-Ecg_Baseline::Ecg_Baseline(std::vector<double> input, double fs)
+Ecg_Baseline::Ecg_Baseline(arma::vec input, double fs)
+{
+    signal_raw = input;
+    sampling_frequency = fs;
+}
+
+void Ecg_Baseline::filter_bandpass()
 {
 
 }
@@ -46,33 +55,45 @@ void Ecg_Baseline::filter_noise()
 
 void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
 {
-
+    switch(filter_params.get_filter_type())
+    {
+    case MOVING_AVERAGE:
+        filter_moving_average();
+        break;
+    case BUTTERWORTH:
+        filter_butterworth();
+        break;
+    case CHEBYSHEV:
+        filter_chebyshev();
+        break;
+    case SAVITZKY_GOLAY:
+        filter_savitzky_golay();
+        break;
+    case LMS:
+        filter_lms();
+        break;
+    default:
+        filter_moving_average();
+        break;
+    }
 }
 
-std::vector<double> Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
+arma::vec Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
 {
-    std::vector<double> time_vec;
-
     return time_vec;
 }
 
-std::vector<double> Ecg_Baseline::get_signal_raw()
+arma::vec Ecg_Baseline::get_signal_raw()
 {
-    std::vector<double> signal_raw;
-
     return signal_raw;
 }
 
-std::vector<double> Ecg_Baseline::get_signal_filtered()
+arma::vec Ecg_Baseline::get_signal_filtered()
 {
-    std::vector<double> signal_filtered;
-
     return signal_filtered;
 }
 
-std::vector<double> Ecg_Baseline::get_signal_baseline()
+arma::vec Ecg_Baseline::get_signal_baseline()
 {
-    std::vector<double> baseline;
-
-    return baseline;
+    return signal_baseline;
 }

@@ -1,46 +1,58 @@
 #include "r_peaks.h"
-#include "vector"
 #include <armadillo>
-#include "liquid/liquid.h"
-void find_r_peaks()
+
+void R_Peaks::pan_tompkins()
 {
 
 }
-std::vector<double> get_r_peaks()
-{
-    std::vector<double> r_peaks;
-
-    return r_peaks;
-}
-void pan_tompkins()
+void R_Peaks::filter_bandpass()
 {
 
 }
-void filter_bandpass()
+void R_Peaks::filter_lowpass()
 {
 
 }
-void filter_lowpass()
+void R_Peaks::filter_highpass()
 {
 
 }
-void filter_highpass()
+void R_Peaks::differentiate()
 {
 
 }
-void differentiate()
+void R_Peaks::square()
 {
 
 }
-void square()
+void R_Peaks::integrate()
 {
 
 }
-void integrate()
+void R_Peaks::hilbert_transform()
 {
 
 }
-void hilbert_transform()
-{
 
+void R_Peaks::find_r_peaks(R_Detection_Method method)
+{
+    switch(method)
+    {
+    case PAN_TOMPKINS:
+        pan_tompkins();
+        break;
+
+    case HILBERT_TRANSFORM:
+        hilbert_transform();
+        break;
+
+    default:
+        pan_tompkins();
+        break;
+    }
+}
+
+arma::vec R_Peaks::get_r_peaks()
+{
+   return r_peaks_vec;
 }

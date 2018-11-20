@@ -421,7 +421,6 @@ debug\main.obj: ..\EcgApplicationCore\main.cpp ../EcgApplicationCore/themewidget
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qchartglobal.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QtGlobal \
 		../EcgApplicationCore/ecg_baseline.h \
-		../EcgApplicationCore/r_peaks.h \
 		..\3rdparty\armadillo-9.200.4\include\armadillo \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_extra.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\config.hpp \
@@ -972,6 +971,7 @@ debug\main.obj: ..\EcgApplicationCore\main.cpp ../EcgApplicationCore/themewidget
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_UpperHessenbergEigen_meat.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_UpperHessenbergQR_meat.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_setup_post.hpp \
+		../EcgApplicationCore/r_peaks.h \
 		..\3rdparty\sigpack-1.2.4\sigpack\sigpack.h \
 		..\3rdparty\sigpack-1.2.4\sigpack\base\base.h \
 		..\3rdparty\sigpack-1.2.4\sigpack\window\window.h \
@@ -1008,6 +1008,7 @@ debug\main.obj: ..\EcgApplicationCore\main.cpp ../EcgApplicationCore/themewidget
 		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Elliptic.h \
 		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Legendre.h \
 		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\RBJ.h \
+		..\3rdparty\sgsmooth-master\include\sgsmooth\SGSmooth.hpp \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QApplication \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qapplication.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qcoreapplication.h \
@@ -1231,7 +1232,6 @@ debug\themewidget.obj: ..\EcgApplicationCore\themewidget.cpp ../EcgApplicationCo
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qvalueaxis.h
 
 debug\ecg_baseline.obj: ..\EcgApplicationCore\ecg_baseline.cpp ../EcgApplicationCore/ecg_baseline.h \
-		..\liquid-dsp\include\liquid\liquid.h \
 		..\3rdparty\armadillo-9.200.4\include\armadillo \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_extra.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\config.hpp \
@@ -1784,7 +1784,6 @@ debug\ecg_baseline.obj: ..\EcgApplicationCore\ecg_baseline.cpp ../EcgApplication
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_setup_post.hpp
 
 debug\r_peaks.obj: ..\EcgApplicationCore\r_peaks.cpp ../EcgApplicationCore/r_peaks.h \
-		../EcgApplicationCore/ecg_baseline.h \
 		..\3rdparty\armadillo-9.200.4\include\armadillo \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_extra.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\config.hpp \
@@ -2335,7 +2334,7 @@ debug\r_peaks.obj: ..\EcgApplicationCore\r_peaks.cpp ../EcgApplicationCore/r_pea
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_UpperHessenbergEigen_meat.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_UpperHessenbergQR_meat.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_setup_post.hpp \
-		..\liquid-dsp\include\liquid\liquid.h
+		../EcgApplicationCore/ecg_baseline.h
 
 debug\moc_themewidget.obj: debug\moc_themewidget.cpp 
 
