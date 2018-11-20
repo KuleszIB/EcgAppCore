@@ -16,21 +16,30 @@
 
 
 using namespace std;
-using namespace arma;
 using namespace sp;
 using namespace Dsp;
 //Jak filtrujesz czy coś, to wpisuj to do pól obiektu
+
+Filter_Type Filter_Params::get_filter_type()
+{
+    return filter_type;
+}
+
+void Ecg_Baseline::calc_time_vec()
+{
+    time_vec = arma::linspace(0, signal_raw.size(), sampling_frequency);
+}
 
 Ecg_Baseline::Ecg_Baseline()
 {
 
 }
 
-Ecg_Baseline::Ecg_Baseline(vector<double> input, double fs)
+Ecg_Baseline::Ecg_Baseline(arma::vec input, double fs)
 {
     signal_raw = input;
     sampling_frequency = fs;
-    calc_time_vec();{time_vec = linspace<vector<double>>(0, signal_raw.size(), sampling_frequency)};
+    calc_time_vec();
     //filter_baseline (filter_type); gdzie to wywolujemy?
 }
 
@@ -40,31 +49,31 @@ void Ecg_Baseline::filter_noise()
 {
     double fc = 34 / (sampling_frequency / 2);
 	int M = 25;
-    vector<double> coeffs = fir1(M, fc);
+    arma::vec coeffs = fir1(M, fc);
     signal_filtered = conv(coeffs, signal_raw, "same");
 }
 
-void Ecg_Baseline::filter_noise_bp()
+void Ecg_Baseline::filter_bandpass()
 {
     double fc1 = 34 / (sampling_frequency / 2);
     double fc2 = 2 / (sampling_frequency / 2);
 	int M = 25;	
-    vector<double> coeffs = fir1_bp(M, fc1, fc2);
+    arma::vec coeffs = fir1_bp(M, fc1, fc2);
     signal_filtered = conv(coeffs, signal_raw, "same");
 }
 
 void Ecg_Baseline::filter_moving_average()
 {
     filter_noise();
-    double windowSize = 97;
-    Col<double> A =  ones<Col<double>>(1, windowSize);
-    vector<double> b(windowSize);
+    int windowSize = 97;
+    arma::Col<double> A =  arma::ones(1, windowSize);
+    arma::vec b(windowSize);
     for (int i = 0; i<windowSize; i++)
     {
         b[i] = 1/windowSize * A[i];
     }
 	//int a = 1;
-    FIR_filt coefficient;
+    FIR_filt<double,double,double> coefficient;
 	coefficient.set_coeffs(b);
     signal_filtered = coefficient.filter(signal_filtered); //albo mat, i jak to zrobic zeby nie nadpisywac sygnalu? czy mam utworzyc nowa zmienna w header?
 }
@@ -72,9 +81,9 @@ void Ecg_Baseline::filter_moving_average()
 void Ecg_Baseline::filter_butterworth()
 {	
     filter_noise();
-	double w = 1,8;
+    double w = 1.8;
     w = w / (sampling_frequency / 2);
-    int numSamples = signal_filtered.n_rows;
+    int numSamples = signal_filtered.size();
 	Dsp::Filter* f = new Dsp::SmoothedFilterDesign
         <Dsp::Butterworth::Design::HighPass <1>, 2, Dsp::DirectFormII>(sampling_frequency);
 	Dsp::Params params;
@@ -102,7 +111,7 @@ void Ecg_Baseline::filter_chebyshev()
 	f.process(numSamples, arrayOfChannels);*/
     filter_noise();
     int numSamples = signal_filtered.n_rows;
-	Dsp::Filter* f = new Dsp::FilterDesign;
+    Dsp::Filter* f = new Dsp::FilterDesign
 		<Dsp::ChebyshevII::Design::LowShelf <2>, 2>;
 	Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
@@ -120,7 +129,7 @@ void Ecg_Baseline::filter_savitzky_golay()
 	int w = 17;
 	int deg = 3;
 	
-    signal_filtered = sg_smooth(signal_filtered, w, deg);
+    signal_filtered = sg_smooth (signal_filtered, w, deg);
 	/*
 		double result;
 		result = (1.0 / 5175.0) * (-253.0*syg_dolno[i - 12]
@@ -156,7 +165,7 @@ void Ecg_Baseline::filter_savitzky_golay()
 
 void Ecg_Baseline::filter_lms()
 {
-    filter_noise_bp();
+    filter_bandpass();
     int N = signal_filtered.n_rows;
 	int M = 15;
     double mu = 0.2;
@@ -170,7 +179,7 @@ void Ecg_Baseline::filter_lms()
 
 	/*for (int i = 1; i <= N; i++) {
 		if (i <= M) {
-			vector<double> k = linspace<vector<double>>(i, -1, 1);
+            arma::vec k = linspace<arma::vec>(i, -1, 1);
 			mat A(M-k.n_rows, 1); A.zeros<mat>();
 			int x;
 			mat x1 = join_rows(A);
@@ -216,65 +225,77 @@ void Ecg_Baseline::filter_lms()
 void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
 {
  //ustalamy ktora funkcje filtracji odpalic  i z jakimi parametrami o ile sa
-    switch (filter_params.filter_type)   //dokoncze jutro
+    switch(filter_params.get_filter_type())
+        {
+        case MOVING_AVERAGE:
+            filter_moving_average();
+            break;
+        case BUTTERWORTH:
+            filter_butterworth();
+            break;
+        case CHEBYSHEV:
+            filter_chebyshev();
+            break;
+        case SAVITZKY_GOLAY:
+            filter_savitzky_golay();
+            break;
+        case LMS:
+            filter_lms();
+            break;
+        default:
+            filter_moving_average();
+            break;
+        }
 }
 
-vector<double> Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
+arma::vec Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
 {
-    vector<double> time_vec;
-
     return time_vec;
 }
 
-vector<double> Ecg_Baseline::get_signal_raw()
+arma::vec Ecg_Baseline::get_signal_raw()
 {
-    vector<double> signal_raw;
-
     return signal_raw;
 }
 
-vector<double> Ecg_Baseline::get_signal_filtered()
+arma::vec Ecg_Baseline::get_signal_filtered()
 {
-    vector<double> signal_filtered;
-
     return signal_filtered;
 }
 
-vector<double> Ecg_Baseline::get_signal_baseline()
+arma::vec Ecg_Baseline::get_signal_baseline()
 {
-    vector<double> baseline;
-
-    return baseline;
+    return signal_baseline;
 }
 
 
-/*double* open()
+arma::vec readtxt()
 {
     //bool s = true;
-    int N;
+    double N;
     ifstream plik;
     plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5.dat");
     if (!plik.good() == true){
         while (!plik.eof())
         {
-            cin.get(plik, N);
+            get(plik, N);
             cout << N << endl;
         }
         plik.close();
     }
-}*/
+}
 
 int main() {
 
     Filter_Type filter_type;
-    string filter = cin >> filter; //wiem że tak sie nie da
-    filter_type = filter ;
+    string filter;
+    cin >> filter;
 
     Filter_Params filter_params;
 
     int fs = 360;
-    vector<double> input;
-    input = open();
+    arma::vec input;
+    input = readtxt();
     Ecg_Baseline test(input, fs);
     test.filter_baseline(filter_params);
     cout << "dziala" << endl;
