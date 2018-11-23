@@ -1009,6 +1009,15 @@ release\main.obj: ..\EcgApplicationCore\main.cpp ../EcgApplicationCore/themewidg
 		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Legendre.h \
 		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\RBJ.h \
 		..\3rdparty\sgsmooth-master\include\sgsmooth\SGSmooth.hpp \
+		..\3rdparty\alglib-3.14.0\src\interpolation.h \
+		..\3rdparty\alglib-3.14.0\src\ap.h \
+		..\3rdparty\alglib-3.14.0\src\alglibinternal.h \
+		..\3rdparty\alglib-3.14.0\src\alglibmisc.h \
+		..\3rdparty\alglib-3.14.0\src\linalg.h \
+		..\3rdparty\alglib-3.14.0\src\solvers.h \
+		..\3rdparty\alglib-3.14.0\src\optimization.h \
+		..\3rdparty\alglib-3.14.0\src\specialfunctions.h \
+		..\3rdparty\alglib-3.14.0\src\integration.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QApplication \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qapplication.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qcoreapplication.h \
@@ -1129,6 +1138,42 @@ release\themewidget.obj: ..\EcgApplicationCore\themewidget.cpp ../EcgApplication
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qchartglobal.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QtGlobal \
 		ui_themewidget.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QVariant \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QApplication \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qapplication.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qcoreapplication.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qeventloop.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qdesktopwidget.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qguiapplication.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qinputmethod.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QCheckBox \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qcheckbox.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractbutton.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qicon.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QComboBox \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qcombobox.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractitemdelegate.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qstyleoption.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractspinbox.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qvalidator.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qregularexpression.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qslider.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractslider.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qstyle.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qtabbar.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qtabwidget.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qrubberband.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qframe.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qabstractitemmodel.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QGridLayout \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qgridlayout.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qlayout.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qlayoutitem.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qboxlayout.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QHBoxLayout \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QLabel \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qlabel.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QSpacerItem \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QChartView \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qchartview.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QAbstractAxis \
@@ -1136,7 +1181,6 @@ release\themewidget.obj: ..\EcgApplicationCore\themewidget.cpp ../EcgApplication
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\QPen \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qpen.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\QFont \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QVariant \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QAbstractSeries \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qabstractseries.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QObject \
@@ -1156,7 +1200,6 @@ release\themewidget.obj: ..\EcgApplicationCore\themewidget.cpp ../EcgApplication
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qtextoption.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qscrollarea.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractscrollarea.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qframe.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qgraphicsscene.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QPieSeries \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qpieseries.h \
@@ -1185,49 +1228,17 @@ release\themewidget.obj: ..\EcgApplicationCore\themewidget.cpp ../EcgApplication
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qscatterseries.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QAreaSeries \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qareaseries.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QGridLayout \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qgridlayout.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qlayout.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qlayoutitem.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qboxlayout.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QFormLayout \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qformlayout.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QLayout \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QComboBox \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qcombobox.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractitemdelegate.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qstyleoption.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractspinbox.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qvalidator.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qregularexpression.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qicon.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qslider.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractslider.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qstyle.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qtabbar.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qtabwidget.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qrubberband.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qabstractitemmodel.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QSpinBox \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qspinbox.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QCheckBox \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qcheckbox.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qabstractbutton.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QGroupBox \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qgroupbox.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QLabel \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qlabel.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QRandomGenerator \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qrandom.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QBarCategoryAxis \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qbarcategoryaxis.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QApplication \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qapplication.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qcoreapplication.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qeventloop.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qdesktopwidget.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qguiapplication.h \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qinputmethod.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\QValueAxis \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCharts\qvalueaxis.h
 
@@ -1781,7 +1792,44 @@ release\ecg_baseline.obj: ..\EcgApplicationCore\ecg_baseline.cpp ../EcgApplicati
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_TridiagEigen_meat.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_UpperHessenbergEigen_meat.hpp \
 		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\newarp_UpperHessenbergQR_meat.hpp \
-		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_setup_post.hpp
+		..\3rdparty\armadillo-9.200.4\include\armadillo_bits\compiler_setup_post.hpp \
+		..\liquid-dsp\include\liquid\liquid.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\sigpack.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\base\base.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\window\window.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\filter\filter.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\resampling\resampling.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\spectrum\spectrum.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\timing\timing.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\gplot\gplot.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\parser\parser.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\fftw\fftw.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\image\image.h \
+		..\3rdparty\sigpack-1.2.4\sigpack\kalman\kalman.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\Dsp.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Common.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Biquad.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\MathSupplement.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Types.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Cascade.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Filter.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Params.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\State.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Layout.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\PoleFilter.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\SmoothedFilter.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Utilities.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Bessel.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Design.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\RootFinder.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Butterworth.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\ChebyshevI.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\ChebyshevII.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Custom.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Elliptic.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\Legendre.h \
+		..\3rdparty\DSPFilters-master\shared\DSPFilters\include\DspFilters\RBJ.h \
+		..\3rdparty\sgsmooth-master\include\sgsmooth\SGSmooth.hpp
 
 release\r_peaks.obj: ..\EcgApplicationCore\r_peaks.cpp ../EcgApplicationCore/r_peaks.h \
 		..\3rdparty\armadillo-9.200.4\include\armadillo \
