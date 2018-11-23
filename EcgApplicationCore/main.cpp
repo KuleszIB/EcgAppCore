@@ -7,6 +7,7 @@
 #include "wfdb.h"
 #include "Dsp.h"
 #include "SGSmooth.hpp"
+#include "interpolation.h"
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
