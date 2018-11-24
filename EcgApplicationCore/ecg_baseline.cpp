@@ -78,6 +78,14 @@ void Ecg_Baseline::filter_moving_average()
     signal_filtered = coefficient.filter(signal_filtered); //albo mat, i jak to zrobic zeby nie nadpisywac sygnalu? czy mam utworzyc nowa zmienna w header?
 }
 
+double **vec2tab(arma::vec signal_vec)
+{
+    double **signal_tab = new double*[signal_vec.size()];
+    for(int ii = 0; ii < signal_vec.size(); ii++)
+        **(signal_tab + ii) = signal_vec(ii);
+    return signal_tab;
+}
+
 void Ecg_Baseline::filter_butterworth()
 {	
     filter_noise();
@@ -91,7 +99,8 @@ void Ecg_Baseline::filter_butterworth()
 	params[1] = 1; // order
 	params[2] = w; // center frequency
     f->setParams(params);
-    f->process(numSamples, signal_filtered);
+    double **signal_tab = vec2tab(signal_filtered);
+    f->process(numSamples, signal_tab);
 
 	/*Dsp::ButterHighPass<6, 2> butter;
 	butter.Setup(w);
@@ -103,16 +112,10 @@ void Ecg_Baseline::filter_chebyshev()
 
     filter_noise();
     int numSamples = signal_filtered.n_rows;
-    double* const signal_buff = new double[numSamples];
-    for (int i=0;i<numSamples;i++)
-    {
-        signal_buff[i] = signal_filtered[i];
 
-    }
-
-
-	// Create a Chebyshev type I Band Stop filter of order 3
-// with state for processing 2 channels of audio.
+/*
+    // Create a Chebyshev type I Band Stop filter of order 3
+    // with state for processing 2 channels of audio.
     Dsp::SimpleFilter <Dsp::ChebyshevII::BandStop <3>, 1> f;
 	f.setup(2,    // order
 		44100,// sample rate
@@ -120,9 +123,10 @@ void Ecg_Baseline::filter_chebyshev()
 		880,  // band width
 		1);   // ripple dB
     f.process(numSamples, signal_buff);
+*/
 
 
-   /* Dsp::Filter* f = new Dsp::FilterDesign
+    Dsp::Filter* f = new Dsp::FilterDesign
         <Dsp::ChebyshevII::Design::LowShelf <1>, 1>;
 	Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
@@ -131,16 +135,10 @@ void Ecg_Baseline::filter_chebyshev()
 	params[3] = 6; // shelf gain
 	params[4] = 10; // passband ripple
 	f->setParams(params);
-    for (int i=0;i<numSamples;i++)
-    {
-        signal_buff[i] = signal_filtered[i];
+    double **signal_tab = vec2tab(signal_filtered);
+    f->process(numSamples, signal_tab);
 
-    }
-    for (int i=0;i<numSamples;i++)
-    {
-       f->process (numSamples, signal_buff);
 
-    }*/
 
 }
 
@@ -304,7 +302,7 @@ arma::vec readtxt()
     if (!plik.good() == true){
         while (!plik.eof())
         {
-            get(plik, N);
+            //get(plik, N);
             cout << N << endl;
         }
         plik.close();
