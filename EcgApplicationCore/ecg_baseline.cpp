@@ -85,12 +85,12 @@ void Ecg_Baseline::filter_butterworth()
     w = w / (sampling_frequency / 2);
     int numSamples = signal_filtered.size();
 	Dsp::Filter* f = new Dsp::SmoothedFilterDesign
-        <Dsp::Butterworth::Design::HighPass <1>, 2, Dsp::DirectFormII>(sampling_frequency);
+        <Dsp::Butterworth::Design::HighPass <1>, 1, Dsp::DirectFormII>(sampling_frequency);
 	Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
 	params[1] = 1; // order
 	params[2] = w; // center frequency
-	f->setParams(params);
+    f->setParams(params);
     f->process(numSamples, signal_filtered);
 
 	/*Dsp::ButterHighPass<6, 2> butter;
@@ -100,19 +100,30 @@ void Ecg_Baseline::filter_butterworth()
 
 void Ecg_Baseline::filter_chebyshev()
 {
+
+    filter_noise();
+    int numSamples = signal_filtered.n_rows;
+    double* const signal_buff = new double[numSamples];
+    for (int i=0;i<numSamples;i++)
+    {
+        signal_buff[i] = signal_filtered[i];
+
+    }
+
+
 	// Create a Chebyshev type I Band Stop filter of order 3
 // with state for processing 2 channels of audio.
-	/*Dsp::SimpleFilter <Dsp::ChebyshevII::BandStop <3>, 2> f;
+    Dsp::SimpleFilter <Dsp::ChebyshevII::BandStop <3>, 1> f;
 	f.setup(2,    // order
 		44100,// sample rate
 		4000, // center frequency
 		880,  // band width
 		1);   // ripple dB
-	f.process(numSamples, arrayOfChannels);*/
-    filter_noise();
-    int numSamples = signal_filtered.n_rows;
-    Dsp::Filter* f = new Dsp::FilterDesign
-		<Dsp::ChebyshevII::Design::LowShelf <2>, 2>;
+    f.process(numSamples, signal_buff);
+
+
+   /* Dsp::Filter* f = new Dsp::FilterDesign
+        <Dsp::ChebyshevII::Design::LowShelf <1>, 1>;
 	Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
 	params[1] = 2; // order
@@ -120,7 +131,17 @@ void Ecg_Baseline::filter_chebyshev()
 	params[3] = 6; // shelf gain
 	params[4] = 10; // passband ripple
 	f->setParams(params);
-    f->process(numSamples, signal_filtered);
+    for (int i=0;i<numSamples;i++)
+    {
+        signal_buff[i] = signal_filtered[i];
+
+    }
+    for (int i=0;i<numSamples;i++)
+    {
+       f->process (numSamples, signal_buff);
+
+    }*/
+
 }
 
 void Ecg_Baseline::filter_savitzky_golay()
@@ -128,8 +149,13 @@ void Ecg_Baseline::filter_savitzky_golay()
     filter_noise();
 	int w = 17;
 	int deg = 3;
-	
-    signal_filtered = sg_smooth (signal_filtered, w, deg);
+    int numSamples = signal_filtered.n_rows;
+    vector<double> sig_buff ;
+    for (int i=0;i<numSamples;i++)
+    {
+        sig_buff[i] = signal_filtered[i];
+    }
+    signal_filtered = sg_smooth (sig_buff, w, deg);
 	/*
 		double result;
 		result = (1.0 / 5175.0) * (-253.0*syg_dolno[i - 12]
