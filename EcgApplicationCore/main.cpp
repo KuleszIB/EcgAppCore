@@ -1,17 +1,16 @@
-#include "themewidget.h"
+#include "View/mainview.h"
 #include "ecg_baseline.h"
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
+#include <QApplication>
+
 int main(int argc, char *argv[])
 {
     //module1::Ecg_Baseline ecg_baseline;
     QApplication a(argc, argv);
-    QMainWindow window;
-    ThemeWidget *widget = new ThemeWidget();
+    MainView w;
     //module1::Ecg_Baseline *baseline = new module1::Ecg_Baseline(); // tutaj cos z deklaracja namespace mozliwe ze usuniemy to module1 ale to do sprawdzenia
-    window.setCentralWidget(widget);
-    window.resize(900, 600);
-    window.show();
+    //w.setCentralWidget(widget);
+    //w.resize(900, 600);
+    w.show();
     return a.exec();
 }
 
