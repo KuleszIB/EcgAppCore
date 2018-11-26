@@ -1,4 +1,4 @@
-#include "themewidget.h"
+#include "View/mainview.h"
 #include "ecg_baseline.h"
 #include "r_peaks.h"
 
@@ -14,6 +14,8 @@
 
 using namespace arma;
 using namespace sp;
+#include <QApplication>
+
 
 int main(int argc, char *argv[])
 {
@@ -23,11 +25,11 @@ int main(int argc, char *argv[])
     vec time_vec = timevec(100,360);
 
     QApplication a(argc, argv);
-    QMainWindow window;
-    ThemeWidget *widget = new ThemeWidget();
-    window.setCentralWidget(widget);
-    window.resize(900, 600);
-    window.show();
+    MainView w;
+    //module1::Ecg_Baseline *baseline = new module1::Ecg_Baseline(); // tutaj cos z deklaracja namespace mozliwe ze usuniemy to module1 ale to do sprawdzenia
+    //w.setCentralWidget(widget);
+    //w.resize(900, 600);
+    w.show();
     return a.exec();
 }
 

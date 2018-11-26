@@ -243,7 +243,6 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro ..\..\..\..\Qt\Qt5.11.1\5
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\lex.prf \
 		..\EcgApplicationCore\EcgApplicationCore.pro \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\qtmaind.prl \
-		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Charts.prl \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Widgets.prl \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Gui.prl \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Core.prl
@@ -416,7 +415,6 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro ..\..\..\..\Qt\Qt5.11.1\5
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\lex.prf:
 ..\EcgApplicationCore\EcgApplicationCore.pro:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\qtmaind.prl:
-..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Charts.prl:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Widgets.prl:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Gui.prl:
 ..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\lib\Qt5Core.prl:

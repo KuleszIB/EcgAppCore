@@ -1,6 +1,5 @@
 #include "ecg_baseline.h"
 #include "vector"
-#include "liquid/liquid.h"
 #include <armadillo>
 #include "sigpack.h"
 #include "Dsp.h"
@@ -212,8 +211,8 @@ void Ecg_Baseline::filter_lms()
 
 	long T, n = 0;
 	double D, Y, E;
-    double W[M];
-    double X[M];
+    double * W = new double[M];
+    double * X = new double[M];
 
 
 	for (T = 0; T < N; T++)
@@ -294,17 +293,19 @@ arma::vec Ecg_Baseline::get_signal_baseline()
 arma::vec readtxt()
 {
     //bool s = true;
-    double N;
+    //string N;
+    arma::vec data;
     ifstream plik;
     plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5.dat");
     if (!plik.good() == true){
         while (!plik.eof())
         {
-            //get(plik, N);
-            cout << N << endl;
+            //getline(plik, N);
+            //tu coś trzeba jeszcze
         }
         plik.close();
     }
+    return data;
 }
 /*
 int main() {
