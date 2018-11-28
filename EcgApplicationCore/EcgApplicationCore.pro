@@ -19,8 +19,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     ecg_baseline.cpp \
-    r_peaks.cpp \
-    hrv1.cpp \
+#    r_peaks.cpp \
+#    hrv1.cpp \
     View/mainview.cpp \
     View/heart_class.cpp \
     View/t_alt_class.cpp \
@@ -33,8 +33,8 @@ SOURCES += \
 
 HEADERS += \
     ecg_baseline.h \
-    r_peaks.h \
-    hrv1.h \
+#    r_peaks.h \
+#    hrv1.h \
     View/mainview.h \
     View/heart_class.h \
     View/t_alt_class.h \
