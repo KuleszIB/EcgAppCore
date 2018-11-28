@@ -30,7 +30,7 @@ SOURCES += \
     View/hrv_dfa.cpp \
     View/ecgbaseline.cpp \
     View/r_peaks.cpp \
-
+    test_get_input.cpp
 
 HEADERS += \
     ecg_baseline.h \
@@ -45,7 +45,7 @@ HEADERS += \
     View/hrv_dfa.h \
     View/ecgbaseline.h \
     View/r_peaks.h \
-
+    examination.h
 
 FORMS += \
     View/mainview.ui \
