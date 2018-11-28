@@ -1,7 +1,6 @@
 #ifndef R_PEAKS_H
 #define R_PEAKS_H
 
-#include "armadillo"
 #include "ecg_baseline.h"
 
 enum R_Detection_Method

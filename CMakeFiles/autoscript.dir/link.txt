@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\autoscript.dir/objects.a
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\autoscript.dir/objects.a @CMakeFiles\autoscript.dir\objects1.rsp
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -Wl,--whole-archive CMakeFiles\autoscript.dir/objects.a -Wl,--no-whole-archive  -o autoscript.exe -Wl,--out-implib,libautoscript.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\autoscript.dir\linklibs.rsp

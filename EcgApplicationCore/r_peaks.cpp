@@ -1,5 +1,4 @@
 #include "r_peaks.h"
-#include <armadillo>
 
 void R_Peaks::pan_tompkins()
 {

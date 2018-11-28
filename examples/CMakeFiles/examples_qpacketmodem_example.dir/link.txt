@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\examples_qpacketmodem_example.dir/objects.a
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\examples_qpacketmodem_example.dir/objects.a @CMakeFiles\examples_qpacketmodem_example.dir\objects1.rsp
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -Wl,--whole-archive CMakeFiles\examples_qpacketmodem_example.dir/objects.a -Wl,--no-whole-archive  -o qpacketmodem_example.exe -Wl,--out-implib,libqpacketmodem_example.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\examples_qpacketmodem_example.dir\linklibs.rsp

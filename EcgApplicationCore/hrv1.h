@@ -3,7 +3,6 @@
 
 #include "ecg_baseline.h"
 #include "r_peaks.h"
-#include "armadillo"
 
 //Jeśli czegoś brakuje daj mi znać
 

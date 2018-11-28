@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\sandbox_minsearch2_test.dir/objects.a
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\sandbox_minsearch2_test.dir/objects.a @CMakeFiles\sandbox_minsearch2_test.dir\objects1.rsp
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -Wl,--whole-archive CMakeFiles\sandbox_minsearch2_test.dir/objects.a -Wl,--no-whole-archive  -o minsearch2_test.exe -Wl,--out-implib,libminsearch2_test.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\sandbox_minsearch2_test.dir\linklibs.rsp

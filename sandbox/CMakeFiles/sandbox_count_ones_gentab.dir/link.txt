@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\sandbox_count_ones_gentab.dir/objects.a
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\sandbox_count_ones_gentab.dir/objects.a @CMakeFiles\sandbox_count_ones_gentab.dir\objects1.rsp
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -Wl,--whole-archive CMakeFiles\sandbox_count_ones_gentab.dir/objects.a -Wl,--no-whole-archive  -o count_ones_gentab.exe -Wl,--out-implib,libcount_ones_gentab.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\sandbox_count_ones_gentab.dir\linklibs.rsp

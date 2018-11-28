@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\sandbox_fecsoft_hamming128_gentab.dir/objects.a
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\sandbox_fecsoft_hamming128_gentab.dir/objects.a @CMakeFiles\sandbox_fecsoft_hamming128_gentab.dir\objects1.rsp
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -Wl,--whole-archive CMakeFiles\sandbox_fecsoft_hamming128_gentab.dir/objects.a -Wl,--no-whole-archive  -o fecsoft_hamming128_gentab.exe -Wl,--out-implib,libfecsoft_hamming128_gentab.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\sandbox_fecsoft_hamming128_gentab.dir\linklibs.rsp

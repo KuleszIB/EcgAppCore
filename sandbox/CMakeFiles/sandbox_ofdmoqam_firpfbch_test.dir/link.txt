@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\sandbox_ofdmoqam_firpfbch_test.dir/objects.a
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\sandbox_ofdmoqam_firpfbch_test.dir/objects.a @CMakeFiles\sandbox_ofdmoqam_firpfbch_test.dir\objects1.rsp
-C:\Qt\Qt5.11.2\Tools\mingw530_32\bin\gcc.exe    -Wl,--whole-archive CMakeFiles\sandbox_ofdmoqam_firpfbch_test.dir/objects.a -Wl,--no-whole-archive  -o ofdmoqam_firpfbch_test.exe -Wl,--out-implib,libofdmoqam_firpfbch_test.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\sandbox_ofdmoqam_firpfbch_test.dir\linklibs.rsp
