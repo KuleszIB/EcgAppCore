@@ -8,6 +8,7 @@
 #include "View/hrv_dfa.h"
 #include "View/ecgbaseline.h"
 #include "View/r_peaks.h"
+#include "r_peaks0.h"
 
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
@@ -30,6 +31,7 @@ MainView::MainView(QWidget *parent) :
     ui ->loECGBaseline->addWidget(ecgBaseline);
     auto rPeaks = new R_peaks(this);
     ui ->loRpeaks->addWidget(rPeaks);
+
 }
 
 MainView::~MainView()

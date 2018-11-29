@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     arma::vec A(256, arma::fill::randu);
     arma::vec B(16, arma::fill::randu);
     arma::vec C = conv(A, B);
+    R_Peaks *obj = new R_Peaks();
 
     MainView w;
     w.show();

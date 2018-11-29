@@ -1,5 +1,10 @@
 #include "r_peaks0.h"
 
+R_Peaks::R_Peaks()
+{
+
+}
+
 void R_Peaks::pan_tompkins()
 {
 
