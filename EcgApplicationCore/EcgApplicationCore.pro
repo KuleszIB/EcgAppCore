@@ -20,7 +20,7 @@ SOURCES += \
     main.cpp \
     ecg_baseline.cpp \
     r_peaks0.cpp \
-#    hrv1.cpp \
+    hrv1.cpp \
     View/mainview.cpp \
     View/heart_class.cpp \
     View/t_alt_class.cpp \
@@ -30,12 +30,13 @@ SOURCES += \
     View/hrv_dfa.cpp \
     View/ecgbaseline.cpp \
     View/r_peaks.cpp \
-    test_get_input.cpp
+    test_get_input.cpp \
+    hrv2.cpp
 
 HEADERS += \
     ecg_baseline.h \
     r_peaks0.h \
-#    hrv1.h \
+    hrv1.h \
     View/mainview.h \
     View/heart_class.h \
     View/t_alt_class.h \
@@ -45,7 +46,8 @@ HEADERS += \
     View/hrv_dfa.h \
     View/ecgbaseline.h \
     View/r_peaks.h \
-    examination.h
+    examination.h \
+    hrv2.h
 
 FORMS += \
     View/mainview.ui \
