@@ -21,6 +21,8 @@ private:
     double tinn;
     double triangular_index;
     double poincare;
+    double sd1;
+    double sd2;
 
 public:
     Hrv2();
