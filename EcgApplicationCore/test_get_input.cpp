@@ -19,7 +19,5 @@ int test( int argc, char **argv)
     for (std::vector<float>::const_iterator i=test.channel_one.begin(); i!=test.channel_one.end(); ++i)
       qInfo() << *i << endl;
 
-
-
-
+return 0; // cos to musi zwracac co autor mial na mysli?
 }
