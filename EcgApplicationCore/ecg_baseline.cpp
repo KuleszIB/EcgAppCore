@@ -5,8 +5,8 @@
 #include <math.h>
 #include <string>
 #include <conio.h>
-
 #include "sigpack.h"
+
 #include "Dsp.h"
 #include "SGSmooth.hpp"
 
