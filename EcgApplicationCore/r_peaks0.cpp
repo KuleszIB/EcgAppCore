@@ -13,10 +13,7 @@ void R_Peaks::filter_bandpass()
 {
 
 }
-void R_Peaks::filter_lowpass()
-{
 
-}
 void R_Peaks::filter_highpass()
 {
 

@@ -1,7 +1,7 @@
 #ifndef R_PEAKS_H
 #define R_PEAKS_H
 
-#include "ecg_baseline.h"
+#include "ecg_baseline_module.h"
 
 enum R_Detection_Method
 {
@@ -14,7 +14,6 @@ class R_Peaks : public Ecg_Baseline
 {
 private:
     void pan_tompkins();
-    void filter_lowpass(); // tutaj w argumentach pododawaj to co potrzebujesz
     void filter_highpass();
     void filter_bandpass();
     void differentiate();

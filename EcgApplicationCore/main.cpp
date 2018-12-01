@@ -15,7 +15,7 @@
 #include "View/mainview.h"
 
 //Our modules
-#include "ecg_baseline.h"
+#include "ecg_baseline_module.h"
 #include "r_peaks0.h"
 
 int main(int argc, char *argv[])
