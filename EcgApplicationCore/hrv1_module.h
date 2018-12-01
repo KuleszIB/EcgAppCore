@@ -2,7 +2,7 @@
 #define HRV1_H
 
 #include "ecg_baseline_module.h"
-#include "r_peaks0.h"
+#include "r_peaks_module.h"
 
 //Jeśli czegoś brakuje daj mi znać
 
