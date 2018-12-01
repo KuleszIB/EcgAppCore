@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 # TARGET = TapBar
 TEMPLATE = app
@@ -33,7 +33,8 @@ SOURCES += \
     hrv1_module.cpp \
     hrv2_module.cpp \
     hrv_dfa_module.cpp \
-    waves_module.cpp
+    waves_module.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -51,7 +52,8 @@ HEADERS += \
     hrv1_module.h \
     hrv2_module.h \
     hrv_dfa_module.h \
-    waves_module.h
+    waves_module.h \
+    qcustomplot.h
 
 FORMS += \
     View/mainview.ui \
