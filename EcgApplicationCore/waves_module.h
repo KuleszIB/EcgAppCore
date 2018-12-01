@@ -1,7 +1,7 @@
 #ifndef WAVES_H
 #define WAVES_H
 
-#include "r_peaks0.h"
+#include "r_peaks_module.h"
 
 struct Waves_Points
 {

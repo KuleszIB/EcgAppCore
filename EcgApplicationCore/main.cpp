@@ -16,7 +16,7 @@
 
 //Our modules
 #include "ecg_baseline_module.h"
-#include "r_peaks0.h"
+#include "r_peaks_module.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     arma::vec B(16, arma::fill::randu);
     arma::vec C = conv(A, B);
     R_Peaks *obj = new R_Peaks();
+    arma::vec R_peaks_numbers = obj->get_r_peaks();
+    std::cout << R_peaks_numbers << std::endl;
 
     MainView w;
     w.show();

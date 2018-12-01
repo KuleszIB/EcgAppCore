@@ -3,6 +3,7 @@
 
 #include "armadillo"
 
+
 enum Filter_Type
 {
     MOVING_AVERAGE = 0,

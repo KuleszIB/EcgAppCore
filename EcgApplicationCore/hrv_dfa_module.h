@@ -1,6 +1,6 @@
 #ifndef HRV_DFA_H
 #define HRV_DFA_H
-#include "r_peaks0.h"
+#include "r_peaks_module.h"
 
 
 class HrvDfa : public R_Peaks
