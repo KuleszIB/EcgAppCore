@@ -16,12 +16,10 @@ struct Waves_Points
 class Waves : public R_Peaks
 {
 private:
-    void find_qrs_onset();
-    void find_qrs_end();
+    void find_qrs_onset_end();
     void find_t_end();
-    void find_p_onset();
-    void find_p_end();
-    void filter_lowpass();
+    void find_p_onset_end();
+    void filter_lowpass(double fc, int M);
 
 protected:
     Waves_Points waves_points;
