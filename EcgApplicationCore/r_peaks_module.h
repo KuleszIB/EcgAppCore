@@ -8,12 +8,13 @@ class R_Peaks : public Ecg_Baseline
 private:
     void pan_tompkins();
     void filter_highpass(double fc, int M);
-    void differentiate();
     void square();
     void integrate(int W);
-    arma::vec find_peaks();
+
 
 protected:
+    void differentiate();
+    arma::vec find_peaks(arma::vec signal);
     arma::vec r_peaks_vec; // output
 
 public:
