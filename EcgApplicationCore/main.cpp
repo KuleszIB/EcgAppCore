@@ -15,6 +15,7 @@
 #include "View/mainview.h"
 
 //Our modules
+#include "examination.h"
 #include "ecg_baseline_module.h"
 #include "r_peaks_module.h"
 #include "waves_module.h"
@@ -22,9 +23,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    arma::vec A(256, arma::fill::randu);
-    arma::vec B(16, arma::fill::randu);
-    arma::vec C = conv(A, B);
+
+//    examination test;
+//    test.get_data(argc, argv);
 
     // Rpeaks test
     R_Peaks *obj = new R_Peaks();

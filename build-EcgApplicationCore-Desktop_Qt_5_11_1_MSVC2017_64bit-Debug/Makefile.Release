@@ -1925,6 +1925,20 @@ release\main.obj: ..\EcgApplicationCore\main.cpp ..\..\..\..\Qt\Qt5.11.1\5.11.1\
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qtabwidget.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtGui\qicon.h \
 		../EcgApplicationCore/View/mainview.h \
+		../EcgApplicationCore/examination.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QWidget \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QFile \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QDir \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qdir.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\qfileinfo.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QString \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QFileDialog \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qfiledialog.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qdialog.h \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QtGlobal \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtCore\QDebug \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QMessageBox \
+		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\qmessagebox.h \
 		../EcgApplicationCore/ecg_baseline_module.h \
 		..\3rdparty\armadillo\include\armadillo \
 		..\3rdparty\armadillo\include\armadillo_bits\compiler_extra.hpp \

@@ -17,11 +17,11 @@ public:
   QString openFile()
   {
       // szukaczka otworzy się w tym katalogu
-      QString dir = "C:/Users/Documens";
+      QString dir = "../data/";
       // fun fact: jak w ścieżce damy folder który nie istnieje, to go wyświetli jako szukana nazwe pliku
       // moze mozna w ten sposob podac ustawic sugerowany plik
     QString filename =  QFileDialog::getOpenFileName(this,tr("Open Document"),
-          dir, tr("Text files (*.txt)"));
+          dir, tr("Text files (*.dat)"));
 
     if( !filename.isNull() )
     {
@@ -58,13 +58,13 @@ struct examination
 
 
         QString filename;
-      QApplication app(argc, argv);
+//      QApplication app(argc, argv);
       //QWidget *window = new QWidget;
      //QHBoxLayout *layout = new QHBoxLayout;
       QFileDialogTester test;
       filename = test.openFile();
       QStringList name_parts = filename.split(QRegExp("[\\.]"));
-      QString info_filename = name_parts[0]+"_hea.txt";
+      QString info_filename = name_parts[0]+".hea";
       qInfo() << "Wczytany plik naglowkowy" <<  info_filename;
       // elo, wybraliśmy plik, teraz liczymy na to że info do niego ma prawilną nazwę czyli num_hea.txt
       QFile file_info(info_filename);
