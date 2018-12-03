@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/root/images">
-        <file>Images/ECG-img.png</file>
-    </qresource>
-</RCC>

@@ -1,4 +1,0 @@
-X:/Dedykowane algorytmy diagnostyki medycznej/EcgAppCore-fabian-testy/3rdparty/sgsmooth-master/build/CMakeFiles/sgsmooth.dir
-X:/Dedykowane algorytmy diagnostyki medycznej/EcgAppCore-fabian-testy/3rdparty/sgsmooth-master/build/CMakeFiles/INSTALL.dir
-X:/Dedykowane algorytmy diagnostyki medycznej/EcgAppCore-fabian-testy/3rdparty/sgsmooth-master/build/CMakeFiles/ALL_BUILD.dir
-X:/Dedykowane algorytmy diagnostyki medycznej/EcgAppCore-fabian-testy/3rdparty/sgsmooth-master/build/CMakeFiles/ZERO_CHECK.dir
