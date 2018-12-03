@@ -1,0 +1,5 @@
+Przekleiæ zawartoœæ folderu sigpack-1.2.4/build
+Do³¹czyæ bibliotekê w Qt
+Najlepiej nie podawaæ nowej œcie¿ki, tylko zostaæ przy starej, jak siê nie uda to usun¹æ nowe INCLUDEPATH i DEPENDPATH
+(Zerkn¹æ jak to wygl¹da w EcgAppCore-fabian-testy)
+Completely no idea jak to dzia³a, ale chyba ograne, o ile komuœ siê nie zachce innych funkcji z tego pakietu
