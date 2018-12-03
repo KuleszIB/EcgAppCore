@@ -2476,7 +2476,8 @@ debug\main.obj: ..\EcgApplicationCore\main.cpp ..\..\..\..\Qt\Qt5.11.1\5.11.1\ms
 		..\3rdparty\armadillo\include\armadillo_bits\newarp_UpperHessenbergEigen_meat.hpp \
 		..\3rdparty\armadillo\include\armadillo_bits\newarp_UpperHessenbergQR_meat.hpp \
 		..\3rdparty\armadillo\include\armadillo_bits\compiler_setup_post.hpp \
-		../EcgApplicationCore/r_peaks_module.h
+		../EcgApplicationCore/r_peaks_module.h \
+		../EcgApplicationCore/waves_module.h
 
 debug\mainview.obj: ..\EcgApplicationCore\View\mainview.cpp ../EcgApplicationCore/View/mainview.h \
 		..\..\..\..\Qt\Qt5.11.1\5.11.1\msvc2017_64\include\QtWidgets\QMainWindow \
