@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ECGbaseline_gui</class>
+ <widget class="QWidget" name="ECGbaseline_gui">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>597</width>
+    <height>413</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox_ECGbaseline">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>491</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>ECG Baseline</string>
+   </property>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>70</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Filtration method</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>lowpass_filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>bandpass_filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Butterworth_filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Chebyshev_filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Savitzky’_Golay_filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Keiser_filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LSM_algorithm</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Moving_average</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

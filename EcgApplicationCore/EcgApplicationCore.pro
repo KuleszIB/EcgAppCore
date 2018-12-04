@@ -19,14 +19,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     View/mainview.cpp \
-    View/heart_class.cpp \
-    View/t_alt_class.cpp \
-    View/hrv1.cpp \
-    View/hrv2.cpp \
-    View/st_segment.cpp \
-    View/hrv_dfa.cpp \
-    View/ecgbaseline.cpp \
-    View/r_peaks.cpp \
     test_get_input.cpp \
     ecg_baseline_module.cpp \
     r_peaks_module.cpp \
@@ -34,18 +26,18 @@ SOURCES += \
     hrv2_module.cpp \
     hrv_dfa_module.cpp \
     waves_module.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    View/ecgbaseline_gui.cpp \
+    View/heart_class_gui.cpp \
+    View/hrv1_gui.cpp \
+    View/hrv2_gui.cpp \
+    View/hrv_dfa_gui.cpp \
+    View/r_peaks_gui.cpp \
+    View/st_segment_gui.cpp \
+    View/t_alt_class_gui.cpp
 
 HEADERS += \
     View/mainview.h \
-    View/heart_class.h \
-    View/t_alt_class.h \
-    View/hrv1.h \
-    View/hrv2.h \
-    View/st_segment.h \
-    View/hrv_dfa.h \
-    View/ecgbaseline.h \
-    View/r_peaks.h \
     examination.h \
     ecg_baseline_module.h \
     r_peaks_module.h \
@@ -53,18 +45,26 @@ HEADERS += \
     hrv2_module.h \
     hrv_dfa_module.h \
     waves_module.h \
-    qcustomplot.h
+    qcustomplot.h \
+    View/ecgbaseline_gui.h \
+    View/heart_class_gui.h \
+    View/hrv1_gui.h \
+    View/hrv2_gui.h \
+    View/hrv_dfa_gui.h \
+    View/r_peaks_gui.h \
+    View/st_segment_gui.h \
+    View/t_alt_class_gui.h
 
 FORMS += \
     View/mainview.ui \
-    View/heart_class.ui \
-    View/t_alt_class.ui \
-    View/hrv1.ui \
-    View/hrv2.ui \
-    View/st_segment.ui \
-    View/hrv_dfa.ui \
-    View/ecgbaseline.ui \
-    View/r_peaks.ui
+    View/ecgbaseline_gui.ui \
+    View/heart_class_gui.ui \
+    View/hrv1_gui.ui \
+    View/hrv2_gui.ui \
+    View/hrv_dfa_gui.ui \
+    View/r_peaks_gui.ui \
+    View/st_segment_gui.ui \
+    View/t_alt_class_gui.ui
 
 RESOURCES += \
     tapbarresource.qrc
