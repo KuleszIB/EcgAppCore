@@ -17,6 +17,7 @@ struct Time_Params
 
 struct Frequency_Params
 {
+    double tp;
     double ulf;
     double vlf;
     double lf;
@@ -30,6 +31,8 @@ struct Frequency_Params
 class Hrv1 : public R_Peaks
 {
 private:
+    arma::vec r_peaks_vec;              //RR intervals
+    arma::vec uniform_r_peaks_vec;      //RR intervals after resampling
     arma::vec cum_time_vec;
     arma::vec uniform_time_vec;
     arma::vec frequency_vec;
@@ -57,3 +60,4 @@ public:
 };
 
 #endif // HRV1_H
+
