@@ -18,131 +18,167 @@
     <normaloff>:/root/images/Images/ECG-img.png</normaloff>:/root/images/Images/ECG-img.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>7</number>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>731</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>4</number>
+    </property>
+    <widget class="QWidget" name="ECGBASE">
+     <attribute name="title">
+      <string>ECG Baseline</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>691</width>
+        <height>271</height>
+       </rect>
       </property>
-      <widget class="QWidget" name="ECGBASE">
-       <attribute name="title">
-        <string>ECG Baseline</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_4">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>691</width>
-          <height>271</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="loECGBaseline"/>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="RPEAKS">
-       <attribute name="title">
-        <string>R-peaks</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_6">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>641</width>
-          <height>251</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="loRpeaks"/>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="HRV1">
-       <attribute name="title">
-        <string>HRV 1</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>591</width>
-          <height>271</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="lo_HRV1"/>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="HRV2">
-       <attribute name="title">
-        <string>HRV 2</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>591</width>
-          <height>271</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="lo_HRV2"/>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="HRF_DFA">
-       <attribute name="title">
-        <string>HRV DFA</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_5">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>681</width>
-          <height>271</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="loHRVdfa"/>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="ST_SEGMENT">
-       <attribute name="title">
-        <string>ST Segment</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>601</width>
-          <height>271</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="loSTSegment"/>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="HEART_CLASS">
-       <attribute name="title">
-        <string>Heart Class</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <layout class="QVBoxLayout" name="loHeartClass"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="T_WAVE_ALT">
-       <attribute name="title">
-        <string>T Wave Alt</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <layout class="QHBoxLayout" name="loTAltClass"/>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QVBoxLayout" name="loECGBaseline"/>
      </widget>
-    </item>
-   </layout>
+    </widget>
+    <widget class="QWidget" name="RPEAKS">
+     <attribute name="title">
+      <string>R-peaks</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>641</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="loRpeaks"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="HRV1">
+     <attribute name="title">
+      <string>HRV 1</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>591</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="lo_HRV1"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="HRV2">
+     <attribute name="title">
+      <string>HRV 2</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>591</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="lo_HRV2"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="HRF_DFA">
+     <attribute name="title">
+      <string>HRV DFA</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>681</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="loHRVdfa"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="ST_SEGMENT">
+     <attribute name="title">
+      <string>ST Segment</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>601</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="loSTSegment"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="HEART_CLASS">
+     <attribute name="title">
+      <string>Heart Class</string>
+     </attribute>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QVBoxLayout" name="loHeartClass"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="T_WAVE_ALT">
+     <attribute name="title">
+      <string>T Wave Alt</string>
+     </attribute>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <layout class="QHBoxLayout" name="loTAltClass"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>201</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="lo_patients_data">
+     <item>
+      <widget class="QLabel" name="label_age">
+       <property name="text">
+        <string>Age</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lE_age"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_gender">
+       <property name="text">
+        <string>Gender</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lE_gender"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -153,6 +189,14 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuSignal">
+    <property name="title">
+     <string>Signal</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuSignal"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -163,6 +207,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

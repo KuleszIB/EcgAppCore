@@ -11,9 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -26,8 +30,9 @@ QT_BEGIN_NAMESPACE
 class Ui_MainView
 {
 public:
+    QAction *actionOpen;
+    QAction *actionExit;
     QWidget *centralWidget;
-    QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget;
     QWidget *ECGBASE;
     QWidget *verticalLayoutWidget_4;
@@ -53,7 +58,14 @@ public:
     QWidget *T_WAVE_ALT;
     QHBoxLayout *horizontalLayout_4;
     QHBoxLayout *loTAltClass;
+    QWidget *widget;
+    QHBoxLayout *lo_patients_data;
+    QLabel *label_age;
+    QLineEdit *lE_age;
+    QLabel *label_gender;
+    QLineEdit *lE_gender;
     QMenuBar *menuBar;
+    QMenu *menuSignal;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -65,14 +77,15 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral(":/root/images/Images/ECG-img.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainView->setWindowIcon(icon);
+        actionOpen = new QAction(MainView);
+        actionOpen->setObjectName(QStringLiteral("actionOpen"));
+        actionExit = new QAction(MainView);
+        actionExit->setObjectName(QStringLiteral("actionExit"));
         centralWidget = new QWidget(MainView);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        horizontalLayout = new QHBoxLayout(centralWidget);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setGeometry(QRect(10, 40, 731, 291));
         ECGBASE = new QWidget();
         ECGBASE->setObjectName(QStringLiteral("ECGBASE"));
         verticalLayoutWidget_4 = new QWidget(ECGBASE);
@@ -165,13 +178,40 @@ public:
         horizontalLayout_4->addLayout(loTAltClass);
 
         tabWidget->addTab(T_WAVE_ALT, QString());
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(20, 10, 201, 22));
+        lo_patients_data = new QHBoxLayout(widget);
+        lo_patients_data->setSpacing(6);
+        lo_patients_data->setContentsMargins(11, 11, 11, 11);
+        lo_patients_data->setObjectName(QStringLiteral("lo_patients_data"));
+        lo_patients_data->setContentsMargins(0, 0, 0, 0);
+        label_age = new QLabel(widget);
+        label_age->setObjectName(QStringLiteral("label_age"));
 
-        horizontalLayout->addWidget(tabWidget);
+        lo_patients_data->addWidget(label_age);
+
+        lE_age = new QLineEdit(widget);
+        lE_age->setObjectName(QStringLiteral("lE_age"));
+
+        lo_patients_data->addWidget(lE_age);
+
+        label_gender = new QLabel(widget);
+        label_gender->setObjectName(QStringLiteral("label_gender"));
+
+        lo_patients_data->addWidget(label_gender);
+
+        lE_gender = new QLineEdit(widget);
+        lE_gender->setObjectName(QStringLiteral("lE_gender"));
+
+        lo_patients_data->addWidget(lE_gender);
 
         MainView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainView);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 751, 21));
+        menuSignal = new QMenu(menuBar);
+        menuSignal->setObjectName(QStringLiteral("menuSignal"));
         MainView->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainView);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -180,9 +220,13 @@ public:
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainView->setStatusBar(statusBar);
 
+        menuBar->addAction(menuSignal->menuAction());
+        menuSignal->addAction(actionOpen);
+        menuSignal->addAction(actionExit);
+
         retranslateUi(MainView);
 
-        tabWidget->setCurrentIndex(7);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainView);
@@ -191,6 +235,8 @@ public:
     void retranslateUi(QMainWindow *MainView)
     {
         MainView->setWindowTitle(QApplication::translate("MainView", "Front Panel Controller", nullptr));
+        actionOpen->setText(QApplication::translate("MainView", "Open", nullptr));
+        actionExit->setText(QApplication::translate("MainView", "Exit", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(ECGBASE), QApplication::translate("MainView", "ECG Baseline", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(RPEAKS), QApplication::translate("MainView", "R-peaks", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(HRV1), QApplication::translate("MainView", "HRV 1", nullptr));
@@ -199,6 +245,9 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(ST_SEGMENT), QApplication::translate("MainView", "ST Segment", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(HEART_CLASS), QApplication::translate("MainView", "Heart Class", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(T_WAVE_ALT), QApplication::translate("MainView", "T Wave Alt", nullptr));
+        label_age->setText(QApplication::translate("MainView", "Age", nullptr));
+        label_gender->setText(QApplication::translate("MainView", "Gender", nullptr));
+        menuSignal->setTitle(QApplication::translate("MainView", "Signal", nullptr));
     } // retranslateUi
 
 };
