@@ -20,6 +20,10 @@ private:
     double sd1;
     double sd2;
 
+    //Kasia - to dodałam
+    arma::vec intervals;
+    void remove_outliers();
+
     void calc_cum_time_vec();
     void calc_histogram();
     void calc_tinn();
