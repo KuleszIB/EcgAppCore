@@ -5,12 +5,13 @@
 #include <math.h>
 #include <string>
 #include <conio.h>
-#include "sigpack.h"
 
+#include "sigpack.h"
 #include "Dsp.h"
 #include "SGSmooth.hpp"
 
 #include "ecg_baseline_module.h"
+#include "examination.h"
 
 using namespace std;
 using namespace sp;
@@ -18,6 +19,10 @@ using namespace Dsp;
 using namespace arma;
 
 //Jak filtrujesz czy coś, to wpisuj to do pól obiektu
+void Filter_Params::set_filter_type(Filter_Type filter_type_set)
+{
+    filter_type = filter_type_set;
+}
 
 Filter_Type Filter_Params::get_filter_type()
 {
@@ -289,38 +294,60 @@ arma::vec Ecg_Baseline::get_signal_baseline()
     return signal_baseline;
 }
 
-arma::vec readtxt()
+arma::vec read_from_file()
 {
-    //bool s = true;
-    //string N;
+    string N;
     arma::vec data;
-//    ifstream plik;
-//    plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5.dat");
-//    if (!plik.good() == true){
-//        while (!plik.eof())
-//        {
-//            //getline(plik, N);
-//            //tu coś trzeba jeszcze
-//        }
-//        plik.close();
-//    }
+    ifstream plik;
+    plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5.dat");
+    if (!plik.good() == true){
+        while (!plik.eof())
+        {
+            getline(plik, N);
+            int i = 1;
+            data[i] = atoi(N.c_str());
+        }
+        plik.close();
+    }
     return data;
 }
-/*
-int main() {
 
-    Filter_Type filter_type;
-    string filter;
-    cin >> filter;
-
-    Filter_Params filter_params;
-
-    int fs = 360;
-    arma::vec input;
-    input = readtxt();
-    Ecg_Baseline test(input, fs);
-    test.filter_baseline(filter_params);
-    cout << "dziala" << endl;
-
+void write_to_file(arma::vec data)
+{
+    ofstream plik;
+    plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5_pozapisaniu.txt");
+    if (!plik.good() == true){
+        int i = 1 ;
+        cin >> data[i];
+        i++;
+    }
+    plik.close();
 }
-*/
+
+/*arma::vec conv_col_vec(arma::Col<float> column)
+{
+    arma::vec vector;
+    for(int i=1; i<column.size(); i++)
+    {vector[i]=column[i]; return vector;}
+}*/
+
+/*arma::vec testuje_baseline(int argc, char **argv) {
+
+    //Wczytywanie danych
+    examination proba;
+    proba.get_data(argc, argv);
+    arma::vec input = conv_col_vec(proba.channel_one);
+    Filter_Type filter_type = BUTTERWORTH;
+    Filter_Params filter_params;
+    filter_params.set_filter_type(filter_type);
+    int fs = 360;
+    //arma::vec input = read_from_file();
+    Ecg_Baseline ecg_baseline_filter( input,  fs);
+    ecg_baseline_filter.filter_baseline(filter_params);
+    arma::vec output = ecg_baseline_filter.get_signal_filtered();
+    //write_to_file(output);
+    qInfo() << "dziala" ;
+
+    return output;
+}*/
+

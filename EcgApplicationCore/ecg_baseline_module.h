@@ -3,7 +3,6 @@
 
 #include "armadillo"
 
-
 enum Filter_Type
 {
     MOVING_AVERAGE = 0,
@@ -19,6 +18,7 @@ private:
     Filter_Type filter_type;
     //musisz sama sobie dopisać, o ile potrzebujesz do tego osobnej klasy
 public:
+    void set_filter_type(Filter_Type filter_type_set);
     Filter_Type get_filter_type();
 };
 

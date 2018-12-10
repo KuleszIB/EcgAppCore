@@ -15,34 +15,48 @@
 #include "View/mainview.h"
 
 //Our modules
-#include "examination.h"
 #include "ecg_baseline_module.h"
-#include "r_peaks_module.h"
-#include "waves_module.h"
+//#include "ecg_baseline_module.cpp"
+#include "r_peaks0.h"
+#include "examination.h"
+
+
+using namespace arma;
+
+arma::vec readtxt()
+{
+    arma::vec data;
+    return data;
+}
+
 
 int main(int argc, char *argv[])
 {
+    /*arma::vec output = testuje_baseline(argc,argv);
     QApplication a(argc, argv);
-
-//    examination test;
-//    test.get_data(argc, argv);
-
-    // Rpeaks test
+    arma::vec A(256, arma::fill::randu);
+    arma::vec B(16, arma::fill::randu);
+    arma::vec C = conv(A, B);
     R_Peaks *obj = new R_Peaks();
-    arma::vec R_peaks_numbers = obj->get_r_peaks();
-    std::cout << "R peaks:" << std::endl << R_peaks_numbers << std::endl;
-
-    // Waves test
-    Waves *obj2 = new Waves();
-    Waves_Points Waves_numbers = obj2->get_waves();
-    std::cout << "QRS onsets:" << std::endl << Waves_numbers.qrs_onset << std::endl;
-    std::cout << "QRS ends:" << std::endl << Waves_numbers.qrs_end << std::endl;
-    std::cout << "P onsets:" << std::endl << Waves_numbers.p_onset << std::endl;
-    std::cout << "P ends:" << std::endl << Waves_numbers.p_end << std::endl;
-    std::cout << "T ends:" << std::endl << Waves_numbers.t_end << std::endl;
-
     MainView w;
     w.show();
-    return a.exec();
+
+    return a.exec();*/
+    examination proba;
+    proba.get_data(argc, argv);
+    arma::Col<float> input = proba.channel_one;
+    Filter_Type filter_type = BUTTERWORTH;
+    Filter_Params filter_params;
+    filter_params.set_filter_type(filter_type);
+    int fs = 360;
+    //arma::vec input = read_from_file();
+    //arma::vec a = conv_col_vec(input);
+    Ecg_Baseline ecg_baseline_filter(input, fs);
+    ecg_baseline_filter.filter_baseline(filter_params);
+    arma::vec output = ecg_baseline_filter.get_signal_filtered();
+    //write_to_file(output);
+    qInfo() << "dziala" ;
+
+    return 0;
 }
 
