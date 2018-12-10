@@ -15,10 +15,10 @@
 #include "View/mainview.h"
 
 //Our modules
-#include "examination.h"
-#include "ecg_baseline_module.h"
-#include "r_peaks_module.h"
-#include "waves_module.h"
+#include "Modules/examination.h"
+#include "Modules/ecg_baseline_module.h"
+#include "Modules/r_peaks_module.h"
+#include "Modules/waves_module.h"
 
 int main(int argc, char *argv[])
 {

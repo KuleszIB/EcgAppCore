@@ -8,7 +8,7 @@
 #include "View/hrv_dfa_gui.h"
 #include "View/ecgbaseline_gui.h"
 #include "View/r_peaks_gui.h"
-#include "r_peaks_module.h"
+#include "Modules/r_peaks_module.h"
 
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
