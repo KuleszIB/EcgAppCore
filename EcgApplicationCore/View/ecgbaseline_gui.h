@@ -15,6 +15,10 @@ public:
     explicit ECGbaseline_gui(QWidget *parent = 0);
     ~ECGbaseline_gui();
 
+private slots:
+
+    void on_comboBox_filter_currentTextChanged(const QString &arg1);
+
 private:
     Ui::ECGbaseline_gui *ui;
 };
