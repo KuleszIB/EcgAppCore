@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../EcgApplicationCore/ecgplot.h"
+#include "../../EcgApplicationCore/View/ecgplot.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -63,7 +63,7 @@ void ecgplot::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
 }
 
 QT_INIT_METAOBJECT const QMetaObject ecgplot::staticMetaObject = {
-    { &QCustomPlot::staticMetaObject, qt_meta_stringdata_ecgplot.data,
+    { &QwtPlot::staticMetaObject, qt_meta_stringdata_ecgplot.data,
       qt_meta_data_ecgplot,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -78,12 +78,12 @@ void *ecgplot::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_ecgplot.stringdata0))
         return static_cast<void*>(this);
-    return QCustomPlot::qt_metacast(_clname);
+    return QwtPlot::qt_metacast(_clname);
 }
 
 int ecgplot::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QCustomPlot::qt_metacall(_c, _id, _a);
+    _id = QwtPlot::qt_metacall(_c, _id, _a);
     return _id;
 }
 QT_WARNING_POP

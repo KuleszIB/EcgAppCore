@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>448</width>
+    <width>626</width>
     <height>323</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>20</x>
      <y>30</y>
-     <width>351</width>
+     <width>581</width>
      <height>231</height>
     </rect>
    </property>
@@ -91,6 +91,16 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="qrsPlot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>30</y>
+      <width>411</width>
+      <height>181</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>

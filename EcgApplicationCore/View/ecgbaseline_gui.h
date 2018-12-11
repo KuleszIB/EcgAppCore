@@ -2,6 +2,9 @@
 #define ECGBASELINE_H
 
 #include <QWidget>
+#include "ecgplot.h"
+//#include "ecg_baseline_module.h"
+#include <QVBoxLayout>
 
 namespace Ui {
 class ECGbaseline_gui;
@@ -16,11 +19,17 @@ public:
     ~ECGbaseline_gui();
 
 private slots:
-
+    void addRandomGraph();
     void on_comboBox_filter_currentTextChanged(const QString &arg1);
+
+
+    void on_pushButton_clicked();
 
 private:
     Ui::ECGbaseline_gui *ui;
+    ecgplot *ecgPlot2;
+    void filter1();
+    void filter2();
 };
 
 #endif // ECGBASELINE_H

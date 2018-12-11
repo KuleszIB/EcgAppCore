@@ -112,7 +112,7 @@
       <x>260</x>
       <y>10</y>
       <width>281</width>
-      <height>241</height>
+      <height>101</height>
      </rect>
     </property>
    </widget>
@@ -197,6 +197,16 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="ecgPlot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>130</y>
+      <width>351</width>
+      <height>151</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>

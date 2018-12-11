@@ -37,11 +37,11 @@ public:
         ECGbaseline_gui->resize(597, 413);
         groupBox_ECGbaseline = new QGroupBox(ECGbaseline_gui);
         groupBox_ECGbaseline->setObjectName(QStringLiteral("groupBox_ECGbaseline"));
-        groupBox_ECGbaseline->setGeometry(QRect(10, 10, 491, 331));
-        pushButton = new QPushButton(groupBox_ECGbaseline);
+        groupBox_baseline->setGeometry(QRect(10, 10, 491, 331));
+        pushButton = new QPushButton(groupBox_baseline);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(10, 20, 75, 23));
-        layoutWidget = new QWidget(groupBox_ECGbaseline);
+        layoutWidget = new QWidget(groupBox_baseline);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(30, 70, 131, 41));
         verticalLayout = new QVBoxLayout(layoutWidget);
@@ -66,32 +66,32 @@ public:
         verticalLayout->addWidget(comboBox);
 
 
-        retranslateUi(ECGbaseline_gui);
+        retranslateUi(baseline_gui);
 
-        QMetaObject::connectSlotsByName(ECGbaseline_gui);
+        QMetaObject::connectSlotsByName(baseline_gui);
     } // setupUi
 
-    void retranslateUi(QWidget *ECGbaseline_gui)
+    void retranslateUi(QWidget *baseline_gui)
     {
-        ECGbaseline_gui->setWindowTitle(QApplication::translate("ECGbaseline_gui", "Form", nullptr));
-        groupBox_ECGbaseline->setTitle(QApplication::translate("ECGbaseline_gui", "ECG Baseline", nullptr));
-        pushButton->setText(QApplication::translate("ECGbaseline_gui", "Run", nullptr));
-        label->setText(QApplication::translate("ECGbaseline_gui", "Filtration method", nullptr));
-        comboBox->setItemText(0, QApplication::translate("ECGbaseline_gui", "lowpass_filter", nullptr));
-        comboBox->setItemText(1, QApplication::translate("ECGbaseline_gui", "bandpass_filter", nullptr));
-        comboBox->setItemText(2, QApplication::translate("ECGbaseline_gui", "Butterworth_filter", nullptr));
-        comboBox->setItemText(3, QApplication::translate("ECGbaseline_gui", "Chebyshev_filter", nullptr));
-        comboBox->setItemText(4, QApplication::translate("ECGbaseline_gui", "Savitzky\342\200\231_Golay_filter", nullptr));
-        comboBox->setItemText(5, QApplication::translate("ECGbaseline_gui", "Keiser_filter", nullptr));
-        comboBox->setItemText(6, QApplication::translate("ECGbaseline_gui", "LSM_algorithm", nullptr));
-        comboBox->setItemText(7, QApplication::translate("ECGbaseline_gui", "Moving_average", nullptr));
+        baseline_gui->setWindowTitle(QApplication::translate("baseline_gui", "Form", nullptr));
+        groupBox_baseline->setTitle(QApplication::translate("baseline_gui", " Baseline", nullptr));
+        pushButton->setText(QApplication::translate("baseline_gui", "Run", nullptr));
+        label->setText(QApplication::translate("baseline_gui", "Filtration method", nullptr));
+        comboBox->setItemText(0, QApplication::translate("baseline_gui", "lowpass_filter", nullptr));
+        comboBox->setItemText(1, QApplication::translate("baseline_gui", "bandpass_filter", nullptr));
+        comboBox->setItemText(2, QApplication::translate("baseline_gui", "Butterworth_filter", nullptr));
+        comboBox->setItemText(3, QApplication::translate("baseline_gui", "Chebyshev_filter", nullptr));
+        comboBox->setItemText(4, QApplication::translate("baseline_gui", "Savitzky\342\200\231_Golay_filter", nullptr));
+        comboBox->setItemText(5, QApplication::translate("baseline_gui", "Keiser_filter", nullptr));
+        comboBox->setItemText(6, QApplication::translate("baseline_gui", "LSM_algorithm", nullptr));
+        comboBox->setItemText(7, QApplication::translate("baseline_gui", "Moving_average", nullptr));
 
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class ECGbaseline_gui: public Ui_ECGbaseline_gui {};
+    class baseline_gui: public Ui_ECGbaseline_gui {};
 } // namespace Ui
 
 QT_END_NAMESPACE

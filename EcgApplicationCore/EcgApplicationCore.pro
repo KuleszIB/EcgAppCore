@@ -26,7 +26,6 @@ SOURCES += \
     Modules/hrv2_module.cpp \
     Modules/hrv_dfa_module.cpp \
     Modules/waves_module.cpp \
-    qcustomplot.cpp \
     View/ecgbaseline_gui.cpp \
     View/heart_class_gui.cpp \
     View/hrv1_gui.cpp \
@@ -34,7 +33,9 @@ SOURCES += \
     View/hrv_dfa_gui.cpp \
     View/r_peaks_gui.cpp \
     View/st_segment_gui.cpp \
-    View/t_alt_class_gui.cpp
+    View/t_alt_class_gui.cpp \
+    View/ecgplot.cpp \
+    View/qrsplot.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -45,7 +46,6 @@ HEADERS += \
     Modules/hrv2_module.h \
     Modules/hrv_dfa_module.h \
     Modules/waves_module.h \
-    qcustomplot.h \
     View/ecgbaseline_gui.h \
     View/heart_class_gui.h \
     View/hrv1_gui.h \
@@ -53,7 +53,9 @@ HEADERS += \
     View/hrv_dfa_gui.h \
     View/r_peaks_gui.h \
     View/st_segment_gui.h \
-    View/t_alt_class_gui.h
+    View/t_alt_class_gui.h \
+    View/qrsplot.h \
+    View/ecgplot.h
 
 FORMS += \
     View/mainview.ui \
