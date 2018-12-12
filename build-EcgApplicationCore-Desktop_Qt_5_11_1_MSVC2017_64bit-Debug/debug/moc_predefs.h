@@ -1,7 +1,7 @@
 #define _MSC_EXTENSIONS 
 #define _INTEGRAL_MAX_BITS 64
-#define _MSC_VER 1913
-#define _MSC_FULL_VER 191326131
+#define _MSC_VER 1916
+#define _MSC_FULL_VER 191627024
 #define _MSC_BUILD 1
 #define _M_AMD64 100
 #define _M_X64 100

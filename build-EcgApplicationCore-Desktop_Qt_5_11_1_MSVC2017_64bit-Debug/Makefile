@@ -147,8 +147,6 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\Qt5.11.1\5.11.1\msv
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_network.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_network_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_networkauth.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_networkauth_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_nfc.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_nfc_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_opengl.pri \
@@ -163,8 +161,6 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\Qt5.11.1\5.11.1\msv
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_positioningquick_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_printsupport.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_printsupport_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_purchasing.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_purchasing_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_qml.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_qml_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_qmldebug_private.pri \
@@ -180,14 +176,6 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\Qt5.11.1\5.11.1\msv
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_script.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_script_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri \
@@ -211,13 +199,6 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\Qt5.11.1\5.11.1\msv
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_vulkan_support_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webchannel.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webchannel_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webengine.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webengine_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginecore.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginecore_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginecoreheaders_private.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginewidgets.pri \
-		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginewidgets_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_websockets.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_websockets_private.pri \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webview.pri \
@@ -236,6 +217,7 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\Qt5.11.1\5.11.1\msv
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\qt_config.prf \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds.prf \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf \
 		C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf \
@@ -338,8 +320,6 @@ C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_network.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_network_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_networkauth.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_networkauth_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_nfc.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_nfc_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_opengl.pri:
@@ -354,8 +334,6 @@ C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_positioningquick.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_positioningquick_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_printsupport.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_printsupport_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_purchasing.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_purchasing_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_qml.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_qml_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_qmldebug_private.pri:
@@ -371,14 +349,6 @@ C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quickparticles_private.
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_script.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_script_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri:
@@ -402,13 +372,6 @@ C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_uitools_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_vulkan_support_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webchannel.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webchannel_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webengine.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webengine_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginecore.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginecore_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginecoreheaders_private.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginewidgets.pri:
-C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webenginewidgets_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_websockets.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_websockets_private.pri:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\modules\qt_lib_webview.pri:
@@ -427,6 +390,7 @@ C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\qt_functions.prf:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\qt_config.prf:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds.prf:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf:
 C:\Qt\Qt5.11.1\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf:
