@@ -11,7 +11,7 @@ ECGbaseline_gui::ECGbaseline_gui(QWidget *parent) :
     ecgPlot2 = new ecgplot(this);
     layout->addWidget(ecgPlot2);
     ui->ecgPlot->setLayout(layout);
-    addRandomGraph();
+
 
 }
 
@@ -93,7 +93,6 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
 }
 
 void ECGbaseline_gui::filter1()
-{
     {
         QVector<double> x(1001), y(1001); // initialize with entries 0..100
         for (int i=0; i<1001; ++i)
@@ -104,10 +103,8 @@ void ECGbaseline_gui::filter1()
         ecgPlot2->setData(x,y);
       }
 
-}
 
 void ECGbaseline_gui::filter2()
-{
     {
         QVector<double> x(1001), y(1001); // initialize with entries 0..100
         for (int i=0; i<1001; ++i)
@@ -118,7 +115,30 @@ void ECGbaseline_gui::filter2()
         ecgPlot2->setData(x,y);
       }
 
-}
+
+void ECGbaseline_gui::filter3()
+    {
+        QVector<double> x(1001), y(1001); // initialize with entries 0..100
+        for (int i=0; i<1001; ++i)
+        {
+          x[i] = i/50.0 - 1; // x goes from -1 to 1
+          y[i] = cos(2*x[i]); // let's plot a quadratic function
+        }
+        ecgPlot2->setData(x,y);
+      }
+
+
+
+void ECGbaseline_gui::filter4()
+    {
+        QVector<double> x(1001), y(1001); // initialize with entries 0..100
+        for (int i=0; i<1001; ++i)
+        {
+          x[i] = i/50.0 - 1; // x goes from -1 to 1
+          y[i] = cos(x[i])+sin(x[i]); // let's plot a quadratic function
+        }
+        ecgPlot2->setData(x,y);
+     }
 
 void ECGbaseline_gui::on_pushButton_clicked()
 {
@@ -130,4 +150,15 @@ void ECGbaseline_gui::on_pushButton_clicked()
     {
         return filter2();
     }
+    if(ui->comboBox_filter->currentIndex() == 2)
+    {
+        return filter3();
+    }
+    if(ui->comboBox_filter->currentIndex() == 3)
+    {
+        return filter4();
+    }
+
+
+
 }

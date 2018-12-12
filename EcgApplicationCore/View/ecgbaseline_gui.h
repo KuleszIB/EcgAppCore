@@ -3,9 +3,9 @@
 
 #include <QWidget>
 #include "ecgplot.h"
-//#include "ecg_baseline_module.h"
+#include "Modules/ecg_baseline_module.h"
 #include <QVBoxLayout>
-
+#include "Modules/examination.h"
 namespace Ui {
 class ECGbaseline_gui;
 }
@@ -30,6 +30,10 @@ private:
     ecgplot *ecgPlot2;
     void filter1();
     void filter2();
+    void filter3();
+    void filter4();
+
+
 };
 
 #endif // ECGBASELINE_H

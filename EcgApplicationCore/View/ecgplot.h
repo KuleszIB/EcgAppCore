@@ -6,7 +6,9 @@
 #include <qwt_plot_grid.h>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_canvas.h>
-#include <qwt_plot_curve.h>
+#include <qwt_plot_panner.h>
+#include <qwt_plot_magnifier.h>
+
 class ecgplot : public QwtPlot
 {
     Q_OBJECT

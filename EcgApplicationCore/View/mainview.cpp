@@ -38,3 +38,4 @@ MainView::~MainView()
 {
     delete ui;
 }
+

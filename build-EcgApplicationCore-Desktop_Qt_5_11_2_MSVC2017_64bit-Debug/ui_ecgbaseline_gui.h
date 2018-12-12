@@ -90,7 +90,7 @@ public:
 
         plainTextEdit = new QPlainTextEdit(groupBox_ECGbaseline);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(260, 10, 281, 101));
+        plainTextEdit->setGeometry(QRect(260, 10, 281, 31));
         layoutWidget1 = new QWidget(groupBox_ECGbaseline);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(0, 140, 152, 136));
@@ -174,7 +174,7 @@ public:
 
         ecgPlot = new QWidget(groupBox_ECGbaseline);
         ecgPlot->setObjectName(QStringLiteral("ecgPlot"));
-        ecgPlot->setGeometry(QRect(200, 130, 351, 151));
+        ecgPlot->setGeometry(QRect(180, 50, 391, 171));
 
         retranslateUi(ECGbaseline_gui);
 

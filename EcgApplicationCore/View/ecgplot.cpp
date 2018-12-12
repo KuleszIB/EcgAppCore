@@ -2,17 +2,36 @@
 
 ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
 {   
-    //setMinimumHeight(20);
-    //setMinimumWidth(40);
+
     plot = new QwtPlot();
-    plot->setMinimumHeight(2*(plot->sizeHint().height()) );
-    signal = new QwtPlotCurve("Signal");
+    signal = new QwtPlotCurve("Sygnał");
     signal->attach(this);
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin(true);
     grid->attach(this);
     setAxisTitle(QwtPlot::yLeft, "Amplituda [mV]");
     setAxisTitle(QwtPlot::xBottom, "Czas [mm:ss.ms]");
+    setAxisScale( xBottom, 0.0, 20.0 );
+    setAxisScale( yLeft, -1.0, 1.0 );
+
+
+    // canvas
+    QwtPlotCanvas *canvas = new QwtPlotCanvas();
+    canvas->setLineWidth( 1 );
+    canvas->setFrameStyle( QFrame::Box | QFrame::Plain );
+    canvas->setBorderRadius( 15 );
+
+    QPalette canvasPalette( Qt::white );
+    canvasPalette.setColor( QPalette::Foreground, QColor( 133, 190, 232 ) );
+    canvas->setPalette( canvasPalette );
+
+    setCanvas( canvas );
+
+    // panning with the left mouse button
+    ( void ) new QwtPlotPanner( canvas );
+
+    // zoom in/out with the wheel
+    ( void ) new QwtPlotMagnifier( canvas );
 
     }
 

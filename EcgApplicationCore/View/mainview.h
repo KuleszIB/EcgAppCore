@@ -15,6 +15,8 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
+private slots:
+
 private:
     Ui::MainView *ui;
 };

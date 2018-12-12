@@ -2,9 +2,9 @@
 #define R_PEAKS_H
 
 #include <QWidget>
-//#include "r_peaks_module.h"
 #include "View/qrsplot.h"
 #include <QVBoxLayout>
+#include "Modules/r_peaks_module.h"
 
 namespace Ui {
 class R_peaks_gui;
@@ -20,19 +20,16 @@ public:
 
 private slots:
     void peakDetection();
-    void prog2();
-    void prog1();
     void addRandomGraph();
-
-//    void on_checkBoxR_toggled(bool checked);
-
-    void on_detectPeaksButton_clicked();
-
-    void on_checkBoxR_toggled(bool checked);
+    void on_pushButton_clicked();
 
 private:
     Ui::R_peaks_gui *ui;
     qrsplot *qrsPlot2;
+    void filter1();
+    void filter2();
+    void filter3();
+    void filter4();
 };
 
 #endif // R_PEAKS_H
