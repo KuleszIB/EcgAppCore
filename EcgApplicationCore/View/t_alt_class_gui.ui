@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>749</width>
-    <height>282</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>721</width>
-     <height>261</height>
+     <width>1001</width>
+     <height>741</height>
     </rect>
    </property>
    <property name="title">
@@ -66,10 +66,10 @@
    <widget class="QWidget" name="ecgPlot" native="true">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>10</y>
-      <width>311</width>
-      <height>241</height>
+      <x>10</x>
+      <y>200</y>
+      <width>780</width>
+      <height>310</height>
      </rect>
     </property>
    </widget>

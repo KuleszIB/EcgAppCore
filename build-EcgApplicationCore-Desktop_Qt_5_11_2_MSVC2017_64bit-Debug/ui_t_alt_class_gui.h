@@ -36,10 +36,10 @@ public:
     {
         if (T_alt_class_gui->objectName().isEmpty())
             T_alt_class_gui->setObjectName(QStringLiteral("T_alt_class_gui"));
-        T_alt_class_gui->resize(749, 282);
+        T_alt_class_gui->resize(1024, 768);
         groupBox = new QGroupBox(T_alt_class_gui);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 721, 261));
+        groupBox->setGeometry(QRect(10, 10, 1001, 741));
         button = new QPushButton(groupBox);
         button->setObjectName(QStringLiteral("button"));
         button->setGeometry(QRect(50, 20, 75, 23));
@@ -66,7 +66,7 @@ public:
 
         ecgPlot = new QWidget(groupBox);
         ecgPlot->setObjectName(QStringLiteral("ecgPlot"));
-        ecgPlot->setGeometry(QRect(220, 10, 311, 241));
+        ecgPlot->setGeometry(QRect(10, 200, 780, 310));
 
         retranslateUi(T_alt_class_gui);
 

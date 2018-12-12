@@ -28,16 +28,16 @@ public:
     {
         if (St_segment_gui->objectName().isEmpty())
             St_segment_gui->setObjectName(QStringLiteral("St_segment_gui"));
-        St_segment_gui->resize(749, 282);
+        St_segment_gui->resize(1024, 713);
         groupBox_STSegment = new QGroupBox(St_segment_gui);
         groupBox_STSegment->setObjectName(QStringLiteral("groupBox_STSegment"));
-        groupBox_STSegment->setGeometry(QRect(10, 10, 727, 261));
+        groupBox_STSegment->setGeometry(QRect(10, 10, 1001, 681));
         button = new QPushButton(groupBox_STSegment);
         button->setObjectName(QStringLiteral("button"));
         button->setGeometry(QRect(50, 20, 75, 23));
         ecgPlot = new QWidget(groupBox_STSegment);
         ecgPlot->setObjectName(QStringLiteral("ecgPlot"));
-        ecgPlot->setGeometry(QRect(220, 10, 311, 241));
+        ecgPlot->setGeometry(QRect(10, 90, 780, 310));
 
         retranslateUi(St_segment_gui);
 

@@ -42,10 +42,10 @@ public:
     {
         if (HRV2_gui->objectName().isEmpty())
             HRV2_gui->setObjectName(QStringLiteral("HRV2_gui"));
-        HRV2_gui->resize(647, 300);
+        HRV2_gui->resize(1024, 713);
         groupBox_HRV2 = new QGroupBox(HRV2_gui);
         groupBox_HRV2->setObjectName(QStringLiteral("groupBox_HRV2"));
-        groupBox_HRV2->setGeometry(QRect(10, 10, 561, 281));
+        groupBox_HRV2->setGeometry(QRect(10, 10, 991, 681));
         pushButton_RUN = new QPushButton(groupBox_HRV2);
         pushButton_RUN->setObjectName(QStringLiteral("pushButton_RUN"));
         pushButton_RUN->setGeometry(QRect(40, 20, 75, 23));
@@ -92,10 +92,10 @@ public:
 
         hrv2poincarePlot = new QWidget(groupBox_HRV2);
         hrv2poincarePlot->setObjectName(QStringLiteral("hrv2poincarePlot"));
-        hrv2poincarePlot->setGeometry(QRect(20, 90, 261, 171));
+        hrv2poincarePlot->setGeometry(QRect(20, 90, 351, 361));
         hrv2histPlot = new QWidget(groupBox_HRV2);
         hrv2histPlot->setObjectName(QStringLiteral("hrv2histPlot"));
-        hrv2histPlot->setGeometry(QRect(300, 10, 241, 241));
+        hrv2histPlot->setGeometry(QRect(410, 90, 351, 361));
 
         retranslateUi(HRV2_gui);
 

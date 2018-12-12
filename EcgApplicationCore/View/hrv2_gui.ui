@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>300</height>
+    <width>1024</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>561</width>
-     <height>281</height>
+     <width>991</width>
+     <height>681</height>
     </rect>
    </property>
    <property name="title">
@@ -90,18 +90,18 @@
      <rect>
       <x>20</x>
       <y>90</y>
-      <width>261</width>
-      <height>171</height>
+      <width>351</width>
+      <height>361</height>
      </rect>
     </property>
    </widget>
    <widget class="QWidget" name="hrv2histPlot" native="true">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>10</y>
-      <width>241</width>
-      <height>241</height>
+      <x>410</x>
+      <y>90</y>
+      <width>351</width>
+      <height>361</height>
      </rect>
     </property>
    </widget>

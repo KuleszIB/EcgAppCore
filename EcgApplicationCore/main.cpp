@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     std::cout << "T ends:" << std::endl << Waves_numbers.t_end << std::endl;
 
     MainView w;
+    w.setWindowState(w.windowState() ^ Qt::WindowFullScreen);
     w.show();
     return a.exec();
 }

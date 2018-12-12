@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -26,6 +27,7 @@ QT_BEGIN_NAMESPACE
 class Ui_ECGbaseline_gui
 {
 public:
+    QGridLayout *gridLayout;
     QGroupBox *groupBox_ECGbaseline;
     QPushButton *pushButton;
     QWidget *layoutWidget;
@@ -56,10 +58,11 @@ public:
     {
         if (ECGbaseline_gui->objectName().isEmpty())
             ECGbaseline_gui->setObjectName(QStringLiteral("ECGbaseline_gui"));
-        ECGbaseline_gui->resize(597, 413);
+        ECGbaseline_gui->resize(1024, 713);
+        gridLayout = new QGridLayout(ECGbaseline_gui);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         groupBox_ECGbaseline = new QGroupBox(ECGbaseline_gui);
         groupBox_ECGbaseline->setObjectName(QStringLiteral("groupBox_ECGbaseline"));
-        groupBox_ECGbaseline->setGeometry(QRect(10, 20, 571, 351));
         pushButton = new QPushButton(groupBox_ECGbaseline);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(10, 20, 75, 23));
@@ -90,7 +93,7 @@ public:
 
         plainTextEdit = new QPlainTextEdit(groupBox_ECGbaseline);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(260, 10, 281, 31));
+        plainTextEdit->setGeometry(QRect(260, 10, 281, 201));
         layoutWidget1 = new QWidget(groupBox_ECGbaseline);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(0, 140, 152, 136));
@@ -174,7 +177,10 @@ public:
 
         ecgPlot = new QWidget(groupBox_ECGbaseline);
         ecgPlot->setObjectName(QStringLiteral("ecgPlot"));
-        ecgPlot->setGeometry(QRect(180, 50, 391, 171));
+        ecgPlot->setGeometry(QRect(10, 280, 780, 310));
+
+        gridLayout->addWidget(groupBox_ECGbaseline, 0, 0, 1, 1);
+
 
         retranslateUi(ECGbaseline_gui);
 

@@ -32,6 +32,8 @@ MainView::MainView(QWidget *parent) :
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
 
+  //  loadSettings();
+
 }
 
 MainView::~MainView()
@@ -39,3 +41,48 @@ MainView::~MainView()
     delete ui;
 }
 
+void MainView::on_actionExit_triggered()
+{
+    QApplication::quit();
+}
+//Jeżeli chce się ustawić rozmiar okna taki jaki się chce!
+
+//{void MainView::saveSettings()
+//{
+//    QSettings settings(QDir::currentPath() + "/ecg.ini", QSettings::IniFormat);
+
+//    settings.beginGroup("MainView");
+
+//    // Save position and size of window
+//    settings.setValue("size", size());
+//    settings.setValue("pos", pos());
+//  // settings.setValue("MainView/fullScreen", main->isFullScreen());
+
+//    settings.endGroup();
+//}
+
+//void MainView::loadSettings()
+//{
+//    // Coordinates of screen center for default window positioning
+//    QRect desktopRect = QApplication::desktop()->availableGeometry(this);
+//    QPoint center = desktopRect.center();
+//    center.setX(center.x() - width() * 0.5);
+//    center.setY(center.y() - height() * 0.5);
+
+//    QSettings settings(QDir::currentPath() + "/ecg.ini", QSettings::IniFormat);
+
+//    settings.beginGroup("MainWindow");
+
+//    // Set position and size of window
+//    resize(settings.value("size", QSize(1081, 693)).toSize());
+//    move(settings.value("pos", center).toPoint());
+
+//    settings.endGroup();
+//}
+
+
+
+ //void MainView::on_actionOpen_triggered()
+ //{
+ //    return test_get_input.cpp
+ //}

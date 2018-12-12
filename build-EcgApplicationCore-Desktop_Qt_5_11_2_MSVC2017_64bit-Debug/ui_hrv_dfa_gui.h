@@ -29,10 +29,10 @@ public:
     {
         if (HRV_dfa_gui->objectName().isEmpty())
             HRV_dfa_gui->setObjectName(QStringLiteral("HRV_dfa_gui"));
-        HRV_dfa_gui->resize(400, 300);
+        HRV_dfa_gui->resize(1024, 713);
         groupBoxHRV_DFA = new QGroupBox(HRV_dfa_gui);
         groupBoxHRV_DFA->setObjectName(QStringLiteral("groupBoxHRV_DFA"));
-        groupBoxHRV_DFA->setGeometry(QRect(10, 30, 301, 211));
+        groupBoxHRV_DFA->setGeometry(QRect(10, 10, 1001, 681));
         pushButton = new QPushButton(groupBoxHRV_DFA);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(10, 20, 75, 23));

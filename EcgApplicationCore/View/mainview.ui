@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
-    <height>385</height>
+    <width>1024</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,12 +23,12 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>731</width>
-      <height>291</height>
+      <width>1001</width>
+      <height>621</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="ECGBASE">
      <attribute name="title">
@@ -37,10 +37,10 @@
      <widget class="QWidget" name="verticalLayoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>691</width>
-        <height>271</height>
+        <x>10</x>
+        <y>10</y>
+        <width>971</width>
+        <height>581</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="loECGBaseline"/>
@@ -53,10 +53,10 @@
      <widget class="QWidget" name="verticalLayoutWidget_6">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>641</width>
-        <height>251</height>
+        <x>10</x>
+        <y>10</y>
+        <width>971</width>
+        <height>571</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="loRpeaks"/>
@@ -71,8 +71,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>591</width>
-        <height>271</height>
+        <width>971</width>
+        <height>571</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="lo_HRV1"/>
@@ -85,10 +85,10 @@
      <widget class="QWidget" name="verticalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>591</width>
-        <height>271</height>
+        <x>10</x>
+        <y>10</y>
+        <width>971</width>
+        <height>571</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="lo_HRV2"/>
@@ -103,8 +103,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>681</width>
-        <height>271</height>
+        <width>971</width>
+        <height>581</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="loHRVdfa"/>
@@ -117,10 +117,10 @@
      <widget class="QWidget" name="verticalLayoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>10</y>
-        <width>601</width>
-        <height>271</height>
+        <width>971</width>
+        <height>571</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="loSTSegment"/>
@@ -147,7 +147,7 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -185,7 +185,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>751</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>

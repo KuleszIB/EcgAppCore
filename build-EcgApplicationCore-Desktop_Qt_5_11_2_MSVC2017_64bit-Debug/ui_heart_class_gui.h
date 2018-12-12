@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -23,6 +24,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Heart_class_gui
 {
 public:
+    QGridLayout *gridLayout;
     QGroupBox *groupBox_HeartClass;
     QPushButton *Button_Run;
     QWidget *layoutWidget;
@@ -38,10 +40,11 @@ public:
     {
         if (Heart_class_gui->objectName().isEmpty())
             Heart_class_gui->setObjectName(QStringLiteral("Heart_class_gui"));
-        Heart_class_gui->resize(754, 375);
+        Heart_class_gui->resize(1024, 713);
+        gridLayout = new QGridLayout(Heart_class_gui);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         groupBox_HeartClass = new QGroupBox(Heart_class_gui);
         groupBox_HeartClass->setObjectName(QStringLiteral("groupBox_HeartClass"));
-        groupBox_HeartClass->setGeometry(QRect(10, 10, 701, 311));
         Button_Run = new QPushButton(groupBox_HeartClass);
         Button_Run->setObjectName(QStringLiteral("Button_Run"));
         Button_Run->setGeometry(QRect(20, 30, 75, 23));
@@ -76,6 +79,9 @@ public:
         edit_QRS_MORPHOLOGY_MONITOR->setObjectName(QStringLiteral("edit_QRS_MORPHOLOGY_MONITOR"));
 
         horizontalLayout_3->addWidget(edit_QRS_MORPHOLOGY_MONITOR);
+
+
+        gridLayout->addWidget(groupBox_HeartClass, 0, 0, 1, 1);
 
 
         retranslateUi(Heart_class_gui);

@@ -38,16 +38,16 @@ public:
     {
         if (R_peaks_gui->objectName().isEmpty())
             R_peaks_gui->setObjectName(QStringLiteral("R_peaks_gui"));
-        R_peaks_gui->resize(626, 323);
+        R_peaks_gui->resize(1024, 713);
         groupBox = new QGroupBox(R_peaks_gui);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(20, 30, 581, 231));
+        groupBox->setGeometry(QRect(10, 10, 991, 681));
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(20, 20, 75, 23));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(30, 60, 76, 134));
+        layoutWidget->setGeometry(QRect(120, 20, 76, 134));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -83,7 +83,7 @@ public:
 
         qrsPlot = new QWidget(groupBox);
         qrsPlot->setObjectName(QStringLiteral("qrsPlot"));
-        qrsPlot->setGeometry(QRect(130, 30, 411, 181));
+        qrsPlot->setGeometry(QRect(10, 200, 780, 310));
 
         retranslateUi(R_peaks_gui);
 

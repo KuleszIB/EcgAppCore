@@ -58,7 +58,7 @@ public:
     QWidget *T_WAVE_ALT;
     QHBoxLayout *horizontalLayout_4;
     QHBoxLayout *loTAltClass;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *lo_patients_data;
     QLabel *label_age;
     QLineEdit *lE_age;
@@ -73,7 +73,7 @@ public:
     {
         if (MainView->objectName().isEmpty())
             MainView->setObjectName(QStringLiteral("MainView"));
-        MainView->resize(751, 385);
+        MainView->resize(1024, 713);
         QIcon icon;
         icon.addFile(QStringLiteral(":/root/images/Images/ECG-img.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainView->setWindowIcon(icon);
@@ -85,12 +85,12 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 40, 731, 291));
+        tabWidget->setGeometry(QRect(10, 40, 1001, 621));
         ECGBASE = new QWidget();
         ECGBASE->setObjectName(QStringLiteral("ECGBASE"));
         verticalLayoutWidget_4 = new QWidget(ECGBASE);
         verticalLayoutWidget_4->setObjectName(QStringLiteral("verticalLayoutWidget_4"));
-        verticalLayoutWidget_4->setGeometry(QRect(9, 9, 691, 271));
+        verticalLayoutWidget_4->setGeometry(QRect(10, 10, 971, 581));
         loECGBaseline = new QVBoxLayout(verticalLayoutWidget_4);
         loECGBaseline->setSpacing(6);
         loECGBaseline->setContentsMargins(11, 11, 11, 11);
@@ -101,7 +101,7 @@ public:
         RPEAKS->setObjectName(QStringLiteral("RPEAKS"));
         verticalLayoutWidget_6 = new QWidget(RPEAKS);
         verticalLayoutWidget_6->setObjectName(QStringLiteral("verticalLayoutWidget_6"));
-        verticalLayoutWidget_6->setGeometry(QRect(30, 20, 641, 251));
+        verticalLayoutWidget_6->setGeometry(QRect(10, 10, 971, 571));
         loRpeaks = new QVBoxLayout(verticalLayoutWidget_6);
         loRpeaks->setSpacing(6);
         loRpeaks->setContentsMargins(11, 11, 11, 11);
@@ -112,7 +112,7 @@ public:
         HRV1->setObjectName(QStringLiteral("HRV1"));
         verticalLayoutWidget = new QWidget(HRV1);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 591, 271));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 971, 571));
         lo_HRV1 = new QVBoxLayout(verticalLayoutWidget);
         lo_HRV1->setSpacing(6);
         lo_HRV1->setContentsMargins(11, 11, 11, 11);
@@ -123,7 +123,7 @@ public:
         HRV2->setObjectName(QStringLiteral("HRV2"));
         verticalLayoutWidget_2 = new QWidget(HRV2);
         verticalLayoutWidget_2->setObjectName(QStringLiteral("verticalLayoutWidget_2"));
-        verticalLayoutWidget_2->setGeometry(QRect(9, 9, 591, 271));
+        verticalLayoutWidget_2->setGeometry(QRect(10, 10, 971, 571));
         lo_HRV2 = new QVBoxLayout(verticalLayoutWidget_2);
         lo_HRV2->setSpacing(6);
         lo_HRV2->setContentsMargins(11, 11, 11, 11);
@@ -134,7 +134,7 @@ public:
         HRF_DFA->setObjectName(QStringLiteral("HRF_DFA"));
         verticalLayoutWidget_5 = new QWidget(HRF_DFA);
         verticalLayoutWidget_5->setObjectName(QStringLiteral("verticalLayoutWidget_5"));
-        verticalLayoutWidget_5->setGeometry(QRect(10, 10, 681, 271));
+        verticalLayoutWidget_5->setGeometry(QRect(10, 10, 971, 581));
         loHRVdfa = new QVBoxLayout(verticalLayoutWidget_5);
         loHRVdfa->setSpacing(6);
         loHRVdfa->setContentsMargins(11, 11, 11, 11);
@@ -145,7 +145,7 @@ public:
         ST_SEGMENT->setObjectName(QStringLiteral("ST_SEGMENT"));
         verticalLayoutWidget_3 = new QWidget(ST_SEGMENT);
         verticalLayoutWidget_3->setObjectName(QStringLiteral("verticalLayoutWidget_3"));
-        verticalLayoutWidget_3->setGeometry(QRect(0, 10, 601, 271));
+        verticalLayoutWidget_3->setGeometry(QRect(10, 10, 971, 571));
         loSTSegment = new QVBoxLayout(verticalLayoutWidget_3);
         loSTSegment->setSpacing(6);
         loSTSegment->setContentsMargins(11, 11, 11, 11);
@@ -178,30 +178,30 @@ public:
         horizontalLayout_4->addLayout(loTAltClass);
 
         tabWidget->addTab(T_WAVE_ALT, QString());
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(20, 10, 201, 22));
-        lo_patients_data = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(20, 10, 201, 22));
+        lo_patients_data = new QHBoxLayout(layoutWidget);
         lo_patients_data->setSpacing(6);
         lo_patients_data->setContentsMargins(11, 11, 11, 11);
         lo_patients_data->setObjectName(QStringLiteral("lo_patients_data"));
         lo_patients_data->setContentsMargins(0, 0, 0, 0);
-        label_age = new QLabel(widget);
+        label_age = new QLabel(layoutWidget);
         label_age->setObjectName(QStringLiteral("label_age"));
 
         lo_patients_data->addWidget(label_age);
 
-        lE_age = new QLineEdit(widget);
+        lE_age = new QLineEdit(layoutWidget);
         lE_age->setObjectName(QStringLiteral("lE_age"));
 
         lo_patients_data->addWidget(lE_age);
 
-        label_gender = new QLabel(widget);
+        label_gender = new QLabel(layoutWidget);
         label_gender->setObjectName(QStringLiteral("label_gender"));
 
         lo_patients_data->addWidget(label_gender);
 
-        lE_gender = new QLineEdit(widget);
+        lE_gender = new QLineEdit(layoutWidget);
         lE_gender->setObjectName(QStringLiteral("lE_gender"));
 
         lo_patients_data->addWidget(lE_gender);
@@ -209,7 +209,7 @@ public:
         MainView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainView);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 751, 21));
+        menuBar->setGeometry(QRect(0, 0, 1024, 21));
         menuSignal = new QMenu(menuBar);
         menuSignal->setObjectName(QStringLiteral("menuSignal"));
         MainView->setMenuBar(menuBar);
@@ -226,7 +226,7 @@ public:
 
         retranslateUi(MainView);
 
-        tabWidget->setCurrentIndex(4);
+        tabWidget->setCurrentIndex(6);
 
 
         QMetaObject::connectSlotsByName(MainView);
