@@ -21,19 +21,23 @@ class Ui_St_segment_gui
 {
 public:
     QGroupBox *groupBox_STSegment;
-    QPushButton *pushButton;
+    QPushButton *button;
+    QWidget *ecgPlot;
 
     void setupUi(QWidget *St_segment_gui)
     {
         if (St_segment_gui->objectName().isEmpty())
             St_segment_gui->setObjectName(QStringLiteral("St_segment_gui"));
-        St_segment_gui->resize(400, 300);
+        St_segment_gui->resize(749, 282);
         groupBox_STSegment = new QGroupBox(St_segment_gui);
         groupBox_STSegment->setObjectName(QStringLiteral("groupBox_STSegment"));
-        groupBox_STSegment->setGeometry(QRect(20, 30, 361, 241));
-        pushButton = new QPushButton(groupBox_STSegment);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(20, 30, 75, 23));
+        groupBox_STSegment->setGeometry(QRect(10, 10, 727, 261));
+        button = new QPushButton(groupBox_STSegment);
+        button->setObjectName(QStringLiteral("button"));
+        button->setGeometry(QRect(50, 20, 75, 23));
+        ecgPlot = new QWidget(groupBox_STSegment);
+        ecgPlot->setObjectName(QStringLiteral("ecgPlot"));
+        ecgPlot->setGeometry(QRect(220, 10, 311, 241));
 
         retranslateUi(St_segment_gui);
 
@@ -44,7 +48,7 @@ public:
     {
         St_segment_gui->setWindowTitle(QApplication::translate("St_segment_gui", "Form", nullptr));
         groupBox_STSegment->setTitle(QApplication::translate("St_segment_gui", "ST segment", nullptr));
-        pushButton->setText(QApplication::translate("St_segment_gui", "Run", nullptr));
+        button->setText(QApplication::translate("St_segment_gui", "Run", nullptr));
     } // retranslateUi
 
 };

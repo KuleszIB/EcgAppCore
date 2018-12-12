@@ -35,21 +35,23 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *labelSD;
     QLineEdit *lineEditSD2;
+    QWidget *hrv2poincarePlot;
+    QWidget *hrv2histPlot;
 
     void setupUi(QWidget *HRV2_gui)
     {
         if (HRV2_gui->objectName().isEmpty())
             HRV2_gui->setObjectName(QStringLiteral("HRV2_gui"));
-        HRV2_gui->resize(400, 300);
+        HRV2_gui->resize(647, 300);
         groupBox_HRV2 = new QGroupBox(HRV2_gui);
         groupBox_HRV2->setObjectName(QStringLiteral("groupBox_HRV2"));
-        groupBox_HRV2->setGeometry(QRect(10, 10, 371, 271));
+        groupBox_HRV2->setGeometry(QRect(10, 10, 561, 281));
         pushButton_RUN = new QPushButton(groupBox_HRV2);
         pushButton_RUN->setObjectName(QStringLiteral("pushButton_RUN"));
         pushButton_RUN->setGeometry(QRect(40, 20, 75, 23));
         layoutWidget = new QWidget(groupBox_HRV2);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 61, 162, 71));
+        layoutWidget->setGeometry(QRect(120, 10, 162, 71));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -88,6 +90,12 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
+        hrv2poincarePlot = new QWidget(groupBox_HRV2);
+        hrv2poincarePlot->setObjectName(QStringLiteral("hrv2poincarePlot"));
+        hrv2poincarePlot->setGeometry(QRect(20, 90, 261, 171));
+        hrv2histPlot = new QWidget(groupBox_HRV2);
+        hrv2histPlot->setObjectName(QStringLiteral("hrv2histPlot"));
+        hrv2histPlot->setGeometry(QRect(300, 10, 241, 241));
 
         retranslateUi(HRV2_gui);
 

@@ -35,7 +35,10 @@ SOURCES += \
     View/st_segment_gui.cpp \
     View/t_alt_class_gui.cpp \
     View/ecgplot.cpp \
-    View/qrsplot.cpp
+    View/qrsplot.cpp \
+    View/hrv1plot.cpp \
+    View/hrv2poincareplot.cpp \
+    View/hrv2histplot.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -55,7 +58,10 @@ HEADERS += \
     View/st_segment_gui.h \
     View/t_alt_class_gui.h \
     View/qrsplot.h \
-    View/ecgplot.h
+    View/ecgplot.h \
+    View/hrv1plot.h \
+    View/hrv2poincareplot.h \
+    View/hrv2histplot.h
 
 FORMS += \
     View/mainview.ui \

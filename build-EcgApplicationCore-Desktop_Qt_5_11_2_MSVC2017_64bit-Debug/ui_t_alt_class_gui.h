@@ -24,24 +24,25 @@ class Ui_T_alt_class_gui
 {
 public:
     QGroupBox *groupBox;
-    QPushButton *Button_Run;
+    QPushButton *button;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QLabel *label_Alterans;
     QLineEdit *line_ALT1;
     QLineEdit *line_Alt2;
+    QWidget *ecgPlot;
 
     void setupUi(QWidget *T_alt_class_gui)
     {
         if (T_alt_class_gui->objectName().isEmpty())
             T_alt_class_gui->setObjectName(QStringLiteral("T_alt_class_gui"));
-        T_alt_class_gui->resize(749, 243);
+        T_alt_class_gui->resize(749, 282);
         groupBox = new QGroupBox(T_alt_class_gui);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 721, 221));
-        Button_Run = new QPushButton(groupBox);
-        Button_Run->setObjectName(QStringLiteral("Button_Run"));
-        Button_Run->setGeometry(QRect(50, 20, 75, 23));
+        groupBox->setGeometry(QRect(10, 10, 721, 261));
+        button = new QPushButton(groupBox);
+        button->setObjectName(QStringLiteral("button"));
+        button->setGeometry(QRect(50, 20, 75, 23));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(50, 70, 135, 70));
@@ -63,6 +64,9 @@ public:
 
         verticalLayout->addWidget(line_Alt2);
 
+        ecgPlot = new QWidget(groupBox);
+        ecgPlot->setObjectName(QStringLiteral("ecgPlot"));
+        ecgPlot->setGeometry(QRect(220, 10, 311, 241));
 
         retranslateUi(T_alt_class_gui);
 
@@ -73,7 +77,7 @@ public:
     {
         T_alt_class_gui->setWindowTitle(QApplication::translate("T_alt_class_gui", "Form", nullptr));
         groupBox->setTitle(QApplication::translate("T_alt_class_gui", "T_Alterans", nullptr));
-        Button_Run->setText(QApplication::translate("T_alt_class_gui", "Run", nullptr));
+        button->setText(QApplication::translate("T_alt_class_gui", "Run", nullptr));
         label_Alterans->setText(QApplication::translate("T_alt_class_gui", "<html><head/><body><p><span style=\" font-size:10pt;\">Alterans</span></p></body></html>", nullptr));
     } // retranslateUi
 

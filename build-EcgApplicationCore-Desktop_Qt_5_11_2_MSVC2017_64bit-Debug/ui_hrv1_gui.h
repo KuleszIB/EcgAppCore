@@ -25,7 +25,7 @@ class Ui_HRV1_gui
 {
 public:
     QGroupBox *groupBox_HRV1;
-    QPushButton *pushButton_RUN;
+    QPushButton *button;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_2;
     QLabel *label;
@@ -42,6 +42,7 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QLabel *labelULF;
     QLineEdit *lineEditULF;
+    QWidget *hrv1Plot;
 
     void setupUi(QWidget *HRV1_gui)
     {
@@ -50,10 +51,10 @@ public:
         HRV1_gui->resize(569, 351);
         groupBox_HRV1 = new QGroupBox(HRV1_gui);
         groupBox_HRV1->setObjectName(QStringLiteral("groupBox_HRV1"));
-        groupBox_HRV1->setGeometry(QRect(10, 10, 481, 281));
-        pushButton_RUN = new QPushButton(groupBox_HRV1);
-        pushButton_RUN->setObjectName(QStringLiteral("pushButton_RUN"));
-        pushButton_RUN->setGeometry(QRect(10, 20, 75, 23));
+        groupBox_HRV1->setGeometry(QRect(10, 10, 531, 281));
+        button = new QPushButton(groupBox_HRV1);
+        button->setObjectName(QStringLiteral("button"));
+        button->setGeometry(QRect(10, 20, 75, 23));
         layoutWidget = new QWidget(groupBox_HRV1);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 50, 163, 129));
@@ -130,6 +131,9 @@ public:
 
         verticalLayout_2->addLayout(verticalLayout);
 
+        hrv1Plot = new QWidget(groupBox_HRV1);
+        hrv1Plot->setObjectName(QStringLiteral("hrv1Plot"));
+        hrv1Plot->setGeometry(QRect(180, 20, 331, 231));
 
         retranslateUi(HRV1_gui);
 
@@ -140,7 +144,7 @@ public:
     {
         HRV1_gui->setWindowTitle(QApplication::translate("HRV1_gui", "Form", nullptr));
         groupBox_HRV1->setTitle(QApplication::translate("HRV1_gui", "HRV 1", nullptr));
-        pushButton_RUN->setText(QApplication::translate("HRV1_gui", "Run", nullptr));
+        button->setText(QApplication::translate("HRV1_gui", "Run", nullptr));
         label->setText(QApplication::translate("HRV1_gui", "Periodogram paremeters", nullptr));
         labelHF->setText(QApplication::translate("HRV1_gui", "HF", nullptr));
         labelLF->setText(QApplication::translate("HRV1_gui", "LF", nullptr));

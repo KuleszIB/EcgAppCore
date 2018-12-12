@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>749</width>
-    <height>243</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,13 +19,13 @@
      <x>10</x>
      <y>10</y>
      <width>721</width>
-     <height>221</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="title">
     <string>T_Alterans</string>
    </property>
-   <widget class="QPushButton" name="Button_Run">
+   <widget class="QPushButton" name="button">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -62,6 +62,16 @@
       <widget class="QLineEdit" name="line_Alt2"/>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="ecgPlot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>10</y>
+      <width>311</width>
+      <height>241</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>
