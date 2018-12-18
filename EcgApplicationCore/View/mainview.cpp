@@ -31,7 +31,7 @@ MainView::MainView(QWidget *parent) :
     ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
-
+    QObject::connect(this,SIGNAL(signal_loaded(examination)),ecgBaseline_gui,SLOT(load_signal(examination)));
   //  loadSettings();
 
 }
@@ -82,7 +82,11 @@ void MainView::on_actionExit_triggered()
 
 
 
- //void MainView::on_actionOpen_triggered()
- //{
- //    return test_get_input.cpp
- //}
+ void MainView::on_actionOpen_triggered()
+ {
+     examination file;
+     file.get_data();
+     qInfo() << "Wczytywanie zakończone!";
+     qInfo() <<  "MainView - wczytano: " << file.channel_one[1];
+     emit signal_loaded(file);
+ }

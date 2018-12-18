@@ -160,5 +160,10 @@ void ECGbaseline_gui::on_pushButton_clicked()
     }
 
 
+}
 
+void ECGbaseline_gui::load_signal(examination file)
+{
+    m_file = file;
+    qInfo() << "Przesłano do ECGbaseline_gui: " << m_file.channel_one[1];
 }
