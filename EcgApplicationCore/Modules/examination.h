@@ -58,7 +58,7 @@ struct examination
         return 1;
     }
 
-    void get_data(int argc, char **argv)
+    void get_data()
     {
 
 

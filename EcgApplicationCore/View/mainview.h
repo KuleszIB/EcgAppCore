@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include "../Modules/examination.h"
 //#include <QSettings>
 //#include <QRect>
 //#include <QDesktopWidget>
@@ -19,11 +20,13 @@ public:
     ~MainView();
     void saveSettings();
     void loadSettings();
+
 private slots:
-
     void on_actionExit_triggered();
+    void on_actionOpen_triggered();
 
-//    void on_actionOpen_triggered();
+signals:
+    void signal_loaded(examination file);
 
 private:
     Ui::MainView *ui;
