@@ -57,6 +57,7 @@ public:
     arma::vec get_freq_vec();
     Time_Params get_time_params();
     Frequency_Params get_freq_params();
+
 };
 
 #endif // HRV1_H
