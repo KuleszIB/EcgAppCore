@@ -51,35 +51,55 @@ Ecg_Baseline::Ecg_Baseline(arma::vec input, double fs)
 
 void Ecg_Baseline::filter_noise()
 {
-    double fc = 34 / (sampling_frequency / 2);
+    qInfo() << "filter noise";
+    double fc = 34 / (sampling_frequency/2);
+    //int M = signal_raw.size();
     int M = 25;
     arma::vec coeffs = sp::fir1(M, fc);
-    signal_filtered = conv(coeffs, signal_raw, "same");
+    signal_filtered = conv(coeffs, signal_raw);
 }
 
 void Ecg_Baseline::filter_bandpass()
 {
-    double fc1 = 34 / (sampling_frequency / 2);
-    double fc2 = 2 / (sampling_frequency / 2);
+    qInfo() << "filter bandpass";
+    double fc1 = 34 / (sampling_frequency/2);
+    double fc2 = 2 / (sampling_frequency/2);
     int M = 25;
-    arma::vec coeffs = fir1_bp(M, fc1, fc2);
-    signal_filtered = conv(coeffs, signal_raw, "same");
+    arma::vec coeffs = sp::fir1_bp(M, fc2, fc1);
+    signal_filtered = conv(coeffs, signal_raw);
 }
 
 void Ecg_Baseline::filter_moving_average()
 {
     filter_noise();
-    int windowSize = 97;
-    arma::Col<double> A =  arma::ones(1, windowSize);
+    qInfo() << "filter moving average";
+    double windowSize = 97;
+    arma::vec A(windowSize);
+    A.ones();
     arma::vec b(windowSize);
     for (int i = 0; i<windowSize; i++)
     {
-        b[i] = 1/windowSize * A[i];
+        b[i] = (1/windowSize) * A[i];
     }
-    //int a = 1;
+
+
     FIR_filt<double,double,double> coefficient;
     coefficient.set_coeffs(b);
-    signal_filtered = coefficient.filter(signal_filtered); //albo mat, i jak to zrobic zeby nie nadpisywac sygnalu? czy mam utworzyc nowa zmienna w header?
+    arma::vec signal_buff = coefficient.filter(signal_filtered);
+    signal_filtered = signal_filtered-signal_buff;
+
+
+    //za pomoca funkcji conv
+    //arma::vec signal_buff= arma::conv(signal_filtered,b);
+    //signal_filtered = signal_filtered(signal_buff.size())-signal_buff;
+    //signal_filtered= arma::conv(signal_filtered,b);
+
+
+    qInfo() << "po filtracji moving average";
+    for (int i=1; i<signal_filtered.size(); i++)
+    {
+        qInfo() << signal_filtered[i];
+    }
 }
 
 double **vec2tab(arma::vec signal_vec)
@@ -191,57 +211,88 @@ void Ecg_Baseline::filter_savitzky_golay()
 
 void Ecg_Baseline::filter_lms()
 {
+    arma::vec x = signal_raw;
     filter_bandpass();
+
+    qInfo() << "LMS";
     int N = signal_filtered.n_rows;
     int M = 15;
     double mu = 0.2;
-    //mat y(N, 1);  y.zeros<mat>();
-    //mat w(M, 1);  w.zeros<mat>();
-    //mat e(N, 1);  e.zeros<mat>();
-    //mat W(M, N);  W.zeros<mat>();
+    sp::FIR_filt<double,double,double> G;
+    sp::FIR_filt<double,double,double> Ghat;
+    arma::vec y(N);  y.zeros();
+    arma::vec e(N);  e.zeros();
+    arma::mat Wlog(M,N);
+    arma::vec w(M);  w.zeros();
+    //arma::vec W(M, N);  W.zeros();
 
-    //FIR_filt lms;
-    //void lms.setup_lms(N, mu, M);
+    G.set_coeffs(w);
+    Ghat.setup_lms(M, mu);
+    arma::vec d= signal_filtered;
+    for(int n=0;n<N;n++)
+        {
+            // Apply adaptiv filter
+            y(n) = Ghat(x(n));
+
+            // Calc error
+            e(n) = d(n)-y(n);
+
+            // Update filter
+            Ghat.lms_adapt(e(n));
+
+            // Save to log
+            Wlog.col(n) = Ghat.get_coeffs();
+        }
+
+    /*std::cout << "Estimated coeffs: " << Ghat.get_coeffs().t() << std::endl;
+    gplot gp0;
+    gp0.window("Plot", 10, 10, 500, 500);
+        gp0.plot_add_mat(Wlog,"b");
+        gp0.plot_show();*/
 
     /*for (int i = 1; i <= N; i++) {
         if (i <= M) {
-            arma::vec k = linspace<arma::vec>(i, -1, 1);
-            mat A(M-k.n_rows, 1); A.zeros<mat>();
+            arma::vec k = arma::linspace(i, -1, 1);
+            arma::vec A(M-k.size()); A.zeros();
             int x;
-            mat x1 = join_rows(A);
-            mat x1 = [x(k)];
+            arma::vec x1 = join_rows(signal_filtered,A);
         }
+        else
     }*/
 
-    long T, n = 0;
+    /*long T, n = 0;
     double D, Y, E;
     double * W = new double[M];
     double * X = new double[M];
-
 
     for (T = 0; T < N; T++)
     {
         for (int m = T; m > T - M; m--) {
             if (m >= 0)
-                X[M + (m - T) - 1] = signal_filtered[m];	//X new input sample for
-                                //LMS filter
+            {X[M + (m - T) - 1] = signal_filtered[m];	//X new input sample for LMS filter
+                qInfo() << X[m];}
             else break;
         }
-
         D = signal_filtered[T];					//desired signal
         Y = 0;						//filter’output set to zero
 
         for (int i = 0; i < M; i++)
-            Y += (W[i] * X[i]);			//calculate filter output
+            Y = Y+(W[i]*X[i]);			//calculate filter output
+
 
         E = D - Y;					//calculate error signal
 
         for (int i = 0; i < M; i++)
             W[i] = W[i] + (mu * E * X[i]);		//update filter coefficients
-
         signal_filtered[T] = Y; //signal_filtered = Y[T]
 
-    }
+    }*/
+
+    /*qInfo() << "po filtracji LMS";
+    for (int i=1; i<signal_filtered.size(); i++)
+    {
+        qInfo() << signal_filtered[i];
+    }*/
 
 }
 
@@ -323,31 +374,3 @@ void write_to_file(arma::vec data)
     }
     plik.close();
 }
-
-/*arma::vec conv_col_vec(arma::Col<float> column)
-{
-    arma::vec vector;
-    for(int i=1; i<column.size(); i++)
-    {vector[i]=column[i]; return vector;}
-}*/
-
-/*arma::vec testuje_baseline(int argc, char **argv) {
-
-    //Wczytywanie danych
-    examination proba;
-    proba.get_data(argc, argv);
-    arma::vec input = conv_col_vec(proba.channel_one);
-    Filter_Type filter_type = BUTTERWORTH;
-    Filter_Params filter_params;
-    filter_params.set_filter_type(filter_type);
-    int fs = 360;
-    //arma::vec input = read_from_file();
-    Ecg_Baseline ecg_baseline_filter( input,  fs);
-    ecg_baseline_filter.filter_baseline(filter_params);
-    arma::vec output = ecg_baseline_filter.get_signal_filtered();
-    //write_to_file(output);
-    qInfo() << "dziala" ;
-
-    return output;
-}*/
-
