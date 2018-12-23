@@ -102,11 +102,27 @@ void Ecg_Baseline::filter_moving_average()
     }
 }
 
+std::vector<double> arma2std(arma::vec signal_vec)
+{
+    std::vector<double> signal_std;
+    for (int i=0;i<signal_vec.size();i++)
+    {
+        signal_std.push_back(signal_vec[i]);
+    }
+    return signal_std;
+}
+
 double **vec2tab(arma::vec signal_vec)
 {
+    qInfo() << "vec2tab";
     double **signal_tab = new double*[signal_vec.size()];
+    //std::vector<double> signal_buff = arma2std(signal_vec);
     for(int ii = 0; ii < signal_vec.size(); ii++)
-        **(signal_tab + ii) = signal_vec(ii);
+    {
+        qInfo() << "petla for przed";
+        **(signal_tab+ii) = signal_vec(ii);
+        qInfo() << "petla for po";
+    }
     return signal_tab;
 }
 
@@ -135,7 +151,7 @@ void Ecg_Baseline::filter_chebyshev()
 {
 
     filter_noise();
-    int numSamples = signal_filtered.n_rows;
+    int numSamples = signal_filtered.size();
 
   /*
     // Create a Chebyshev type I Band Stop filter of order 3
@@ -161,6 +177,11 @@ void Ecg_Baseline::filter_chebyshev()
     f->setParams(params);
     double **signal_tab = vec2tab(signal_filtered);
     f->process(numSamples, signal_tab);
+    qInfo() << "po filtracji czebyszev";
+    for (int i=1; i<signal_filtered.size(); i++)
+    {
+        qInfo() << signal_tab[i];
+    }
 
 }
 
@@ -169,44 +190,15 @@ void Ecg_Baseline::filter_savitzky_golay()
     filter_noise();
     int w = 17;
     int deg = 3;
-    int numSamples = signal_filtered.n_rows;
-    vector<double> sig_buff ;
-    for (int i=0;i<numSamples;i++)
-    {
-        sig_buff[i] = signal_filtered[i];
-    }
+    int numSamples = signal_filtered.size();
+    std::vector<double> sig_buff= arma2std(signal_filtered);
     signal_filtered = sg_smooth (sig_buff, w, deg);
-    /*
-        double result;
-        result = (1.0 / 5175.0) * (-253.0*syg_dolno[i - 12]
-        - 138.0*syg_dolno[i - 11]
-        - 33.0*syg_dolno[i - 10]
-        + 62.0*syg_dolno[i - 9]
-        + 147.0*syg_dolno[i - 8]
-        + 222.0*syg_dolno[i - 7]
-        + 287.0*syg_dolno[i - 6]
-        + 343.0*syg_dolno[i - 5]
-        + 387.0*syg_dolno[i - 4]
-        + 422.0*syg_dolno[i - 3]
-        + 447.0*syg_dolno[i - 2]
-        + 462.0*syg_dolno[i - 1]
 
-        + 467.0*syg_dolno[i]
-
-        + 462.0*syg_dolno[i + 1]
-        + 447.0*syg_dolno[i + 2]
-        + 422.0*syg_dolno[i + 3]
-        + 387.0*syg_dolno[i + 4]
-        + 343.0*syg_dolno[i + 5]
-        + 287.0*syg_dolno[i + 6]
-        + 222.0*syg_dolno[i + 7]
-        + 147.0*syg_dolno[i + 8]
-        + 62.0*syg_dolno[i + 9]
-        - 33.0*syg_dolno[i + 10]
-        - 138.0*syg_dolno[i + 11]
-        - 253.0*syg_dolno[i + 12]);
-
-    return result;*/
+    qInfo() << "po filtracji Savitzkyego";
+    for (int i=1; i<signal_filtered.size(); i++)
+    {
+        qInfo() << signal_filtered[i];
+    }
 }
 
 void Ecg_Baseline::filter_lms()

@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     examination proba;
     proba.get_data(argc, argv);
     arma::vec input = proba.channel_one;
-    Filter_Type filter_type = LMS;
+    Filter_Type filter_type = CHEBYSHEV;
     Filter_Params filter_params;
     filter_params.set_filter_type(filter_type);
     qInfo() << filter_params.get_filter_type();
@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     {
       qInfo() << output[i];
     }*/
+
 
     return a.exec();
 }
