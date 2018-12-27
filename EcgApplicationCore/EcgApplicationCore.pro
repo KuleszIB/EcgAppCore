@@ -83,29 +83,24 @@ RESOURCES += \
 
 INCLUDEPATH += $$PWD/../3rdparty/armadillo/include \
                $$PWD/../3rdparty/sigpack/include \
-               $$PWD/../3rdparty/wfdb/lib \
                $$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/include \
                $$PWD/../3rdparty/sgsmooth-master/include/sgsmooth \
-               $$PWD/../3rdparty/alglib/src
+               $$PWD/../3rdparty/alglib/src \
+               $$PWD/../3rdparty/Qwt-6.1.3/include
 
 DEPENDPATH += $$PWD/../3rdparty/armadillo/include \
               $$PWD/../3rdparty/sigpack/include \
-              $$PWD/../3rdparty/wfdb/lib \
               $$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/include \
               $$PWD/../3rdparty/sgsmooth-master/include/sgsmooth \
-              $$PWD/../3rdparty/alglib/src
+              $$PWD/../3rdparty/alglib/src \
+              $$PWD/../3rdparty/Qwt-6.1.3/include
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../3rdparty/sgsmooth-master/build/release/ -lsgsmooth \
-                                              -L$$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/Builds/VisualStudio2017/release/ -lDSPFilters
+                                              -L$$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/Builds/VisualStudio2017/release/ -lDSPFilters \
+                                              -L$$PWD/../3rdparty/Qwt-6.1.3/lib/ -lqwt
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../3rdparty/sgsmooth-master/build/debug/ -lsgsmooth \
-                                                 -L$$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/Builds/VisualStudio2017/debug/ -lDSPFilters
+                                                 -L$$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/Builds/VisualStudio2017/debug/ -lDSPFilters \
+                                                 -L$$PWD/../3rdparty/Qwt-6.1.3/lib/ -lqwtd
 else:unix: LIBS += -L$$PWD/../3rdparty/sgsmooth-master/build/ -lsgsmooth \
-                   -L$$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/Builds/VisualStudio2017/ -lDSPFilters
-
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../3rdparty/Qwt-6.1.3/lib/ -lqwt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../3rdparty/Qwt-6.1.3/lib/ -lqwtd
-else:unix: LIBS += -L$$PWD/../3rdparty/Qwt-6.1.3/lib/ -lqwt
-
-INCLUDEPATH += $$PWD/../3rdparty/Qwt-6.1.3/include
-DEPENDPATH += $$PWD/../3rdparty/Qwt-6.1.3/include
+                   -L$$PWD/../3rdparty/DSPFilters-master/shared/DSPFilters/Builds/VisualStudio2017/ -lDSPFilters \
+                   -L$$PWD/../3rdparty/Qwt-6.1.3/lib/ -lqwt
