@@ -38,7 +38,9 @@ SOURCES += \
     View/qrsplot.cpp \
     View/hrv1plot.cpp \
     View/hrv2poincareplot.cpp \
-    View/hrv2histplot.cpp
+    View/hrv2histplot.cpp \
+    Modules/t_wave_alt_module.cpp \
+    Modules/t_peaks.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -61,7 +63,9 @@ HEADERS += \
     View/ecgplot.h \
     View/hrv1plot.h \
     View/hrv2poincareplot.h \
-    View/hrv2histplot.h
+    View/hrv2histplot.h \
+    Modules/t_wave_alt_module.h \
+    Modules/t_peaks.h
 
 FORMS += \
     View/mainview.ui \

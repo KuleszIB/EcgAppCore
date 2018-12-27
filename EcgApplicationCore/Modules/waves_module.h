@@ -19,10 +19,10 @@ private:
     void find_qrs_onset_end();
     void find_t_end();
     void find_p_onset_end();
-    void filter_lowpass(double fc, int M);
 
 protected:
     Waves_Points waves_points;
+    void filter_lowpass(double fc, int M);
 
 public:
     Waves();
