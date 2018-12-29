@@ -22,20 +22,43 @@ HrvDfa::HrvDfa(arma::vec r_peaks, int middle, int first_delta, int last_delta)
 
 void HrvDfa::make_tachogram()
 {
-   r_peaks = {75,367,661,944,1230,1514,1806,2042,2401,2704,2996,3278,3555,3859,4167,4464,4763,5057,5345,5631,5914,6211,6524,6822,7104,7379,7668,7952,8243,8537,8836,9140,9429,9706,9991};
+
    for(int i = 0; i < (r_peaks.size() - 1); i++) {
         RR_intervals[i] = r_peaks[i + 1] - r_peaks[i];             //RR intervals
         RR_intervals[i] = RR_intervals[i] / 360;                    //sampling frequency = 360; changing to the time [s]
    }
    cum_time_vec = arma::cumsum(RR_intervals);                   //creating tachogram's timeline
    cum_time_vec = cum_time_vec/360;                            //changing to the time [s]; NOT SURE IF WORKS
-//    for(int i=0;i<cum_time_vec.size();i++) {
-//        cum_time_vec[i] = cum_time_vec[i]/360;//tachogram's timeline
-   //}
+
 }
 Out_DFA HrvDfa::calculate_DFA() {
+    make_tachogram();
+    arma::vec delta_vector;
+    for (int i =0;i=(last_delta-first_delta);i++) {
+        delta_vector(i,0) = first_delta + i; //tworzenie wektora delt
+    }
+    arma::vec F;
+    for (int k = 0; k<delta_vector.n_elem; k++) {
+        F(k,0) = calculate_F(cum_time_vec, RR_intervals, delta_vector(k,0));
+    }
+    arma::vec fit = polyfit(log10(delta_vector.rows(0,middle)), log10(F.rows(0,middle)),1);
 
-    return out_DFA; // tu bede implementowac algorytm
+    // polyfit zwraca
+    // wspolczynniki a i b, takie ze dopasowana prosta to y = a * x + b
+    arma:: vec fitdata=fit(0,0) * (log10(delta_vector.rows(0,middle-1)))+fit(1,0);
+    double alpha = arma::as_scalar(fit(0,0));
+    arma::vec fit2 = polyfit(log10(delta_vector.rows(middle,delta_vector.n_elem-1)), log10(F.rows(middle,delta_vector.n_elem -1)),1);
+    arma::vec fitdata2=fit2(0,0)*(log10(delta_vector.rows(middle,delta_vector.n_elem-1)))+fit2(1,0);
+    double alpha2 = arma::as_scalar(fit2(1));
+    Out_DFA out_DFA;
+    out_DFA.alpha1 = alpha;
+    out_DFA.alpha2 = alpha2;
+    out_DFA.log_F = log10(F);
+    out_DFA.log_delta = log10(delta_vector);
+    out_DFA.vector_short_windows = fitdata;
+    out_DFA.vector_long_windows = fitdata2;
+
+    return out_DFA;
 }
 Out_DFA HrvDfa::get_out_DFA() {
     return out_DFA;
