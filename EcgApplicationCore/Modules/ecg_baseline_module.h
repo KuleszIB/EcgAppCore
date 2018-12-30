@@ -12,14 +12,26 @@ enum Filter_Type
     LMS = 4
 };
 
+struct Filter_Values
+{
+    double high_cutoff_freq;
+    double low_cutoff_freq;
+    unsigned int filter_order;
+    unsigned int filter_length;
+    double step_size;
+};
+
 class Filter_Params
 {
 private:
     Filter_Type filter_type;
+    Filter_Values filter_values;
     //musisz sama sobie dopisać, o ile potrzebujesz do tego osobnej klasy
 public:
     void set_filter_type(Filter_Type filter_type_set);
+    void set_filter_params(double high, double low, unsigned int order, unsigned int length, double step);
     Filter_Type get_filter_type();
+    Filter_Values get_filter_values();
 };
 
 class Ecg_Baseline
@@ -38,6 +50,7 @@ protected:
     arma::vec signal_baseline;
     double sampling_frequency;
     arma::vec time_vec;
+    Filter_Params filter_params;
     void calc_time_vec(); //powinno to być użyte w konstruktorze
 
 public:

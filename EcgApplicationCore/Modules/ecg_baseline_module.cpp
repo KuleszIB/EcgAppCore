@@ -24,9 +24,23 @@ void Filter_Params::set_filter_type(Filter_Type filter_type_set)
     filter_type = filter_type_set;
 }
 
+void Filter_Params::set_filter_params(double high=34, double low=2, unsigned int order=25, unsigned int length=97, double step=0.2)
+{
+    filter_values.high_cutoff_freq = high;
+    filter_values.low_cutoff_freq = low;
+    filter_values.filter_order = order;
+    filter_values.filter_length = length;
+    filter_values.step_size = step;
+}
+
 Filter_Type Filter_Params::get_filter_type()
 {
     return filter_type;
+}
+
+Filter_Values Filter_Params::get_filter_values()
+{
+    return filter_values;
 }
 
 void Ecg_Baseline::calc_time_vec()
