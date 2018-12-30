@@ -81,7 +81,7 @@ struct examination
           QMessageBox::information(0, "info", not_found);
           //qInfo() << "fileOpen failed";
             age = -1;
-            sex = "N";
+            *sex = 'N';
             //qInfo() << "sex" << *sex<< endl;
             frequency = -1;
             baseline = -1;
