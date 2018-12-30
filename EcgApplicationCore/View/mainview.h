@@ -16,7 +16,7 @@ class MainView : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainView(QWidget *parent = 0);
+    explicit MainView(QApplication *app, QWidget *parent = 0);
     ~MainView();
     void saveSettings();
     void loadSettings();
@@ -26,10 +26,11 @@ private slots:
     void on_actionOpen_triggered();
 
 signals:
-    void signal_loaded(examination file);
+    void signal_loaded(examination *file);
 
 private:
     Ui::MainView *ui;
+    QApplication *m_app;
 };
 
 #endif // MAINVIEW_H

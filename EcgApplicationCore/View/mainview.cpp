@@ -10,7 +10,7 @@
 #include "View/r_peaks_gui.h"
 #include "Modules/r_peaks_module.h"
 
-MainView::MainView(QWidget *parent) :
+MainView::MainView(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainView)
 {
@@ -31,9 +31,9 @@ MainView::MainView(QWidget *parent) :
     ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
-    QObject::connect(this,SIGNAL(signal_loaded(examination)),ecgBaseline_gui,SLOT(load_signal(examination)));
+    QObject::connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
   //  loadSettings();
-
+    m_app = app; // ewentualnie do usunięcia
 }
 
 MainView::~MainView()
@@ -43,7 +43,7 @@ MainView::~MainView()
 
 void MainView::on_actionExit_triggered()
 {
-    QApplication::quit();
+    m_app->quit(); // dupa, to nie działa :'(
 }
 //Jeżeli chce się ustawić rozmiar okna taki jaki się chce!
 
@@ -88,5 +88,5 @@ void MainView::on_actionExit_triggered()
      file.get_data();
      qInfo() << "Wczytywanie zakończone!";
      qInfo() <<  "MainView - wczytano: " << file.channel_one[1];
-     emit signal_loaded(file);
+     emit signal_loaded(&file);
  }

@@ -47,6 +47,7 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->spinBox_filLength->setDisabled(true);
         ui->spinBox_stepSize->setDisabled(true);
 
+
     } else if (filter=="Butterworth_filter") {
         ui->spinBox_lowFreq->setDisabled(false);
         ui->spinBox_highFreq->setDisabled(true);
@@ -93,15 +94,32 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
 }
 
 void ECGbaseline_gui::filter1()
-    {
-        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-        for (int i=0; i<1001; ++i)
-        {
-          x[i] = i/50.0 - 1; // x goes from -1 to 1
-          y[i] = sin(x[i]); // let's plot a quadratic function
-        }
-        ecgPlot2->setData(x,y);
-      }
+{
+    qInfo() << "Teraz ma być MOVING AVERAGE";
+    Filter_Params filter_params;
+    filter_params.set_filter_type(MOVING_AVERAGE);
+    m_ecg_baseline->filter_baseline(filter_params);
+    arma::vec signal_filtered = m_ecg_baseline->get_signal_filtered();
+    qInfo() << "Teoretycznie przefiltrowało - signal_filtered[1] = " << signal_filtered[1];
+    int N = 7200;
+    QVector<double> x(N), y(N); // initialize with entries 0..100
+    arma::vec time = m_ecg_baseline->get_time_vec();
+    arma::vec time_cropped = time(arma::span(0,N-1));
+    x = examination::convert_vec_qvector(time_cropped);
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+//    for (int i=0; i<1001; ++i)
+//    {
+//      x[i] = i/50.0 - 1; // x goes from -1 to 1
+//      y[i] = sin(x[i]); // let's plot a quadratic function
+//    }
+//    ecgPlot2->setData(x,y);
+//    for (int i=0; i<1001; ++i)
+//    {
+//      x[i] = time_cropped[i]; // x goes from -1 to 1
+//      y[i] = signal_filtered[i]; // let's plot a quadratic function
+//    }
+    ecgPlot2->setData(x,y);
+}
 
 
 void ECGbaseline_gui::filter2()
@@ -113,6 +131,8 @@ void ECGbaseline_gui::filter2()
           y[i] = cos(x[i]); // let's plot a quadratic function
         }
         ecgPlot2->setData(x,y);
+
+
       }
 
 
@@ -162,8 +182,11 @@ void ECGbaseline_gui::on_pushButton_clicked()
 
 }
 
-void ECGbaseline_gui::load_signal(examination file)
+void ECGbaseline_gui::load_signal(examination *file)
 {
     m_file = file;
-    qInfo() << "Przesłano do ECGbaseline_gui: " << m_file.channel_one[1];
+    qInfo() << "Przesłano do ECGbaseline_gui: " << m_file->channel_one[1];
+    double fs = m_file->frequency;
+    Ecg_Baseline *ecg_baseline = new Ecg_Baseline(m_file->channel_one,fs);
+    m_ecg_baseline = ecg_baseline;
 }

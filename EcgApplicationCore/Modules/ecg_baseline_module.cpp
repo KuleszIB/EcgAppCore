@@ -31,7 +31,8 @@ Filter_Type Filter_Params::get_filter_type()
 
 void Ecg_Baseline::calc_time_vec()
 {
-    time_vec = arma::linspace(0, signal_raw.size(), sampling_frequency);
+//    time_vec = arma::linspace(0, signal_raw.size(), sampling_frequency);
+    time_vec = timevec(signal_raw.size(), sampling_frequency);
 }
 
 Ecg_Baseline::Ecg_Baseline()
@@ -95,11 +96,11 @@ void Ecg_Baseline::filter_moving_average()
     //signal_filtered= arma::conv(signal_filtered,b);
 
 
-    qInfo() << "po filtracji moving average";
-    for (int i=1; i<signal_filtered.size(); i++)
-    {
-        qInfo() << signal_filtered[i];
-    }
+//    qInfo() << "po filtracji moving average";
+//    for (int i=1; i<signal_filtered.size(); i++)
+//    {
+//        qInfo() << signal_filtered[i];
+//    }
 }
 
 std::vector<double> arma2std(arma::vec signal_vec)

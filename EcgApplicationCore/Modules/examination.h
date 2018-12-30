@@ -229,12 +229,12 @@ unsigned int counter = 0;
     } // zamyka funkcję
 
 
-    static QVector<float> convert_vec_qvector(arma::vec signal)
+    static QVector<double> convert_vec_qvector(arma::vec signal)
     {
-       typedef std::vector<float> stdvec;
+       typedef std::vector<double> stdvec;
         //typedef QVector<float> qvec;
         stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
-        QVector<float> signal_qvec = QVector<float>::fromStdVector(signal_temp);
+        QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
 
 
         return signal_qvec;

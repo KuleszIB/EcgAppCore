@@ -23,10 +23,11 @@ private slots:
     void on_comboBox_filter_currentTextChanged(const QString &arg1);
     void on_pushButton_clicked();
 public slots:
-    void load_signal(examination file);
+    void load_signal(examination *file);
 
 private:
-    examination m_file;
+    examination *m_file;
+    Ecg_Baseline *m_ecg_baseline;
     Ui::ECGbaseline_gui *ui;
     ecgplot *ecgPlot2;
     void filter1();
