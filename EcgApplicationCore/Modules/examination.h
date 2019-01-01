@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QString>
 #include <iostream>
+#include <QVector>
 #include <QFileDialog>
 #include <QtGlobal>
 #include <QDebug>

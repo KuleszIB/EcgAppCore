@@ -27,7 +27,8 @@ public slots:
 
 private:
     examination *m_file;
-    Ecg_Baseline *m_ecg_baseline;
+    QVector<Ecg_Baseline*> m_ecg_baseline;
+    unsigned int current_it;
     Ui::ECGbaseline_gui *ui;
     ecgplot *ecgPlot2;
     void filter1();
