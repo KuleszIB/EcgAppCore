@@ -127,18 +127,12 @@ std::vector<double> arma2std(arma::vec signal_vec)
     return signal_std;
 }
 
-double **vec2tab(arma::vec signal_vec)
+double* vec2tab(arma::vec signal_vec)
 {
-    qInfo() << "vec2tab";
-    double **signal_tab = new double*[signal_vec.size()];
-    //std::vector<double> signal_buff = arma2std(signal_vec);
+    double *signal = new double[signal_vec.size()];
     for(int ii = 0; ii < signal_vec.size(); ii++)
-    {
-        qInfo() << "petla for przed";
-        **(signal_tab+ii) = signal_vec(ii);
-        qInfo() << "petla for po";
-    }
-    return signal_tab;
+        signal[ii] = signal_vec(ii);
+    return signal;
 }
 
 void Ecg_Baseline::filter_butterworth()
@@ -154,9 +148,9 @@ void Ecg_Baseline::filter_butterworth()
     params[1] = 1; // order
     params[2] = w; // center frequency
     f->setParams(params);
-    double **signal_tab = vec2tab(signal_filtered);
+    double *signal_tab[1];
+    signal_tab[0] = vec2tab(signal_filtered);
     f->process(numSamples, signal_tab);
-
     /*Dsp::ButterHighPass<6, 2> butter;
     butter.Setup(w);
     butter.Process<0>(count, stereoBuffer);*/
@@ -167,7 +161,6 @@ void Ecg_Baseline::filter_chebyshev()
 
     filter_noise();
     int numSamples = signal_filtered.size();
-
   /*
     // Create a Chebyshev type I Band Stop filter of order 3
     // with state for processing 2 channels of audio.
@@ -179,8 +172,6 @@ void Ecg_Baseline::filter_chebyshev()
         1);   // ripple dB
     f.process(numSamples, signal_buff);
   */
-
-
     Dsp::Filter* f = new Dsp::FilterDesign
         <Dsp::ChebyshevII::Design::LowShelf <1>, 1>;
     Dsp::Params params;
@@ -190,13 +181,13 @@ void Ecg_Baseline::filter_chebyshev()
     params[3] = 6; // shelf gain
     params[4] = 10; // passband ripple
     f->setParams(params);
-    double **signal_tab = vec2tab(signal_filtered);
+    double *signal_tab[1];
+    signal_tab[0] = vec2tab(signal_filtered);
     f->process(numSamples, signal_tab);
-    qInfo() << "po filtracji czebyszev";
-    for (int i=1; i<signal_filtered.size(); i++)
-    {
-        qInfo() << signal_tab[i];
-    }
+//    for (int i=1; i<signal_filtered.size(); i++)
+//    {
+//        qInfo() << *(signal_tab[0]+ii);
+//    }
 
 }
 
@@ -209,11 +200,11 @@ void Ecg_Baseline::filter_savitzky_golay()
     std::vector<double> sig_buff= arma2std(signal_filtered);
     signal_filtered = sg_smooth (sig_buff, w, deg);
 
-    qInfo() << "po filtracji Savitzkyego";
-    for (int i=1; i<signal_filtered.size(); i++)
-    {
-        qInfo() << signal_filtered[i];
-    }
+//    qInfo() << "po filtracji Savitzkyego";
+//    for (int i=1; i<signal_filtered.size(); i++)
+//    {
+//        qInfo() << signal_filtered[i];
+//    }
 }
 
 void Ecg_Baseline::filter_lms()

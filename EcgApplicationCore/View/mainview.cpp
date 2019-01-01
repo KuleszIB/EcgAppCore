@@ -15,6 +15,8 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     ui(new Ui::MainView)
 {
     ui->setupUi(this);
+    auto ecgBaseline_gui = new ECGbaseline_gui(this);
+    ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto heart_class_gui = new Heart_class_gui(this);
     ui ->loHeartClass->addWidget(heart_class_gui);
     auto t_alt_class_gui = new T_alt_class_gui(this);
@@ -27,8 +29,6 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     ui ->loSTSegment->addWidget(stSegment_gui);
     auto hrv_dfa_gui = new HRV_dfa_gui(this);
     ui ->loHRVdfa->addWidget(hrv_dfa_gui);
-    auto ecgBaseline_gui = new ECGbaseline_gui(this);
-    ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
     QObject::connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
