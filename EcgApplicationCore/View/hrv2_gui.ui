@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1024</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>371</width>
-     <height>271</height>
+     <width>991</width>
+     <height>681</height>
     </rect>
    </property>
    <property name="title">
@@ -41,8 +41,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>61</y>
+      <x>120</x>
+      <y>10</y>
       <width>162</width>
       <height>71</height>
      </rect>
@@ -51,7 +51,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Alterans parameters</string>
+        <string>Parameters</string>
        </property>
       </widget>
      </item>
@@ -60,7 +60,7 @@
        <item>
         <widget class="QLabel" name="labelSD1">
          <property name="text">
-          <string>SD1</string>
+          <string>TINN</string>
          </property>
         </widget>
        </item>
@@ -74,7 +74,7 @@
        <item>
         <widget class="QLabel" name="labelSD">
          <property name="text">
-          <string>SD2</string>
+          <string>Traingle Index</string>
          </property>
         </widget>
        </item>
@@ -84,6 +84,26 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="hrv2poincarePlot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>351</width>
+      <height>361</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="hrv2histPlot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>90</y>
+      <width>351</width>
+      <height>361</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>

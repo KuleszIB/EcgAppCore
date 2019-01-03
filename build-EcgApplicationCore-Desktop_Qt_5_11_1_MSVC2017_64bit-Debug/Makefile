@@ -242,6 +242,9 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\5.11.1\msvc2017_64\
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\default_pre.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\win32\default_pre.prf \
+		..\3rdparty\Qwt-6.1.3\features\qwtconfig.pri \
+		..\3rdparty\Qwt-6.1.3\features\qwtfunctions.pri \
+		..\3rdparty\Qwt-6.1.3\features\qwt.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\resolve_config.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds_post.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\default_post.prf \
@@ -263,6 +266,7 @@ Makefile: ..\EcgApplicationCore\EcgApplicationCore.pro C:\Qt\5.11.1\msvc2017_64\
 		..\EcgApplicationCore\EcgApplicationCore.pro \
 		C:\Qt\5.11.1\msvc2017_64\lib\qtmaind.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5PrintSupport.prl \
+		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Svg.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Widgets.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Gui.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Core.prl
@@ -434,6 +438,9 @@ C:\Qt\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\default_pre.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\win32\default_pre.prf:
+..\3rdparty\Qwt-6.1.3\features\qwtconfig.pri:
+..\3rdparty\Qwt-6.1.3\features\qwtfunctions.pri:
+..\3rdparty\Qwt-6.1.3\features\qwt.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\resolve_config.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds_post.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\default_post.prf:
@@ -455,6 +462,7 @@ C:\Qt\5.11.1\msvc2017_64\mkspecs\features\lex.prf:
 ..\EcgApplicationCore\EcgApplicationCore.pro:
 C:\Qt\5.11.1\msvc2017_64\lib\qtmaind.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5PrintSupport.prl:
+C:\Qt\5.11.1\msvc2017_64\lib\Qt5Svg.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5Widgets.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5Gui.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5Core.prl:

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ECGbaseline_gui_t {
-    QByteArrayData data[1];
-    char stringdata0[16];
+    QByteArrayData data[9];
+    char stringdata0[126];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,10 +31,21 @@ struct qt_meta_stringdata_ECGbaseline_gui_t {
     )
 static const qt_meta_stringdata_ECGbaseline_gui_t qt_meta_stringdata_ECGbaseline_gui = {
     {
-QT_MOC_LITERAL(0, 0, 15) // "ECGbaseline_gui"
+QT_MOC_LITERAL(0, 0, 15), // "ECGbaseline_gui"
+QT_MOC_LITERAL(1, 16, 14), // "addRandomGraph"
+QT_MOC_LITERAL(2, 31, 0), // ""
+QT_MOC_LITERAL(3, 32, 37), // "on_comboBox_filter_currentTex..."
+QT_MOC_LITERAL(4, 70, 4), // "arg1"
+QT_MOC_LITERAL(5, 75, 21), // "on_pushButton_clicked"
+QT_MOC_LITERAL(6, 97, 11), // "load_signal"
+QT_MOC_LITERAL(7, 109, 11), // "examination"
+QT_MOC_LITERAL(8, 121, 4) // "file"
 
     },
-    "ECGbaseline_gui"
+    "ECGbaseline_gui\0addRandomGraph\0\0"
+    "on_comboBox_filter_currentTextChanged\0"
+    "arg1\0on_pushButton_clicked\0load_signal\0"
+    "examination\0file"
 };
 #undef QT_MOC_LITERAL
 
@@ -44,22 +55,41 @@ static const uint qt_meta_data_ECGbaseline_gui[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   34,    2, 0x08 /* Private */,
+       3,    1,   35,    2, 0x08 /* Private */,
+       5,    0,   38,    2, 0x08 /* Private */,
+       6,    1,   39,    2, 0x0a /* Public */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    4,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 7,    8,
+
        0        // eod
 };
 
 void ECGbaseline_gui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        ECGbaseline_gui *_t = static_cast<ECGbaseline_gui *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->addRandomGraph(); break;
+        case 1: _t->on_comboBox_filter_currentTextChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 2: _t->on_pushButton_clicked(); break;
+        case 3: _t->load_signal((*reinterpret_cast< examination(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 QT_INIT_METAOBJECT const QMetaObject ECGbaseline_gui::staticMetaObject = {
@@ -84,6 +114,17 @@ void *ECGbaseline_gui::qt_metacast(const char *_clname)
 int ECGbaseline_gui::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 4)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 4;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 4)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 4;
+    }
     return _id;
 }
 QT_WARNING_POP

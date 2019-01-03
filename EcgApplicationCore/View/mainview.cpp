@@ -8,7 +8,7 @@
 #include "View/hrv_dfa_gui.h"
 #include "View/ecgbaseline_gui.h"
 #include "View/r_peaks_gui.h"
-#include "r_peaks_module.h"
+#include "Modules/r_peaks_module.h"
 
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
@@ -31,6 +31,8 @@ MainView::MainView(QWidget *parent) :
     ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
+    QObject::connect(this,SIGNAL(signal_loaded(examination)),ecgBaseline_gui,SLOT(load_signal(examination)));
+  //  loadSettings();
 
 }
 
@@ -38,3 +40,53 @@ MainView::~MainView()
 {
     delete ui;
 }
+
+void MainView::on_actionExit_triggered()
+{
+    QApplication::quit();
+}
+//Jeżeli chce się ustawić rozmiar okna taki jaki się chce!
+
+//{void MainView::saveSettings()
+//{
+//    QSettings settings(QDir::currentPath() + "/ecg.ini", QSettings::IniFormat);
+
+//    settings.beginGroup("MainView");
+
+//    // Save position and size of window
+//    settings.setValue("size", size());
+//    settings.setValue("pos", pos());
+//  // settings.setValue("MainView/fullScreen", main->isFullScreen());
+
+//    settings.endGroup();
+//}
+
+//void MainView::loadSettings()
+//{
+//    // Coordinates of screen center for default window positioning
+//    QRect desktopRect = QApplication::desktop()->availableGeometry(this);
+//    QPoint center = desktopRect.center();
+//    center.setX(center.x() - width() * 0.5);
+//    center.setY(center.y() - height() * 0.5);
+
+//    QSettings settings(QDir::currentPath() + "/ecg.ini", QSettings::IniFormat);
+
+//    settings.beginGroup("MainWindow");
+
+//    // Set position and size of window
+//    resize(settings.value("size", QSize(1081, 693)).toSize());
+//    move(settings.value("pos", center).toPoint());
+
+//    settings.endGroup();
+//}
+
+
+
+ void MainView::on_actionOpen_triggered()
+ {
+     examination file;
+     file.get_data();
+     qInfo() << "Wczytywanie zakończone!";
+     qInfo() <<  "MainView - wczytano: " << file.channel_one[1];
+     emit signal_loaded(file);
+ }
