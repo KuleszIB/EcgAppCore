@@ -5,23 +5,42 @@
 
 struct histogram_hrv2
 {
-    arma::vec values; // typ danych do sprawdzenia
+    arma::ivec values; // typ danych do sprawdzenia
     arma::vec bins; // do czego to ma sie odnosic?  do zmiany albo wyrzucenia
+    int max_value;
+};
+
+//Dodalam strukture, mysle ze tak bedzie latwiej dla Moniki do wizualizacji
+//Jeszcze nie implementowalam, wiec nei wiem czy tak zostanie
+struct poincare_graph
+{
+    arma::vec intervals_ox;
+    arma::vec intervals_oy;
+    arma::vec left_axis;
+    arma::vec right_axis;
+    arma::vec centroid;
+    double sd1;
+    double sd2;
+
 };
 
 class Hrv2 : public R_Peaks
 {
 private:
-    double cum_time_vec;
+    //double cum_time_vec; // tego raczej nie potrzebuje
     histogram_hrv2 histogram;
     double tinn;
-    double triangular_index; // -> do konsultacji z Kasi
-    double poincare; // -> do konsultacji z Kasią
-    double sd1;
-    double sd2;
+    double triangular_index;
+    poincare_graph poincare; // tu nie wiem czy tak zostanie
+//    double sd1;
+//    double sd2;
+    arma::vec intervals_original;
+    arma::vec intervals;
 
-    void calc_cum_time_vec();
+
+    //void calc_cum_time_vec(); tego nie potrzeba
     void calc_histogram();
+    void remove_outliers();
     void calc_tinn();
     void calc_triangular_index();
     void calc_poincare();
@@ -36,7 +55,7 @@ public:
     histogram_hrv2 get_hist();
     double get_tinn();
     double get_triang_index();
-    double get_poincare();
+    poincare_graph get_poincare();
 
 };
 
