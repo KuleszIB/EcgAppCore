@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QDebug>
-#include "../Modules/examination.h"
+#include <QTime>
+//#include "../Modules/examination.h"
+#include "../Modules/ecg_io.h"
 //#include <QSettings>
 //#include <QRect>
 //#include <QDesktopWidget>
@@ -31,6 +33,8 @@ signals:
 private:
     Ui::MainView *ui;
     QApplication *m_app;
+    Ecg_IO *ecg_io;
+
 };
 
 #endif // MAINVIEW_H

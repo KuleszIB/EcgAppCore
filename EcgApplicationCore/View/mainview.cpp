@@ -9,6 +9,7 @@
 #include "View/ecgbaseline_gui.h"
 #include "View/r_peaks_gui.h"
 #include "Modules/r_peaks_module.h"
+#include "Modules/ecg_io.h"
 
 MainView::MainView(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
@@ -31,9 +32,13 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     ui ->loHRVdfa->addWidget(hrv_dfa_gui);
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
-    QObject::connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
   //  loadSettings();
     m_app = app; // ewentualnie do usunięcia
+    QObject::connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+    // Tutaj jest do multithread
+//    ecg_io = new Ecg_IO();
+//    QObject::connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+
 }
 
 MainView::~MainView()
@@ -85,8 +90,10 @@ void MainView::on_actionExit_triggered()
  void MainView::on_actionOpen_triggered()
  {
      examination file;
+     QTime time;
+     time.start();
      file.get_data();
-     qInfo() << "Wczytywanie zakończone!";
-     qInfo() <<  "MainView - wczytano: " << file.channel_one[1];
+     qInfo() << "Upłynęło " << time.elapsed()/1000.0 << "s";
      emit signal_loaded(&file);
+//     ecg_io->start();
  }
