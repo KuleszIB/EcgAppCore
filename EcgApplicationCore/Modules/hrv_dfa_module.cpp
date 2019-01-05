@@ -57,7 +57,6 @@ Out_DFA HrvDfa::calculate_DFA() {
     out_DFA.log_delta = log10(delta_vector);
     out_DFA.vector_short_windows = fitdata;
     out_DFA.vector_long_windows = fitdata2;
-
     return out_DFA;
 }
 Out_DFA HrvDfa::get_out_DFA() {
