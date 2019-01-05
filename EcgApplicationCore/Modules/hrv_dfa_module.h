@@ -30,7 +30,7 @@ public:
     HrvDfa();
     HrvDfa(arma::vec r_peaks);
     // jesli chcemy sami wpisac srodek analizy czasowej (middle), najmniejsze okienko (pierwsza_delta), najwieksze okienko (ostatnia_delta)
-    HrvDfa(arma::vec r_peaks, int middle, int first_delta, int last_delta);
+    HrvDfa(arma::vec r_peaks, int first_delta, int last_delta);
     Out_DFA get_out_DFA();
 
 };

@@ -12,12 +12,12 @@ HrvDfa::HrvDfa(arma::vec r_peaks)
     HrvDfa::first_delta = 4;
     HrvDfa::last_delta = 64;
 }
-HrvDfa::HrvDfa(arma::vec r_peaks, int middle, int first_delta, int last_delta)
+HrvDfa::HrvDfa(arma::vec r_peaks, int first_delta, int last_delta)
 {
     HrvDfa::r_peaks = r_peaks;
-    HrvDfa::middle = middle;
     HrvDfa::first_delta = first_delta;
     HrvDfa::last_delta = last_delta;
+    HrvDfa::middle = floor(last_delta/ 4);
 }
 
 void HrvDfa::make_tachogram()
@@ -35,11 +35,11 @@ Out_DFA HrvDfa::calculate_DFA() {
     make_tachogram();
     arma::vec delta_vector;
     for (int i =0;i=(last_delta-first_delta);i++) {
-        delta_vector(i,0) = first_delta + i; //tworzenie wektora delt
+        delta_vector[i] = first_delta + i; //tworzenie wektora delt
     }
     arma::vec F;
     for (int k = 0; k<delta_vector.n_elem; k++) {
-        F(k,0) = calculate_F(cum_time_vec, RR_intervals, delta_vector(k,0));
+        F[k] = calculate_F(cum_time_vec, RR_intervals, delta_vector(k,0));
     }
     arma::vec fit = polyfit(log10(delta_vector.rows(0,middle)), log10(F.rows(0,middle)),1);
 
@@ -65,25 +65,18 @@ Out_DFA HrvDfa::get_out_DFA() {
 }
 
 arma::vec HrvDfa::least_squares(arma::vec tm, arma::vec ym, int delta_m) {
-int M = delta_m;
+double M = delta_m;
 double YM_sum2 = arma::sum(tm % ym); // odpowiednik .* w matlabie
 double TM_sum = arma::sum(tm);
-double TM_sumpow = arma::sum(tm % tm);
+double TM_sumpow = arma::sum(arma::square(tm));
 double YM_sum = arma::sum(ym);
-arma::mat Matrix2;
-Matrix2 << YM_sum  << arma::endr
-         << YM_sum2 << arma::endr; // matko jakie to dziwne
+arma::mat Matrix2 = {YM_sum,YM_sum2};
 // sprobuje to potem przepisac na normalna inwersje macierzy
 // ale w matlabie nie dzialala, wiec wole na razie zostawic tak
-double first_factor = 1/(M*TM_sumpow-TM_sum*TM_sum);
-arma::mat second_factor;
-second_factor << TM_sumpow << -TM_sum << arma::endr
-                       << -TM_sum  << M       << arma::endr;
-second_factor = second_factor.t();
-arma::mat inv_Matrix1 = first_factor* second_factor;
-
+arma::mat Matrix3 = {{TM_sumpow, -TM_sum}, {-TM_sum, M}};
+double Matrix4 = 1/(M*TM_sumpow-TM_sum*TM_sum);
+arma::mat inv_Matrix1 = 1/Matrix4*Matrix3 ;
 return inv_Matrix1 * Matrix2;
-
 }
 
 double HrvDfa::calculate_F(arma::vec tk, arma::vec x, int delta_m) {
