@@ -17,18 +17,18 @@ HrvDfa::HrvDfa(arma::vec r_peaks, int first_delta, int last_delta)
     HrvDfa::r_peaks = r_peaks;
     HrvDfa::first_delta = first_delta;
     HrvDfa::last_delta = last_delta;
-    HrvDfa::middle = floor(last_delta/ 4);
+    HrvDfa::middle = floor(last_delta/ 4); //tu konwersja, ale nie szkodzi bo jest floor
 }
 
 void HrvDfa::make_tachogram()
 {
 
-   for(int i = 0; i < (r_peaks.size() - 1); i++) {
-        RR_intervals[i] = r_peaks[i + 1] - r_peaks[i];             //RR intervals
-        RR_intervals[i] = RR_intervals[i] / 360;                    //sampling frequency = 360; changing to the time [s]
+   for(int i = 0; i < (r_peaks.n_elem - 1); i++) {
+        HrvDfa::RR_intervals[i] = r_peaks[i + 1] - r_peaks[i];             //RR intervals
+        HrvDfa::RR_intervals[i] = HrvDfa::RR_intervals[i] / 360;                    //sampling frequency = 360; changing to the time [s]
    }
-   cum_time_vec = arma::cumsum(RR_intervals);                   //creating tachogram's timeline
-   cum_time_vec = cum_time_vec/360;                            //changing to the time [s]; NOT SURE IF WORKS
+   HrvDfa::cum_time_vec = arma::cumsum(HrvDfa::RR_intervals);                   //creating tachogram's timeline
+   HrvDfa::cum_time_vec = HrvDfa::cum_time_vec/360;                            //changing to the time [s]; NOT SURE IF WORKS
 
 }
 Out_DFA HrvDfa::calculate_DFA() {
@@ -39,16 +39,16 @@ Out_DFA HrvDfa::calculate_DFA() {
     }
     arma::vec F;
     for (int k = 0; k<delta_vector.n_elem; k++) {
-        F[k] = calculate_F(cum_time_vec, RR_intervals, delta_vector(k,0));
+        F[k] = calculate_F(cum_time_vec, RR_intervals, delta_vector(k));
     }
     arma::vec fit = polyfit(log10(delta_vector.rows(0,middle)), log10(F.rows(0,middle)),1);
 
     // polyfit zwraca
     // wspolczynniki a i b, takie ze dopasowana prosta to y = a * x + b
-    arma:: vec fitdata=fit(0,0) * (log10(delta_vector.rows(0,middle-1)))+fit(1,0);
-    double alpha = arma::as_scalar(fit(0,0));
+    arma:: vec fitdata=fit(0) * (log10(delta_vector.rows(0,middle-1)))+fit(1);
+    double alpha = arma::as_scalar(fit(0));
     arma::vec fit2 = polyfit(log10(delta_vector.rows(middle,delta_vector.n_elem-1)), log10(F.rows(middle,delta_vector.n_elem -1)),1);
-    arma::vec fitdata2=fit2(0,0)*(log10(delta_vector.rows(middle,delta_vector.n_elem-1)))+fit2(1,0);
+    arma::vec fitdata2=fit2(0)*(log10(delta_vector.rows(middle,delta_vector.n_elem-1)))+fit2(1);
     double alpha2 = arma::as_scalar(fit2(1));
     Out_DFA out_DFA;
     out_DFA.alpha1 = alpha;
@@ -82,7 +82,7 @@ double HrvDfa::calculate_F(arma::vec tk, arma::vec x, int delta_m) {
     //calkowanie
     double x_mean = arma::mean(x);
     arma::vec y = arma::cumsum(x-x_mean);
-    int K=arma::as_scalar(y.n_elem);
+    arma::uword K=y.n_elem; //co to w ogole za typ zmiennej
     arma::vec regression_vector;
 
     // dopasowanie prostych, osobno dla kazdego okienka (dlatego i jest co
@@ -95,12 +95,12 @@ double HrvDfa::calculate_F(arma::vec tk, arma::vec x, int delta_m) {
         // wywolujemy funkcje wspolczynniki_HRV_DFA zeby policzyc a i b
         // metoda najmniejszych kwadratow
          arma::vec result = HrvDfa::least_squares(tk.rows(i,i+delta_m-1), y.rows(i,i+delta_m-1), delta_m);
-         //wydłużamy wektor 'proste' o kolejne dofitowanie
-         regression_vector = arma::join_rows(regression_vector, result(1,0) * tk.rows(i,(i+delta_m-1)) + result(0,0));
+         //wydłużamy wektor 'regression_vector' o kolejne dofitowanie
+         regression_vector = arma::join_rows(regression_vector, result(1) * tk.rows(i,(i+delta_m-1)) + result(0));
     }
     double sum=0;
     for (int i=0;i==K-K%delta_m-delta_m;i++) {
-        sum = sum + (arma::as_scalar(y(i,0))-arma::as_scalar(regression_vector(i,0)))*(arma::as_scalar(y(i,0))-arma::as_scalar(regression_vector(i,0))); // sum to suma we wzorze na F, obliczam
+        sum = sum + ((arma::as_scalar(y(i))-arma::as_scalar(regression_vector(i)))*(arma::as_scalar(y(i))-arma::as_scalar(regression_vector(i)))); // sum to suma we wzorze na F, obliczam
         // ja osobno dla wiekszej przejrzystosci
     }
         // ostateczny wzor na fluktuacje
