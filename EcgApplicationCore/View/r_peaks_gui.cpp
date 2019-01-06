@@ -122,8 +122,8 @@ void R_peaks_gui::on_pushButton_clicked()
 //    {
 //        return filter4();
 //    }
-    m_r_peaks[0]->find_r_peaks();
+    //m_r_peaks[0]->find_r_peaks();
     filter1();
-    arma::uvec r_test = m_r_peaks[0]->get_r_peaks();
+    arma::vec r_test = m_r_peaks[0]->get_r_peaks();
     qInfo() << "Znaleziono " << r_test.size() << " zespołów QRS.";
 }

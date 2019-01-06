@@ -26,7 +26,7 @@ protected:
 
 public:
     Waves();
-    Waves(arma::vec signal, arma::uvec r_peaks, double fs);
+    Waves(arma::vec signal, arma::vec r_peaks, double fs);
     void find_waves();
     Waves_Points get_waves();
 };

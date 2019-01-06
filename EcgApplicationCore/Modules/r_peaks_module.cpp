@@ -32,7 +32,7 @@ void R_Peaks::pan_tompkins()
     square();                   // Potegowanie
     integrate(19);              // Calkowanie
 
-    arma::uvec peaks = find_peaks(signal_filtered);     // Wstepne wyszukiwanie pikow
+    arma::vec peaks = find_peaks(signal_filtered);     // Wstepne wyszukiwanie pikow
     int N = int(peaks.size());
 
     arma::vec peakValue(N);
@@ -43,7 +43,7 @@ void R_Peaks::pan_tompkins()
     int max_number = int(peaks[0]);
     int nrOfSamples = int(floor(0.2 * sampling_frequency));
 
-    arma::uvec Rpeaks(N);
+    arma::vec Rpeaks(N);
     int counter = 0;
 
     if (N > 1)
@@ -75,10 +75,10 @@ void R_Peaks::pan_tompkins()
     r_peaks_vec -= 9;
 }
 
-arma::uvec R_Peaks::find_peaks(arma::vec signal)
+arma::vec R_Peaks::find_peaks(arma::vec signal)
 {
     int N = int(signal.size());
-    arma::uvec peaks(N);
+    arma::vec peaks(N);
     double threshold = signal.max() / 10;
     int counter = 0;
 
@@ -162,7 +162,7 @@ void R_Peaks::find_r_peaks()
     pan_tompkins();
 }
 
-arma::uvec R_Peaks::get_r_peaks()
+arma::vec R_Peaks::get_r_peaks()
 {
    find_r_peaks();
    return r_peaks_vec;

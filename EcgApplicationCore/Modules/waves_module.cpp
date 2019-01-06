@@ -14,7 +14,7 @@ Waves::Waves()
     sampling_frequency = R_Peaks::sampling_frequency;
 }
 
-Waves::Waves(arma::vec signal, arma::uvec r_peaks, double fs)
+Waves::Waves(arma::vec signal, arma::vec r_peaks, double fs)
 {
     signal_filtered = signal;
     r_peaks_vec = r_peaks;
@@ -204,7 +204,7 @@ void Waves::find_t_end()
 
         // Poszukiwanie minimum lokalnego wystepujacego bezposrednio po
         // wczesniej wyszukanym maksimum
-        arma::uvec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
+        arma::vec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
         int minPos;
         if (b.size() != 0)
             minPos = int(b[0]) + maxPos;
