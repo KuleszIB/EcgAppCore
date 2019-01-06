@@ -1,6 +1,6 @@
 #include "file_explorer.h"
 
-void QFileDialogTester::openFile()
+QString QFileDialogTester::openFile()
  {
         // szukaczka otworzy się w tym katalogu
         QString dir = "C:/";
