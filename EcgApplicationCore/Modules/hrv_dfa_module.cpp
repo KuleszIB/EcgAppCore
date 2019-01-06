@@ -5,6 +5,8 @@ HrvDfa::HrvDfa() //konstruktor domyslny
 {
 
 }
+// GDY NIE PODAJEMY DELT
+// TO PRZYJMUJEMY 4 i 64, TAKIE JAK W LABORATORIUM
 HrvDfa::HrvDfa(arma::vec r_peaks)
 {
     r_peaks = HrvDfa::r_peaks;
@@ -12,6 +14,8 @@ HrvDfa::HrvDfa(arma::vec r_peaks)
     HrvDfa::first_delta = 4;
     HrvDfa::last_delta = 64;
 }
+
+//KONSTRUKTOR W PRZYPADKU GDY PODAJEMY DELTY
 HrvDfa::HrvDfa(arma::vec r_peaks, int first_delta, int last_delta)
 {
     HrvDfa::r_peaks = r_peaks;
@@ -19,24 +23,26 @@ HrvDfa::HrvDfa(arma::vec r_peaks, int first_delta, int last_delta)
     HrvDfa::last_delta = last_delta;
     HrvDfa::middle = floor(last_delta/ 4); //tu konwersja, ale nie szkodzi bo jest floor
 }
-
+//ROBIMY TACHOGRAM
 void HrvDfa::make_tachogram()
 {
 
    for(int i = 0; i < (r_peaks.n_elem - 1); i++) {
-        HrvDfa::RR_intervals[i] = r_peaks[i + 1] - r_peaks[i];             //RR intervals
-        HrvDfa::RR_intervals[i] = HrvDfa::RR_intervals[i] / 360;                    //sampling frequency = 360; changing to the time [s]
+        HrvDfa::RR_intervals[i] = r_peaks[i + 1] - r_peaks[i];             //roznice miedzy probkami
+        HrvDfa::RR_intervals[i] = HrvDfa::RR_intervals[i] / 360;                    //dzielimy przez 360, czyli czestotliwosc progkowania
    }
-   HrvDfa::cum_time_vec = arma::cumsum(HrvDfa::RR_intervals);                   //creating tachogram's timeline
-   HrvDfa::cum_time_vec = HrvDfa::cum_time_vec/360;                            //changing to the time [s]; NOT SURE IF WORKS
+   HrvDfa::cum_time_vec = arma::cumsum(HrvDfa::RR_intervals);                   // wektor czasu, armadillo ma funkcje cumsum
 
 }
 Out_DFA HrvDfa::calculate_DFA() {
-    make_tachogram();
+    // najpierw robimy tachogram
+    HrvDfa::make_tachogram();
+    // tu robimy wektor delt: od first_delta, co jeden, do last_delta
     arma::vec delta_vector;
     for (int i =0;i=(last_delta-first_delta);i++) {
         delta_vector[i] = first_delta + i; //tworzenie wektora delt
     }
+    // tu obliczamy F
     arma::vec F;
     for (int k = 0; k<delta_vector.n_elem; k++) {
         F[k] = calculate_F(cum_time_vec, RR_intervals, delta_vector(k));
@@ -46,10 +52,10 @@ Out_DFA HrvDfa::calculate_DFA() {
     // polyfit zwraca
     // wspolczynniki a i b, takie ze dopasowana prosta to y = a * x + b
     arma:: vec fitdata=fit(0) * (log10(delta_vector.rows(0,middle-1)))+fit(1);
-    double alpha = arma::as_scalar(fit(0));
+    double alpha = fit(0);
     arma::vec fit2 = polyfit(log10(delta_vector.rows(middle,delta_vector.n_elem-1)), log10(F.rows(middle,delta_vector.n_elem -1)),1);
     arma::vec fitdata2=fit2(0)*(log10(delta_vector.rows(middle,delta_vector.n_elem-1)))+fit2(1);
-    double alpha2 = arma::as_scalar(fit2(1));
+    double alpha2 = fit2(0);
     Out_DFA out_DFA;
     out_DFA.alpha1 = alpha;
     out_DFA.alpha2 = alpha2;
@@ -60,6 +66,7 @@ Out_DFA HrvDfa::calculate_DFA() {
     return out_DFA;
 }
 Out_DFA HrvDfa::get_out_DFA() {
+    Out_DFA out_DFA = calculate_DFA();
     return out_DFA;
 }
 
@@ -73,7 +80,7 @@ arma::mat Matrix2 = {YM_sum,YM_sum2};
 // sprobuje to potem przepisac na normalna inwersje macierzy
 // ale w matlabie nie dzialala, wiec wole na razie zostawic tak
 arma::mat Matrix3 = {{TM_sumpow, -TM_sum}, {-TM_sum, M}};
-double Matrix4 = 1/(M*TM_sumpow-TM_sum*TM_sum);
+double Matrix4 = (M*TM_sumpow-TM_sum*TM_sum);
 arma::mat inv_Matrix1 = 1/Matrix4*Matrix3 ;
 return inv_Matrix1 * Matrix2;
 }
