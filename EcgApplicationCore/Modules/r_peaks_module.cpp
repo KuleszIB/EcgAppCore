@@ -20,6 +20,11 @@ R_Peaks::R_Peaks()
     sampling_frequency = 360;
 }
 
+R_Peaks::R_Peaks(arma::vec signal)
+{
+    signal_filtered = signal;
+}
+
 void R_Peaks::pan_tompkins()
 {
     filter_highpass(5,30);      // Filtracja gornoprzepustowa
@@ -27,7 +32,7 @@ void R_Peaks::pan_tompkins()
     square();                   // Potegowanie
     integrate(19);              // Calkowanie
 
-    arma::vec peaks = find_peaks(signal_filtered);     // Wstepne wyszukiwanie pikow
+    arma::uvec peaks = find_peaks(signal_filtered);     // Wstepne wyszukiwanie pikow
     int N = int(peaks.size());
 
     arma::vec peakValue(N);
@@ -38,7 +43,7 @@ void R_Peaks::pan_tompkins()
     int max_number = int(peaks[0]);
     int nrOfSamples = int(floor(0.2 * sampling_frequency));
 
-    arma::vec Rpeaks(N);
+    arma::uvec Rpeaks(N);
     int counter = 0;
 
     if (N > 1)
@@ -70,10 +75,10 @@ void R_Peaks::pan_tompkins()
     r_peaks_vec -= 9;
 }
 
-arma::vec R_Peaks::find_peaks(arma::vec signal)
+arma::uvec R_Peaks::find_peaks(arma::vec signal)
 {
     int N = int(signal.size());
-    arma::vec peaks(N);
+    arma::uvec peaks(N);
     double threshold = signal.max() / 10;
     int counter = 0;
 
@@ -157,7 +162,7 @@ void R_Peaks::find_r_peaks()
     pan_tompkins();
 }
 
-arma::vec R_Peaks::get_r_peaks()
+arma::uvec R_Peaks::get_r_peaks()
 {
    find_r_peaks();
    return r_peaks_vec;

@@ -14,7 +14,7 @@ Waves::Waves()
     sampling_frequency = R_Peaks::sampling_frequency;
 }
 
-Waves::Waves(arma::vec signal, arma::vec r_peaks, double fs)
+Waves::Waves(arma::vec signal, arma::uvec r_peaks, double fs)
 {
     signal_filtered = signal;
     r_peaks_vec = r_peaks;
@@ -33,7 +33,7 @@ void Waves::find_qrs_onset_end()
 
     bool goLeft, decreasingL, firstMinReached;
     bool goRight, decreasingR;
-    arma::vec qrsOnset(r_peaks_vec.size()), qrsEnd(r_peaks_vec.size());
+    arma::uvec qrsOnset(r_peaks_vec.size()), qrsEnd(r_peaks_vec.size());
 
     for(int i=0; i<r_peaks_vec.size(); i++)
     {
@@ -108,7 +108,7 @@ void Waves::find_p_onset_end()
     filter_lowpass(15,20);  // ponowna filtracja
 
     // WYSZUKIWANIE PONSETS I PENDS
-    arma::vec Ponset(r_peaks_vec.size()), Pend(r_peaks_vec.size());
+    arma::uvec Ponset(r_peaks_vec.size()), Pend(r_peaks_vec.size());
     int noOfSamples = int(floor(0.25/(1/sampling_frequency)));
 
     for (int i=0; i<r_peaks_vec.size(); i++)
@@ -132,7 +132,7 @@ void Waves::find_p_onset_end()
             {
                 lookingForZero = false;
                 // Sprawdzenie, czy p. P-end znajduje sie przez QRS-onset
-                if (j >= waves_points.qrs_onset[i] || abs(waves_points.qrs_onset[i]-j)<10)
+                if (j >= waves_points.qrs_onset[i] || abs(int(waves_points.qrs_onset[i])-j)<10)
                     Pend[i] = waves_points.qrs_onset[i] - 10;
                 else
                     Pend[i] = j;
@@ -188,7 +188,7 @@ void Waves::find_t_end()
     differentiate();        // rozniczkowanie
     filter_lowpass(15,20);  // ponowna filtracja
 
-    arma::vec Tend(r_peaks_vec.size());
+    arma::uvec Tend(r_peaks_vec.size());
     for (int i=0; i<r_peaks_vec.size(); i++)
     {
         // Poszukiwanie maksimum pochodnej wystepujacego miedzy punktem
@@ -204,7 +204,7 @@ void Waves::find_t_end()
 
         // Poszukiwanie minimum lokalnego wystepujacego bezposrednio po
         // wczesniej wyszukanym maksimum
-        arma::vec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
+        arma::uvec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
         int minPos;
         if (b.size() != 0)
             minPos = int(b[0]) + maxPos;

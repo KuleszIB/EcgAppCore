@@ -343,6 +343,11 @@ arma::vec Ecg_Baseline::get_signal_baseline()
     return signal_baseline;
 }
 
+double Ecg_Baseline::get_sampling_freq()
+{
+    return sampling_frequency;
+}
+
 arma::vec read_from_file()
 {
     string N;

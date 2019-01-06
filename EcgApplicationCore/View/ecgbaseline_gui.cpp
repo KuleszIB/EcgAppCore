@@ -175,6 +175,7 @@ void ECGbaseline_gui::filter4()
     filter_params.set_filter_type(MOVING_AVERAGE);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
     arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
     int N = 7200;
     QVector<double> x(N), y(N); // initialize with entries 0..100
     arma::vec time = m_ecg_baseline[current_it]->get_time_vec();

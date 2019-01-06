@@ -14,14 +14,14 @@ private:
 
 protected:
     void differentiate();
-    arma::vec find_peaks(arma::vec signal);
-    arma::vec r_peaks_vec; // output
+    arma::uvec find_peaks(arma::vec signal);
+    arma::uvec r_peaks_vec; // output
 
 public:
     R_Peaks();
     R_Peaks(arma::vec signal);
     void find_r_peaks();
-    arma::vec get_r_peaks();
+    arma::uvec get_r_peaks();
 };
 
 #endif // R_PEAKS_H

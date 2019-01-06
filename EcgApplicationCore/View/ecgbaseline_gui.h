@@ -1,5 +1,5 @@
-#ifndef ECGBASELINE_H
-#define ECGBASELINE_H
+#ifndef ECG_BASELINE_GUI_H
+#define ECG_BASELINE_GUI_H
 
 #include <QWidget>
 #include "ecgplot.h"
@@ -24,6 +24,9 @@ private slots:
     void on_pushButton_clicked();
 public slots:
     void load_signal(examination *file);
+
+signals:
+    void ecg_signal_filtered(Ecg_Baseline* signal);
 
 private:
     examination *m_file;

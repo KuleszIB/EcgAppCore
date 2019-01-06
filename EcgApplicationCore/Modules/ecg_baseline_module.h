@@ -63,6 +63,7 @@ public:
     arma::vec get_signal_filtered();
     arma::vec get_signal_baseline();
     arma::vec get_time_vec();
+    double get_sampling_freq();
 };
 
 #endif // ECG_BASELINE_H

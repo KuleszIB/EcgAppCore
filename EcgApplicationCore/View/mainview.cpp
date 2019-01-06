@@ -34,7 +34,8 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     ui ->loRpeaks->addWidget(rPeaks_gui);
   //  loadSettings();
     m_app = app; // ewentualnie do usunięcia
-    QObject::connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+    connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+    connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
     // Tutaj jest do multithread
 //    ecg_io = new Ecg_IO();
 //    QObject::connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
@@ -48,6 +49,7 @@ MainView::~MainView()
 
 void MainView::on_actionExit_triggered()
 {
+    // możliwe, że nie usuwamy czegoś deletem
     m_app->quit(); // dupa, to nie działa :'(
 }
 //Jeżeli chce się ustawić rozmiar okna taki jaki się chce!
