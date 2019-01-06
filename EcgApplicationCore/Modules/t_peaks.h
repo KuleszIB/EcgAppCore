@@ -6,7 +6,7 @@
 class T_Peaks : public Waves
 {
 protected:
-    arma::vec t_peaks;
+    arma::uvec t_peaks;
     void find_t_peaks();
     T_Peaks();
 

@@ -39,7 +39,7 @@ public:
     T_Wave_Alt();
     T_Wave_Alt(arma::vec signal, double fs, Waves_Points waves); // wywołaj calc_time_vec() i wpisz do time_vec
     void analyze();             // główna funkcja wywołująca wszystkie podfunkcje i wpisująca do pól obiektu
-    arma::vec get_t_peaks();
+    arma::uvec get_t_peaks();
     double get_alt();
 };
 

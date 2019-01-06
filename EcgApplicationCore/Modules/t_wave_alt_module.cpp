@@ -126,7 +126,7 @@ void T_Wave_Alt::remove_wrong_t_detection()
     //std::cout << t_peaks_mean << std::endl << t_peaks_std << std::endl;
 
     int N_peak =t_peak_val.size();  //liczba załamków T w sygnale EKG
-    bool flag[N_peak];
+    bool *flag = new bool[N_peak];
     for(int i=0; i<N_peak; i++)
     {
         flag[i] = true;
