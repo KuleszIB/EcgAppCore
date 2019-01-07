@@ -28,7 +28,7 @@ public slots:
 private:
     Ui::HRV1_gui *ui;
     hrv1plot *hrv1Plot2;
-    QVector<R_Peaks*> m_r_peaks;
+    QVector<Hrv1*> hrv_r_peaks;
 };
 
 #endif // HRV1_H
