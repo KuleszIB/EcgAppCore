@@ -11,6 +11,13 @@
 #include "armadillo"
 #include "examination.h"
 
+QString examination::get_filename()
+{
+    QString filename;
+    QFileDialogTester file_dialog;
+    filename = file_dialog.openFile();
+    return filename;
+}
 
 //void examination::get_data(int argc, char **argv)
 void examination::get_data()
@@ -19,11 +26,8 @@ void examination::get_data()
 
 
     QString filename;
-  //QApplication app(argc, argv);
-  //QWidget *window = new QWidget;
- //QHBoxLayout *layout = new QHBoxLayout;
-  QFileDialogTester test;
-  filename = test.openFile();
+    filename = get_file();
+
   QStringList name_parts = filename.split(QRegExp("[\\.]"));
   QString info_filename = name_parts[0]+"_info.txt";
   qInfo() << "Wczytany plik naglowkowy" <<  info_filename;

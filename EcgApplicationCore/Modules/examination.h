@@ -30,6 +30,7 @@ struct examination
     //std::vector <float> channel_one, channel_two;
     arma::vec sample=arma::zeros<arma::vec>(N);
 
+    QString get_filename();
 
     //void get_data(int argc, char **argv);
        void get_data();
