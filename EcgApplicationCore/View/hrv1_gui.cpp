@@ -13,6 +13,7 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     layout->addWidget(hrv1Plot2);
     ui->hrv1Plot->setLayout(layout);
     connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
+    m_r_peaks.reserve(10);
 
 }
 
@@ -31,3 +32,12 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
     hrv1Plot2->setData2(x,y);
   }
 
+void HRV1_gui::load_R_Peaks_vector(Ecg_Baseline *r_peaks_signal)
+{
+    Hrv1 *hrv1_r_peaks = new R_Peaks(r_peaks_signal->get_signal_raw());
+    m_r_peaks.push_back(r_peaks);
+}
+void HRV1_gui::on_pushButton_clicked()
+{
+    addRandomGraph();
+}
