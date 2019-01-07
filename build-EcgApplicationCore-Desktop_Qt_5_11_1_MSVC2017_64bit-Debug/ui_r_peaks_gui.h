@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
@@ -22,6 +23,7 @@ QT_BEGIN_NAMESPACE
 class Ui_R_peaks_gui
 {
 public:
+    QGridLayout *gridLayout;
     QGroupBox *groupBox;
     QPushButton *pushButton;
     QWidget *layoutWidget;
@@ -37,16 +39,17 @@ public:
     {
         if (R_peaks_gui->objectName().isEmpty())
             R_peaks_gui->setObjectName(QStringLiteral("R_peaks_gui"));
-        R_peaks_gui->resize(448, 323);
+        R_peaks_gui->resize(236, 231);
+        gridLayout = new QGridLayout(R_peaks_gui);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         groupBox = new QGroupBox(R_peaks_gui);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(20, 30, 351, 231));
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(20, 20, 75, 23));
+        pushButton->setGeometry(QRect(10, 23, 75, 23));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(30, 60, 76, 134));
+        layoutWidget->setGeometry(QRect(91, 23, 76, 134));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -79,6 +82,9 @@ public:
         checkBoxPend->setObjectName(QStringLiteral("checkBoxPend"));
 
         verticalLayout->addWidget(checkBoxPend);
+
+
+        gridLayout->addWidget(groupBox, 0, 0, 1, 1);
 
 
         retranslateUi(R_peaks_gui);

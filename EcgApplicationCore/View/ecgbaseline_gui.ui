@@ -6,199 +6,175 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>597</width>
-    <height>413</height>
+    <width>624</width>
+    <height>306</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QGroupBox" name="groupBox_ECGbaseline">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>571</width>
-     <height>351</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>ECG Baseline</string>
-   </property>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Run</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>70</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Filtration method</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_filter">
-       <item>
-        <property name="text">
-         <string>select filtration method</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>lowpass_filter</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>bandpass_filter</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Butterworth_filter</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Chebyshev_filter</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Savitzky’_Golay_filter</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Keiser_filter</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>LSM_algorithm</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Moving_average</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>10</y>
-      <width>281</width>
-      <height>241</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>140</y>
-      <width>152</width>
-      <height>136</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <layout class="QHBoxLayout" name="loHighFreq">
-       <item>
-        <widget class="QLabel" name="label_highFreq">
-         <property name="text">
-          <string>High cutoff frequency</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_highFreq"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="hloLowFreq">
-       <item>
-        <widget class="QLabel" name="label_lowFreq">
-         <property name="text">
-          <string>Low cutoff frequency</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_lowFreq"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="loFilterOrder">
-       <item>
-        <widget class="QLabel" name="label_filOrder">
-         <property name="text">
-          <string>Filter order</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_filOrder"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="loFilterLength">
-       <item>
-        <widget class="QLabel" name="label_filLenght">
-         <property name="text">
-          <string>filter length</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_filLength"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="loStepSize">
-       <item>
-        <widget class="QLabel" name="label_stepSize">
-         <property name="text">
-          <string>Step size</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_stepSize"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-  </widget>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBox_ECGbaseline">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="title">
+      <string>ECG Baseline</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Run</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" rowspan="3">
+         <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        </item>
+        <item row="1" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Filtration method</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_filter">
+            <item>
+             <property name="text">
+              <string>select filtration method</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>lowpass_filter</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>bandpass_filter</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Butterworth_filter</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Chebyshev_filter</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Savitzky’_Golay_filter</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Keiser_filter</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>LSM_algorithm</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Moving_average</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="loHighFreq">
+            <item>
+             <widget class="QLabel" name="label_highFreq">
+              <property name="text">
+               <string>High cutoff frequency</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_highFreq"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="hloLowFreq">
+            <item>
+             <widget class="QLabel" name="label_lowFreq">
+              <property name="text">
+               <string>Low cutoff frequency</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_lowFreq"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="loFilterOrder">
+            <item>
+             <widget class="QLabel" name="label_filOrder">
+              <property name="text">
+               <string>Filter order</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_filOrder"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="loFilterLength">
+            <item>
+             <widget class="QLabel" name="label_filLenght">
+              <property name="text">
+               <string>filter length</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_filLength"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="loStepSize">
+            <item>
+             <widget class="QLabel" name="label_stepSize">
+              <property name="text">
+               <string>Step size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_stepSize"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

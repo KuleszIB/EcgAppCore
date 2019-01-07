@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
@@ -22,6 +23,8 @@ class Ui_HRV_dfa_gui
 {
 public:
     QGroupBox *groupBoxHRV_DFA;
+    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout;
     QPushButton *pushButton;
     QLabel *label;
 
@@ -32,13 +35,24 @@ public:
         HRV_dfa_gui->resize(400, 300);
         groupBoxHRV_DFA = new QGroupBox(HRV_dfa_gui);
         groupBoxHRV_DFA->setObjectName(QStringLiteral("groupBoxHRV_DFA"));
-        groupBoxHRV_DFA->setGeometry(QRect(10, 30, 301, 211));
+        groupBoxHRV_DFA->setGeometry(QRect(10, 30, 119, 77));
+        gridLayout_2 = new QGridLayout(groupBoxHRV_DFA);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         pushButton = new QPushButton(groupBoxHRV_DFA);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(10, 20, 75, 23));
+
+        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
+
         label = new QLabel(groupBoxHRV_DFA);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(40, 70, 101, 16));
+
+        gridLayout->addWidget(label, 1, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout, 0, 0, 1, 1);
+
 
         retranslateUi(HRV_dfa_gui);
 

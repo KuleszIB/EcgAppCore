@@ -15,6 +15,10 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
+
+private slots:
+    void on_tabWidget_currentChanged(int index);
+
 private:
     Ui::MainView *ui;
 };

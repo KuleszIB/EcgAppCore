@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
@@ -21,6 +22,7 @@ class Ui_St_segment_gui
 {
 public:
     QGroupBox *groupBox_STSegment;
+    QGridLayout *gridLayout;
     QPushButton *pushButton;
 
     void setupUi(QWidget *St_segment_gui)
@@ -30,10 +32,14 @@ public:
         St_segment_gui->resize(400, 300);
         groupBox_STSegment = new QGroupBox(St_segment_gui);
         groupBox_STSegment->setObjectName(QStringLiteral("groupBox_STSegment"));
-        groupBox_STSegment->setGeometry(QRect(20, 30, 361, 241));
+        groupBox_STSegment->setGeometry(QRect(20, 30, 95, 56));
+        gridLayout = new QGridLayout(groupBox_STSegment);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         pushButton = new QPushButton(groupBox_STSegment);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(20, 30, 75, 23));
+
+        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
+
 
         retranslateUi(St_segment_gui);
 

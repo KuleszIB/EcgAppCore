@@ -38,3 +38,8 @@ MainView::~MainView()
 {
     delete ui;
 }
+
+void MainView::on_tabWidget_currentChanged(int index)
+{
+    ui->statusBar->showMessage("tab changed");
+}

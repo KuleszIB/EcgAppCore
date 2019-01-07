@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -24,8 +25,9 @@ class Ui_T_alt_class_gui
 {
 public:
     QGroupBox *groupBox;
+    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout;
     QPushButton *Button_Run;
-    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QLabel *label_Alterans;
     QLineEdit *line_ALT1;
@@ -38,30 +40,38 @@ public:
         T_alt_class_gui->resize(749, 243);
         groupBox = new QGroupBox(T_alt_class_gui);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 721, 221));
+        groupBox->setGeometry(QRect(10, 10, 157, 134));
+        gridLayout_2 = new QGridLayout(groupBox);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         Button_Run = new QPushButton(groupBox);
         Button_Run->setObjectName(QStringLiteral("Button_Run"));
-        Button_Run->setGeometry(QRect(50, 20, 75, 23));
-        layoutWidget = new QWidget(groupBox);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(50, 70, 135, 70));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+
+        gridLayout->addWidget(Button_Run, 0, 0, 1, 1);
+
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        label_Alterans = new QLabel(layoutWidget);
+        label_Alterans = new QLabel(groupBox);
         label_Alterans->setObjectName(QStringLiteral("label_Alterans"));
 
         verticalLayout->addWidget(label_Alterans);
 
-        line_ALT1 = new QLineEdit(layoutWidget);
+        line_ALT1 = new QLineEdit(groupBox);
         line_ALT1->setObjectName(QStringLiteral("line_ALT1"));
 
         verticalLayout->addWidget(line_ALT1);
 
-        line_Alt2 = new QLineEdit(layoutWidget);
+        line_Alt2 = new QLineEdit(groupBox);
         line_Alt2->setObjectName(QStringLiteral("line_Alt2"));
 
         verticalLayout->addWidget(line_Alt2);
+
+
+        gridLayout->addLayout(verticalLayout, 1, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout, 0, 0, 1, 1);
 
 
         retranslateUi(T_alt_class_gui);

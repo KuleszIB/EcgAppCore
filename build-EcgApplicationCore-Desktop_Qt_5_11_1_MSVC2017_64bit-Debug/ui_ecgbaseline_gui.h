@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -26,14 +27,15 @@ QT_BEGIN_NAMESPACE
 class Ui_ECGbaseline_gui
 {
 public:
+    QHBoxLayout *horizontalLayout;
     QGroupBox *groupBox_ECGbaseline;
+    QGridLayout *gridLayout_3;
+    QGridLayout *gridLayout;
     QPushButton *pushButton;
-    QWidget *layoutWidget;
+    QPlainTextEdit *plainTextEdit;
     QVBoxLayout *verticalLayout;
     QLabel *label;
     QComboBox *comboBox_filter;
-    QPlainTextEdit *plainTextEdit;
-    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *loHighFreq;
     QLabel *label_highFreq;
@@ -55,25 +57,34 @@ public:
     {
         if (ECGbaseline_gui->objectName().isEmpty())
             ECGbaseline_gui->setObjectName(QStringLiteral("ECGbaseline_gui"));
-        ECGbaseline_gui->resize(597, 413);
+        ECGbaseline_gui->resize(624, 306);
+        horizontalLayout = new QHBoxLayout(ECGbaseline_gui);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         groupBox_ECGbaseline = new QGroupBox(ECGbaseline_gui);
         groupBox_ECGbaseline->setObjectName(QStringLiteral("groupBox_ECGbaseline"));
-        groupBox_ECGbaseline->setGeometry(QRect(10, 20, 571, 351));
+        groupBox_ECGbaseline->setLayoutDirection(Qt::LeftToRight);
+        gridLayout_3 = new QGridLayout(groupBox_ECGbaseline);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         pushButton = new QPushButton(groupBox_ECGbaseline);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(10, 20, 75, 23));
-        layoutWidget = new QWidget(groupBox_ECGbaseline);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(30, 70, 141, 41));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+
+        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
+
+        plainTextEdit = new QPlainTextEdit(groupBox_ECGbaseline);
+        plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
+
+        gridLayout->addWidget(plainTextEdit, 0, 1, 3, 1);
+
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(layoutWidget);
+        label = new QLabel(groupBox_ECGbaseline);
         label->setObjectName(QStringLiteral("label"));
 
         verticalLayout->addWidget(label);
 
-        comboBox_filter = new QComboBox(layoutWidget);
+        comboBox_filter = new QComboBox(groupBox_ECGbaseline);
         comboBox_filter->addItem(QString());
         comboBox_filter->addItem(QString());
         comboBox_filter->addItem(QString());
@@ -87,23 +98,19 @@ public:
 
         verticalLayout->addWidget(comboBox_filter);
 
-        plainTextEdit = new QPlainTextEdit(groupBox_ECGbaseline);
-        plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(260, 10, 281, 241));
-        layoutWidget1 = new QWidget(groupBox_ECGbaseline);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(0, 140, 152, 136));
-        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
+
+        gridLayout->addLayout(verticalLayout, 1, 0, 1, 1);
+
+        verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         loHighFreq = new QHBoxLayout();
         loHighFreq->setObjectName(QStringLiteral("loHighFreq"));
-        label_highFreq = new QLabel(layoutWidget1);
+        label_highFreq = new QLabel(groupBox_ECGbaseline);
         label_highFreq->setObjectName(QStringLiteral("label_highFreq"));
 
         loHighFreq->addWidget(label_highFreq);
 
-        spinBox_highFreq = new QSpinBox(layoutWidget1);
+        spinBox_highFreq = new QSpinBox(groupBox_ECGbaseline);
         spinBox_highFreq->setObjectName(QStringLiteral("spinBox_highFreq"));
 
         loHighFreq->addWidget(spinBox_highFreq);
@@ -113,12 +120,12 @@ public:
 
         hloLowFreq = new QHBoxLayout();
         hloLowFreq->setObjectName(QStringLiteral("hloLowFreq"));
-        label_lowFreq = new QLabel(layoutWidget1);
+        label_lowFreq = new QLabel(groupBox_ECGbaseline);
         label_lowFreq->setObjectName(QStringLiteral("label_lowFreq"));
 
         hloLowFreq->addWidget(label_lowFreq);
 
-        spinBox_lowFreq = new QSpinBox(layoutWidget1);
+        spinBox_lowFreq = new QSpinBox(groupBox_ECGbaseline);
         spinBox_lowFreq->setObjectName(QStringLiteral("spinBox_lowFreq"));
 
         hloLowFreq->addWidget(spinBox_lowFreq);
@@ -128,12 +135,12 @@ public:
 
         loFilterOrder = new QHBoxLayout();
         loFilterOrder->setObjectName(QStringLiteral("loFilterOrder"));
-        label_filOrder = new QLabel(layoutWidget1);
+        label_filOrder = new QLabel(groupBox_ECGbaseline);
         label_filOrder->setObjectName(QStringLiteral("label_filOrder"));
 
         loFilterOrder->addWidget(label_filOrder);
 
-        spinBox_filOrder = new QSpinBox(layoutWidget1);
+        spinBox_filOrder = new QSpinBox(groupBox_ECGbaseline);
         spinBox_filOrder->setObjectName(QStringLiteral("spinBox_filOrder"));
 
         loFilterOrder->addWidget(spinBox_filOrder);
@@ -143,12 +150,12 @@ public:
 
         loFilterLength = new QHBoxLayout();
         loFilterLength->setObjectName(QStringLiteral("loFilterLength"));
-        label_filLenght = new QLabel(layoutWidget1);
+        label_filLenght = new QLabel(groupBox_ECGbaseline);
         label_filLenght->setObjectName(QStringLiteral("label_filLenght"));
 
         loFilterLength->addWidget(label_filLenght);
 
-        spinBox_filLength = new QSpinBox(layoutWidget1);
+        spinBox_filLength = new QSpinBox(groupBox_ECGbaseline);
         spinBox_filLength->setObjectName(QStringLiteral("spinBox_filLength"));
 
         loFilterLength->addWidget(spinBox_filLength);
@@ -158,18 +165,27 @@ public:
 
         loStepSize = new QHBoxLayout();
         loStepSize->setObjectName(QStringLiteral("loStepSize"));
-        label_stepSize = new QLabel(layoutWidget1);
+        label_stepSize = new QLabel(groupBox_ECGbaseline);
         label_stepSize->setObjectName(QStringLiteral("label_stepSize"));
 
         loStepSize->addWidget(label_stepSize);
 
-        spinBox_stepSize = new QSpinBox(layoutWidget1);
+        spinBox_stepSize = new QSpinBox(groupBox_ECGbaseline);
         spinBox_stepSize->setObjectName(QStringLiteral("spinBox_stepSize"));
 
         loStepSize->addWidget(spinBox_stepSize);
 
 
         verticalLayout_2->addLayout(loStepSize);
+
+
+        gridLayout->addLayout(verticalLayout_2, 2, 0, 1, 1);
+
+
+        gridLayout_3->addLayout(gridLayout, 0, 0, 1, 1);
+
+
+        horizontalLayout->addWidget(groupBox_ECGbaseline);
 
 
         retranslateUi(ECGbaseline_gui);

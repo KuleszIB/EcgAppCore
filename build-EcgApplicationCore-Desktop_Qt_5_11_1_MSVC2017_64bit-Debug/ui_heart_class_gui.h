@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -23,13 +24,14 @@ QT_BEGIN_NAMESPACE
 class Ui_Heart_class_gui
 {
 public:
+    QHBoxLayout *horizontalLayout_2;
     QGroupBox *groupBox_HeartClass;
+    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout;
     QPushButton *Button_Run;
-    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label_QRSClass;
     QLineEdit *edit_QRS_CLASS_MONITOR;
-    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_QRSMORPHOLOGY;
     QLineEdit *edit_QRS_MORPHOLOGY_MONITOR;
@@ -38,44 +40,55 @@ public:
     {
         if (Heart_class_gui->objectName().isEmpty())
             Heart_class_gui->setObjectName(QStringLiteral("Heart_class_gui"));
-        Heart_class_gui->resize(754, 375);
+        Heart_class_gui->resize(281, 132);
+        horizontalLayout_2 = new QHBoxLayout(Heart_class_gui);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         groupBox_HeartClass = new QGroupBox(Heart_class_gui);
         groupBox_HeartClass->setObjectName(QStringLiteral("groupBox_HeartClass"));
-        groupBox_HeartClass->setGeometry(QRect(10, 10, 701, 311));
+        gridLayout_2 = new QGridLayout(groupBox_HeartClass);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         Button_Run = new QPushButton(groupBox_HeartClass);
         Button_Run->setObjectName(QStringLiteral("Button_Run"));
-        Button_Run->setGeometry(QRect(20, 30, 75, 23));
-        layoutWidget = new QWidget(groupBox_HeartClass);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 80, 241, 22));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
+
+        gridLayout->addWidget(Button_Run, 0, 0, 1, 1);
+
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        label_QRSClass = new QLabel(layoutWidget);
+        label_QRSClass = new QLabel(groupBox_HeartClass);
         label_QRSClass->setObjectName(QStringLiteral("label_QRSClass"));
 
         horizontalLayout->addWidget(label_QRSClass);
 
-        edit_QRS_CLASS_MONITOR = new QLineEdit(layoutWidget);
+        edit_QRS_CLASS_MONITOR = new QLineEdit(groupBox_HeartClass);
         edit_QRS_CLASS_MONITOR->setObjectName(QStringLiteral("edit_QRS_CLASS_MONITOR"));
 
         horizontalLayout->addWidget(edit_QRS_CLASS_MONITOR);
 
-        layoutWidget1 = new QWidget(groupBox_HeartClass);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(20, 110, 241, 22));
-        horizontalLayout_3 = new QHBoxLayout(layoutWidget1);
+
+        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
+
+        horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        label_QRSMORPHOLOGY = new QLabel(layoutWidget1);
+        label_QRSMORPHOLOGY = new QLabel(groupBox_HeartClass);
         label_QRSMORPHOLOGY->setObjectName(QStringLiteral("label_QRSMORPHOLOGY"));
 
         horizontalLayout_3->addWidget(label_QRSMORPHOLOGY);
 
-        edit_QRS_MORPHOLOGY_MONITOR = new QLineEdit(layoutWidget1);
+        edit_QRS_MORPHOLOGY_MONITOR = new QLineEdit(groupBox_HeartClass);
         edit_QRS_MORPHOLOGY_MONITOR->setObjectName(QStringLiteral("edit_QRS_MORPHOLOGY_MONITOR"));
 
         horizontalLayout_3->addWidget(edit_QRS_MORPHOLOGY_MONITOR);
+
+
+        gridLayout->addLayout(horizontalLayout_3, 2, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout, 0, 0, 1, 1);
+
+
+        horizontalLayout_2->addWidget(groupBox_HeartClass);
 
 
         retranslateUi(Heart_class_gui);

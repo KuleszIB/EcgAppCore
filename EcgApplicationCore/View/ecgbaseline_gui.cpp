@@ -1,5 +1,6 @@
 #include "ecgbaseline_gui.h"
 #include "ui_ecgbaseline_gui.h"
+#include "View/mainview.h"
 
 ECGbaseline_gui::ECGbaseline_gui(QWidget *parent) :
     QWidget(parent),
@@ -44,14 +45,14 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(true);
         ui->spinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("we did it3");
+
     } else if (filter=="Savitzky’_Golay_filter") {
         ui->spinBox_lowFreq->setDisabled(true);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(false);
         ui->spinBox_filLength->setDisabled(false);
         ui->spinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("we did it4");
+
     } else if (filter=="Keiser_filter") {
         ui->spinBox_lowFreq->setDisabled(false);
         ui->spinBox_highFreq->setDisabled(false);
@@ -75,3 +76,4 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
 
     }
 }
+

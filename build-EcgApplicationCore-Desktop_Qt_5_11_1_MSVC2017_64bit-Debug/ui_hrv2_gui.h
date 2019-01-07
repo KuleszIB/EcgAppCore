@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -25,8 +26,9 @@ class Ui_HRV2_gui
 {
 public:
     QGroupBox *groupBox_HRV2;
+    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout;
     QPushButton *pushButton_RUN;
-    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QLabel *label;
     QHBoxLayout *horizontalLayout;
@@ -43,29 +45,31 @@ public:
         HRV2_gui->resize(400, 300);
         groupBox_HRV2 = new QGroupBox(HRV2_gui);
         groupBox_HRV2->setObjectName(QStringLiteral("groupBox_HRV2"));
-        groupBox_HRV2->setGeometry(QRect(10, 10, 371, 271));
+        groupBox_HRV2->setGeometry(QRect(10, 10, 184, 135));
+        gridLayout_2 = new QGridLayout(groupBox_HRV2);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         pushButton_RUN = new QPushButton(groupBox_HRV2);
         pushButton_RUN->setObjectName(QStringLiteral("pushButton_RUN"));
-        pushButton_RUN->setGeometry(QRect(40, 20, 75, 23));
-        layoutWidget = new QWidget(groupBox_HRV2);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 61, 162, 71));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+
+        gridLayout->addWidget(pushButton_RUN, 0, 0, 1, 1);
+
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(layoutWidget);
+        label = new QLabel(groupBox_HRV2);
         label->setObjectName(QStringLiteral("label"));
 
         verticalLayout->addWidget(label);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        labelSD1 = new QLabel(layoutWidget);
+        labelSD1 = new QLabel(groupBox_HRV2);
         labelSD1->setObjectName(QStringLiteral("labelSD1"));
 
         horizontalLayout->addWidget(labelSD1);
 
-        lineEditSD1 = new QLineEdit(layoutWidget);
+        lineEditSD1 = new QLineEdit(groupBox_HRV2);
         lineEditSD1->setObjectName(QStringLiteral("lineEditSD1"));
 
         horizontalLayout->addWidget(lineEditSD1);
@@ -75,18 +79,24 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        labelSD = new QLabel(layoutWidget);
+        labelSD = new QLabel(groupBox_HRV2);
         labelSD->setObjectName(QStringLiteral("labelSD"));
 
         horizontalLayout_2->addWidget(labelSD);
 
-        lineEditSD2 = new QLineEdit(layoutWidget);
+        lineEditSD2 = new QLineEdit(groupBox_HRV2);
         lineEditSD2->setObjectName(QStringLiteral("lineEditSD2"));
 
         horizontalLayout_2->addWidget(lineEditSD2);
 
 
         verticalLayout->addLayout(horizontalLayout_2);
+
+
+        gridLayout->addLayout(verticalLayout, 1, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout, 0, 0, 1, 1);
 
 
         retranslateUi(HRV2_gui);
