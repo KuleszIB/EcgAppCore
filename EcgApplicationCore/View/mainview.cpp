@@ -84,9 +84,12 @@ void MainView::on_actionExit_triggered()
 
  void MainView::on_actionOpen_triggered()
  {
+     ui->statusBar->showMessage("Data loading");
      examination file;
      file.get_data();
+     ui->lE_gender->setText(file.sex);
      qInfo() << "Wczytywanie zakończone!";
      qInfo() <<  "MainView - wczytano: " << file.channel_one[1];
      emit signal_loaded(file);
+     ui->statusBar->showMessage("Data loaded");
  }
