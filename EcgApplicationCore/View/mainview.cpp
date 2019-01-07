@@ -9,12 +9,15 @@
 #include "View/ecgbaseline_gui.h"
 #include "View/r_peaks_gui.h"
 #include "Modules/r_peaks_module.h"
+#include "Modules/ecg_io.h"
 
-MainView::MainView(QWidget *parent) :
+MainView::MainView(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainView)
 {
     ui->setupUi(this);
+    auto ecgBaseline_gui = new ECGbaseline_gui(this);
+    ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto heart_class_gui = new Heart_class_gui(this);
     ui ->loHeartClass->addWidget(heart_class_gui);
     auto t_alt_class_gui = new T_alt_class_gui(this);
@@ -27,12 +30,15 @@ MainView::MainView(QWidget *parent) :
     ui ->loSTSegment->addWidget(stSegment_gui);
     auto hrv_dfa_gui = new HRV_dfa_gui(this);
     ui ->loHRVdfa->addWidget(hrv_dfa_gui);
-    auto ecgBaseline_gui = new ECGbaseline_gui(this);
-    ui ->loECGBaseline->addWidget(ecgBaseline_gui);
     auto rPeaks_gui = new R_peaks_gui(this);
     ui ->loRpeaks->addWidget(rPeaks_gui);
-    QObject::connect(this,SIGNAL(signal_loaded(examination)),ecgBaseline_gui,SLOT(load_signal(examination)));
   //  loadSettings();
+    m_app = app; // ewentualnie do usunięcia
+    connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+    connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
+    // Tutaj jest do multithread
+//    ecg_io = new Ecg_IO();
+//    QObject::connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
 
 }
 
@@ -43,7 +49,8 @@ MainView::~MainView()
 
 void MainView::on_actionExit_triggered()
 {
-    QApplication::quit();
+    // możliwe, że nie usuwamy czegoś deletem
+    m_app->quit(); // dupa, to nie działa :'(
 }
 //Jeżeli chce się ustawić rozmiar okna taki jaki się chce!
 
@@ -84,12 +91,11 @@ void MainView::on_actionExit_triggered()
 
  void MainView::on_actionOpen_triggered()
  {
-     ui->statusBar->showMessage("Data loading");
      examination file;
+     QTime time;
+     time.start();
      file.get_data();
-     ui->lE_gender->setText(file.sex);
-     qInfo() << "Wczytywanie zakończone!";
-     qInfo() <<  "MainView - wczytano: " << file.channel_one[1];
-     emit signal_loaded(file);
-     ui->statusBar->showMessage("Data loaded");
+     qInfo() << "Upłynęło " << time.elapsed()/1000.0 << "s";
+     emit signal_loaded(&file);
+//     ecg_io->start();
  }

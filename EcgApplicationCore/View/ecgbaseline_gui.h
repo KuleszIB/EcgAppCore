@@ -1,5 +1,5 @@
-#ifndef ECGBASELINE_H
-#define ECGBASELINE_H
+#ifndef ECG_BASELINE_GUI_H
+#define ECG_BASELINE_GUI_H
 
 #include <QWidget>
 #include "ecgplot.h"
@@ -23,10 +23,15 @@ private slots:
     void on_comboBox_filter_currentTextChanged(const QString &arg1);
     void on_pushButton_clicked();
 public slots:
-    void load_signal(examination file);
+    void load_signal(examination *file);
+
+signals:
+    void ecg_signal_filtered(Ecg_Baseline* signal);
 
 private:
-    examination m_file;
+    examination *m_file;
+    QVector<Ecg_Baseline*> m_ecg_baseline;
+    unsigned int current_it;
     Ui::ECGbaseline_gui *ui;
     ecgplot *ecgPlot2;
     void filter1();

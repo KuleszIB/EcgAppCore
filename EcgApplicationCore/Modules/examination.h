@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QString>
 #include <iostream>
+#include <QVector>
 #include <QFileDialog>
 #include <QtGlobal>
 #include <QDebug>
@@ -19,6 +20,7 @@ public:
   {
       // szukaczka otworzy się w tym katalogu
       QString dir = "C:/";
+      //QString dir = "D:/sem2mag/dadm/signals/mitdb";
       // fun fact: jak w ścieżce damy folder który nie istnieje, to go wyświetli jako szukana nazwe pliku
       // moze mozna w ten sposob podac ustawic sugerowany plik
     QString filename =  QFileDialog::getOpenFileName(this,tr("Open Document"),
@@ -57,8 +59,8 @@ struct examination
         qInfo() << frequency;
         return 1;
     }
-
-    void get_data()
+	void get_data()
+    //void get_data(int argc, char **argv)
     {
 
 
@@ -74,16 +76,21 @@ struct examination
       // elo, wybraliśmy plik, teraz liczymy na to że info do niego ma prawilną nazwę czyli num_info.txt
       QFile file_info(info_filename);
       if (!file_info.open(QIODevice::ReadOnly)){
-          // TODO jeszcze nie działa
-          // może jak nie znajdzie to pominąć i wyświetlać bez
-          // dodac inicjalizowanie jakichs domyślnych wartości
-          // i zeby nie zabijało programu jak nie ma pliku z informacjami
-            QMessageBox::information(0, "info", file_info.errorString());
+
+            //QMessageBox::information(0, "info", file_info.errorString());
+          QString not_found = "Info file not found, using dummy values";
+          QMessageBox::information(0, "info", not_found);
+          //qInfo() << "fileOpen failed";
             age = -1;
-            *sex = '?';
+            *sex = 'N';
+            //qInfo() << "sex" << *sex<< endl;
             frequency = -1;
             baseline = -1;
             gain = -1;
+            medication = "NA";
+            channel1 = "unknown";
+            channel2 = "unknown";
+            qInfo() << gain;
 
       }else{ //bylo bez
           QTextStream info(&file_info);
@@ -145,19 +152,14 @@ struct examination
 
       }
 
-      // do wyswietlania w konsoli, co ładnego odczytaliśmy
-      // cout wyswietla zle w Qt
-      //qInfo() << "WIek" << age;
-      //qInfo() << "plec" << sex;
-      //qInfo() << "Czestotliwosc: "<< frequency;
-      //qInfo() << channel1;
-      //qInfo() << channel2;
-      //qInfo() << baseline;
-
       // wczytujemy w koncu sygnal
       QFile file(filename);
       if (!file.open(QIODevice::ReadOnly))
-          QMessageBox::information(0, "info", file.errorString());
+      {
+          qInfo() << "filropen signal fail";
+          QMessageBox::information(0, "file", file.errorString());
+      }
+
       QTextStream in(&file);
       //QTextBrowser *browser = new QTextBrowser;
       QString line;
@@ -226,6 +228,18 @@ unsigned int counter = 0;
 
 
     } // zamyka funkcję
+
+
+    static QVector<double> convert_vec_qvector(arma::vec signal)
+    {
+       typedef std::vector<double> stdvec;
+        //typedef QVector<float> qvec;
+        stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+        QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+
+
+        return signal_qvec;
+    }
 
 
 }; // zamyka strukturę

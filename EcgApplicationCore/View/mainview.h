@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QDebug>
-#include "../Modules/examination.h"
+#include <QTime>
+//#include "../Modules/examination.h"
+#include "../Modules/ecg_io.h"
 //#include <QSettings>
 //#include <QRect>
 //#include <QDesktopWidget>
@@ -16,7 +18,7 @@ class MainView : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainView(QWidget *parent = 0);
+    explicit MainView(QApplication *app, QWidget *parent = 0);
     ~MainView();
     void saveSettings();
     void loadSettings();
@@ -26,10 +28,13 @@ private slots:
     void on_actionOpen_triggered();
 
 signals:
-    void signal_loaded(examination file);
+    void signal_loaded(examination *file);
 
 private:
     Ui::MainView *ui;
+    QApplication *m_app;
+    Ecg_IO *ecg_io;
+
 };
 
 #endif // MAINVIEW_H

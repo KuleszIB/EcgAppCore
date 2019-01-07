@@ -19,7 +19,7 @@ protected:
 
 public:
     R_Peaks();
-    R_Peaks(arma::vec signal);
+    R_Peaks(arma::vec signal, double fs=360);
     void find_r_peaks();
     arma::vec get_r_peaks();
 };
