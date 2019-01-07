@@ -18,7 +18,7 @@ public:
     ~ecgplot();
     void setData(QVector<double> x, QVector<double> y);
     void clear();
-    QSize sizeHint() const;
+ //   QSize sizeHint() const;
 signals:
 
 public slots:

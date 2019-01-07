@@ -18,18 +18,23 @@ public:
     ~qrsplot();
     void setData2(QVector<double> x, QVector<double> y);
     void setData();
+    void setRpeaks(QVector<double> x, QVector<double> y, QVector<double> r);
 
 public slots:
 
 private:
     QwtPlot *plot;
-    QwtPlotCurve *signal;
-    QwtPlotMarker *qrs_onset;
-    QwtPlotMarker *qrs_end;
-    QwtPlotMarker *t_end;
-    QwtPlotMarker *p_onset;
-    QwtPlotMarker *p_end;
-    QwtPlotMarker *t_wave;
+
+
+    QwtPlotCurve* signalCurve;
+    QwtPlotCurve* peaksCurve;
+    QwtPlotCurve* qrsOnSetCurve;
+    QwtPlotCurve* qrsEndSetCurve;
+    QwtPlotCurve* pOnSetCurve;
+    QwtPlotCurve* pEndSetCurve;
+    QwtPlotCurve* tEndSetCurve;
+    QwtPlotCurve* svCurve;
+    QwtPlotCurve* vCurve;
 };
 
 class VectorInt
@@ -43,4 +48,6 @@ public:
 
   QVector<int> * signal;
 };
+
+
 #endif // QRSPLOT_H

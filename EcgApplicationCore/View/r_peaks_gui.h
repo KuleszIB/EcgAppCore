@@ -6,7 +6,7 @@
 #include <QVBoxLayout>
 #include "Modules/r_peaks_module.h"
 #include "Modules/examination.h"
-
+#include "Modules/waves_module.h"
 namespace Ui {
 class R_peaks_gui;
 }
@@ -31,8 +31,9 @@ private:
     Ui::R_peaks_gui *ui;
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
+    Waves_Points *m_waves;
     qrsplot *qrsPlot2;
-    void filter1();
+    void display();
     void filter2();
     void filter3();
     void filter4();

@@ -47,10 +47,10 @@ void ecgplot::setData(QVector<double> x, QVector<double> y)
     signal->setSamples(x, y);
     replot();
 }
-QSize ecgplot::sizeHint() const
-{
-    return QSize( 540, 400 );
-}
+//QSize ecgplot::sizeHint() const
+//{
+//    return QSize( 540, 400 );
+//}
 //void ecgplot::clear()
 //{
 

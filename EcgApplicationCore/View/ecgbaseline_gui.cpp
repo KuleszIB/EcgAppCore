@@ -32,27 +32,44 @@ void ECGbaseline_gui::addRandomGraph() //Przykładowy wykres
 void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
 {
     QString filter = ui->comboBox_filter->currentText();
-    if(filter=="lowpass_filter"){
+    if(filter=="Raw_signal"){ //dodanie sygnału podstawowego
       ui->spinBox_lowFreq->setDisabled(true);
-      ui->spinBox_highFreq->setDisabled(false);
+      ui->spinBox_highFreq->setDisabled(true);
       ui->spinBox_filOrder->setDisabled(true);
       ui->spinBox_filLength->setDisabled(true);
       ui->spinBox_stepSize->setDisabled(true);
-
-    } else if (filter=="bandpass_filter") {
-        ui->spinBox_lowFreq->setDisabled(false);
-        ui->spinBox_highFreq->setDisabled(false);
+        ui->plainTextEdit->setPlainText("Raw");
+    }else if (filter=="Moving_average"){
+        ui->spinBox_lowFreq->setDisabled(true);
+        ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(true);
-        ui->spinBox_filLength->setDisabled(true);
-        ui->spinBox_stepSize->setDisabled(true);
+        ui->spinBox_filLength->setDisabled(false);
+        ui->spinBox_stepSize->setDisabled(false);
+        ui->plainTextEdit->setPlainText("Moving average");
+    }
+ //   else if (filter=="lowpass_filter"){
+ //     ui->spinBox_lowFreq->setDisabled(true);
+ //     ui->spinBox_highFreq->setDisabled(false);
+ //     ui->spinBox_filOrder->setDisabled(true);
+ //     ui->spinBox_filLength->setDisabled(true);
+ //     ui->spinBox_stepSize->setDisabled(true);
+
+ //   } else if (filter=="bandpass_filter") {
+ //       ui->spinBox_lowFreq->setDisabled(false);
+ //       ui->spinBox_highFreq->setDisabled(false);
+ //       ui->spinBox_filOrder->setDisabled(true);
+ //       ui->spinBox_filLength->setDisabled(true);
+ //       ui->spinBox_stepSize->setDisabled(true);
 
 
-    } else if (filter=="Butterworth_filter") {
+ //   }
+    else if (filter=="Butterworth_filter") {
         ui->spinBox_lowFreq->setDisabled(false);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(false);
         ui->spinBox_filLength->setDisabled(true);
         ui->spinBox_stepSize->setDisabled(true);
+        ui->plainTextEdit->setPlainText("Butterworth");
 
     } else if (filter=="Chebyshev_filter") {
         ui->spinBox_lowFreq->setDisabled(false);
@@ -60,116 +77,46 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(true);
         ui->spinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("we did it3");
+        ui->plainTextEdit->setPlainText("Chebyshev");
     } else if (filter=="Savitzky’_Golay_filter") {
         ui->spinBox_lowFreq->setDisabled(true);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(false);
         ui->spinBox_filLength->setDisabled(false);
         ui->spinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("we did it4");
-    } else if (filter=="Keiser_filter") {
-        ui->spinBox_lowFreq->setDisabled(false);
-        ui->spinBox_highFreq->setDisabled(false);
-        ui->spinBox_filOrder->setDisabled(true);
-        ui->spinBox_filLength->setDisabled(true);
-        ui->spinBox_stepSize->setDisabled(true);
+        ui->plainTextEdit->setPlainText("Savitzky’_Golay");
+    } //else if (filter=="Keiser_filter") {
+      //  ui->spinBox_lowFreq->setDisabled(false);
+      //  ui->spinBox_highFreq->setDisabled(false);
+      //  ui->spinBox_filOrder->setDisabled(true);
+      //  ui->spinBox_filLength->setDisabled(true);
+      //  ui->spinBox_stepSize->setDisabled(true);
 
-    } else if (filter=="LSM_algoritm") {
+    //}
+    else if (filter=="LSM_algorithm") {
         ui->spinBox_lowFreq->setDisabled(true);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(false);
         ui->spinBox_stepSize->setDisabled(true);
-
-    }else if (filter=="Moving_average"){
-        ui->spinBox_lowFreq->setDisabled(true);
-        ui->spinBox_highFreq->setDisabled(true);
-        ui->spinBox_filOrder->setDisabled(true);
-        ui->spinBox_filLength->setDisabled(false);
-        ui->spinBox_stepSize->setDisabled(false);
-
+        ui->plainTextEdit->setPlainText("LSM");
     }
 }
-
-void ECGbaseline_gui::filter1()
+void ECGbaseline_gui::nofilter()
 {
-    Filter_Params filter_params;
-    filter_params.set_filter_type(BUTTERWORTH);
-    m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+//    Filter_Params filter_params;
+//    filter_params.set_filter_type(BUTTERWORTH);
+//    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    arma::vec signal_raw = m_ecg_baseline[current_it]->get_signal_raw();
     int N = 7200;
     QVector<double> x(N), y(N); // initialize with entries 0..100
     arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
-
-//    for (int i=0; i<1001; ++i)
-//    {
-//      x[i] = i/50.0 - 1; // x goes from -1 to 1
-//      y[i] = sin(x[i]); // let's plot a quadratic function
-//    }
-//    ecgPlot2->setData(x,y);
-//    for (int i=0; i<1001; ++i)
-//    {
-//      x[i] = time_cropped[i]; // x goes from -1 to 1
-//      y[i] = signal_filtered[i]; // let's plot a quadratic function
-//    }
+    y = examination::convert_vec_qvector(signal_raw(arma::span(0,N-1)));
     ecgPlot2->setData(x,y);
 }
-
-
-void ECGbaseline_gui::filter2()
-    {
-    Filter_Params filter_params;
-    filter_params.set_filter_type(CHEBYSHEV);
-    m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
-    int N = 7200;
-    QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
-    arma::vec time_cropped = time(arma::span(0,N-1));
-    x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
-
-//        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-//        for (int i=0; i<1001; ++i)
-//        {
-//          x[i] = i/50.0 - 1; // x goes from -1 to 1
-//          y[i] = cos(x[i]); // let's plot a quadratic function
-//        }
-        ecgPlot2->setData(x,y);
-
-
-      }
-
-
-void ECGbaseline_gui::filter3()
-    {
-    Filter_Params filter_params;
-    filter_params.set_filter_type(SAVITZKY_GOLAY);
-    m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
-    int N = 7200;
-    QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
-    arma::vec time_cropped = time(arma::span(0,N-1));
-    x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
-
-//        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-//        for (int i=0; i<1001; ++i)
-//        {
-//          x[i] = i/50.0 - 1; // x goes from -1 to 1
-//          y[i] = cos(2*x[i]); // let's plot a quadratic function
-//        }
-        ecgPlot2->setData(x,y);
-      }
-
-
-
-void ECGbaseline_gui::filter4()
+void ECGbaseline_gui::filter1()
     {
     Filter_Params filter_params;
     filter_params.set_filter_type(MOVING_AVERAGE);
@@ -192,26 +139,103 @@ void ECGbaseline_gui::filter4()
 
      }
 
+void ECGbaseline_gui::filter2()
+{
+    Filter_Params filter_params;
+    filter_params.set_filter_type(BUTTERWORTH);
+    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    int N = 7200;
+    QVector<double> x(N), y(N); // initialize with entries 0..100
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
+    arma::vec time_cropped = time(arma::span(0,N-1));
+    x = examination::convert_vec_qvector(time_cropped);
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+    ecgPlot2->setData(x,y);
+}
+
+
+void ECGbaseline_gui::filter3()
+    {
+    Filter_Params filter_params;
+    filter_params.set_filter_type(CHEBYSHEV);
+    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    int N = 7200;
+    QVector<double> x(N), y(N); // initialize with entries 0..100
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
+    arma::vec time_cropped = time(arma::span(0,N-1));
+    x = examination::convert_vec_qvector(time_cropped);
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+        ecgPlot2->setData(x,y);
+
+
+      }
+
+
+void ECGbaseline_gui::filter4()
+    {
+    Filter_Params filter_params;
+    filter_params.set_filter_type(SAVITZKY_GOLAY);
+    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    int N = 7200;
+    QVector<double> x(N), y(N); // initialize with entries 0..100
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
+    arma::vec time_cropped = time(arma::span(0,N-1));
+    x = examination::convert_vec_qvector(time_cropped);
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+        ecgPlot2->setData(x,y);
+      }
+
+
+
+
+void ECGbaseline_gui::filter5()
+    {
+    Filter_Params filter_params;
+    filter_params.set_filter_type(LMS);
+    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    int N = 7200;
+    QVector<double> x(N), y(N); // initialize with entries 0..100
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
+    arma::vec time_cropped = time(arma::span(0,N-1));
+    x = examination::convert_vec_qvector(time_cropped);
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+        ecgPlot2->setData(x,y);
+      }
+
 void ECGbaseline_gui::on_pushButton_clicked()
 {
+    if(ui->comboBox_filter->currentIndex() == 1)
+    {
+        nofilter(); //raw signal
+        // emituj sygnał do R_Peaks
+    }
+    if(ui->comboBox_filter->currentIndex() == 2)
+    {
+        filter1(); //Moving Average
+        // emituj sygnał do R_Peaks
+    }
     if(ui->comboBox_filter->currentIndex() == 3)
     {
-        filter1();
+        filter2(); //Butterworth
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 4)
     {
-        filter2();
+        filter3(); //Chebyshev
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 5)
     {
-        filter3();
+        filter4(); //Savitzky_Golay
         // emituj sygnał do R_Peaks
     }
-    if(ui->comboBox_filter->currentIndex() == 8)
+    if(ui->comboBox_filter->currentIndex() == 6)
     {
-        filter4();
+        filter5(); //LMS
         // emituj sygnał do R_Peaks
     }
 

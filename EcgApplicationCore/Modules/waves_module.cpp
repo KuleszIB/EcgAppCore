@@ -17,7 +17,6 @@ Waves::Waves()
 Waves::Waves(arma::vec signal, arma::vec r_peaks, double fs)
 {
     signal_filtered = signal;
-    signal_raw = signal;
     r_peaks_vec = r_peaks;
     sampling_frequency = fs;
 }
@@ -274,7 +273,6 @@ void Waves::filter_lowpass(double fc, int M)
 
 void Waves::find_waves()
 {
-    signal_filtered = signal_raw;
     find_qrs_onset_end();
     find_p_onset_end();
     find_t_end();
