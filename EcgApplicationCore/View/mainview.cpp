@@ -10,6 +10,7 @@
 #include "View/r_peaks_gui.h"
 #include "Modules/r_peaks_module.h"
 #include "Modules/ecg_io.h"
+#include <QString>
 
 MainView::MainView(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
@@ -92,10 +93,18 @@ void MainView::on_actionExit_triggered()
  void MainView::on_actionOpen_triggered()
  {
      examination file;
+     ui->statusBar->showMessage("Data loading");
      QTime time;
      time.start();
      file.get_data();
      qInfo() << "Upłynęło " << time.elapsed()/1000.0 << "s";
      emit signal_loaded(&file);
+     //Konwersja int wieku do Qstringa
+     QString xstr=QString::number(file.age);
+     ui->lE_age->setText(xstr);
+     //Do poprawy wyswietlanie plci
+     //QString str=QString::unicode(file.sex);
+     //ui->lE_gender->setText(str);
+     ui->statusBar->showMessage("Data loaded");
 //     ecg_io->start();
  }
