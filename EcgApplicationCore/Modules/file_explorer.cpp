@@ -3,7 +3,7 @@
 QString QFileDialogTester::openFile()
  {
         // szukaczka otworzy się w tym katalogu
-        QString dir = "C:/";
+        QString dir = "../../";
         //QString dir = "D:/sem2mag/dadm/signals/mitdb";
         // fun fact: jak w ścieżce damy folder który nie istnieje, to go wyświetli jako szukana nazwe pliku
         // moze mozna w ten sposob podac ustawic sugerowany plik
@@ -12,10 +12,7 @@ QString QFileDialogTester::openFile()
 
       if( !filename.isNull() )
       {
-        qInfo() << "selected file path : " << filename.toUtf8();
-
-
-
+//        qInfo() << "selected file path : " << filename.toUtf8();
       }
     return filename;
     }

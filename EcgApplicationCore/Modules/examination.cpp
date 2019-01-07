@@ -13,21 +13,16 @@
 
 QString examination::get_filename()
 {
-    QString filename;
     QFileDialogTester file_dialog;
     filename = file_dialog.openFile();
     return filename;
 }
 
+
 //void examination::get_data(int argc, char **argv)
 void examination::get_data()
 
 {
-
-
-    QString filename;
-    filename = get_file();
-
   QStringList name_parts = filename.split(QRegExp("[\\.]"));
   QString info_filename = name_parts[0]+"_info.txt";
   qInfo() << "Wczytany plik naglowkowy" <<  info_filename;

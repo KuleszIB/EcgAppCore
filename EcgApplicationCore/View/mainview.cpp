@@ -37,9 +37,9 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
     // Tutaj jest do multithread
-//    ecg_io = new Ecg_IO();
-//    QObject::connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
-
+    ecg_io = new Ecg_IO();
+    connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+    connect(ecg_io,SIGNAL(finished()),ecg_io,SLOT(deleteLater()));
 }
 
 MainView::~MainView()
@@ -92,10 +92,13 @@ void MainView::on_actionExit_triggered()
  void MainView::on_actionOpen_triggered()
  {
      examination file;
-     QTime time;
-     time.start();
-     file.get_data();
-     qInfo() << "Upłynęło " << time.elapsed()/1000.0 << "s";
-     emit signal_loaded(&file);
+//     QTime time;
+     QString name = file.get_filename();
+     ecg_io->set_filename(name);
+//     time.start();
+     ecg_io->start();
+//     file.get_data();
+//     qInfo() << "Upłynęło " << time.elapsed()/1000.0 << "s";
+//     emit signal_loaded(input.get_file());
 //     ecg_io->start();
  }

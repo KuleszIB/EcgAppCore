@@ -11,6 +11,8 @@ class Ecg_IO : public QThread
 
 public:
     Ecg_IO();
+    void set_filename(QString name);
+    examination* get_file();
     void run();
 
 signals:

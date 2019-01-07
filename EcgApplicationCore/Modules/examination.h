@@ -12,18 +12,15 @@
 #include <QApplication>
 #include "armadillo"
 #include "file_explorer.h"
-#include "file_explorer.cpp"
 //#include <examination.h>
 
-
-
-
-struct examination
+class examination : public QObject
 {
+    Q_OBJECT
     int age=-1; //TRZEBA JAKOS ZAINICJALIZOWAĆ!!
     char *sex;
     int frequency, baseline, gain;
-    QString channel1, channel2, medication;
+    QString channel1, channel2, medication, filename;
     int N = 650000;
     arma::vec channel_one=arma::zeros<arma::vec>(N);
     arma::vec channel_two=arma::zeros<arma::vec>(N);
@@ -36,17 +33,18 @@ struct examination
        void get_data();
 
        // definicja f statycznej musi być tutaj
-    static QVector<float> convert_vec_qvector(arma::vec signal)
+    static QVector<double> convert_vec_qvector(arma::vec signal)
     {
-        typedef std::vector<float> stdvec;
+        typedef std::vector<double> stdvec;
          //typedef QVector<float> qvec;
          stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
-         QVector<float> signal_qvec = QVector<float>::fromStdVector(signal_temp);
+         QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
 
 
          return signal_qvec;
     }
-
+signals:
+    void part_loaded(examination*);
 
 
 }; // zamyka strukturę
