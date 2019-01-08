@@ -41,7 +41,8 @@ SOURCES += \
     View/hrv2histplot.cpp \
     Modules/t_wave_alt_module.cpp \
     Modules/t_peaks.cpp \
-    Modules/ecg_io.cpp
+    Modules/ecg_io.cpp \
+    Modules/report_creator.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -67,7 +68,9 @@ HEADERS += \
     View/hrv2histplot.h \
     Modules/t_wave_alt_module.h \
     Modules/t_peaks.h \
-    Modules/ecg_io.h
+    Modules/ecg_io.h \
+    Modules/custom_renderer.h \
+    Modules/report_creator.h
 
 FORMS += \
     View/mainview.ui \
