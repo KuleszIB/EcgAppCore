@@ -6,7 +6,6 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     ui(new Ui::HRV1_gui)
 {
     ui->setupUi(this);
-    ui->setupUi(this);
     QVBoxLayout *layout;
     layout = new QVBoxLayout;
     hrv1Plot2 = new hrv1plot(this);

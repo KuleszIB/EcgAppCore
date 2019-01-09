@@ -51,7 +51,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Alterans parameters</string>
+        <string>Parameters</string>
        </property>
       </widget>
      </item>
@@ -60,7 +60,7 @@
        <item>
         <widget class="QLabel" name="labelSD1">
          <property name="text">
-          <string>SD1</string>
+          <string>TINN</string>
          </property>
         </widget>
        </item>
@@ -74,7 +74,7 @@
        <item>
         <widget class="QLabel" name="labelSD">
          <property name="text">
-          <string>SD2</string>
+          <string>Traingle Index</string>
          </property>
         </widget>
        </item>

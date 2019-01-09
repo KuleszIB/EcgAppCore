@@ -28,7 +28,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="ECGBASE">
      <attribute name="title">
@@ -178,6 +178,19 @@
       <widget class="QLineEdit" name="lE_gender"/>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_report">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>10</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Report</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
