@@ -12,13 +12,15 @@
 #include "Modules/r_peaks_module.h"
 #include "Modules/waves_module.h"
 #include "Modules/hrv1_module.h"
+#include "Modules/stsegment_module.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainView w(&a);
+//    QApplication a(argc, argv);
+//    MainView w(&a);
 //    w.setWindowState(w.windowState() ^ Qt::WindowFullScreen);
-    w.show();
-    return a.exec();
+    St_Segment Test;
+    Test.analyze();
+//    return a.exec();
 }
 
