@@ -57,7 +57,7 @@ void T_Wave_Alt::preprocessing_t_wave_alt()
 
     if(waves_points.t_end(0) < waves_points.qrs_end(0)) //gdy sygnał zaczyna się od Tend
     {
-        arma::uvec tmp(waves_points.t_end.size()-1);                //wektor pomocniczy
+        arma::vec tmp(waves_points.t_end.size()-1);                //wektor pomocniczy
         tmp = waves_points.t_end.tail(waves_points.t_end.size()-1); //usunięcie pierwszego Tend
         waves_points.t_end.set_size(tmp.size());                    //zmiana rozmiaru wektora t_end
         waves_points.t_end = tmp;                                   //zapisanie nowego wektora t_end
@@ -68,7 +68,7 @@ void T_Wave_Alt::preprocessing_t_wave_alt()
     if(waves_points.qrs_end(waves_points.qrs_end.size()-1) > waves_points.t_end(waves_points.t_end.size()-1)) //gdy sygnał kończy się na QRSend
     {
         std::cout << std::endl;
-        arma::uvec tmp(waves_points.qrs_end.size()-1);                  //wektor pomocniczy
+        arma::vec tmp(waves_points.qrs_end.size()-1);                  //wektor pomocniczy
         tmp = waves_points.qrs_end.head(waves_points.qrs_end.size()-1); //usunięcie ostatniego QRSend
         waves_points.qrs_end.set_size(tmp.size());                      //zmiana rozmiaru wektora qrs_end
         waves_points.qrs_end = tmp;                                     //zapisanie nowego wektora qrs_end
@@ -86,11 +86,11 @@ void T_Wave_Alt::preprocessing_t_wave_alt()
         if(waves_points.t_end.size() % 2 != 0) //sprawdzenie czy liczba QRSend i Tend jest parzysta
         {
             //usunięcie ostatniego QRSend i Tend, gdy liczba ta jest nieparzysta
-            arma::uvec tmp(waves_points.qrs_end.size()-1);                  //wektor pomocniczy
+            arma::vec tmp(waves_points.qrs_end.size()-1);                  //wektor pomocniczy
             tmp = waves_points.qrs_end.head(waves_points.qrs_end.size()-1); //usunięcie ostatniego QRSend
             waves_points.qrs_end.set_size(tmp.size());                      //zmiana rozmiaru wektora qrs_end
             waves_points.qrs_end = tmp;                                     //zapisanie nowego wektora qrs_end
-            arma::uvec tmp1(waves_points.t_end.size()-1);                   //wektor pomocniczy
+            arma::vec tmp1(waves_points.t_end.size()-1);                   //wektor pomocniczy
             tmp1 = waves_points.t_end.head(waves_points.t_end.size()-1);    //usunięcie ostatniego Tend
             waves_points.t_end.set_size(tmp1.size());                       //zmiana rozmiaru wektora t_end
             waves_points.t_end = tmp1;                                      //zapisanie nowego wektora t_end

@@ -34,7 +34,7 @@ void Waves::find_qrs_onset_end()
 
     bool goLeft, decreasingL, firstMinReached;
     bool goRight, decreasingR;
-    arma::uvec qrsOnset(r_peaks_vec.size()), qrsEnd(r_peaks_vec.size());
+    arma::vec qrsOnset(r_peaks_vec.size()), qrsEnd(r_peaks_vec.size());
 
     for(int i=0; i<r_peaks_vec.size(); i++)
     {
@@ -109,7 +109,7 @@ void Waves::find_p_onset_end()
     filter_lowpass(15,20);  // ponowna filtracja
 
     // WYSZUKIWANIE PONSETS I PENDS
-    arma::uvec Ponset(r_peaks_vec.size()), Pend(r_peaks_vec.size());
+    arma::vec Ponset(r_peaks_vec.size()), Pend(r_peaks_vec.size());
     int noOfSamples = int(floor(0.25/(1/sampling_frequency)));
 
     for (int i=0; i<r_peaks_vec.size(); i++)
@@ -189,7 +189,7 @@ void Waves::find_t_end()
     differentiate();        // rozniczkowanie
     filter_lowpass(15,20);  // ponowna filtracja
 
-    arma::uvec Tend(r_peaks_vec.size());
+    arma::vec Tend(r_peaks_vec.size());
     for (int i=0; i<r_peaks_vec.size(); i++)
     {
         // Poszukiwanie maksimum pochodnej wystepujacego miedzy punktem
@@ -282,6 +282,37 @@ void Waves::find_waves()
 
 Waves_Points Waves::get_waves()
 {
-    find_waves();
     return waves_points;
+}
+
+void Waves::remove_head(int which)
+{
+    switch(which)
+    {
+    case 0:
+        waves_points.p_onset.shed_row(0);
+        break;
+    case 1:
+        waves_points.p_end.shed_row(0);
+        break;
+    case 2:
+        waves_points.qrs_onset.shed_row(0);
+        break;
+    case 3:
+        waves_points.r_peaks.shed_row(0);
+        break;
+    case 4:
+        waves_points.qrs_end.shed_row(0);
+        break;
+    case 5:
+        waves_points.t_end.shed_row(0);
+        break;
+    default:
+        break;
+    }
+}
+
+void Waves::set_waves(Waves_Points waves)
+{
+    waves_points = waves;
 }

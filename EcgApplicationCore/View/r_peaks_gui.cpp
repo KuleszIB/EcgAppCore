@@ -11,8 +11,9 @@ R_peaks_gui::R_peaks_gui(QWidget *parent) :
     qrsPlot2=new qrsplot(this);
     layout->addWidget(qrsPlot2);
     ui->qrsPlot->setLayout(layout);
-    m_ecg_baseline.reserve(10);
-    m_r_peaks.reserve(10);
+    m_ecg_baseline.reserve(20);
+    m_r_peaks.reserve(20);
+    m_waves.reserve(20);
     current_it = 0;
     ui->pushButton->setDisabled(true);
 }
@@ -71,8 +72,9 @@ void R_peaks_gui::filter1()
 //        qInfo() << "Current it" << current_it;
         m_r_peaks[current_it]->find_r_peaks();
         renumber_r_peaks();
-        qInfo() << "R Peak[" << suma << "] =" << (m_r_peaks[current_it]->get_r_peaks())(0);
+        qInfo() << "R_Peak[" << suma << "] =" << (m_r_peaks[current_it]->get_r_peaks())(0);
         suma += (m_r_peaks[current_it]->get_r_peaks()).size();
+
         if(++current_it < m_r_peaks.size()-1)
             emit still_loading();
 
@@ -152,7 +154,93 @@ void R_peaks_gui::renumber_r_peaks()
     m_r_peaks[current_it]->set_r_peaks(new_r_peaks + tmp);
 }
 
+void R_peaks_gui::renumber_waves()
+{
+    Waves_Points new_waves = m_waves[current_it]->get_waves();
+    arma::vec new_p_onset = new_waves.p_onset;
+    arma::vec new_p_end = new_waves.p_end;
+    arma::vec new_qrs_onset = new_waves.qrs_onset;
+    arma::vec new_r_peaks = new_waves.r_peaks;
+    arma::vec new_qrs_end = new_waves.qrs_end;
+    arma::vec new_t_end = new_waves.t_end;
+
+    arma::vec tmp_p_onset(new_p_onset.size());
+    arma::vec tmp_p_end(new_p_end.size());
+    arma::vec tmp_qrs_onset(new_qrs_onset.size());
+    arma::vec tmp_r_peaks(new_r_peaks.size());
+    arma::vec tmp_qrs_end(new_qrs_end.size());
+    arma::vec tmp_t_end(new_t_end.size());
+
+    tmp_p_onset.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+    tmp_p_end.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+    tmp_qrs_onset.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+    tmp_r_peaks.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+    tmp_qrs_end.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+    tmp_t_end.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+
+    new_p_onset = new_p_onset + tmp_p_onset;
+    new_p_end = new_p_end + tmp_p_end;
+    new_qrs_onset = new_qrs_onset + tmp_qrs_onset;
+    new_r_peaks = new_r_peaks + tmp_r_peaks;
+    new_qrs_end = new_qrs_end + tmp_qrs_end;
+    new_t_end = new_t_end + tmp_t_end;
+
+    new_waves.p_onset = new_p_onset;
+    new_waves.p_end = new_p_end;
+    new_waves.qrs_onset = new_qrs_onset;
+    new_waves.r_peaks = new_r_peaks;
+    new_waves.qrs_end = new_qrs_end;
+    new_waves.t_end = new_t_end;
+
+    m_waves[current_it]->set_waves(new_waves);
+}
+
 void R_peaks_gui::continue_processing()
 {
     filter1();
+}
+
+void R_peaks_gui::run_waves()
+{
+    Waves *waves = new Waves(m_r_peaks[current_it]->get_signal_filtered(),m_r_peaks[current_it]->get_r_peaks(),m_r_peaks[current_it]->get_sampling_freq());
+    m_waves.push_back(waves);
+    if(current_it != 0)
+        find_waves();
+    else
+        find_waves();
+}
+
+void R_peaks_gui::find_waves()
+{
+    Waves *waves;
+
+    arma::vec new_r_peaks((m_r_peaks[current_it]->get_r_peaks()).size()+1);
+
+    new_r_peaks(0) = (m_r_peaks[current_it-1]->get_r_peaks())((m_r_peaks[current_it-1]->get_r_peaks()).size()-1);
+    new_r_peaks(arma::span(1,new_r_peaks.size()-1)) = m_r_peaks[current_it]->get_r_peaks();
+
+    arma::vec new_signal0 = (m_r_peaks[current_it-1]->get_signal_filtered())(arma::span(new_r_peaks(0),(m_r_peaks[current_it-1]->get_signal_filtered()).size()-1));
+    arma::vec new_signal1((m_r_peaks[current_it]->get_signal_filtered()).size()+new_signal0.size());
+    new_signal1(arma::span(0,new_signal0.size()-1)) = new_signal0;
+    new_signal1(arma::span(new_signal0.size(),new_signal1.size()-1)) = m_r_peaks[current_it]->get_signal_filtered();
+
+    waves = new Waves(new_signal1,new_r_peaks,m_r_peaks[current_it]->get_sampling_freq());
+    waves->find_waves();
+    Waves_Points qrs0 = m_waves[current_it-1]->get_waves();
+    renumber_waves();
+    Waves_Points qrs1 = waves->get_waves();
+
+//    if(qrs0.p_onset.tail(1) == qrs1.p_onset.head(1))
+//        m_waves[current_it]->remove_head(0);
+//    if(qrs0.p_end.tail(1) == qrs1.p_end.head(1))
+//        m_waves[current_it]->remove_head(1);
+//    if(qrs0.qrs_onset.tail(1) == qrs1.qrs_onset.head(1))
+//        m_waves[current_it]->remove_head(2);
+//    if(qrs0.r_peaks.tail(1) == qrs1.r_peaks.head(1))
+//        m_waves[current_it]->remove_head(3);
+//    if(qrs0.qrs_end.tail(1) == qrs1.qrs_end.head(1))
+//        m_waves[current_it]->remove_head(4);
+//    if(qrs0.t_end.tail(1) == qrs1.t_end.head(1))
+//        m_waves[current_it]->remove_head(5);
+
 }

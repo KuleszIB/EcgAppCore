@@ -5,12 +5,12 @@
 
 struct Waves_Points
 {
-    arma::uvec r_peaks;
-    arma::uvec qrs_onset;
-    arma::uvec qrs_end;
-    arma::uvec t_end;
-    arma::uvec p_onset;
-    arma::uvec p_end;
+    arma::vec r_peaks;
+    arma::vec qrs_onset;
+    arma::vec qrs_end;
+    arma::vec t_end;
+    arma::vec p_onset;
+    arma::vec p_end;
 };
 
 class Waves : public R_Peaks
@@ -29,6 +29,8 @@ public:
     Waves(arma::vec signal, arma::vec r_peaks, double fs);
     void find_waves();
     Waves_Points get_waves();
+    void set_waves(Waves_Points waves);
+    void remove_head(int which);
 };
 
 #endif // WAVES_H
