@@ -62,7 +62,7 @@ public:
     arma::vec get_signal_raw();
     arma::vec get_signal_filtered();
     arma::vec get_signal_baseline();
-    arma::vec get_time_vec();
+    arma::vec get_time_vec(int it);
     double get_sampling_freq();
 };
 

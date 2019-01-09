@@ -57,7 +57,7 @@ void R_peaks_gui::filter1()
 //          x[i] = i/50.0 - 1; // x goes from -1 to 1
 //          y[i] = sin(x[i]); // let's plot a quadratic function
 //        }
-        arma::vec time = m_ecg_baseline[0]->get_time_vec();
+        arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
         arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
         arma::vec time_cropped = time(arma::span(0,N-1));
         x = examination::convert_vec_qvector(time_cropped);

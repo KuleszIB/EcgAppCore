@@ -321,8 +321,11 @@ void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
         }
 }
 
-arma::vec Ecg_Baseline::get_time_vec() //Nie wiem czy to nie musi być przed konstruktorem jeszcze
+arma::vec Ecg_Baseline::get_time_vec(int it) //Nie wiem czy to nie musi być przed konstruktorem jeszcze
 {
+    arma::vec tmp(signal_raw.size());
+    tmp.fill(signal_raw.size()*it/sampling_frequency);
+    time_vec = time_vec + tmp;
     return time_vec;
 }
 
