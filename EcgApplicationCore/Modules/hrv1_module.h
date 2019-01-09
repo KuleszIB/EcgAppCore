@@ -1,5 +1,5 @@
-#ifndef HRV1_H
-#define HRV1_H
+#ifndef HRV1
+#define HRV1
 
 #include "ecg_baseline_module.h"
 #include "r_peaks_module.h"

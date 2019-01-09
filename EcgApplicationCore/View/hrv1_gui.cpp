@@ -12,6 +12,7 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     layout->addWidget(hrv1Plot2);
     ui->hrv1Plot->setLayout(layout);
     connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
+    hrv_r_peaks.reserve(10);
 
 }
 
@@ -30,3 +31,16 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
     hrv1Plot2->setData2(x,y);
   }
 
+void HRV1_gui::load_R_Peaks_vector(Ecg_Baseline *r_peaks_signal)
+{
+    Hrv1 *hrv1_r_peaks = new Hrv1(r_peaks_signal->get_signal_raw());
+    hrv_r_peaks.push_back(hrv1_r_peaks);
+}
+void HRV1_gui::on_pushButton_clicked()
+{
+    addRandomGraph();
+    //tutaj chyba calculate periodogram
+    hrv_r_peaks[0]->calc_periodogram();
+    //fabian sprawdz czy to jest dobrze bo ja nie kumaty z tych rzeczy albo osoba od hrv1 co tu ma byc .
+
+}
