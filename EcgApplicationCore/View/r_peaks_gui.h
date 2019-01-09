@@ -18,6 +18,7 @@ class R_peaks_gui : public QWidget
 public:
     explicit R_peaks_gui(QWidget *parent = 0);
     ~R_peaks_gui();
+    void renumber_r_peaks();
 
 private slots:
     void peakDetection();
@@ -26,8 +27,13 @@ private slots:
 
 public slots:
     void filtered_signal_loaded(Ecg_Baseline *signal);
+    void continue_processing();
+
+signals:
+    void still_loading();
 
 private:
+    int current_it;
     Ui::R_peaks_gui *ui;
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;

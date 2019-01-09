@@ -70,7 +70,8 @@ void Ecg_Baseline::filter_noise()
     //int M = signal_raw.size();
     int M = 25;
     arma::vec coeffs = sp::fir1(M, fc);
-    signal_filtered = conv(coeffs, signal_raw);
+    signal_filtered = conv(signal_raw, coeffs, "same");
+//    qInfo() << "Filter noise signal_filtered.size()" << signal_filtered.size();
 }
 
 void Ecg_Baseline::filter_bandpass()
@@ -80,7 +81,8 @@ void Ecg_Baseline::filter_bandpass()
     double fc2 = 2 / (sampling_frequency/2);
     int M = 25;
     arma::vec coeffs = sp::fir1_bp(M, fc2, fc1);
-    signal_filtered = conv(coeffs, signal_raw);
+    signal_filtered = conv(signal_raw, coeffs, "same");
+//    qInfo() << "Filter bandpass signal_filtered.size()" << signal_filtered.size();
 }
 
 void Ecg_Baseline::filter_moving_average()
@@ -100,7 +102,6 @@ void Ecg_Baseline::filter_moving_average()
     coefficient.set_coeffs(b);
     arma::vec signal_buff = coefficient.filter(signal_filtered);
     signal_filtered = signal_filtered-signal_buff;
-
 
     //za pomoca funkcji conv
     //arma::vec signal_buff= arma::conv(signal_filtered,b);

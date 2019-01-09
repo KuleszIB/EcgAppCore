@@ -200,7 +200,9 @@ void ECGbaseline_gui::filter4()
 //          y[i] = cos(x[i])+sin(x[i]); // let's plot a quadratic function
 //        }
         ecgPlot2->setData(x,y);
-    current_it++;
+//        qInfo() << "Filtering it" << current_it;
+        if(current_it++ < m_ecg_baseline.size()-1)
+            emit still_loading();
      }
 
 void ECGbaseline_gui::on_pushButton_clicked()
@@ -251,10 +253,10 @@ void ECGbaseline_gui::load_part(arma::vec *part)
         ui->plainTextEdit->setPlainText("Wczytano fragment");
         ui->pushButton->setDisabled(false);
     }
-    else if (current_it > 0)
-    {
+    if (current_it > 0)
         emit still_loading();
-    }
+//    qInfo() << "ECG size" << m_ecg_baseline.size();
+
 }
 
 void ECGbaseline_gui::load_info(examination_info *info)

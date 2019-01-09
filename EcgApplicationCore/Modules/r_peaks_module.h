@@ -22,6 +22,7 @@ public:
     R_Peaks(arma::vec signal, double fs=360);
     void find_r_peaks();
     arma::vec get_r_peaks();
+    void set_r_peaks(arma::vec new_r_peaks);
 };
 
 #endif // R_PEAKS_H

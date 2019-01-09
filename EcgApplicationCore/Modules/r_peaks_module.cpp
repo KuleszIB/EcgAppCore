@@ -167,6 +167,11 @@ void R_Peaks::find_r_peaks()
 
 arma::vec R_Peaks::get_r_peaks()
 {
-   find_r_peaks();
+//   find_r_peaks();
    return r_peaks_vec;
+}
+
+void R_Peaks::set_r_peaks(arma::vec new_r_peaks)
+{
+    r_peaks_vec = new_r_peaks;
 }
