@@ -191,6 +191,20 @@ void ECGbaseline_gui::filter4()
         ecgPlot2->setData(x,y);
 
      }
+void ECGbaseline_gui::filter5()
+{
+    Filter_Params filter_params;
+    filter_params.set_filter_type(LMS);
+    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    int N = 7200;
+    QVector<double> x(N), y(N); // initialize with entries 0..100
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
+    arma::vec time_cropped = time(arma::span(0,N-1));
+    x = examination::convert_vec_qvector(time_cropped);
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+}
 
 void ECGbaseline_gui::on_pushButton_clicked()
 {
@@ -214,7 +228,10 @@ void ECGbaseline_gui::on_pushButton_clicked()
         filter4();
         // emituj sygnał do R_Peaks
     }
-
+    if(ui->comboBox_filter->currentIndex() == 7)
+    {
+        filter5();
+    }
 
 }
 
