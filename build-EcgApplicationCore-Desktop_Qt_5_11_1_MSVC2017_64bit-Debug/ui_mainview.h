@@ -87,6 +87,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setEnabled(false);
         tabWidget->setGeometry(QRect(10, 40, 1001, 621));
         ECGBASE = new QWidget();
         ECGBASE->setObjectName(QStringLiteral("ECGBASE"));
@@ -195,6 +196,7 @@ public:
 
         lE_age = new QLineEdit(layoutWidget);
         lE_age->setObjectName(QStringLiteral("lE_age"));
+        lE_age->setEnabled(false);
 
         lo_patients_data->addWidget(lE_age);
 
@@ -205,6 +207,7 @@ public:
 
         lE_gender = new QLineEdit(layoutWidget);
         lE_gender->setObjectName(QStringLiteral("lE_gender"));
+        lE_gender->setEnabled(false);
 
         lo_patients_data->addWidget(lE_gender);
 
@@ -231,7 +234,7 @@ public:
 
         retranslateUi(MainView);
 
-        tabWidget->setCurrentIndex(7);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainView);

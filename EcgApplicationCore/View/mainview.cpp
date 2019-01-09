@@ -105,6 +105,7 @@ void MainView::on_actionExit_triggered()
      //Do poprawy wyswietlanie plci
      //QString str=QString::unicode(file.sex);
      //ui->lE_gender->setText(str);
+     ui->tabWidget->setEnabled(true);
      ui->statusBar->showMessage("Data loaded");
 //     ecg_io->start();
  }
