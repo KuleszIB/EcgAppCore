@@ -41,7 +41,6 @@ private:
     Frequency_Params freq_params;
 
     void calc_cum_time_vec();
-    void calc_freq_vec();
     void resample();
     void calc_time_params();
     void calc_freq_params();
@@ -52,6 +51,7 @@ public:
 
     void calc_periodogram();
     void calc_params();
+    void calc_freq_vec(); //MB:przerzuciłam z private do public, bo nie mogłam użyć
 
     arma::vec get_periodogram();
     arma::vec get_freq_vec();

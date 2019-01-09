@@ -12,7 +12,7 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     hrv1Plot2 = new hrv1plot(this);
     layout->addWidget(hrv1Plot2);
     ui->hrv1Plot->setLayout(layout);
-    connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
+ //   connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
     hrv_r_peaks.reserve(10);
 
 }
@@ -23,25 +23,51 @@ HRV1_gui::~HRV1_gui()
 }
 void HRV1_gui::addRandomGraph() //Przykładowy wykres
 {
-    QVector<double> x(1001), y(1001); // initialize with entries 0..100
-    for (int i=0; i<1001; ++i)
-    {
-        x[i] = i/50.0 - 1; // x goes from -1 to 1
-        y[i] = cos(2*x[i]); // let's plot a quadratic function
-   }
-    hrv1Plot2->setData2(x,y);
+
+    hrv_r_peaks[0]->calc_periodogram();
+    hrv_r_peaks[0]->calc_freq_vec();
+
+    int N = 7200;
+    QVector<double> periodogram(N), time(N); // initialize with entries 0..100
+    arma::vec period =hrv_r_peaks[0]->get_periodogram();
+    periodogram = examination::convert_vec_qvector(period);
+
+    arma::vec ti = hrv_r_peaks[0]->get_freq_vec();
+    time = examination::convert_vec_qvector(ti);
+
+    timeParams = hrv_r_peaks[0]->get_time_params();
+    freq_params = hrv_r_peaks[0]->get_freq_params();
+
+
+        double hff = freq_params.hf;
+        double ulff = freq_params.ulf;
+        double vlff = freq_params.vlf;
+        double lff = freq_params.lf;
+
+//    arma:: vec hff = freq_params.freq_hf;
+//    arma:: vec ulff = freq_params.freq_ulf;
+//    arma:: vec vlff = freq_params.freq_vlf;
+//    arma:: vec lff = freq_params.freq_lf;
+//    int K=100;
+//    QVector<double> hf(K), ulf(K), vlf(K), lf(K);
+//    hf= examination::convert_vec_qvector(hff);
+//    ulf= examination::convert_vec_qvector(ulff);
+//    vlf= examination::convert_vec_qvector(vlff);
+//    lf= examination::convert_vec_qvector(lff);
+    hrv1Plot2->setData2(time,periodogram, hff,ulff,vlff,lff);
   }
 
 void HRV1_gui::load_R_Peaks_vector(Ecg_Baseline *r_peaks_signal)
 {
-    Hrv1 *hrv1_r_peaks = new Hrv1(r_peaks_signal->get_signal_raw());
+    Hrv1 *hrv1_r_peaks = new Hrv1(r_peaks_signal->get_signal_filtered()); //MB:zmieniam  raw na filtered
     hrv_r_peaks.push_back(hrv1_r_peaks);
 }
 void HRV1_gui::on_pushButton_clicked()
 {
-    addRandomGraph();
-    //tutaj chyba calculate periodogram
-    hrv_r_peaks[0]->calc_periodogram();
-    //fabian sprawdz czy to jest dobrze bo ja nie kumaty z tych rzeczy albo osoba od hrv1 co tu ma byc .
+    hrv_r_peaks[0]->calc_params();
 
+    //tutaj chyba calculate periodogram
+
+    //KN:fabian sprawdz czy to jest dobrze bo ja nie kumaty z tych rzeczy albo osoba od hrv1 co tu ma byc .
+    addRandomGraph();
 }

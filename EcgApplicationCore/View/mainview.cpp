@@ -36,6 +36,7 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     m_app = app; // ewentualnie do usunięcia
     connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
+    connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),hrv_1_gui, SLOT(load_R_Peaks_vector(Ecg_Baseline*))); //MB:dobrze dodalam?
     // Tutaj jest do multithread
 //    ecg_io = new Ecg_IO();
 //    QObject::connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
