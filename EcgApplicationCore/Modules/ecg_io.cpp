@@ -7,7 +7,7 @@ Ecg_IO::Ecg_IO()
 
 void Ecg_IO::set_filename(QString name)
 {
-    file->filename = name;
+    file->set_filename(name);
 }
 
 examination* Ecg_IO::get_file()

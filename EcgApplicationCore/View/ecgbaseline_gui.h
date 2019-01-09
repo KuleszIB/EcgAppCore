@@ -16,6 +16,7 @@ class ECGbaseline_gui : public QWidget
 
 public:
     explicit ECGbaseline_gui(QWidget *parent = 0);
+    void set_info(examination_info file_info);
     ~ECGbaseline_gui();
 
 private slots:
@@ -24,14 +25,19 @@ private slots:
     void on_pushButton_clicked();
 public slots:
     void load_signal(examination *file);
-
+    void load_part(arma::vec *part);
+    void load_info(examination_info *info);
+    void continue_processing();
 signals:
-    void ecg_signal_filtered(Ecg_Baseline* signal);
-
+    void ecg_signal_filtered(Ecg_Baseline *signal);
+    void still_loading();
 private:
     examination *m_file;
+    examination_info m_file_info;
+    QVector<arma::vec*> m_signal;
     QVector<Ecg_Baseline*> m_ecg_baseline;
     unsigned int current_it;
+    bool loading_finished;
     Ui::ECGbaseline_gui *ui;
     ecgplot *ecgPlot2;
     void filter1();

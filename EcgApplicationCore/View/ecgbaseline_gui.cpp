@@ -11,12 +11,21 @@ ECGbaseline_gui::ECGbaseline_gui(QWidget *parent) :
     ecgPlot2 = new ecgplot(this);
     layout->addWidget(ecgPlot2);
     ui->ecgPlot->setLayout(layout);
-    m_ecg_baseline.reserve(10);
+    m_signal.reserve(20);
+    m_ecg_baseline.reserve(20);
+    current_it = 0;
+    loading_finished = false;
+    ui->pushButton->setDisabled(true);
 }
 
 ECGbaseline_gui::~ECGbaseline_gui()
 {
     delete ui;
+}
+
+void ECGbaseline_gui::set_info(examination_info file_info)
+{
+    m_file_info = file_info;
 }
 
 void ECGbaseline_gui::addRandomGraph() //Przykładowy wykres
@@ -175,10 +184,10 @@ void ECGbaseline_gui::filter4()
     filter_params.set_filter_type(MOVING_AVERAGE);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
     arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
-    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    emit ecg_signal_filtered(m_ecg_baseline[current_it]); 
     int N = 7200;
     QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec();
+    arma::vec time = m_ecg_baseline[current_it++]->get_time_vec();
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
@@ -194,6 +203,7 @@ void ECGbaseline_gui::filter4()
 
 void ECGbaseline_gui::on_pushButton_clicked()
 {
+//    current_it++;
     if(ui->comboBox_filter->currentIndex() == 3)
     {
         filter1();
@@ -221,8 +231,54 @@ void ECGbaseline_gui::on_pushButton_clicked()
 void ECGbaseline_gui::load_signal(examination *file)
 {
     m_file = file;
-    Ecg_Baseline *ecg_baseline = new Ecg_Baseline(m_file->channel_one,m_file->frequency);
-    m_ecg_baseline.push_back(ecg_baseline);
-    current_it = 0;
+//    Ecg_Baseline *ecg_baseline = new Ecg_Baseline(m_file->get_channel_one(),m_file->get_freq());
+//    m_ecg_baseline.push_back(ecg_baseline);
+//    current_it = 0;
     ui->plainTextEdit->setPlainText("Sygnał załadowano");
+//    loading_finished = true;
+}
+
+void ECGbaseline_gui::load_part(arma::vec *part)
+{
+    m_signal.push_back(part);
+    Ecg_Baseline *ecg_baseline = new Ecg_Baseline(*(m_signal.last()),m_file_info.frequency);
+    m_ecg_baseline.push_back(ecg_baseline);
+    if (m_signal.length() == 1)
+    {
+        ui->plainTextEdit->setPlainText("Wczytano fragment");
+        ui->pushButton->setDisabled(false);
+    }
+    else if (current_it > 0)
+    {
+        emit still_loading();
+    }
+}
+
+void ECGbaseline_gui::load_info(examination_info *info)
+{
+    m_file_info = *info;
+}
+
+void ECGbaseline_gui::continue_processing()
+{
+    if(ui->comboBox_filter->currentIndex() == 3)
+    {
+        filter1();
+        // emituj sygnał do R_Peaks
+    }
+    if(ui->comboBox_filter->currentIndex() == 4)
+    {
+        filter2();
+        // emituj sygnał do R_Peaks
+    }
+    if(ui->comboBox_filter->currentIndex() == 5)
+    {
+        filter3();
+        // emituj sygnał do R_Peaks
+    }
+    if(ui->comboBox_filter->currentIndex() == 8)
+    {
+        filter4();
+        // emituj sygnał do R_Peaks
+    }
 }

@@ -34,12 +34,16 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     ui ->loRpeaks->addWidget(rPeaks_gui);
   //  loadSettings();
     m_app = app; // ewentualnie do usunięcia
+    // TU MA BYĆ INFO_LOADED Z CZYMŚ POŁĄCZONE
     connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
     // Tutaj jest do multithread
     ecg_io = new Ecg_IO();
     connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
     connect(ecg_io,SIGNAL(finished()),ecg_io,SLOT(deleteLater()));
+    connect(ecg_io->get_file(),SIGNAL(info_loaded(examination_info*)),ecgBaseline_gui, SLOT(load_info(examination_info*)));
+    connect(ecg_io->get_file(),SIGNAL(part_loaded(arma::vec*)),ecgBaseline_gui,SLOT(load_part(arma::vec*)));
+    connect(ecgBaseline_gui,SIGNAL(still_loading()),ecgBaseline_gui,SLOT(continue_processing()));
 }
 
 MainView::~MainView()

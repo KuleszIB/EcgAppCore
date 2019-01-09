@@ -66,7 +66,6 @@ Ecg_Baseline::Ecg_Baseline(arma::vec input, double fs)
 
 void Ecg_Baseline::filter_noise()
 {
-    qInfo() << "filter noise";
     double fc = 34 / (sampling_frequency/2);
     //int M = signal_raw.size();
     int M = 25;
@@ -87,7 +86,6 @@ void Ecg_Baseline::filter_bandpass()
 void Ecg_Baseline::filter_moving_average()
 {
     filter_noise();
-    qInfo() << "filter moving average";
     double windowSize = 97;
     arma::vec A(windowSize);
     A.ones();

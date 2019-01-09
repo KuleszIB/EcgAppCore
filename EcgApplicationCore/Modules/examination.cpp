@@ -11,6 +11,15 @@
 #include "armadillo"
 #include "examination.h"
 
+examination::examination()
+{
+    age = -1;
+    N = 650000;
+    channel_one=arma::zeros<arma::vec>(N);
+    channel_two=arma::zeros<arma::vec>(N);
+    sample=arma::zeros<arma::vec>(N);
+}
+
 QString examination::get_filename()
 {
     QFileDialogTester file_dialog;
@@ -18,11 +27,41 @@ QString examination::get_filename()
     return filename;
 }
 
+QVector<double> examination::convert_vec_qvector(arma::vec signal)
+{
+    typedef std::vector<double> stdvec;
+    //typedef QVector<float> qvec;
+    stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+    QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+
+    return signal_qvec;
+}
+
+void examination::set_filename(QString name)
+{
+    filename = name;
+}
+
+arma::vec examination::get_channel_one()
+{
+    return channel_one;
+}
+
+double examination::get_freq()
+{
+    return frequency;
+}
 
 //void examination::get_data(int argc, char **argv)
 void examination::get_data()
 
 {
+    examination_info e_info;
+    int i = 0, M = 65000;
+    arma::vec tmp(M);
+    QVector<arma::vec> data_tab;
+    data_tab.reserve(10);
+
   QStringList name_parts = filename.split(QRegExp("[\\.]"));
   QString info_filename = name_parts[0]+"_info.txt";
   qInfo() << "Wczytany plik naglowkowy" <<  info_filename;
@@ -35,7 +74,8 @@ void examination::get_data()
       QMessageBox::information(0, "info", not_found);
       //qInfo() << "fileOpen failed";
         age = -1;
-        *sex = 'N';
+//        *sex = 'N';
+        sex = "N";
         //sex = "N";
         //qInfo() << "sex" << *sex<< endl;
         frequency = -1;
@@ -48,6 +88,7 @@ void examination::get_data()
 
   }else{ //bylo bez
       QTextStream info(&file_info);
+
 
 
       // to czego będziemy szukać
@@ -88,9 +129,11 @@ void examination::get_data()
               age = list[0].toInt();
 
               // czary mary z typami
-              sex = const_cast<char*>( list[1].toStdString().c_str());
-              if (*sex == 'F') // female - kobieta, male - mezczyzna zostaje :)
-                  *sex = 'K';
+              sex = /*const_cast<char*>*/( list[1].toStdString().c_str());
+//              if (*sex == 'F') // female - kobieta, male - mezczyzna zostaje :)
+//                  *sex = 'K';
+              if (sex == "F")
+                  sex = "K";
 
               // teraz sprawdzamy, czy nasz badany sie leczy
               info_line = info.readLine();
@@ -105,7 +148,11 @@ void examination::get_data()
       }
 
   }
+    e_info.age = age;
+    e_info.frequency = frequency;
+    e_info.sex = sex;
 
+    emit info_loaded(&e_info);
   // wczytujemy w koncu sygnal
   QFile file(filename);
   if (!file.open(QIODevice::ReadOnly))
@@ -155,10 +202,21 @@ if (list.size() == 2)   {
 
    // qInfo() << channel_one.at(counter);
 }
-
-
-   ++counter;
+    tmp(i) = ch1;
+    if(++counter%M == 0)
+    {
+        data_tab.push_back(tmp);
+        emit part_loaded(&(data_tab.last()));
+        i = 0;
+    }
+    else
+        ++i;
   }
+    if(tmp.size() < M)
+    {
+        data_tab.push_back(tmp);
+        emit part_loaded(&(data_tab.last()));
+    }
     //sprawdzenie jakiejś wartości ze środka, czy sygnał cyfrowy czy analogowy
     // albo sprawdzać, czy coś po przecinku (ale to może trafić na zero
     if (channel_one[10]>50 || channel_two[10]> 50)
