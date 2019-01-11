@@ -20,7 +20,7 @@ public:
     explicit R_peaks_gui(QWidget *parent = 0);
     ~R_peaks_gui();
     void renumber_r_peaks();
-    void renumber_waves();
+    void renumber_waves(); 
 
 private slots:
     void peakDetection();
@@ -30,7 +30,7 @@ private slots:
 public slots:
     void filtered_signal_loaded(Ecg_Baseline *signal);
     void continue_processing();
-    void run_waves();
+
 
 signals:
     void still_loading();
@@ -48,6 +48,7 @@ private:
     void filter3();
     void filter4();
     void find_waves();
+    void run_waves();
 
 };
 

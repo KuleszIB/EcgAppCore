@@ -54,7 +54,7 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
         emit still_loading();
 //    qInfo() << "R_peaks size" << m_r_peaks.size();
 }
-static int suma = 0;
+static int suma;
 void R_peaks_gui::filter1()
     {
 //    int N = 7200;
@@ -75,7 +75,8 @@ void R_peaks_gui::filter1()
         qInfo() << "R_Peak[" << suma << "] =" << (m_r_peaks[current_it]->get_r_peaks())(0);
         suma += (m_r_peaks[current_it]->get_r_peaks()).size();
 
-        if(++current_it < m_r_peaks.size()-1)
+        run_waves();
+        if(++current_it < m_waves.size()-1)
             emit still_loading();
 
 //        qrsPlot2->setData2(x,y);
@@ -204,31 +205,73 @@ void R_peaks_gui::run_waves()
 {
     Waves *waves = new Waves(m_r_peaks[current_it]->get_signal_filtered(),m_r_peaks[current_it]->get_r_peaks(),m_r_peaks[current_it]->get_sampling_freq());
     m_waves.push_back(waves);
-    if(current_it != 0)
-        find_waves();
-    else
-        find_waves();
+    find_waves();
+
 }
 
 void R_peaks_gui::find_waves()
 {
-    Waves *waves;
+// ------------
+// Dobry pomysł Kasi Samojeden!
+// ------------
+    int M, N;
+    qInfo() << current_it;
+    arma::vec new_r_peaks = m_waves[current_it]->get_r_peaks();
+    arma::vec old_r_peaks;
 
-    arma::vec new_r_peaks((m_r_peaks[current_it]->get_r_peaks()).size()+1);
+    arma::vec old_signal;
+    arma::vec current_signal = m_ecg_baseline[current_it]->get_signal_filtered();
 
-    new_r_peaks(0) = (m_r_peaks[current_it-1]->get_r_peaks())((m_r_peaks[current_it-1]->get_r_peaks()).size()-1);
-    new_r_peaks(arma::span(1,new_r_peaks.size()-1)) = m_r_peaks[current_it]->get_r_peaks();
+    // usunięcie ostatniego r peaka
+    new_r_peaks.shed_row(new_r_peaks.size()-1);
+    m_waves[current_it]->set_r_peaks(new_r_peaks);
+    qInfo() << "Weszło do waves";
+    if(current_it > 0)
+    {
+        old_r_peaks = m_waves[current_it-1]->get_r_peaks();
+        old_signal = m_ecg_baseline[current_it-1]->get_signal_filtered();
+        M = old_r_peaks(old_r_peaks.size()-1)-old_signal.size()*(current_it-1)+1;
+        N = old_signal.size()-1;
+        qInfo() << "M" << M << "| N" << N;
+        old_signal = old_signal(arma::span(M,N));
+        // wklejenie poprzedniego fragmentu sygnału od przedostatniego r peaka
+        qInfo() << "Wklejanie";
+        current_signal.insert_rows(0,old_signal);
+//        for(int i = 0; i < 1000; i++)
+//            qInfo() << current_signal[i];
 
-    arma::vec new_signal0 = (m_r_peaks[current_it-1]->get_signal_filtered())(arma::span(new_r_peaks(0),(m_r_peaks[current_it-1]->get_signal_filtered()).size()-1));
-    arma::vec new_signal1((m_r_peaks[current_it]->get_signal_filtered()).size()+new_signal0.size());
-    new_signal1(arma::span(0,new_signal0.size()-1)) = new_signal0;
-    new_signal1(arma::span(new_signal0.size(),new_signal1.size()-1)) = m_r_peaks[current_it]->get_signal_filtered();
-
-    waves = new Waves(new_signal1,new_r_peaks,m_r_peaks[current_it]->get_sampling_freq());
-    waves->find_waves();
-    Waves_Points qrs0 = m_waves[current_it-1]->get_waves();
+        qInfo() << "find_waves()";
+        m_waves[current_it]->set_signal_filtered(current_signal);
+        m_waves[current_it]->find_waves();
+        qInfo() << "Znalazło dupa";
+        // powrócenie sygnału do stanu początkowego
+        current_signal.shed_rows(0,old_signal.size()-1);
+        m_waves[current_it]->set_signal_filtered(current_signal);
+    }
+    else
+        m_waves[current_it]->find_waves();
+    qInfo() << "renumber_waves()";
     renumber_waves();
-    Waves_Points qrs1 = waves->get_waves();
+// ------------
+// Stara wersja
+// ------------
+//    Waves *waves;
+
+//    arma::vec new_r_peaks((m_r_peaks[current_it]->get_r_peaks()).size()+1);
+
+//    new_r_peaks(0) = (m_r_peaks[current_it-1]->get_r_peaks())((m_r_peaks[current_it-1]->get_r_peaks()).size()-1);
+//    new_r_peaks(arma::span(1,new_r_peaks.size()-1)) = m_r_peaks[current_it]->get_r_peaks();
+
+//    arma::vec new_signal0 = (m_r_peaks[current_it-1]->get_signal_filtered())(arma::span(new_r_peaks(0),(m_r_peaks[current_it-1]->get_signal_filtered()).size()-1));
+//    arma::vec new_signal1((m_r_peaks[current_it]->get_signal_filtered()).size()+new_signal0.size());
+//    new_signal1(arma::span(0,new_signal0.size()-1)) = new_signal0;
+//    new_signal1(arma::span(new_signal0.size(),new_signal1.size()-1)) = m_r_peaks[current_it]->get_signal_filtered();
+
+//    waves = new Waves(new_signal1,new_r_peaks,m_r_peaks[current_it]->get_sampling_freq());
+//    waves->find_waves();
+//    Waves_Points qrs0 = m_waves[current_it-1]->get_waves();
+//    renumber_waves();
+//    Waves_Points qrs1 = waves->get_waves();
 
 //    if(qrs0.p_onset.tail(1) == qrs1.p_onset.head(1))
 //        m_waves[current_it]->remove_head(0);

@@ -25,6 +25,7 @@ R_Peaks::R_Peaks(arma::vec signal, double fs)
     signal_raw = signal;
     signal_filtered = signal;
     sampling_frequency = fs;
+    calc_time_vec();
 }
 
 void R_Peaks::pan_tompkins()

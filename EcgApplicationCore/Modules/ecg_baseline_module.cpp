@@ -379,3 +379,8 @@ void write_to_file(arma::vec data)
     }
     plik.close();
 }
+
+void Ecg_Baseline::set_signal_filtered(arma::vec signal)
+{
+    signal_filtered = signal;
+}
