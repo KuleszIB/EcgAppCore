@@ -7,6 +7,7 @@
 #include <qwt_plot_grid.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_magnifier.h>
+#include <qwt_symbol.h>
 
 class hrv2poincareplot : public QwtPlot
 {
@@ -14,15 +15,15 @@ class hrv2poincareplot : public QwtPlot
 public:
     hrv2poincareplot(QWidget *parent = 0);
     ~hrv2poincareplot();
-    void setData2(QVector<double> x, QVector<double> y);
+    void setData2(QVector<double> x, QVector<double> y, float s1, float s2);
 
 public slots:
 
 private:
     QwtPlot *plot;
     QwtPlotCurve *signal;
-
-
+    QwtPlotCurve *sd1;
+    QwtPlotCurve *sd2;
 
 };
 

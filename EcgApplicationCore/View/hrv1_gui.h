@@ -7,6 +7,7 @@
 #include "Modules/r_peaks_module.h"
 #include "Modules/ecg_baseline_module.h"
 #include "Modules/hrv1_module.h"
+#include "Modules/examination.h"
 namespace Ui {
 class HRV1_gui;
 }
@@ -29,6 +30,8 @@ private:
     Ui::HRV1_gui *ui;
     hrv1plot *hrv1Plot2;
     QVector<Hrv1*> hrv_r_peaks;
+    Time_Params timeParams;
+    Frequency_Params freq_params;
 };
 
 #endif // HRV1_H
