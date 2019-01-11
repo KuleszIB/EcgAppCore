@@ -368,19 +368,34 @@ arma::vec read_from_file()
     return data;
 }
 
-void write_to_file(arma::vec data)
+void Ecg_Baseline::write_to_file(int it)
 {
-    ofstream plik;
-    plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5_pozapisaniu.txt");
-    if (!plik.good() == true){
-        int i = 1 ;
-        cin >> data[i];
-        i++;
-    }
-    plik.close();
+//    ofstream plik;
+//    int i = 0;
+//    plik.open("C:/Users/Laura/Desktop/Laura/semestr 9/MOJE/DADM/projekt/Prototyp Matlab/100_V5_pozapisaniu.txt");
+//    if (!plik.good() == true){
+//        cin >> data[i++];
+//    }
+//    plik.close();
+    QString a = "../EcgApplicationCore/results/ecg_baseline/ecg_";
+    a.append(QString::number(it));
+    a.append(".txt");
+    QFile file(a);
+    qInfo() << a;
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+    qInfo() << "Przeszło";
+    QTextStream out(&file);
+    for(int i = 0; i < signal_filtered.size(); i++)
+        out << QString::number(signal_filtered[i]) << "\n";
 }
 
 void Ecg_Baseline::set_signal_filtered(arma::vec signal)
 {
     signal_filtered = signal;
+}
+
+void Ecg_Baseline::set_signal_raw(arma::vec signal)
+{
+    signal_raw = signal;
 }

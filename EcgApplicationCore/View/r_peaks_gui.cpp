@@ -215,7 +215,6 @@ void R_peaks_gui::find_waves()
 // Dobry pomysł Kasi Samojeden!
 // ------------
     int M, N;
-    qInfo() << current_it;
     arma::vec new_r_peaks = m_waves[current_it]->get_r_peaks();
     arma::vec old_r_peaks;
 
@@ -230,7 +229,7 @@ void R_peaks_gui::find_waves()
     {
         old_r_peaks = m_waves[current_it-1]->get_r_peaks();
         old_signal = m_ecg_baseline[current_it-1]->get_signal_filtered();
-        M = old_r_peaks(old_r_peaks.size()-1)-old_signal.size()*(current_it-1)+1;
+        M = old_r_peaks(old_r_peaks.size()-1)-old_signal.size()*(current_it-1)+int(m_waves[current_it]->get_sampling_freq()/10.0);
         N = old_signal.size()-1;
         qInfo() << "M" << M << "| N" << N;
         old_signal = old_signal(arma::span(M,N));
