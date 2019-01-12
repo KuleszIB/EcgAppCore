@@ -15,7 +15,7 @@ R_peaks_gui::R_peaks_gui(QWidget *parent) :
     m_r_peaks.reserve(20);
     m_waves.reserve(20);
     current_it = 0;
-    ui->pushButton->setDisabled(true);
+//    ui->pushButton->setDisabled(true);
 }
 
 
@@ -35,9 +35,6 @@ R_peaks_gui::~R_peaks_gui()
     delete ui;
 }
 
-
-
-
 void R_peaks_gui::peakDetection()
 {
 
@@ -45,114 +42,40 @@ void R_peaks_gui::peakDetection()
 
 void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
 {
-//    Ecg_Baseline *ecg_signal_filtered = new Ecg_Baseline(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_ecg_baseline.push_back(signal);
     R_Peaks *r_peaks = new R_Peaks(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_r_peaks.push_back(r_peaks);
     ui->pushButton->setDisabled(false);
     if(current_it > 0)
         emit still_loading();
-//    qInfo() << "R_peaks size" << m_r_peaks.size();
 }
-static int suma;
+static int suma; // tylko do debugowania
 void R_peaks_gui::filter1()
+{
+    m_r_peaks[current_it]->find_r_peaks();
+    run_waves();
+    qInfo() << "Przeszło run_waves(), current_it" << current_it << "| m_waves.size()" << m_waves.size();
+    if(current_it < m_waves.size())
     {
-//    int N = 7200;
-//        QVector<double> x(N), y(N); // initialize with entries 0..100
-//        for (int i=0; i<1001; ++i)
-//        {
-//          x[i] = i/50.0 - 1; // x goes from -1 to 1
-//          y[i] = sin(x[i]); // let's plot a quadratic function
-//        }
-//        arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
-//        arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-//        arma::vec time_cropped = time(arma::span(0,N-1));
-//        x = examination::convert_vec_qvector(time_cropped);
-//        y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
-//        qInfo() << "Current it" << current_it;
-        m_r_peaks[current_it]->find_r_peaks();
-        renumber_r_peaks();
-        qInfo() << "R_Peak[" << suma << "] =" << (m_r_peaks[current_it]->get_r_peaks())(0);
-        suma += (m_r_peaks[current_it]->get_r_peaks()).size();
-
-        run_waves();
-        if(++current_it < m_waves.size()-1)
-            emit still_loading();
-
-//        qrsPlot2->setData2(x,y);
-      }
-
-
-void R_peaks_gui::filter2()
-    {
-        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-        for (int i=0; i<1001; ++i)
-        {
-          x[i] = i/50.0 - 1; // x goes from -1 to 1
-          y[i] = cos(x[i]); // let's plot a quadratic function
-        }
-        qrsPlot2->setData2(x,y);
-      }
-
-
-void R_peaks_gui::filter3()
-    {
-        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-        for (int i=0; i<1001; ++i)
-        {
-          x[i] = i/50.0 - 1; // x goes from -1 to 1
-          y[i] = exp(x[i]); // let's plot a quadratic function
-        }
-        qrsPlot2->setData2(x,y);
-      }
-
-
-
-void R_peaks_gui::filter4()
-    {
-        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-        for (int i=0; i<1001; ++i)
-        {
-          x[i] = i/50.0 - 1; // x goes from -1 to 1
-          y[i] = (x[i]); // let's plot a quadratic function
-        }
-        qrsPlot2->setData2(x,y);
-     }
-
-
+        current_it++;
+        qInfo() << "Emituje";
+        emit still_loading();
+        qInfo() << "Wyemitowało";
+    }
+}
 
 void R_peaks_gui::on_pushButton_clicked()
 {
-//    if(ui->checkBoxR->isChecked())
-//    {
-//        return filter1();
-//    }
-//    if(ui->checkBoxQRSonset->isChecked())
-//    {
-//        return filter2();
-//    }
-//    if(ui->checkBoxR->isChecked())
-//    {
-//        return filter3();
-//    }
-//    if(ui->checkBoxQRSend->isChecked())
-//    {
-//        return filter4();
-//    }
-    //m_r_peaks[0]->find_r_peaks();
     filter1();
-    arma::vec r_test = m_r_peaks[0]->get_r_peaks();
-    if (current_it > 0)
-        emit still_loading();
 }
 
 void R_peaks_gui::renumber_r_peaks()
 {
-    arma::vec new_r_peaks = m_r_peaks[current_it]->get_r_peaks();
+    arma::vec new_r_peaks = m_r_peaks[current_it-1]->get_r_peaks();
     arma::vec tmp(new_r_peaks.size());
-    int N = (m_r_peaks[current_it]->get_signal_filtered()).size();
-    tmp.fill(N*current_it);
-    m_r_peaks[current_it]->set_r_peaks(new_r_peaks + tmp);
+    int N = (m_r_peaks[current_it-1]->get_signal_filtered()).size();
+    tmp.fill(N*(current_it-1));
+    m_r_peaks[current_it-1]->set_r_peaks(new_r_peaks + tmp);
 }
 
 void R_peaks_gui::renumber_waves()
@@ -203,10 +126,10 @@ void R_peaks_gui::continue_processing()
 
 void R_peaks_gui::run_waves()
 {
+    qInfo() << "run_waves()";
     Waves *waves = new Waves(m_r_peaks[current_it]->get_signal_filtered(),m_r_peaks[current_it]->get_r_peaks(),m_r_peaks[current_it]->get_sampling_freq());
     m_waves.push_back(waves);
     find_waves();
-
 }
 
 void R_peaks_gui::find_waves()
@@ -214,8 +137,10 @@ void R_peaks_gui::find_waves()
 // ------------
 // Dobry pomysł Kasi Samojeden!
 // ------------
+    qInfo() << "find_waves()";
     int M, N;
     arma::vec new_r_peaks = m_waves[current_it]->get_r_peaks();
+    arma::vec new_r_peaks_copy;
     arma::vec old_r_peaks;
 
     arma::vec old_signal;
@@ -223,33 +148,54 @@ void R_peaks_gui::find_waves()
 
     // usunięcie ostatniego r peaka
     new_r_peaks.shed_row(new_r_peaks.size()-1);
-    m_waves[current_it]->set_r_peaks(new_r_peaks);
-    qInfo() << "Weszło do waves";
+    new_r_peaks_copy = new_r_peaks;
     if(current_it > 0)
     {
+        // wycięcie ze starego sygnału fragmentu od przedostaniego r peaka
         old_r_peaks = m_waves[current_it-1]->get_r_peaks();
         old_signal = m_ecg_baseline[current_it-1]->get_signal_filtered();
-        M = old_r_peaks(old_r_peaks.size()-1)-old_signal.size()*(current_it-1)+int(m_waves[current_it]->get_sampling_freq()/10.0);
+        M = old_r_peaks(old_r_peaks.size()-1)+int(m_waves[current_it]->get_sampling_freq()/10.0);
         N = old_signal.size()-1;
-        qInfo() << "M" << M << "| N" << N;
+        qInfo() << "M" << M << "| N" << N << "| old_signal.size()" << old_signal.size();
         old_signal = old_signal(arma::span(M,N));
-        // wklejenie poprzedniego fragmentu sygnału od przedostatniego r peaka
-        qInfo() << "Wklejanie";
-        current_signal.insert_rows(0,old_signal);
-//        for(int i = 0; i < 1000; i++)
-//            qInfo() << current_signal[i];
 
-        qInfo() << "find_waves()";
+        // wklejenie poprzedniego fragmentu sygnału od przedostatniego r peaka
+        current_signal.insert_rows(0,old_signal);
+
+        // przenumerowanie r peaków ze względu na wklejenie dodatkowych próbek
+        qInfo() << "przenumerowanie r peaków";
+        arma::vec r_peaks_add_samples(new_r_peaks.size());
+        r_peaks_add_samples.fill(old_signal.size());
+        new_r_peaks = new_r_peaks + r_peaks_add_samples;
+        m_waves[current_it]->set_r_peaks(new_r_peaks);
+
+        // wstawienie sygnału z zakładką
+        qInfo() << "wstawienie sygnału z zakładką";
         m_waves[current_it]->set_signal_filtered(current_signal);
+
+        // szukanie wavesów
+        qInfo() << "szukanie wavesów";
         m_waves[current_it]->find_waves();
-        qInfo() << "Znalazło dupa";
+
         // powrócenie sygnału do stanu początkowego
+        qInfo() << "powrócenie sygnału do stanu początkowego";
+        qInfo() << "current_signal.size()" << current_signal.size() << "| old_signal.size()" << old_signal.size();
         current_signal.shed_rows(0,old_signal.size()-1);
         m_waves[current_it]->set_signal_filtered(current_signal);
+
+        // powrócenie r peaków do stanu początkowego
+        qInfo() << "powrócenie r peaków do stanu początkowego";
+        m_waves[current_it]->set_r_peaks(new_r_peaks_copy);
+
+        // przenumerowanie starych r peaków
+        qInfo() << "renumber_r_peaks()";
+        renumber_r_peaks();
+//        qInfo() << "R_Peak[" << suma << "] =" << (m_r_peaks[current_it-1]->get_r_peaks())(0);
+//        suma += (m_r_peaks[current_it-1]->get_r_peaks()).size();
     }
     else
         m_waves[current_it]->find_waves();
-    qInfo() << "renumber_waves()";
+
     renumber_waves();
 // ------------
 // Stara wersja

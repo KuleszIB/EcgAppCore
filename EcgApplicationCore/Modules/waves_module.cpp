@@ -276,11 +276,8 @@ void Waves::filter_lowpass(double fc, int M)
 void Waves::find_waves()
 {
     signal_filtered = signal_raw;
-    qInfo() << "find_qrs_onset_end()";
     find_qrs_onset_end();
-    qInfo() << "find_p_onset_end()";
     find_p_onset_end();
-    qInfo() << "find_t_end()";
     find_t_end();
 }
 

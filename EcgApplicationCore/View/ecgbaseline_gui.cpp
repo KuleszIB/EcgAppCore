@@ -183,7 +183,7 @@ void ECGbaseline_gui::filter3()
 void ECGbaseline_gui::filter4()
 {
     double fs = m_ecg_baseline[current_it]->get_sampling_freq();
-    int N = int(2*fs); // 2 s nakładka
+    int N = int(10*fs); // 10 s nakładka
 
     Filter_Params filter_params;
     filter_params.set_filter_type(MOVING_AVERAGE);
@@ -207,7 +207,6 @@ void ECGbaseline_gui::filter4()
         delete n_ecg;
 
         emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-        qInfo() << (m_ecg_baseline[current_it]->get_signal_filtered()).size();
     }
     else if(current_it == 1)
     {
@@ -242,7 +241,6 @@ void ECGbaseline_gui::filter4()
         good_signal.shed_rows(0,o_signal.size()-1);
 
         m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
-        qInfo() << (m_ecg_baseline[current_it]->get_signal_filtered()).size();
 
         delete n_ecg;
         emit ecg_signal_filtered(m_ecg_baseline[current_it]);
@@ -265,7 +263,7 @@ void ECGbaseline_gui::filter4()
 //        ecgPlot2->setData(x,y);
 //        qInfo() << "Filtering it" << current_it;
 
-    m_ecg_baseline[current_it]->write_to_file(current_it);
+//    m_ecg_baseline[current_it]->write_to_file(current_it);
     if(current_it++ < m_ecg_baseline.size()-1)
         emit still_loading();
 }

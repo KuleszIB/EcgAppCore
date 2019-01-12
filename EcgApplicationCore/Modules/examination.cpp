@@ -212,8 +212,9 @@ if (list.size() == 2)   {
     else
         ++i;
   }
-    if(i < M)
+    if(i < M && i != 0)
     {
+        tmp.shed_rows(i,tmp.size()-1);
         data_tab.push_back(tmp);
         emit part_loaded(&(data_tab.last()));
     }

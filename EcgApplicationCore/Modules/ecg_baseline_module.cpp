@@ -381,13 +381,15 @@ void Ecg_Baseline::write_to_file(int it)
     a.append(QString::number(it));
     a.append(".txt");
     QFile file(a);
-    qInfo() << a;
+//    qInfo() << a;
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
-    qInfo() << "Przeszło";
+//    qInfo() << "Przeszło";
     QTextStream out(&file);
     for(int i = 0; i < signal_filtered.size(); i++)
         out << QString::number(signal_filtered[i]) << "\n";
+//    for(int i = 0; i < signal_raw.size(); i++)
+//        out << QString::number(signal_raw[i]) << "\n";
 }
 
 void Ecg_Baseline::set_signal_filtered(arma::vec signal)
