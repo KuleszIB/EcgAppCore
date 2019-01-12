@@ -26,11 +26,11 @@ Waves::Waves(arma::vec signal, arma::vec r_peaks, double fs)
 void Waves::find_qrs_onset_end()
 {
     // sprawdzenie czy sygnal jest "odwrocony"
-    bool odwrocony = false;
-    if (signal_raw[int(r_peaks_vec[0])] < 0)
+    bool inverted = false;
+    if ((signal_raw[int(r_peaks_vec[0])] + signal_raw[int(r_peaks_vec[1])]) / 2 < 0)
     {
         signal_filtered = -signal_filtered;
-        odwrocony = true;
+        inverted = true;
     }
 
     bool goLeft, decreasingL, firstMinReached;
@@ -45,7 +45,7 @@ void Waves::find_qrs_onset_end()
         decreasingL = false;
         firstMinReached = false;
         int j = int(r_peaks_vec[i]);
-        while (goLeft)
+        while (goLeft && j>0)
         {
             if (signal_filtered[j] > signal_filtered[j-1])
                 decreasingL = true;
@@ -56,6 +56,8 @@ void Waves::find_qrs_onset_end()
                 qrsOnset[i] = j;
                 goLeft = false;
             }
+            if ((decreasingL == true) && (j == 1))
+                qrsOnset[i] = 0;
             j--;
         }
 
@@ -65,7 +67,7 @@ void Waves::find_qrs_onset_end()
         decreasingR = false;
         firstMinReached = false;
         j = int(r_peaks_vec[i]);
-        while (goRight)
+        while (goRight && j<signal_filtered.size()-1)
         {
             if (signal_filtered[j] > signal_filtered[j+1])
                 decreasingR = true;
@@ -76,11 +78,13 @@ void Waves::find_qrs_onset_end()
                 qrsEnd[i] = j;
                 goRight = false;
             }
+            if (decreasingR == true && j == signal_filtered.size()-2)
+                qrsEnd[i] = j+1;
             j++;
         }
     }
 
-    if (odwrocony)
+    if (inverted)
         signal_filtered = -signal_filtered;
 
     waves_points.qrs_onset = qrsOnset;
@@ -90,16 +94,13 @@ void Waves::find_qrs_onset_end()
 void Waves::find_p_onset_end()
 {
     // sprawdzenie czy sygnal jest "odwrocony"
-    bool odwrocony = false;
-    if (signal_raw[int(r_peaks_vec[0])] < 0)
-    {
+    if ((signal_raw[int(r_peaks_vec[0])] + signal_raw[int(r_peaks_vec[1])]) / 2 < 0)
         signal_filtered = -signal_filtered;
-        odwrocony = true;
-    }
 
     // WSTEPNE PRZETWARZANIE
     // usuniecie zespolow QRS
-    for (int i=0; i<waves_points.qrs_onset.size(); i++)
+    int min_len = std::min(waves_points.qrs_onset.size(),waves_points.qrs_end.size());
+    for (int i=0; i<min_len; i++)
     {
         double meanValue = (signal_filtered[int(waves_points.qrs_onset[i])] + signal_filtered[int(waves_points.qrs_end[i])]) / 2;
         for (int j=int(waves_points.qrs_onset[i]); j<=waves_points.qrs_end[i]; j++)
@@ -135,7 +136,12 @@ void Waves::find_p_onset_end()
                 lookingForZero = false;
                 // Sprawdzenie, czy p. P-end znajduje sie przez QRS-onset
                 if (j >= waves_points.qrs_onset[i] || abs(int(waves_points.qrs_onset[i])-j)<10)
-                    Pend[i] = waves_points.qrs_onset[i] - 10;
+                {
+                    if (j>9 && waves_points.qrs_onset[i]>9)
+                        Pend[i] = waves_points.qrs_onset[i] - 10;
+                    else
+                        Pend[i] = waves_points.qrs_onset[i];
+                }
                 else
                     Pend[i] = j;
             }
@@ -151,12 +157,20 @@ void Waves::find_p_onset_end()
         // pochodnej jest mniejsza od zadanej wartosci. Jest to p. P-onset
         lookingForZero = true;
         j = maxPos;
-        while (lookingForZero)
+        while (lookingForZero && j>=0)
         {
             if (signal_filtered[j] <= 0.0003)
             {
                 lookingForZero = false;
+                if (j > Pend[i])
+                    Ponset[i] = Pend[i];
+                else
+                    Ponset[i] = j;
+            }
+            if (j == 0)
+            {
                 Ponset[i] = j;
+                lookingForZero = false;
             }
             j--;
         }
@@ -171,16 +185,13 @@ void Waves::find_p_onset_end()
 void Waves::find_t_end()
 {
     // sprawdzenie czy sygnal jest "odwrocony"
-    bool odwrocony = false;
-    if (signal_raw[int(r_peaks_vec[0])] < 0)
-    {
+    if ((signal_raw[int(r_peaks_vec[0])] + signal_raw[int(r_peaks_vec[1])]) / 2 < 0)
         signal_filtered = -signal_filtered;
-        odwrocony = true;
-    }
 
     // WSTEPNE PRZETWARZANIE
     // usuniecie zespolow QRS
-    for (int i=0; i<waves_points.qrs_onset.size(); i++)
+    int min_len = std::min(waves_points.qrs_onset.size(),waves_points.qrs_end.size());
+    for (int i=0; i<min_len; i++)
     {
         double meanValue = (signal_filtered[int(waves_points.qrs_onset[i])] + signal_filtered[int(waves_points.qrs_end[i])]) / 2;
         for (int j=int(waves_points.qrs_onset[i]); j<=waves_points.qrs_end[i]; j++)
@@ -191,27 +202,48 @@ void Waves::find_t_end()
     filter_lowpass(15,20);  // ponowna filtracja
 
     arma::vec Tend(r_peaks_vec.size());
+    int counter = 0;
     for (int i=0; i<r_peaks_vec.size(); i++)
     {
         // Poszukiwanie maksimum pochodnej wystepujacego miedzy punktem
         // ORS-end a P-onset z nastepnego uderzenia
-        int startPoint = int(waves_points.qrs_end[i]);
+        int startPoint;
+        if (waves_points.qrs_end[i] == signal_filtered.size())
+            startPoint = int(waves_points.qrs_end[i]);
+        else
+            startPoint = int(waves_points.qrs_end[i]) + 1;
+
         int endPoint;
         if (i == waves_points.qrs_end.size()-1)
-            endPoint = int(signal_filtered.size())-1;
+            endPoint = int(signal_filtered.size()) - 1;
         else
-            endPoint = int(waves_points.p_onset[i+1]);
-        int maxPos = int(arma::index_max(signal_filtered.subvec(startPoint,endPoint)));
-        maxPos += startPoint;
+            endPoint = int(waves_points.p_onset[i+1])-1;
+
+        int maxPos;
+        if (startPoint < endPoint)
+        {
+            maxPos = int(arma::index_max(signal_filtered.subvec(startPoint,endPoint)));
+            maxPos += startPoint;
+        }
+        else
+            continue;
 
         // Poszukiwanie minimum lokalnego wystepujacego bezposrednio po
         // wczesniej wyszukanym maksimum
-        arma::vec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
         int minPos;
-        if (b.size() != 0)
-            minPos = int(b[0]) + maxPos;
-        else
+        if ((endPoint - maxPos) < 2)
             continue;
+        else
+        {
+            arma::vec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
+            if (b.size() != 0)
+                minPos = int(b[0]) + maxPos - 1;
+            else
+            {
+                Tend[counter++] = endPoint;
+                continue;
+            }
+        }
 
         // Szukany jest punkt za znalezionym minimum, w ktorym wartosc
         // pochodnej jest wieksza od zadanej wartosci. Jest to p. T-end
@@ -225,18 +257,18 @@ void Waves::find_t_end()
                 if (i!= waves_points.qrs_end.size()-1)
                 {
                     if (j >= waves_points.p_onset[i+1])
-                        Tend[i] = waves_points.p_onset[i+1] - 10;
+                        Tend[counter++] = waves_points.p_onset[i+1] - 10;
                     else
-                        Tend[i] = j;
+                        Tend[counter++] = j;
                 }
                 else
-                    Tend[i] = j;
+                    Tend[counter++] = j;
             }
             if (j<signal_filtered.size()-1)
                 j++;
             else
             {
-                Tend[i] = j;
+                Tend[counter++] = j;
                 break;
             }
         }
@@ -244,7 +276,7 @@ void Waves::find_t_end()
 
     signal_filtered = signal_raw;
 
-    waves_points.t_end = Tend;
+    waves_points.t_end = Tend.subvec(0,counter-1);
 }
 
 void Waves::filter_lowpass(double fc, int M)

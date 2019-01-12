@@ -34,7 +34,13 @@ void R_Peaks::pan_tompkins()
     filter_highpass(5,30);      // Filtracja gornoprzepustowa
     differentiate();            // Rozniczkowanie
     square();                   // Potegowanie
-    integrate(19);              // Calkowanie
+    // Ustalenie dlugosci okna calkowania
+    int W = floor(0.025*sampling_frequency);
+    if (W%2 == 0)
+    {
+        W = ceil(0.025*sampling_frequency);
+    }
+    integrate(2*W+1);           // Calkowanie
 
     arma::vec peaks = find_peaks(signal_filtered);     // Wstepne wyszukiwanie pikow
     int N = int(peaks.size());
@@ -54,11 +60,16 @@ void R_Peaks::pan_tompkins()
     {
         for (int i=1; i<N; i++)
         {
+            // Sprawdzenie czy obecna probka jest wieksza od tymczasowego
+            // maksimum oraz czy odleglosc pomiedzy nimi jest mniejsza od 0.2s
             if((peakValue[i] > max_value) && ((peaks[i] - max_number) < nrOfSamples))
             {
                 max_value = peakValue[i];
                 max_number = int(peaks[i]);
             }
+            // Jesli odleglosc od poprzedniego maksimum jest wieksza od 0.2s,
+            // wartosc ostatniego maksimum jest zapisywana i rozpoczyna sie
+            // wyszukiwanie nowego
             else if ((peaks[i] - max_number) >= nrOfSamples)
             {
                 Rpeaks[counter++] = max_number;
@@ -76,14 +87,14 @@ void R_Peaks::pan_tompkins()
     {
         r_peaks_vec = peaks;
     }
-    r_peaks_vec -= 9;
+    r_peaks_vec -= W;
 }
 
 arma::vec R_Peaks::find_peaks(arma::vec signal)
 {
     int N = int(signal.size());
     arma::vec peaks(N);
-    double threshold = signal.max() / 10;
+    double threshold = signal.max() / 15;
     int counter = 0;
 
     if (N > 2)
