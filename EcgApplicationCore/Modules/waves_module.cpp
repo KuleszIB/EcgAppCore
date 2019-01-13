@@ -102,6 +102,9 @@ void Waves::find_p_onset_end()
     int min_len = std::min(waves_points.qrs_onset.size(),waves_points.qrs_end.size());
     for (int i=0; i<min_len; i++)
     {
+//        if(i==118)
+//            qInfo() << "int(waves_points.qrs_onset[i])" << int(waves_points.qrs_onset[i])
+//                    << "int(waves_points.qrs_end[i])"   << int(waves_points.qrs_end[i]);
         double meanValue = (signal_filtered[int(waves_points.qrs_onset[i])] + signal_filtered[int(waves_points.qrs_end[i])]) / 2;
         for (int j=int(waves_points.qrs_onset[i]); j<=waves_points.qrs_end[i]; j++)
             signal_filtered[j] = meanValue;
@@ -348,4 +351,28 @@ void Waves::remove_head(int which)
 void Waves::set_waves(Waves_Points waves)
 {
     waves_points = waves;
+}
+
+void Waves::write_to_file(int it)
+{
+    QString a = "../EcgApplicationCore/results/waves/waves_";
+    a.append(QString::number(it));
+    a.append(".txt");
+    QFile file(a);
+    qInfo() << a;
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+    QTextStream out(&file);
+    for(int i = 0; i < r_peaks_vec.size(); i++)
+    {
+        out << QString::number(waves_points.p_onset[i]) << ";" <<
+               QString::number(waves_points.p_end[i]) << ";" <<
+               QString::number(waves_points.qrs_onset[i]) << ";" <<
+               QString::number(r_peaks_vec[i]) << ";" <<
+               QString::number(waves_points.qrs_end[i]) << ";" <<
+               QString::number(waves_points.t_end[i]) << "\n";
+    }
+    qInfo() << "Przeszło";
+//    for(int i = 0; i < signal_raw.size(); i++)
+//        out << QString::number(signal_raw[i]) << "\n";
 }

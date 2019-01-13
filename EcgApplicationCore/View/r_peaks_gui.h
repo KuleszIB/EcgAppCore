@@ -19,8 +19,9 @@ class R_peaks_gui : public QWidget
 public:
     explicit R_peaks_gui(QWidget *parent = 0);
     ~R_peaks_gui();
-    void renumber_r_peaks();
+    void renumber_r_peaks(int direction = -1);
     void renumber_waves(); 
+    void renumber_waves(int old_signal_size);
 
 private slots:
     void peakDetection();

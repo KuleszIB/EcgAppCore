@@ -68,7 +68,7 @@ public:
     double get_sampling_freq();
     void set_signal_filtered(arma::vec signal);
     void set_signal_raw(arma::vec signal);
-    virtual void write_to_file(int dupa); // do usunięcia później
+    virtual void write_to_file(int it); // do usunięcia później
 };
 
 #endif // ECG_BASELINE_H

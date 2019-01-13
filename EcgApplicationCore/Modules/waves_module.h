@@ -31,6 +31,7 @@ public:
     Waves_Points get_waves();
     void set_waves(Waves_Points waves);
     void remove_head(int which);
+    void write_to_file(int it);
 };
 
 #endif // WAVES_H
