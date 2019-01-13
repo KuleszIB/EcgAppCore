@@ -12,33 +12,46 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
     grid->enableXMin(true);
     grid->attach(this);
 
-    ulf = new QwtPlotMarker();
-    ulf->setLineStyle(QwtPlotMarker::VLine);
-    ulf->setLabel(tr("ULF"));
-    ulf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
-    ulf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+    ulf = new QwtPlotCurve();
+    ulf->setStyle(QwtPlotCurve::Sticks);
+    ulf->setPen(QPen(Qt::darkGray, 0, Qt::DashLine));
     ulf->attach(this);
 
-    vlf = new QwtPlotMarker();
-    vlf->setLineStyle(QwtPlotMarker::VLine);
-    vlf->setLabel(tr("VLF"));
-    vlf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
-    vlf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+    vlf = new QwtPlotCurve();
+    vlf->setStyle(QwtPlotCurve::Sticks);
+    vlf->setPen(QPen(Qt::red, 0, Qt::DashLine));
     vlf->attach(this);
 
-    lf = new QwtPlotMarker();
-    lf->setLineStyle(QwtPlotMarker::VLine);
-    lf->setLabel(tr("LF"));
-    lf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
-    lf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+    lf = new QwtPlotCurve();
+    lf->setStyle(QwtPlotCurve::Sticks);
+    lf->setPen(QPen(Qt::blue, 0, Qt::DashLine));
     lf->attach(this);
 
-    hf = new QwtPlotMarker();
-    hf->setLineStyle(QwtPlotMarker::VLine);
-    hf->setLabel(tr("HF"));
-    hf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
-    hf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+    hf = new QwtPlotCurve();
+    hf->setStyle(QwtPlotCurve::Sticks);
+    hf->setPen(QPen(Qt::green, 0, Qt::DashLine));
     hf->attach(this);
+
+//    vlf = new QwtPlotMarker();
+//    vlf->setLineStyle(QwtPlotMarker::VLine);
+//    vlf->setLabel(tr("VLF"));
+//    vlf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
+//    vlf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+//    vlf->attach(this);
+
+//    lf = new QwtPlotMarker();
+//    lf->setLineStyle(QwtPlotMarker::VLine);
+//    lf->setLabel(tr("LF"));
+//    lf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
+//    lf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+//    lf->attach(this);
+
+//    hf = new QwtPlotMarker();
+//    hf->setLineStyle(QwtPlotMarker::VLine);
+//    hf->setLabel(tr("HF"));
+//    hf->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
+//    hf->setLinePen(QPen(Qt::red, 0, Qt::DashLine));
+//    hf->attach(this);
 
 //    setAxisTitle(QwtPlot::yLeft, "PSD [db/Hz]");
 //    setAxisTitle(QwtPlot::xBottom, "Częstotliwość [Hz]");
@@ -84,16 +97,16 @@ hrv1plot::~hrv1plot()
     delete hf;
 }
 
-void hrv1plot::setData2(QVector<double> x, QVector<double> y, double hff, double ulff, double vlff, double lff )
+void hrv1plot::setData2(QVector<double> x, QVector<double> y, QVector<double> hff, QVector<double> ulff,QVector<double> vlff, QVector<double> lff )
 {
-    QVector<QPointF> peaks;
-    for (QVector<double>::iterator i = x.begin(); i < x.end(); i++)
-    {
-        for(QVector<double>::iterator j = y.begin(); j < y.end(); j++)
-        {
-           peaks.append(QPointF(float(*i), float(*j)));
-        }
-    }
+//    QVector<QPointF> peaks;
+//    for (QVector<double>::iterator i = x.begin(); i < x.end(); i++)
+//    {
+//        for(QVector<double>::iterator j = y.begin(); j < y.end(); j++)
+//        {
+//           peaks.append(QPointF(float(*i), float(*j)));
+//        }
+//    }
 
 //    QVector<QPointF> peaks2;
  //   for (QVector<double>::iterator i = hff.begin(); i < hff.end(); i++)
@@ -103,11 +116,16 @@ void hrv1plot::setData2(QVector<double> x, QVector<double> y, double hff, double
 //
 //    }
 
+//    signal->setSamples(x,y);
+//    ulf->setSamples(ulff,y);
+//    vlf->setSamples(vlff,y);
+//    lf->setSamples(lff,y);
+//    hf->setSamples(hff,y);
     signal->setSamples(x,y);
-    ulf->setValue( 0.0,hff);
-    vlf->setValue(0.0,ulff );
-    lf->setValue(0.0,vlff );
-    hf->setValue( 0.0,lff);
+    ulf->setSamples(ulff,y);
+    vlf->setSamples(vlff,y);
+    lf->setSamples(lff,y);
+    hf->setSamples(hff,y);
     replot();
 }
 

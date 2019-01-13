@@ -19,7 +19,7 @@ public:
     ~ECGbaseline_gui();
 
 private slots:
-    void addRandomGraph();
+ //   void addRandomGraph();
     void on_comboBox_filter_currentTextChanged(const QString &arg1);
     void on_pushButton_clicked();
 public slots:

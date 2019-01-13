@@ -240,6 +240,16 @@ unsigned int counter = 0;
 
         return signal_qvec;
     }
+    static QVector<double> convert_uvec_qvector(arma::uvec signal)
+    {
+       typedef std::vector<double> stdvec;
+        //typedef QVector<float> qvec;
+        stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+        QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+
+
+        return signal_qvec;
+    }
 
 
 }; // zamyka strukturę

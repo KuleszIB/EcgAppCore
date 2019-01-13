@@ -5,6 +5,7 @@
 #include "View/qrsplot.h"
 #include <QVBoxLayout>
 #include "Modules/r_peaks_module.h"
+#include "Modules/waves_module.h"
 #include "Modules/examination.h"
 
 namespace Ui {
@@ -26,11 +27,15 @@ private slots:
 
 public slots:
     void filtered_signal_loaded(Ecg_Baseline *signal);
+signals:
+    void r_peaks_get(R_Peaks* peaks);
 
 private:
     Ui::R_peaks_gui *ui;
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
+    Waves m_waves;
+    Waves_Points m_waves_points;
     qrsplot *qrsPlot2;
     void filter1();
     void filter2();

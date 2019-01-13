@@ -16,7 +16,7 @@ public:
     hrv2poincareplot(QWidget *parent = 0);
     ~hrv2poincareplot();
     void setData2(QVector<double> x, QVector<double> y, float s1, float s2);
-
+    void setPoincare(QVector<int> &poincarex,QVector<int> &poincarey,float s1, float s2 )
 public slots:
 
 private:
@@ -24,6 +24,7 @@ private:
     QwtPlotCurve *signal;
     QwtPlotCurve *sd1;
     QwtPlotCurve *sd2;
+        QwtPlotCurve *rr;
 
 };
 

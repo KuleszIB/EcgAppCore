@@ -26,3 +26,10 @@ HRV2_gui::~HRV2_gui()
 {
     delete ui;
 }
+
+
+void HRV2_gui::on_pushButton_RUN_clicked()
+{
+    int i=0;
+    i++;
+}

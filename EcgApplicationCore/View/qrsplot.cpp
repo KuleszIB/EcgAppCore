@@ -64,6 +64,31 @@ void qrsplot::setData2(QVector<double> x, QVector<double> y)
     signal->setSamples(x, y);
     replot();
 }
+//void qrsplot::setWave(QwtPlotMarker *Marko, QVector<double> x, QVector<double> y, QVector<double> peaks)
+//{
+   
+
+  
+//        QVector<QPointF> peak;
+//        for (QVector<double>::iterator i = x.begin(); i < x.end(); i++)
+//        {
+//            for(QVector<double>::iterator j = y.begin(); j < y.end(); j++)
+//            {
+//                for (QVector<double>::iterator k = peaks.begin(); k < peaks.end(); k++)
+//                {
+//                    if(*i == *j)
+//                    {
+//                        peak.append(QPointF(float(*k), float(*j)));
+//                    }
+//                }
+//            }
+//        }
+//        Marko->setValue(float(peaks), );
+    
+    
+    
+//    replot();
+//}
 
 void qrsplot::setData()
 {

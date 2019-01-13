@@ -25,7 +25,7 @@
    <property name="title">
     <string>HRV 2</string>
    </property>
-   <widget class="QPushButton" name="pushButton_RUN">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>40</x>

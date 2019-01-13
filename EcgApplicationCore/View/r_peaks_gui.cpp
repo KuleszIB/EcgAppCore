@@ -48,6 +48,8 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
     m_r_peaks.push_back(r_peaks);
 }
 
+
+
 void R_peaks_gui::filter1()
     {
     int N = 7200;
@@ -68,13 +70,33 @@ void R_peaks_gui::filter1()
 
 void R_peaks_gui::filter2()
     {
-        QVector<double> x(1001), y(1001); // initialize with entries 0..100
-        for (int i=0; i<1001; ++i)
-        {
-          x[i] = i/50.0 - 1; // x goes from -1 to 1
-          y[i] = cos(x[i]); // let's plot a quadratic function
-        }
-        qrsPlot2->setData2(x,y);
+//        QVector<double> x(1001), y(1001); // initialize with entries 0..100
+//        for (int i=0; i<1001; ++i)
+//        {
+//          x[i] = i/50.0 - 1; // x goes from -1 to 1
+//          y[i] = cos(x[i]); // let's plot a quadratic function
+//        }
+//        qrsPlot2->setData2(x,y);
+
+
+    m_waves_points=m_waves.get_waves();
+    arma:: uvec rpeaks=m_waves_points.r_peaks;
+    arma:: uvec qrsonset=m_waves_points.qrs_onset;
+    arma:: uvec qrsend=m_waves_points.qrs_end;
+    arma:: uvec tend=m_waves_points.t_end;
+    arma:: uvec ponset=m_waves_points.p_onset;
+    arma:: uvec pend=m_waves_points.p_end;
+    int N = rpeaks.size();
+        QVector<double> Rpeaks(N), QRSonset(N), QRSend(N), Tend(N), Ponset(N), Pend(N);
+    Rpeaks = examination::convert_uvec_qvector(rpeaks);
+    QRSonset = examination::convert_uvec_qvector(qrsonset);
+    QRSend = examination::convert_uvec_qvector(qrsend);
+    Tend = examination::convert_uvec_qvector(tend);
+    Ponset = examination::convert_uvec_qvector(ponset);
+    Pend = examination::convert_uvec_qvector(pend);
+
+
+
       }
 
 
@@ -125,5 +147,6 @@ void R_peaks_gui::on_pushButton_clicked()
     //m_r_peaks[0]->find_r_peaks();
     filter1();
     arma::vec r_test = m_r_peaks[0]->get_r_peaks();
+    emit r_peaks_get(m_r_peaks[0]);
     qInfo() << "Znaleziono " << r_test.size() << " zespołów QRS.";
 }

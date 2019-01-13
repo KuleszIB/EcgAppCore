@@ -19,16 +19,16 @@ ECGbaseline_gui::~ECGbaseline_gui()
     delete ui;
 }
 
-void ECGbaseline_gui::addRandomGraph() //Przykładowy wykres
-{
-    QVector<double> x(1001), y(1001); // initialize with entries 0..100
-    for (int i=0; i<1001; ++i)
-    {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = x[i]*x[i]; // let's plot a quadratic function
-    }
-    ecgPlot2->setData(x,y);
-  }
+//void ECGbaseline_gui::addRandomGraph() //Przykładowy wykres
+//{
+//    QVector<double> x(1001), y(1001); // initialize with entries 0..100
+//    for (int i=0; i<1001; ++i)
+//    {
+//      x[i] = i/50.0 - 1; // x goes from -1 to 1
+//      y[i] = x[i]*x[i]; // let's plot a quadratic function
+//    }
+//    ecgPlot2->setData(x,y);
+//  }
 void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
 {
     QString filter = ui->comboBox_filter->currentText();
