@@ -50,7 +50,7 @@ void Hrv1::resample()
 //    std::cout << "Uniform timeline vec" << std::endl << uniform_time_vec << std::endl;                 //USUNAC!!! do testow
     arma::interp1(cum_time_vec, r_peaks_vec, uniform_time_vec, uniform_r_peaks_vec, "nearest");     //interpolation
 //    std::cout << "Uniform r peaks" << std::endl<< uniform_r_peaks_vec << std::endl;              //USUNAC!!!! do testow
-//    uniform_r_peaks_vec = uniform_r_peaks_vec - time_params.rr_mean;                        //removing constant signal component
+    uniform_r_peaks_vec = uniform_r_peaks_vec - time_params.rr_mean;                        //removing constant signal component
 }
 
 void Hrv1::calc_time_params()
@@ -79,12 +79,14 @@ void Hrv1::calc_time_params()
 
 void Hrv1::calc_freq_params()
 {
-    int ulf_end=0, vlf_end=0, lf_end=0, hf_end=0;
+    int ulf_end=0, vlf_end=0, lf_end=0, hf_end=0, vlf_start=0;
 
-//    std::cout << "SIZE " << frequency_vec.size() <<  std::endl;
     for(int i=0;i<int(frequency_vec.size());i++) {                              //checking the range of parameters (how many samples
-        if (frequency_vec[i]<=0.003) {                                          //of frequency vec belong to each parameter)
-            ulf_end++;
+        if (frequency_vec[i]<=0.003 && ((cum_time_vec[cum_time_vec.size() - 1] * 360) > 120000)) {                                          //of frequency vec belong to each parameter)
+                ulf_end++;
+        }
+        else if(frequency_vec[i]<=0.003) {
+                vlf_start++;
         }
         else if (frequency_vec[i]<0.04) {
             vlf_end++;
@@ -98,7 +100,13 @@ void Hrv1::calc_freq_params()
 
     }
 
-    int vlf_range=vlf_end+ulf_end;
+    int vlf_range;
+    if(ulf_end == 0) {
+        vlf_range=vlf_end+vlf_start;
+    }
+    else {
+        vlf_range=vlf_end+ulf_end;
+    }
     int lf_range =vlf_range+lf_end;
     int hf_range=lf_range+hf_end;
 
@@ -122,17 +130,17 @@ void Hrv1::calc_freq_params()
             temp_ulf[a] = periodogram[i];
             a++;
         }
-        else if (ulf_end<=i && i<vlf_range) {
+        else if (ulf_end<=i && frequency_vec(i)>0.003 && i<vlf_range) {
             temp_freq_vlf[b] = frequency_vec[i];
             temp_vlf[b] = periodogram[i];
             b++;
         }
-        else if (vlf_range<=i && i<lf_range) {
+        else if (vlf_range<=i && frequency_vec(i)>0.003 && i<lf_range) {
             temp_freq_lf[c] = frequency_vec[i];
             temp_lf[c] = periodogram[i];
             c++;
         }
-        else if (lf_range<=i && i<hf_range) {
+        else if (lf_range<=i && frequency_vec(i)>0.003 && i<hf_range) {
             temp_freq_hf[d] = frequency_vec[i];
             temp_hf[d] = periodogram[i];
             d++;
@@ -164,7 +172,7 @@ void Hrv1::calc_periodogram()
     for(int i=0;i<length_perio;i++) {
         std::complex<double> temp = 0;
         for(int k=0;k<length;k++) {                                           //creating periodogram
-            temp = temp + uniform_r_peaks_vec(k)*std::exp(-2*(pi)*ii*frequency_vec(i)*uniform_time_vec(k));
+            temp = temp + (uniform_r_peaks_vec(k)*(std::exp(-2*(pi)*ii*frequency_vec(i)*uniform_time_vec(k))));
         }
 //        std:: cout << "temp " << temp << std::endl;
         double result = std::abs(temp);
@@ -193,6 +201,7 @@ arma::vec Hrv1::get_periodogram()
 
 arma::vec Hrv1::get_freq_vec()
 {
+//    frequency_vec = arma::log(frequency_vec);
     return frequency_vec;
 }
 
