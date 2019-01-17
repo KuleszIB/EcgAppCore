@@ -57,7 +57,7 @@ void examination::get_data()
 
 {
     examination_info e_info;
-    int i = 0, M = 65000;
+    int i = 0, M = 30000;
     arma::vec tmp(M);
     QVector<arma::vec> data_tab;
     data_tab.reserve(10);

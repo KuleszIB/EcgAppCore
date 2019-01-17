@@ -102,9 +102,6 @@ void Waves::find_p_onset_end()
     int min_len = std::min(waves_points.qrs_onset.size(),waves_points.qrs_end.size());
     for (int i=0; i<min_len; i++)
     {
-//        if(i==118)
-//            qInfo() << "int(waves_points.qrs_onset[i])" << int(waves_points.qrs_onset[i])
-//                    << "int(waves_points.qrs_end[i])"   << int(waves_points.qrs_end[i]);
         double meanValue = (signal_filtered[int(waves_points.qrs_onset[i])] + signal_filtered[int(waves_points.qrs_end[i])]) / 2;
         for (int j=int(waves_points.qrs_onset[i]); j<=waves_points.qrs_end[i]; j++)
             signal_filtered[j] = meanValue;
@@ -313,7 +310,7 @@ void Waves::find_waves()
     signal_filtered = signal_raw;
     find_qrs_onset_end();
     find_p_onset_end();
-    find_t_end();
+//    find_t_end();
 }
 
 Waves_Points Waves::get_waves()
@@ -368,11 +365,8 @@ void Waves::write_to_file(int it)
         out << QString::number(waves_points.p_onset[i]) << ";" <<
                QString::number(waves_points.p_end[i]) << ";" <<
                QString::number(waves_points.qrs_onset[i]) << ";" <<
-               QString::number(r_peaks_vec[i]) << ";" <<
-               QString::number(waves_points.qrs_end[i]) << ";" <<
-               QString::number(waves_points.t_end[i]) << "\n";
+//               QString::number(r_peaks_vec[i]) << ";" <<
+               QString::number(waves_points.qrs_end[i]) << "\n";
+//               QString::number(waves_points.t_end[i]) << "\n";
     }
-    qInfo() << "Przeszło";
-//    for(int i = 0; i < signal_raw.size(); i++)
-//        out << QString::number(signal_raw[i]) << "\n";
 }

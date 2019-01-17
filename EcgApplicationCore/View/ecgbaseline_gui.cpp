@@ -303,6 +303,7 @@ void ECGbaseline_gui::load_signal(examination *file)
 //    current_it = 0;
     ui->plainTextEdit->setPlainText("Sygnał załadowano");
     ui->pushButton->setDisabled(false);
+    emit signal_loaded();
 //    loading_finished = true;
 }
 

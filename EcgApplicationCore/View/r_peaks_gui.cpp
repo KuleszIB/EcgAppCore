@@ -49,24 +49,15 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
     if(current_it > 0)
         emit still_loading();
 }
-static int suma; // tylko do debugowania
-void R_peaks_gui::filter1()
-{
-    m_r_peaks[current_it]->find_r_peaks();
-    run_waves();
-//    qInfo() << "Przeszło run_waves(), current_it" << current_it << "| m_waves.size()" << m_waves.size();
-    if(current_it < m_waves.size())
-    {
-        current_it++;
-        qInfo() << "Emituje";
-        emit still_loading();
-        qInfo() << "Wyemitowało";
-    }
-}
 
 void R_peaks_gui::on_pushButton_clicked()
 {
-    filter1();
+    emit still_loading();
+}
+
+void R_peaks_gui::filter1()
+{
+
 }
 
 void R_peaks_gui::renumber_r_peaks(int direction)
@@ -95,12 +86,12 @@ void R_peaks_gui::renumber_waves() // w zależności od numeru iteracji
     arma::vec tmp_qrs_end(new_qrs_end.size());
     arma::vec tmp_t_end(new_t_end.size());
 
-    tmp_p_onset.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
-    tmp_p_end.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
-    tmp_qrs_onset.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
-    tmp_r_peaks.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
-    tmp_qrs_end.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
-    tmp_t_end.fill((m_r_peaks[current_it]->get_signal_filtered()).size()*current_it);
+    tmp_p_onset.fill((m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it);
+    tmp_p_end.fill((m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it);
+    tmp_qrs_onset.fill((m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it);
+    tmp_r_peaks.fill((m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it);
+    tmp_qrs_end.fill((m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it);
+    tmp_t_end.fill((m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it);
 
     new_p_onset = new_p_onset + tmp_p_onset;
     new_p_end = new_p_end + tmp_p_end;
@@ -162,13 +153,15 @@ void R_peaks_gui::renumber_waves(int old_signal_size) // cofnięcie o ilość pr
 
 void R_peaks_gui::continue_processing()
 {
-    filter1(); // trochę to bez sensu - w przyszłości do wstawienia ciała filter1()
+    m_r_peaks[current_it]->find_r_peaks();
+    run_waves();
+    if(++current_it < m_r_peaks.size())
+        emit still_loading();
 }
 
 void R_peaks_gui::run_waves()
 {
-    qInfo() << "run_waves()";
-    Waves *waves = new Waves(m_r_peaks[current_it]->get_signal_filtered(),m_r_peaks[current_it]->get_r_peaks(),m_r_peaks[current_it]->get_sampling_freq());
+    Waves *waves = new Waves(m_ecg_baseline[current_it]->get_signal_filtered(),m_r_peaks[current_it]->get_r_peaks(),m_r_peaks[current_it]->get_sampling_freq());
     m_waves.push_back(waves);
     find_waves();
 }
@@ -178,7 +171,6 @@ void R_peaks_gui::find_waves()
 // ------------
 // Dobry pomysł Kasi Samojeden!
 // ------------
-    qInfo() << "find_waves()";
     int M, N;
     arma::vec new_r_peaks = m_r_peaks[current_it]->get_r_peaks();
     arma::vec new_r_peaks_copy;
@@ -190,166 +182,70 @@ void R_peaks_gui::find_waves()
     arma::vec current_signal = m_ecg_baseline[current_it]->get_signal_filtered();
 
     // usunięcie ostatniego r peaka
-//    qInfo() << "przed usunięciem" << new_r_peaks(new_r_peaks.size()-1);
     new_r_peaks.shed_row(new_r_peaks.size()-1);
-//    qInfo() << "po usunięciu" << new_r_peaks(new_r_peaks.size()-1);
     new_r_peaks_copy = new_r_peaks;
     if(current_it > 0)
     {
         // wycięcie ze starego sygnału fragmentu od przedostaniego r peaka
         old_r_peaks = m_waves[current_it-1]->get_r_peaks();
-//        qInfo() << "old_r_peaks(old_r_peaks.size()-1)" << old_r_peaks(old_r_peaks.size()-1);
         old_signal = m_ecg_baseline[current_it-1]->get_signal_filtered();
         M = old_r_peaks(old_r_peaks.size()-1)+int(m_waves[current_it]->get_sampling_freq()/10.0); // R peak + 10 ms
         N = old_signal.size()-1;
-//        qInfo() << "M" << M << "| N" << N << "| old_signal.size()" << old_signal.size();
         old_signal = old_signal(arma::span(M,N));
 
         // wklejenie poprzedniego fragmentu sygnału od przedostatniego r peaka
         current_signal.insert_rows(0,old_signal);        
 
         // przenumerowanie r peaków ze względu na wklejenie dodatkowych próbek
-        qInfo() << "przenumerowanie r peaków";
         arma::vec r_peaks_add_samples(new_r_peaks.size());
         r_peaks_add_samples.fill(old_signal.size());
         new_r_peaks = new_r_peaks + r_peaks_add_samples;
-//        qInfo() << "new_r_peaks(0)" << new_r_peaks(0);
 
         // przeliczenie r peaka z poprzedniego fragmentu
         last_r = (m_r_peaks[current_it-1]->get_r_peaks())((m_r_peaks[current_it-1]->get_r_peaks()).size()-1);
-//        qInfo() << "last_r" << last_r;
-//        qInfo() << "(m_r_peaks[current_it-1]->get_signal_filtered()).size()" << (m_r_peaks[current_it-1]->get_signal_filtered()).size();
-//        qInfo() << "old_signal.size()" << old_signal.size();
-        last_r = last_r - (m_r_peaks[current_it-1]->get_signal_filtered()).size() + old_signal.size();
-//        qInfo() << "last_r" << last_r;
+        last_r = last_r - (m_r_peaks[current_it-1]->get_signal_filtered()).size()*current_it + old_signal.size();
         last_r_vec(0) = last_r;
         new_r_peaks.insert_rows(0,last_r_vec);
 
-//        for(int i = 0; i < new_r_peaks.size(); i++)
-//            qInfo() << new_r_peaks(i);
-
         // wstawienie przenumerowanych, doklejonych r peaków
         m_waves[current_it]->set_r_peaks(new_r_peaks);
-//        qInfo() << "new_r_peaks.size()" << new_r_peaks.size();
 
         // wstawienie sygnału z zakładką
-        qInfo() << "wstawienie sygnału z zakładką";
         m_waves[current_it]->set_signal_filtered(current_signal);
-//        qInfo() << "current_signal.size()" << current_signal.size();
-//        qInfo() << "new_r_peaks.size()" << new_r_peaks.size();
-
-        // tu wstawić wpisywanie do pliku -> sprawdzić czy r_peaki się pokrywają z sygnałem
-//        QString a = "../EcgApplicationCore/results/waves/r_peaks_";
-//        a.append(QString::number(current_it));
-//        a.append(".txt");
-//        QFile file(a);
-//        qInfo() << a;
-//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-//            return;
-//        QTextStream out(&file);
-//        for(int i = 0; i < new_r_peaks.size(); i++)
-//            out << QString::number(new_r_peaks(i)) << "\n";
-
-//        a = "../EcgApplicationCore/results/waves/signal_";
-//        a.append(QString::number(current_it));
-//        a.append(".txt");
-//        QFile filea(a);
-//        qInfo() << a;
-//        if (!filea.open(QIODevice::WriteOnly | QIODevice::Text))
-//            return;
-//        QTextStream outa(&filea);
-//        for(int i = 0; i < current_signal.size(); i++)
-//            outa << QString::number(current_signal(i)) << "\n";
+        m_waves[current_it]->set_signal_raw(current_signal);
 
         // szukanie wavesów
-        qInfo() << "szukanie wavesów";
         m_waves[current_it]->find_waves();
 
         // powrócenie sygnału do stanu początkowego
-        qInfo() << "powrócenie sygnału do stanu początkowego";
         current_signal.shed_rows(0,old_signal.size()-1);
         m_waves[current_it]->set_signal_filtered(current_signal);
 
         // przenumerowanie wavesów związane z wklejeniem sygnału
-//        qInfo() << "p_onset(0) przed przenumerowaniem" << (m_waves[current_it]->get_waves()).p_onset(0);
         renumber_waves(-int(old_signal.size()));
-//        qInfo() << "p_onset(0) po przenumerowaniu" << (m_waves[current_it]->get_waves()).p_onset(0);
 
         // powrócenie r peaków do stanu początkowego
-        qInfo() << "powrócenie r peaków do stanu początkowego";
-//        qInfo() << new_r_peaks_copy(new_r_peaks_copy.size());
         m_waves[current_it]->set_r_peaks(new_r_peaks_copy);
 
         // przenumerowanie starych r peaków, bo w następnej iteracji już ich nie używamy
-        qInfo() << "renumber_r_peaks()";
         renumber_r_peaks();
-//        qInfo() << "R_Peak[" << suma << "] =" << (m_r_peaks[current_it-1]->get_r_peaks())(0);
-//        suma += (m_r_peaks[current_it-1]->get_r_peaks()).size();
+        renumber_waves();
     }
     else
     {
         m_waves[current_it]->set_r_peaks(new_r_peaks);
         m_waves[current_it]->find_waves();
     }
-    renumber_waves(); // przenumerowanie związane z numerem fragmentu
-    renumber_r_peaks(0); // przenumerowanie związane z numerem fragmentu
-//    qInfo() << "r_peaks(0)" << (m_r_peaks[current_it]->get_r_peaks())(0);
-    m_waves[current_it]->write_to_file(current_it);
-//    QString a = "../EcgApplicationCore/results/waves/r_peaks_";
-//    a.append(QString::number(current_it));
-//    a.append(".txt");
-//    QFile file(a);
-//    qInfo() << a;
-//    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-//        return;
-//    QTextStream out(&file);
-//    for(int i = 0; i < new_r_peaks.size(); i++)
-//        out << QString::number(new_r_peaks(i)) << "\n";
 
-//    a = "../EcgApplicationCore/results/waves/signal_";
-//    a.append(QString::number(current_it));
-//    a.append(".txt");
-//    QFile filea(a);
-//    qInfo() << a;
-//    if (!filea.open(QIODevice::WriteOnly | QIODevice::Text))
-//        return;
-//    QTextStream outa(&filea);
-//    for(int i = 0; i < current_signal.size(); i++)
-//        outa << QString::number(current_signal(i)) << "\n";
+    renumber_r_peaks(0); // przenumerowanie związane z numerem fragmentu
+    m_waves[current_it]->write_to_file(current_it);
+
     if(current_it>0)
         renumber_r_peaks();
-// ------------
-// Stara wersja
-// ------------
-//    Waves *waves;
+    emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
+}
 
-//    arma::vec new_r_peaks((m_r_peaks[current_it]->get_r_peaks()).size()+1);
-
-//    new_r_peaks(0) = (m_r_peaks[current_it-1]->get_r_peaks())((m_r_peaks[current_it-1]->get_r_peaks()).size()-1);
-//    new_r_peaks(arma::span(1,new_r_peaks.size()-1)) = m_r_peaks[current_it]->get_r_peaks();
-
-//    arma::vec new_signal0 = (m_r_peaks[current_it-1]->get_signal_filtered())(arma::span(new_r_peaks(0),(m_r_peaks[current_it-1]->get_signal_filtered()).size()-1));
-//    arma::vec new_signal1((m_r_peaks[current_it]->get_signal_filtered()).size()+new_signal0.size());
-//    new_signal1(arma::span(0,new_signal0.size()-1)) = new_signal0;
-//    new_signal1(arma::span(new_signal0.size(),new_signal1.size()-1)) = m_r_peaks[current_it]->get_signal_filtered();
-
-//    waves = new Waves(new_signal1,new_r_peaks,m_r_peaks[current_it]->get_sampling_freq());
-//    waves->find_waves();
-//    Waves_Points qrs0 = m_waves[current_it-1]->get_waves();
-//    renumber_waves();
-//    Waves_Points qrs1 = waves->get_waves();
-
-//    if(qrs0.p_onset.tail(1) == qrs1.p_onset.head(1))
-//        m_waves[current_it]->remove_head(0);
-//    if(qrs0.p_end.tail(1) == qrs1.p_end.head(1))
-//        m_waves[current_it]->remove_head(1);
-//    if(qrs0.qrs_onset.tail(1) == qrs1.qrs_onset.head(1))
-//        m_waves[current_it]->remove_head(2);
-//    if(qrs0.r_peaks.tail(1) == qrs1.r_peaks.head(1))
-//        m_waves[current_it]->remove_head(3);
-//    if(qrs0.qrs_end.tail(1) == qrs1.qrs_end.head(1))
-//        m_waves[current_it]->remove_head(4);
-//    if(qrs0.t_end.tail(1) == qrs1.t_end.head(1))
-//        m_waves[current_it]->remove_head(5);
+void R_peaks_gui::signal_loaded()
+{
 
 }

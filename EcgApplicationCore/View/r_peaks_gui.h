@@ -31,7 +31,7 @@ private slots:
 public slots:
     void filtered_signal_loaded(Ecg_Baseline *signal);
     void continue_processing();
-
+    void signal_loaded();
 
 signals:
     void still_loading();

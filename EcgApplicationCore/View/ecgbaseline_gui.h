@@ -31,6 +31,7 @@ public slots:
 signals:
     void ecg_signal_filtered(Ecg_Baseline *signal);
     void still_loading();
+    void signal_loaded();
 private:
     examination *m_file;
     examination_info m_file_info;
