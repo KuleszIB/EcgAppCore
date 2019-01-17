@@ -9,7 +9,7 @@ HrvDfa::HrvDfa() //konstruktor domyslny
 // TO PRZYJMUJEMY 4 i 64, TAKIE JAK W LABORATORIUM
 HrvDfa::HrvDfa(arma::vec r_peaks)
 {
-    r_peaks = HrvDfa::r_peaks;
+    HrvDfa::r_peaks = r_peaks;
     HrvDfa::middle = 12;
     HrvDfa::first_delta = 4;
     HrvDfa::last_delta = 64;
@@ -21,7 +21,7 @@ HrvDfa::HrvDfa(arma::vec r_peaks, int first_delta, int last_delta)
     HrvDfa::r_peaks = r_peaks;
     HrvDfa::first_delta = first_delta;
     HrvDfa::last_delta = last_delta;
-    HrvDfa::middle = floor(last_delta/ 4); //tu konwersja, ale nie szkodzi bo jest floor
+    HrvDfa::middle = floor((last_delta-first_delta)/ 4); //tu konwersja, ale nie szkodzi bo jest floor
 }
 //ROBIMY TACHOGRAM
 void HrvDfa::make_tachogram()
