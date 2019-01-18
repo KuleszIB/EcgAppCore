@@ -10,9 +10,16 @@ HrvDfa::HrvDfa() //konstruktor domyslny
 HrvDfa::HrvDfa(arma::vec r_peaks)
 {
     HrvDfa::r_peaks = r_peaks;
+            //zabezpieczenie na wypadek gdyby ktos probowal uzyc funkcji na wektorze r_peak o rozmiarze 35
+    if (r_peaks.size() < 200) {
+        HrvDfa::first_delta = 4;
+        HrvDfa::last_delta = floor(r_peaks.size()/4);
+        HrvDfa::middle = floor((last_delta-first_delta)/ 4);
+    } else {
     HrvDfa::middle = 12;
     HrvDfa::first_delta = 4;
     HrvDfa::last_delta = 64;
+    }
 }
 
 //KONSTRUKTOR W PRZYPADKU GDY PODAJEMY DELTY
