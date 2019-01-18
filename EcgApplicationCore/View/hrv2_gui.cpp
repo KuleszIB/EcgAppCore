@@ -17,8 +17,9 @@ HRV2_gui::HRV2_gui(QWidget *parent) :
     hrv2histPlot2 = new hrv2histplot(this);
     layout2->addWidget(hrv2histPlot2);
     ui->hrv2histPlot->setLayout(layout2);
-
-
+    m_hrv2.reserve(20);
+    m_r_peaks.reserve(20);
+    current_it = 0;
 
 }
 
@@ -69,10 +70,10 @@ void HRV2_gui::addHistogram(){
 
 
 }
-void HRV2_gui::load_R_Peaks_vector2(R_Peaks *r_peaks_signal)
+void HRV2_gui::load_R_Peaks_vector2(R_Peaks *r_peaks_signal, Waves *waves)
 {
     m_r_peaks.push_back(r_peaks_signal);
-    Hrv2 *hrv2_r_peaks = new Hrv2(m_r_peaks[0]->get_r_peaks());
+    Hrv2 *hrv2_r_peaks = new Hrv2(m_r_peaks[current_it++]->get_r_peaks());
     m_hrv2.push_back(hrv2_r_peaks);
 }
 

@@ -7,6 +7,7 @@
 #include "Modules/hrv2_module.h"
 #include "Modules/r_peaks_module.h"
 #include "Modules/examination.h"
+#include "Modules/waves_module.h"
 
 namespace Ui {
 class HRV2_gui;
@@ -21,7 +22,7 @@ public:
     ~HRV2_gui();
 
 public slots:
-    void load_R_Peaks_vector2(R_Peaks *r_peaks_signal);
+    void load_R_Peaks_vector2(R_Peaks*, Waves*);
 
 private slots:
     void on_pushButton_RUN_clicked();
@@ -32,6 +33,7 @@ private:
     hrv2histplot *hrv2histPlot2;
     QVector<Hrv2*> m_hrv2;
     QVector<R_Peaks*> m_r_peaks;
+    unsigned int current_it;
     void addGraph();
     void addHistogram();
 };

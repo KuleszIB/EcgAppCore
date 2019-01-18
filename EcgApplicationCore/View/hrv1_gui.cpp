@@ -14,7 +14,7 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     ui->hrv1Plot->setLayout(layout);
     connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
     hrv_r_peaks.reserve(10);
-
+    current_it = 0;
 }
 
 HRV1_gui::~HRV1_gui()
@@ -25,7 +25,7 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 {
    // hrv_r_peaks[0]->calc_periodogram();
    // hrv_r_peaks[0]->calc_freq_vec();
-    hrv_r_peaks[0]->calc_params();
+    hrv_r_peaks[current_it++]->calc_params();
     int N = 7200;
     QVector<double> periodogram(N), freq(N); // initialize with entries 0..100
     arma::vec period =hrv_r_peaks[0]->get_periodogram();
@@ -57,10 +57,10 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
    // qInfo()<<hf.size();
 }
 
-void HRV1_gui::load_R_Peaks_vector(R_Peaks *r_peaks_signal)
+void HRV1_gui::load_R_Peaks_vector(R_Peaks *r_peaks_signal, Waves *waves)
 {
     m_r_peaks.push_back(r_peaks_signal);
-    Hrv1 *hrv1_r_peaks = new Hrv1(m_r_peaks[0]->get_r_peaks());
+    Hrv1 *hrv1_r_peaks = new Hrv1(m_r_peaks[current_it]->get_r_peaks());
     hrv_r_peaks.push_back(hrv1_r_peaks);
 
 

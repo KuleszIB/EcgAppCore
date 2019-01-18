@@ -386,7 +386,7 @@ void R_peaks_gui::find_waves()
 
     if(current_it>0)
         renumber_r_peaks();
-//    emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
+    emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
 }
 
 void R_peaks_gui::signal_loaded()
@@ -408,8 +408,8 @@ void R_peaks_gui::signal_loaded()
 //        return filter4();
 //    }
     //m_r_peaks[0]->find_r_peaks();
-    filter1();
-    arma::vec r_test = m_r_peaks[0]->get_r_peaks();
-    emit r_peaks_get(m_r_peaks[0]);
-    qInfo() << "Znaleziono " << r_test.size() << " zespołów QRS.";
+//    filter1();
+//    arma::vec r_test = m_r_peaks[0]->get_r_peaks();
+//    emit r_peaks_get(m_r_peaks[0]);
+//    qInfo() << "Znaleziono " << r_test.size() << " zespołów QRS.";
 }

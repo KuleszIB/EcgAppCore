@@ -8,6 +8,7 @@
 #include "Modules/ecg_baseline_module.h"
 #include "Modules/hrv1_module.h"
 #include "Modules/examination.h"
+#include "Modules/waves_module.h"
 
 
 namespace Ui {
@@ -27,7 +28,7 @@ private slots:
     void on_pushButton_clicked();
 
 public slots:
-    void load_R_Peaks_vector(R_Peaks *r_peaks_signal);
+    void load_R_Peaks_vector(R_Peaks*,Waves*);
 
 private:
     Ui::HRV1_gui *ui;
@@ -36,6 +37,7 @@ private:
     QVector<Hrv1*> hrv_r_peaks;
     Time_Params timeParams;
     Frequency_Params freq_params;
+    unsigned int current_it;
 };
 
 #endif // HRV1_H

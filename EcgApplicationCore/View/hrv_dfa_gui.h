@@ -6,6 +6,7 @@
 #include <Modules/hrv_dfa_module.h>
 #include <Modules/r_peaks_module.h>
 #include <Modules/examination.h>
+#include "Modules/waves_module.h"
 
 namespace Ui {
 class HRV_dfa_gui;
@@ -20,17 +21,17 @@ public:
     ~HRV_dfa_gui();
 
 public slots:
-    void load_R_Peaks_vector3(R_Peaks *r_peaks_signal);
+    void load_R_Peaks_vector3(R_Peaks*,Waves*);
 
 private slots:
     void on_pushButton_clicked();
-
 
 private:
     Ui::HRV_dfa_gui *ui;
     hrvdfaplot *hrvdfaPlot2;
     QVector<R_Peaks*> m_r_peaks;
     QVector<HrvDfa*> m_hrv_dfa;
+    unsigned int current_it;
     void AddGraph();
 };
 

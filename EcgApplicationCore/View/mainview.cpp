@@ -38,9 +38,9 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     // TU MA BYĆ INFO_LOADED Z CZYMŚ POŁĄCZONE
     connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
-    connect(rPeaks_gui,SIGNAL(r_peaks_get(R_Peaks*)),hrv_1_gui, SLOT(load_R_Peaks_vector(R_Peaks*)));
-    connect(rPeaks_gui,SIGNAL(r_peaks_get(R_Peaks*)),hrv_2_gui, SLOT(load_R_Peaks_vector2(R_Peaks*)));
-    connect(rPeaks_gui,SIGNAL(r_peaks_get(R_Peaks*)),hrv_dfa_gui, SLOT(load_R_Peaks_vector3(R_Peaks*)));
+    connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_1_gui, SLOT(load_R_Peaks_vector(R_Peaks*,Waves*)));
+    connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_2_gui, SLOT(load_R_Peaks_vector2(R_Peaks*,Waves*)));
+    connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_dfa_gui, SLOT(load_R_Peaks_vector3(R_Peaks*,Waves*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),stSegment_gui,SLOT(filtered_signal_loaded_Stsegment(Ecg_Baseline*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),t_alt_class_gui,SLOT(filtered_signal_loaded_Taltclass(Ecg_Baseline*)));
 

@@ -11,6 +11,9 @@ HRV_dfa_gui::HRV_dfa_gui(QWidget *parent) :
     hrvdfaPlot2 = new hrvdfaplot(this);
     layout->addWidget(hrvdfaPlot2);
     ui->Plot->setLayout(layout);
+    m_r_peaks.reserve(20);
+    m_hrv_dfa.reserve(20);
+    current_it = 0;
 }
 
 HRV_dfa_gui::~HRV_dfa_gui()
@@ -39,10 +42,10 @@ hrvdfaPlot2->setDataHRVDFA(log_f, log_d);//, v_s, v_l);
 }
 
 
-void HRV_dfa_gui::load_R_Peaks_vector3(R_Peaks *r_peaks_signal)
+void HRV_dfa_gui::load_R_Peaks_vector3(R_Peaks *r_peaks_signal, Waves *waves)
 {
     m_r_peaks.push_back(r_peaks_signal);
-    HrvDfa *hrv_dfa_r_peaks = new HrvDfa(r_peaks_signal->get_r_peaks());
+    HrvDfa *hrv_dfa_r_peaks = new HrvDfa(m_r_peaks[current_it++]->get_r_peaks());
     m_hrv_dfa.push_back(hrv_dfa_r_peaks);
 }
 
