@@ -45,8 +45,8 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
     m_ecg_baseline.push_back(signal);
     R_Peaks *r_peaks = new R_Peaks(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_r_peaks.push_back(r_peaks);
-<<<<<<< HEAD
     ui->pushButton->setDisabled(false);
+    qInfo() << "m_r_peaks.size()" << m_r_peaks.size();
     if(current_it > 0)
         emit still_loading();
 }
@@ -56,14 +56,6 @@ void R_peaks_gui::on_pushButton_clicked()
     emit still_loading();
 }
 
-void R_peaks_gui::filter1()
-{
-=======
-
-    Waves *m_waves2 = new Waves(signal->get_signal_filtered(),m_r_peaks[0]->get_r_peaks(), signal->get_sampling_freq());
-    m_waves.push_back(m_waves2);
-
-}
 
 void R_peaks_gui::filter1()
     {
@@ -75,7 +67,7 @@ void R_peaks_gui::filter1()
           y[i] = sin(x[i]); // let's plot a quadratic function
         }
         arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-        arma::vec time = m_ecg_baseline[0]->get_time_vec();
+        arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
         arma::vec time_cropped = time(arma::span(0,N-1));
         x = examination::convert_vec_qvector(time_cropped);
         y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
@@ -207,8 +199,7 @@ void R_peaks_gui::filter2()
       y[i] = exp(x[i]); // let's plot a quadratic function
     }
     qrsPlot2->setData2(x,y);
-}
->>>>>>> origin/Monique_visualization
+
 
 }
 

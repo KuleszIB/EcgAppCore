@@ -45,12 +45,9 @@ private:
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
-<<<<<<< HEAD
-=======
     Waves_Points new_waves;
     void funkcja1();
 
->>>>>>> origin/Monique_visualization
     qrsplot *qrsPlot2;
     void filter1();
     void filter2();

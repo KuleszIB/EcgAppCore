@@ -43,7 +43,7 @@ SOURCES += \
     Modules/t_peaks.cpp \
     Modules/ecg_io.cpp \
     Modules/examination.cpp \
-    Modules/file_explorer.cpp
+    Modules/file_explorer.cpp \
     View/hrvdfaplot.cpp
 
 HEADERS += \
@@ -71,7 +71,7 @@ HEADERS += \
 #    Modules/t_wave_alt_module.h \
     Modules/t_peaks.h \
     Modules/ecg_io.h \
-    Modules/file_explorer.h
+    Modules/file_explorer.h \
     View/hrvdfaplot.h
 
 FORMS += \

@@ -317,7 +317,7 @@ void Waves::find_waves()
     signal_filtered = signal_raw;
     find_qrs_onset_end();
     find_p_onset_end();
-//   find_t_end();
+    find_t_end();
 }
 
 Waves_Points Waves::get_waves()
@@ -359,7 +359,7 @@ void Waves::set_waves(Waves_Points waves)
 
 void Waves::write_to_file(int it)
 {
-    QString a = "../EcgApplicationCore/results/waves/waves_";
+    QString a = "../../results/waves/waves_";
     a.append(QString::number(it));
     a.append(".txt");
     QFile file(a);
@@ -367,8 +367,12 @@ void Waves::write_to_file(int it)
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     QTextStream out(&file);
+//    qInfo() << waves_points.p_onset.size() << waves_points.p_end.size() <<
+//               waves_points.qrs_onset.size() << r_peaks_vec.size() <<
+//               waves_points.qrs_end.size() << waves_points.t_end.size();
     for(int i = 0; i < r_peaks_vec.size(); i++)
     {
+//        qInfo() << i;
         out << QString::number(waves_points.p_onset[i]) << ";" <<
                QString::number(waves_points.p_end[i]) << ";" <<
                QString::number(waves_points.qrs_onset[i]) << ";" <<
