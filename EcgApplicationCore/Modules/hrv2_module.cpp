@@ -9,8 +9,9 @@ Hrv2::Hrv2()
 
 Hrv2::Hrv2(arma::vec r_peaks)
 {
-    double fs = sampling_frequency;
-        //r_peaks = {75,367,661,944,1230,1514,1806,2042,2401,2704,2996,3278,3555,3859,4167,4464,4763,5057,5345,5631,5914,6211,6524,6822,7104,7379,7668,7952,8243,8537,8836,9140,9429,9706,9991};
+//    double fs = sampling_frequency;
+    double fs = 360;
+    r_peaks = {75,367,661,944,1230,1514,1806,2042,2401,2704,2996,3278,3555,3859,4167,4464,4763,5057,5345,5631,5914,6211,6524,6822,7104,7379,7668,7952,8243,8537,8836,9140,9429,9706,9991};
         int size = int(r_peaks.size()) - 1;
         arma::vec r_peaks_vec_temp(size);                                     //temporary vector for RR intervals
         for(int i=0; i<size; i++) {
@@ -18,7 +19,7 @@ Hrv2::Hrv2(arma::vec r_peaks)
             r_peaks_vec_temp[i] = r_peaks_vec_temp[i]/fs;                    //changing to the time [s]
         }
         intervals_original = r_peaks_vec_temp;
-
+        calc_params();
 }
 
 
@@ -86,7 +87,8 @@ void Hrv2::remove_outliers()
 
 void Hrv2::calc_histogram()
 {
-    double fs = sampling_frequency;
+//    double fs = sampling_frequency;
+    double fs = 360;
     double minimum = intervals.min();
     double maximum = intervals.max();
     double bin_width = 1/fs;
@@ -171,6 +173,7 @@ void Hrv2::calc_poincare()
     calc_SD1();
     calc_SD2();
     calc_centroid();
+    calc_ellipse();
     calc_poincare_axises();
 }
 
@@ -209,6 +212,28 @@ void Hrv2::calc_centroid()
     double x_centre = tmp_sum/size;
 
     poincare.centroid = x_centre;
+}
+
+
+void Hrv2::calc_ellipse(){
+    double pi = 3.14159265359;
+    double sd1 = poincare.sd1;
+    double sd2 = poincare.sd2;
+    double centre = poincare.centroid;
+    double angle = pi/4;
+    int N = 100;                //quantity of points in ellipse vector
+    arma::vec th = arma::linspace<arma::vec>(0, 2*pi, N); //wektor 100 próbek z zakresu 0-360
+    arma::vec x_ellipse(N);
+    arma::vec y_ellipse(N);
+
+//  Ellipse parametric formula
+    for(int i = 0; i < N; i++){
+        x_ellipse[i] = centre + sd2*cos(th[i])*cos(angle) - sd1*sin(th[i])*sin(angle);
+        y_ellipse[i] = centre + sd2*cos(th[i])*sin(angle) + sd1*sin(th[i])*cos(angle);
+    }
+
+    poincare.ellipse_ox = x_ellipse;
+    poincare.ellipse_oy = y_ellipse;
 }
 
 

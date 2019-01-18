@@ -20,6 +20,8 @@ struct poincare_graph
     arma::vec intervals_ox;
     arma::vec intervals_oy;
     arma::vec straight_xy;
+    arma::vec ellipse_ox;
+    arma::vec ellipse_oy;
     arma::vec sd1_axis_ox;
     arma::vec sd1_axis_oy;
     arma::vec sd2_axis;
@@ -46,7 +48,9 @@ private:
     void calc_SD1();
     void calc_SD2();
     void calc_centroid();
+    void calc_ellipse();
     void calc_poincare_axises();
+
 
 public:
     Hrv2();
