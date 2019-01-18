@@ -33,6 +33,9 @@ void HrvDfa::make_tachogram()
         RR_intervals_temp[i] = RR_intervals_temp[i] / 360;                    //dzielimy przez 360, czyli czestotliwosc progkowania
    }
    RR_intervals =  RR_intervals_temp;
+
+
+
    HrvDfa::cum_time_vec = arma::cumsum(HrvDfa::RR_intervals);                   // wektor czasu, armadillo ma funkcje cumsum
 
 }
@@ -48,6 +51,9 @@ Out_DFA HrvDfa::calculate_DFA() {
     // tu obliczamy F
     arma::vec F(size_delta);
     for (int k = 0; k<size_delta; k++) {
+
+
+
         F[k] = calculate_F(cum_time_vec, RR_intervals, delta_vector(k));
     }
     arma::vec fit = least_squares(log10(delta_vector.rows(0,middle-1)), log10(F.rows(0,middle-1)),middle);
@@ -59,6 +65,9 @@ Out_DFA HrvDfa::calculate_DFA() {
     arma::vec fit2 = least_squares(log10(delta_vector.rows(middle,delta_vector.n_elem-1)), log10(F.rows(middle,delta_vector.n_elem -1)),delta_vector.n_elem-middle-1);
     arma::vec fitdata2=fit2(1)*(log10(delta_vector.rows(middle,delta_vector.n_elem-1)))+fit2(0);
     double alpha2 = fit2(1);
+
+
+
     Out_DFA out_DFA;
     out_DFA.alpha1 = alpha;
     out_DFA.alpha2 = alpha2;

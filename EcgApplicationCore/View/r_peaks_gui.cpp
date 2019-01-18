@@ -40,6 +40,7 @@ void R_peaks_gui::peakDetection()
 
 }
 
+// tutaj odbieramy sygnal i wczytujemy go do wektora. Patrz na r_peaks_gui.h
 void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
 {
     m_ecg_baseline.push_back(signal);
