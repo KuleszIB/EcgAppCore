@@ -8,6 +8,7 @@ ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
     signal->attach(this);
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin(true);
+    grid->setPen(QPen(Qt::gray, 0, Qt::DotLine));
     grid->attach(this);
     setAxisTitle(QwtPlot::yLeft, "Amplitude [mV]");
     setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");

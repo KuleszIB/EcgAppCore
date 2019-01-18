@@ -188,6 +188,16 @@
      </property>
     </column>
    </widget>
+   <widget class="QWidget" name="Plot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>250</y>
+      <width>541</width>
+      <height>221</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

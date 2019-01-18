@@ -37,7 +37,15 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     m_app = app; // ewentualnie do usunięcia
     connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
-    connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),hrv_1_gui, SLOT(load_R_Peaks_vector(Ecg_Baseline*))); //MB:dobrze dodalam?
+    connect(rPeaks_gui,SIGNAL(r_peaks_get(R_Peaks*)),hrv_1_gui, SLOT(load_R_Peaks_vector(R_Peaks*)));
+    connect(rPeaks_gui,SIGNAL(r_peaks_get(R_Peaks*)),hrv_2_gui, SLOT(load_R_Peaks_vector2(R_Peaks*)));
+    connect(rPeaks_gui,SIGNAL(r_peaks_get(R_Peaks*)),hrv_dfa_gui, SLOT(load_R_Peaks_vector3(R_Peaks*)));
+    connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),stSegment_gui,SLOT(filtered_signal_loaded_Stsegment(Ecg_Baseline*)));
+    connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),t_alt_class_gui,SLOT(filtered_signal_loaded_Taltclass(Ecg_Baseline*)));
+
+
+
+
     // Tutaj jest do multithread
 //    ecg_io = new Ecg_IO();
 //    QObject::connect(ecg_io,SIGNAL(data_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
