@@ -35,7 +35,7 @@ public slots:
 
 signals:
     void still_loading();
-    void r_peaks_found();
+    void r_peaks_waves_found(R_Peaks*,Waves*);
 
 private:
     int current_it;

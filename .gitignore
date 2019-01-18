@@ -11,6 +11,7 @@
 *.lai
 *.so
 *.dylib
+/results
 
 # Qt-es
 object_script.*.Release
