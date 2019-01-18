@@ -1,5 +1,5 @@
-#ifndef HRV_DFA_H
-#define HRV_DFA_H
+#ifndef HRV_DFA_GUI_H
+#define HRV_DFA_GUI_H
 
 #include <QWidget>
 #include "hrvdfaplot.h"
@@ -35,4 +35,4 @@ private:
     void AddGraph();
 };
 
-#endif // HRV_DFA_H
+#endif // HRV_DFA_GUI_H

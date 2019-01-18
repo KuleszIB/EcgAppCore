@@ -1,5 +1,5 @@
-#ifndef HRV2_H
-#define HRV2_H
+#ifndef HRV2_GUI_H
+#define HRV2_GUI_H
 
 #include <QWidget>
 #include "hrv2poincareplot.h"
@@ -38,4 +38,4 @@ private:
     void addHistogram();
 };
 
-#endif // HRV2_H
+#endif // HRV2_GUI_H

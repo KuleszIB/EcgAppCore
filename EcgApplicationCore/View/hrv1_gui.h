@@ -1,5 +1,5 @@
-#ifndef HRV1_H
-#define HRV1_H
+#ifndef HRV1_GUI_H
+#define HRV1_GUI_H
 
 #include <QWidget>
 #include "hrv1plot.h"
@@ -40,4 +40,4 @@ private:
     unsigned int current_it;
 };
 
-#endif // HRV1_H
+#endif // HRV1_GUI_H
