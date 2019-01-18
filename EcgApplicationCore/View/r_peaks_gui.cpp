@@ -170,6 +170,7 @@ void R_peaks_gui::find_waves()
 {
 // ------------
 // Dobry pomysł Kasi Samojeden!
+// I jeszcze lepsze wykonanie Fabiana Bogusza!
 // ------------
     int M, N;
     arma::vec new_r_peaks = m_r_peaks[current_it]->get_r_peaks();
@@ -242,7 +243,7 @@ void R_peaks_gui::find_waves()
 
     if(current_it>0)
         renumber_r_peaks();
-    emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
+//    emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
 }
 
 void R_peaks_gui::signal_loaded()

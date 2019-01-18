@@ -106,7 +106,11 @@ arma::vec R_Peaks::find_peaks(arma::vec signal)
                 peaks[counter++] = i;
             }
         }
-        peaks = peaks.subvec(0,counter-1);
+
+        if (counter > 0)
+            peaks = peaks.subvec(0,counter-1);
+        else
+            peaks = signal[N-1];
     }
     return peaks;
 }

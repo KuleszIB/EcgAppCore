@@ -226,13 +226,19 @@ void Waves::find_t_end()
             maxPos += startPoint;
         }
         else
+        {
+            Tend[counter++] = waves_points.qrs_end[i]+10;   // wyszukaj cokolwiek
             continue;
+        }
 
         // Poszukiwanie minimum lokalnego wystepujacego bezposrednio po
         // wczesniej wyszukanym maksimum
         int minPos;
         if ((endPoint - maxPos) < 2)
+        {
+            Tend[counter++] = waves_points.qrs_end[i]+10;   // wyszukaj cokolwiek
             continue;
+        }
         else
         {
             arma::vec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
@@ -263,6 +269,7 @@ void Waves::find_t_end()
                 }
                 else
                     Tend[counter++] = j;
+
             }
             if (j<signal_filtered.size()-1)
                 j++;
@@ -275,7 +282,6 @@ void Waves::find_t_end()
     }
 
     signal_filtered = signal_raw;
-
     waves_points.t_end = Tend.subvec(0,counter-1);
 }
 
@@ -310,7 +316,7 @@ void Waves::find_waves()
     signal_filtered = signal_raw;
     find_qrs_onset_end();
     find_p_onset_end();
-//    find_t_end();
+    find_t_end();
 }
 
 Waves_Points Waves::get_waves()
@@ -365,8 +371,8 @@ void Waves::write_to_file(int it)
         out << QString::number(waves_points.p_onset[i]) << ";" <<
                QString::number(waves_points.p_end[i]) << ";" <<
                QString::number(waves_points.qrs_onset[i]) << ";" <<
-//               QString::number(r_peaks_vec[i]) << ";" <<
-               QString::number(waves_points.qrs_end[i]) << "\n";
-//               QString::number(waves_points.t_end[i]) << "\n";
+               QString::number(r_peaks_vec[i]) << ";" <<
+               QString::number(waves_points.qrs_end[i]) << ";" <<
+               QString::number(waves_points.t_end[i]) << "\n";
     }
 }
