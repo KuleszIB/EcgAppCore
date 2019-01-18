@@ -19,6 +19,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -28,7 +31,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="ECGBASE">
      <attribute name="title">
@@ -165,7 +168,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lE_age"/>
+      <widget class="QLineEdit" name="lE_age">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_gender">
@@ -175,9 +182,26 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lE_gender"/>
+      <widget class="QLineEdit" name="lE_gender">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_report">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>10</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Report</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

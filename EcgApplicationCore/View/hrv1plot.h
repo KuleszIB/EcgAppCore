@@ -16,11 +16,15 @@ class hrv1plot : public QwtPlot
 public:
     hrv1plot(QWidget *parent = 0);
     ~hrv1plot();
-    void setData2(QVector<double> x, QVector<double> y);
+    void setData2(QVector<double> , QVector<double> , double , double , double , double  );
 
 private:
     QwtPlot *plot;
     QwtPlotCurve *signal;
+    QwtPlotMarker *ulf;
+    QwtPlotMarker *vlf;
+    QwtPlotMarker *lf;
+    QwtPlotMarker *hf;
 
 };
 

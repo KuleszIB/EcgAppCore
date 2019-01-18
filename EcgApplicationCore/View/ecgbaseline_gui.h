@@ -34,11 +34,12 @@ private:
     unsigned int current_it;
     Ui::ECGbaseline_gui *ui;
     ecgplot *ecgPlot2;
+    void nofilter();
     void filter1();
     void filter2();
     void filter3();
     void filter4();
-
+    void filter5();
 
 };
 

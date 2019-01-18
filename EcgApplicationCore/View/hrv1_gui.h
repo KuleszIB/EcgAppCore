@@ -4,6 +4,10 @@
 #include <QWidget>
 #include "hrv1plot.h"
 #include <QVBoxLayout>
+#include "Modules/r_peaks_module.h"
+#include "Modules/ecg_baseline_module.h"
+#include "Modules/hrv1_module.h"
+#include "Modules/examination.h"
 namespace Ui {
 class HRV1_gui;
 }
@@ -18,11 +22,16 @@ public:
 
 private slots:
     void addRandomGraph();
+    void on_pushButton_clicked();
 
-
+public slots:
+    void load_R_Peaks_vector(Ecg_Baseline *r_peaks_signal); // chyba musi byc tak bo w outpucie z r peaksow jest arma vec ale ecgbaseline tez
 private:
     Ui::HRV1_gui *ui;
     hrv1plot *hrv1Plot2;
+    QVector<Hrv1*> hrv_r_peaks;
+    Time_Params timeParams;
+    Frequency_Params freq_params;
 };
 
 #endif // HRV1_H

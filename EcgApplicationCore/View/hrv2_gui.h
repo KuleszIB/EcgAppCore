@@ -21,6 +21,7 @@ private:
     Ui::HRV2_gui *ui;
     hrv2poincareplot *hrv2poincarePlot2;
     hrv2histplot *hrv2histPlot2;
+
 };
 
 #endif // HRV2_H
