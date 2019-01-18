@@ -45,7 +45,7 @@ Out_DFA HrvDfa::calculate_DFA() {
     // tu robimy wektor delt: od first_delta, co jeden, do last_delta
     int size_delta = last_delta-first_delta+1; //rozmiar ktory sie przyda do deklaracji wektorow F, delta_vector...
     arma::vec delta_vector(size_delta);
-    for (int i =0;i < last_delta-first_delta;i++) {
+    for (int i =0;i < last_delta-first_delta+1;i++) {
         delta_vector[i] = first_delta + i; //tworzenie wektora delt
     }
     // tu obliczamy F
