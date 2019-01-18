@@ -36,6 +36,25 @@ QVector<double> examination::convert_vec_qvector(arma::vec signal)
 
     return signal_qvec;
 }
+QVector<double> examination::convert_uvec_qvector(arma::uvec signal)
+{
+   typedef std::vector<double> stdvec;
+    //typedef QVector<float> qvec;
+    stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+    QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+
+    return signal_qvec;
+}
+QVector<double> examination::convert_ivec_qvector(arma::ivec signal)
+{
+   typedef std::vector<double> stdvec;
+    //typedef QVector<float> qvec;
+    stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+    QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+
+
+    return signal_qvec;
+}
 
 void examination::set_filename(QString name)
 {

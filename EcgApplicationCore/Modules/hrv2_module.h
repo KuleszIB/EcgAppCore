@@ -1,5 +1,5 @@
-#ifndef HRV2_H
-#define HRV2_H
+#ifndef HRV2
+#define HRV2
 
 #include "r_peaks_module.h"
 
@@ -22,6 +22,7 @@ struct poincare_graph
     arma::vec sd1_axis_oy;
     arma::vec sd2_axis;
     double centroid;
+    double centroid2;
     double sd1;
     double sd2;
 };
@@ -44,6 +45,7 @@ private:
     void calc_SD1();
     void calc_SD2();
     void calc_centroid();
+    void calc_centroid2();
     void calc_poincare_axises();
 
 public:

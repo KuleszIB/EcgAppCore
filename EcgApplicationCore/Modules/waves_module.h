@@ -1,5 +1,5 @@
-#ifndef WAVES_H
-#define WAVES_H
+#ifndef WAVES
+#define WAVES
 
 #include "r_peaks_module.h"
 

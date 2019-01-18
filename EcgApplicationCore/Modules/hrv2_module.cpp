@@ -175,6 +175,7 @@ void Hrv2::calc_poincare()
     calc_SD1();
     calc_SD2();
     calc_centroid();
+    calc_centroid2();
     calc_poincare_axises();
 }
 
@@ -219,6 +220,19 @@ void Hrv2::calc_centroid()
     poincare.centroid = x_centre;
 }
 
+void Hrv2::calc_centroid2()
+{
+    //  Centroid as an average of points
+    double tmp_sum = arma::sum(poincare.intervals_oy);
+    double size = double(poincare.intervals_ox.size());
+    double y_centre = tmp_sum/size;
+
+//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc git
+//    double tmp_sum2 = arma::sum(poincare.intervals_oy);
+//    double y_centre = tmp_sum2/size;
+
+    poincare.centroid2 = y_centre;
+}
 
 void Hrv2::calc_poincare_axises()
 {

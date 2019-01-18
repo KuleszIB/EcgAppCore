@@ -9,18 +9,21 @@
 #include <qwt_plot_grid.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_magnifier.h>
-
+#include <qwt_scale_engine.h>
 class hrv1plot : public QwtPlot
 {
     Q_OBJECT
 public:
     hrv1plot(QWidget *parent = 0);
     ~hrv1plot();
-    void setData2(QVector<double> x, QVector<double> y);
-
+    void setDataHRV(QVector<double> , QVector<double>, QVector<double> , QVector<double> , QVector<double> ,QVector<double> );
 private:
     QwtPlot *plot;
     QwtPlotCurve *signal;
+    QwtPlotCurve *ulf;
+    QwtPlotCurve *vlf;
+    QwtPlotCurve *lf;
+    QwtPlotCurve *hf;
 
 };
 

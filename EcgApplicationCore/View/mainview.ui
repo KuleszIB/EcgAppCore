@@ -19,16 +19,19 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>40</y>
       <width>1001</width>
-      <height>621</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="ECGBASE">
      <attribute name="title">
@@ -40,7 +43,7 @@
         <x>10</x>
         <y>10</y>
         <width>971</width>
-        <height>581</height>
+        <height>541</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="loECGBaseline"/>
@@ -165,7 +168,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lE_age"/>
+      <widget class="QLineEdit" name="lE_age">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_gender">
@@ -175,9 +182,26 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lE_gender"/>
+      <widget class="QLineEdit" name="lE_gender">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_report">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>10</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Report</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -205,6 +229,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionExit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">

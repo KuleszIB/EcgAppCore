@@ -21,6 +21,7 @@ Waves::Waves(arma::vec signal, arma::vec r_peaks, double fs)
     signal_raw = signal;
     r_peaks_vec = r_peaks;
     sampling_frequency = fs;
+    calc_time_vec();
 }
 
 void Waves::find_qrs_onset_end()
@@ -316,7 +317,7 @@ void Waves::find_waves()
     signal_filtered = signal_raw;
     find_qrs_onset_end();
     find_p_onset_end();
-    find_t_end();
+//   find_t_end();
 }
 
 Waves_Points Waves::get_waves()

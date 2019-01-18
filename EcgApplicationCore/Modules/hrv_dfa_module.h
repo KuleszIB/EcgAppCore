@@ -1,5 +1,5 @@
-#ifndef HRV_DFA_H
-#define HRV_DFA_H
+#ifndef HRV_DFA
+#define HRV_DFA
 #include "r_peaks_module.h"
 #include "armadillo"
 
@@ -19,7 +19,7 @@ private:
     double calculate_F(arma::vec tk, arma::vec x, int delta_m);
     void make_tachogram();
     Out_DFA out_DFA;
-    Out_DFA calculate_DFA();
+
     arma::vec cum_time_vec;
     arma::vec RR_intervals;
     arma::vec r_peaks;
@@ -32,6 +32,7 @@ public:
     // jesli chcemy sami wpisac srodek analizy czasowej (middle), najmniejsze okienko (pierwsza_delta), najwieksze okienko (ostatnia_delta)
     HrvDfa(arma::vec r_peaks, int first_delta, int last_delta);
     Out_DFA get_out_DFA();
+    Out_DFA calculate_DFA();
 
 };
 

@@ -7,6 +7,7 @@
 #include "Modules/r_peaks_module.h"
 #include "Modules/waves_module.h"
 #include "Modules/examination.h"
+#include "armadillo"
 
 namespace Ui {
 class R_peaks_gui;
@@ -36,6 +37,7 @@ public slots:
 signals:
     void still_loading();
     void r_peaks_waves_found(R_Peaks*,Waves*);
+    void r_peaks_get(R_Peaks* peaks);
 
 private:
     int current_it;
@@ -43,6 +45,12 @@ private:
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
+<<<<<<< HEAD
+=======
+    Waves_Points new_waves;
+    void funkcja1();
+
+>>>>>>> origin/Monique_visualization
     qrsplot *qrsPlot2;
     void filter1();
     void filter2();

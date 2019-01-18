@@ -34,6 +34,7 @@ private:
     arma::vec channel_two;
     arma::vec sample;
 
+<<<<<<< HEAD
     // definicja f statycznej musi być tutaj -> wydaje mi się, że nie musi
 public:
     examination();
@@ -47,7 +48,30 @@ public:
 signals:
     void part_loaded(arma::vec*);
     void info_loaded(examination_info *info);
+=======
+        return signal_qvec;
+    }
+    static QVector<double> convert_uvec_qvector(arma::uvec signal)
+    {
+       typedef std::vector<double> stdvec;
+        //typedef QVector<float> qvec;
+        stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+        QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+>>>>>>> origin/Monique_visualization
 
+
+        return signal_qvec;
+    }
+    static QVector<double> convert_ivec_qvector(arma::ivec signal)
+    {
+       typedef std::vector<double> stdvec;
+        //typedef QVector<float> qvec;
+        stdvec signal_temp = arma::conv_to<stdvec>::from(signal);
+        QVector<double> signal_qvec = QVector<double>::fromStdVector(signal_temp);
+
+
+        return signal_qvec;
+    }
 
 }; // zamyka strukturę
 

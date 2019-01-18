@@ -4,6 +4,9 @@
 #include <QWidget>
 #include "ecgplot.h"
 #include <QVBoxLayout>
+#include "Modules/ecg_baseline_module.h"
+#include "Modules/waves_module.h"
+#include "Modules/examination.h"
 namespace Ui {
 class St_segment_gui;
 }
@@ -17,9 +20,14 @@ public:
     ~St_segment_gui();
 private slots:
     void addRandomGraph();
+    void filtered_signal_loaded_Stsegment(Ecg_Baseline*);
 
 private:
     Ui::St_segment_gui *ui;
+    QVector<Ecg_Baseline*> m_ecg_baseline;
+    QVector<R_Peaks*> m_r_peaks;
+    QVector<Waves*> m_waves;
+    Waves_Points new_waves;
     ecgplot *ecgPlot2;
 };
 

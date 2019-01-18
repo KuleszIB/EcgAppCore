@@ -44,6 +44,7 @@ SOURCES += \
     Modules/ecg_io.cpp \
     Modules/examination.cpp \
     Modules/file_explorer.cpp
+    View/hrvdfaplot.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -71,6 +72,7 @@ HEADERS += \
     Modules/t_peaks.h \
     Modules/ecg_io.h \
     Modules/file_explorer.h
+    View/hrvdfaplot.h
 
 FORMS += \
     View/mainview.ui \

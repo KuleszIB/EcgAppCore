@@ -4,13 +4,14 @@ ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
 {   
 
     plot = new QwtPlot();
-    signal = new QwtPlotCurve("Sygnał");
+    signal = new QwtPlotCurve("Signal");
     signal->attach(this);
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin(true);
+    grid->setPen(QPen(Qt::gray, 0, Qt::DotLine));
     grid->attach(this);
-    setAxisTitle(QwtPlot::yLeft, "Amplituda [mV]");
-    setAxisTitle(QwtPlot::xBottom, "Czas [mm:ss.ms]");
+    setAxisTitle(QwtPlot::yLeft, "Amplitude [mV]");
+    setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");
     setAxisScale( xBottom, 0.0, 20.0 );
     setAxisScale( yLeft, -1.0, 1.0 );
 

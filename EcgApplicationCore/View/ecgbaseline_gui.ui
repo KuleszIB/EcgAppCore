@@ -53,17 +53,12 @@
         <widget class="QComboBox" name="comboBox_filter">
          <item>
           <property name="text">
-           <string>select filtration method</string>
+           <string>Raw_signal</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>lowpass_filter</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>bandpass_filter</string>
+           <string>Moving_average</string>
           </property>
          </item>
          <item>
@@ -83,17 +78,7 @@
          </item>
          <item>
           <property name="text">
-           <string>Keiser_filter</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>LSM_algorithm</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Moving_average</string>
           </property>
          </item>
         </widget>

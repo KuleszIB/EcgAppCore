@@ -210,9 +210,8 @@ void Ecg_Baseline::filter_lms()
 {
     arma::vec x = signal_raw;
     filter_bandpass();
-
     qInfo() << "LMS";
-    int N = signal_filtered.n_rows;
+    int N = x.size();
     int M = 15;
     double mu = 0.2;
     sp::FIR_filt<double,double,double> G;
@@ -228,69 +227,30 @@ void Ecg_Baseline::filter_lms()
     arma::vec d= signal_filtered;
     for(int n=0;n<N;n++)
         {
+        //qInfo() <<"rozmiar x to: "<< x.size();
+        //qInfo()<<n;
+        //qInfo()<<"to jest x"<<x(n);
             // Apply adaptiv filter
             y(n) = Ghat(x(n));
-
+//qInfo()<<"second";
             // Calc error
+//qInfo()<<"to jest d"<<d(n);
+//qInfo()<<"to jest y"<<y(n);
             e(n) = d(n)-y(n);
 
             // Update filter
+            //qInfo()<<"before updatefilter";
             Ghat.lms_adapt(e(n));
 
             // Save to log
+
+            //qInfo() << Ghat.get_coeffs().size();
+
+            //qInfo()<<Wlog.size();
             Wlog.col(n) = Ghat.get_coeffs();
         }
-
-    /*std::cout << "Estimated coeffs: " << Ghat.get_coeffs().t() << std::endl;
-    gplot gp0;
-    gp0.window("Plot", 10, 10, 500, 500);
-        gp0.plot_add_mat(Wlog,"b");
-        gp0.plot_show();*/
-
-    /*for (int i = 1; i <= N; i++) {
-        if (i <= M) {
-            arma::vec k = arma::linspace(i, -1, 1);
-            arma::vec A(M-k.size()); A.zeros();
-            int x;
-            arma::vec x1 = join_rows(signal_filtered,A);
-        }
-        else
-    }*/
-
-    /*long T, n = 0;
-    double D, Y, E;
-    double * W = new double[M];
-    double * X = new double[M];
-
-    for (T = 0; T < N; T++)
-    {
-        for (int m = T; m > T - M; m--) {
-            if (m >= 0)
-            {X[M + (m - T) - 1] = signal_filtered[m];	//X new input sample for LMS filter
-                qInfo() << X[m];}
-            else break;
-        }
-        D = signal_filtered[T];					//desired signal
-        Y = 0;						//filter’output set to zero
-
-        for (int i = 0; i < M; i++)
-            Y = Y+(W[i]*X[i]);			//calculate filter output
-
-
-        E = D - Y;					//calculate error signal
-
-        for (int i = 0; i < M; i++)
-            W[i] = W[i] + (mu * E * X[i]);		//update filter coefficients
-        signal_filtered[T] = Y; //signal_filtered = Y[T]
-
-    }*/
-
-    /*qInfo() << "po filtracji LMS";
-    for (int i=1; i<signal_filtered.size(); i++)
-    {
-        qInfo() << signal_filtered[i];
-    }*/
-
+qInfo()<<"Wyszedlem z petli";
+//tutaj trzeba podpiac signal_filtered do czegos.
 }
 
 
