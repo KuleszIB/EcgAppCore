@@ -10,26 +10,26 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
 
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin(true);
-    grid->setPen(QPen(Qt::gray, 0, Qt::DotLine));
+    grid->setPen(QPen(Qt::gray, 1.0, Qt::DotLine));
     grid->attach(this);
 
     hf = new QwtPlotCurve();
    // hf->setStyle(QwtPlotCurve::Sticks);
-    hf->setPen(QPen(Qt::green, 0, Qt::DashLine));
+    hf->setPen(QPen(Qt::green, 1.0, Qt::DashLine));
     hf->attach(this);
     ulf = new QwtPlotCurve();
   //  ulf->setStyle(QwtPlotCurve::Sticks);
-    ulf->setPen(QPen(Qt::darkGray, 0, Qt::DashLine));
+    ulf->setPen(QPen(Qt::darkGray, 1.0, Qt::DashLine));
     ulf->attach(this);
 
     vlf = new QwtPlotCurve();
     //vlf->setStyle(QwtPlotCurve::Sticks);
-    vlf->setPen(QPen(Qt::red, 0, Qt::DashLine));
+    vlf->setPen(QPen(Qt::red, 1.0, Qt::DashLine));
     vlf->attach(this);
 
     lf = new QwtPlotCurve();
     //lf->setStyle(QwtPlotCurve::Sticks);
-    lf->setPen(QPen(Qt::blue, 0, Qt::DashLine));
+    lf->setPen(QPen(Qt::blue, 1.0, Qt::DashLine));
     lf->attach(this);
 
 

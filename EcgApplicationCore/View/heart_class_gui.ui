@@ -76,6 +76,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="Plot" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>780</width>
+        <height>310</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>

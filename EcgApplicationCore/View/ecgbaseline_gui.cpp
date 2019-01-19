@@ -144,7 +144,7 @@ void ECGbaseline_gui::filter2()
 {
     Filter_Params filter_params;
     filter_params.set_filter_type(BUTTERWORTH);
-    m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    m_ecg_baseline[0]->filter_baseline(filter_params);
     arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
     emit ecg_signal_filtered(m_ecg_baseline[current_it]);
     int N = 20000;

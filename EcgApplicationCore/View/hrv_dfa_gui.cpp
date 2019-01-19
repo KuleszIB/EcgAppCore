@@ -38,7 +38,7 @@ log_d= examination::convert_vec_qvector(logdelta);
 v_s= examination::convert_vec_qvector(vectorshortwindows);
 v_l= examination::convert_vec_qvector(vectorlongwindows);
 
-hrvdfaPlot2->setDataHRVDFA(log_f, log_d, v_s, v_l);
+hrvdfaPlot2->setDataHRVDFA(log_d,log_f,  v_l,v_s);
 }
 
 

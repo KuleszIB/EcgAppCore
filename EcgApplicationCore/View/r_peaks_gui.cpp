@@ -88,7 +88,7 @@ void R_peaks_gui::filter1()
 //        arma::vec y_pend(new_p_end);
 //        arma::vec y_qrsend(new_qrs_end);
 //        arma::vec y_qrsonset(new_qrs_onset);
-        qInfo()<<"Tu jestem";
+   //     qInfo()<<"Tu jestem";
         //SPOSÓB 1
 //        for(int i = 0; i<(new_waves.qrs_onset).size()-1;i++)
 //        {
