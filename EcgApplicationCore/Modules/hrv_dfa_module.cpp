@@ -10,9 +10,16 @@ HrvDfa::HrvDfa() //konstruktor domyslny
 HrvDfa::HrvDfa(arma::vec r_peaks)
 {
     HrvDfa::r_peaks = r_peaks;
+            //zabezpieczenie na wypadek gdyby ktos probowal uzyc funkcji na wektorze r_peak o rozmiarze 35
+    if (r_peaks.size() < 100) {
+        HrvDfa::first_delta = 4;
+        HrvDfa::last_delta = floor(r_peaks.size()/4);
+        HrvDfa::middle = floor((last_delta-first_delta)/ 4);
+    } else {
     HrvDfa::middle = 12;
     HrvDfa::first_delta = 4;
-    HrvDfa::last_delta = 64;
+    HrvDfa::last_delta = 44;
+    }
 }
 
 //KONSTRUKTOR W PRZYPADKU GDY PODAJEMY DELTY
@@ -62,7 +69,7 @@ Out_DFA HrvDfa::calculate_DFA() {
     // wspolczynniki a i b, takie ze dopasowana prosta to y = a * x + b
     arma:: vec fitdata=fit(1) * (log10(delta_vector.rows(0,middle-1)))+fit(0);
     double alpha = fit(1);
-    arma::vec fit2 = least_squares(log10(delta_vector.rows(middle,delta_vector.n_elem-1)), log10(F.rows(middle,delta_vector.n_elem -1)),delta_vector.n_elem-middle-1);
+    arma::vec fit2 = least_squares(log10(delta_vector.rows(middle,delta_vector.n_elem-1)), log10(F.rows(middle,delta_vector.n_elem -1)),delta_vector.n_elem-middle);
     arma::vec fitdata2=fit2(1)*(log10(delta_vector.rows(middle,delta_vector.n_elem-1)))+fit2(0);
     double alpha2 = fit2(1);
 

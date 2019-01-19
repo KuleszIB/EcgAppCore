@@ -67,10 +67,10 @@ void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y, QVector<dou
         vs1.push_back(QPointF(float(x[i]), float(vs[i])));
     }
 
-    QVector<QPointF> vl1(vl.size()-vs.size());
+    QVector<QPointF> vl1;
     for (int i = 0; i < vl.size(); i++)
     {
-        if(vl[i]!=0)
+
         vl1.push_back(QPointF(float(x[i+vs.size()]), float(vl[i])));
     }
 
