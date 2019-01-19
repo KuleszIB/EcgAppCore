@@ -110,7 +110,7 @@
          <item>
           <widget class="QLabel" name="label_highFreq">
            <property name="text">
-            <string>High cutoff frequency</string>
+            <string>Center frequency</string>
            </property>
           </widget>
          </item>
@@ -124,7 +124,7 @@
          <item>
           <widget class="QLabel" name="label_lowFreq">
            <property name="text">
-            <string>Low cutoff frequency</string>
+            <string>Corner frequency</string>
            </property>
           </widget>
          </item>
@@ -171,7 +171,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_stepSize"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_stepSize">
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
