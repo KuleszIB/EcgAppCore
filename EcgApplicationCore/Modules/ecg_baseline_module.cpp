@@ -156,14 +156,15 @@ void Ecg_Baseline::filter_butterworth(Filter_Values gui_parameters)
 {	
     filter_noise();
     Filter_Values filter_values = gui_parameters;
+
     double w = filter_values.high_cutoff_freq;
-    w = w/(sampling_frequency / 2);
+    w = w/(sampling_frequency/2);
     int numSamples = signal_filtered.size();
     Dsp::Filter* f = new Dsp::SmoothedFilterDesign
         <Dsp::Butterworth::Design::HighPass <1>, 1, Dsp::DirectFormII>(sampling_frequency);
     Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
-    params[1] = filter_values.filter_order;; // order
+    params[1] = filter_values.filter_order; // order
     params[2] = w; // center frequency
     f->setParams(params);
     double *signal_tab[1];
