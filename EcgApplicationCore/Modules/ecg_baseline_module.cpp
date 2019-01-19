@@ -90,6 +90,7 @@ void Ecg_Baseline::filter_moving_average(Filter_Values gui_parameters)
     filter_noise();
     Filter_Values filter_values = gui_parameters;
     //double windowSize = 97;
+    qInfo()<<"to jest dlugosc filtra"<<filter_values.filter_length;
     arma::vec A(filter_values.filter_length);
     A.ones();
     arma::vec b(filter_values.filter_length);
