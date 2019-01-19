@@ -144,6 +144,9 @@ void ECGbaseline_gui::nofilter()
 
 void ECGbaseline_gui::filter2()
 {
+    double fs = m_ecg_baseline[current_it]->get_sampling_freq();
+    int N = int(10*fs); // 10 s nakładka
+
     Filter_Params filter_params;
     filter_params.set_filter_type(BUTTERWORTH);
     double highFreq_b;
@@ -152,23 +155,96 @@ void ECGbaseline_gui::filter2()
              {
                highFreq_b=centerFreq;
               }else{ highFreq_b=34;}
-    filter_params.set_filter_params(highFreq_b, 34, 1, 1, 0.2);
+    filter_params.set_filter_params(highFreq_b, 34, 2, 1, 0.2);
     m_ecg_baseline[0]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 20000;
-    QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
-    arma::vec time_cropped = time(arma::span(0,N-1));
+    arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
+
+    if(current_it > 1)
+    {
+        arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+        o_signal.shed_rows(0,o_signal.size()-N);
+
+        arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal.insert_rows(0,o_signal);
+
+        Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+        n_ecg->filter_baseline(filter_params);
+
+        arma::vec good_signal = n_ecg->get_signal_filtered();
+        good_signal.shed_rows(0,o_signal.size()-1);
+//        qInfo() << "good_signal.size()" << good_signal.size();
+        m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+        delete n_ecg;
+
+        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    }
+    else if(current_it == 1)
+    {
+        // current_it-1
+        arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+
+        arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal = n_signal(arma::span(0,N-1));
+        o_signal.insert_rows(o_signal.size()-1,n_signal);
+
+        Ecg_Baseline *o_ecg = new Ecg_Baseline(o_signal,fs);
+        o_ecg->filter_baseline(filter_params);
+        arma::vec signal0 = o_ecg->get_signal_filtered();
+        signal0.shed_rows(signal0.size()-N,signal0.size()-1);
+        m_ecg_baseline[current_it-1]->set_signal_filtered(signal0);
+
+        delete o_ecg;
+        emit ecg_signal_filtered(m_ecg_baseline[current_it-1]);
+        m_ecg_baseline[current_it-1]->write_to_file(current_it-1);
+
+        // current_it
+        o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+        o_signal.shed_rows(0,o_signal.size()-N);
+
+        n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal.insert_rows(0,o_signal);
+
+        Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+        n_ecg->filter_baseline(filter_params);
+
+        arma::vec good_signal = n_ecg->get_signal_filtered();
+        good_signal.shed_rows(0,o_signal.size()-1);
+
+        m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+        delete n_ecg;
+        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    }
+    else
+    {
+        m_ecg_baseline[current_it]->filter_baseline(filter_params);
+//        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+        signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    }
+
+    int K = 20000;
+    QVector<double> x(K), y(K); // initialize with entries 0..100
+    signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+    arma::vec time_cropped = time(arma::span(0,K-1));
     x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
-    ecgPlot2->setData(x,y);
-    current_it++;
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,K-1)));
+        ecgPlot2->setData(x,y);
+//        qInfo() << "Filtering it" << current_it;
+
+//    m_ecg_baseline[current_it]->write_to_file(current_it);
+    if(current_it++ < m_ecg_baseline.size()-1)
+        emit still_loading();
+
 }
 
 
 void ECGbaseline_gui::filter3()
     {
+    double fs = m_ecg_baseline[current_it]->get_sampling_freq();
+    int N = int(10*fs); // 10 s nakładka
+
     Filter_Params filter_params;
     filter_params.set_filter_type(CHEBYSHEV);
     double lowFreq_c;
@@ -177,24 +253,97 @@ void ECGbaseline_gui::filter3()
              {
                lowFreq_c=cornerFreq;
               }else{ lowFreq_c=2;}
-    filter_params.set_filter_params(2, lowFreq_c, 2, 1, 0.2);
+    filter_params.set_filter_params(2, lowFreq_c, 1, 2, 0.2);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 20000;
-    QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
-    arma::vec time_cropped = time(arma::span(0,N-1));
+    arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
+
+    if(current_it > 1)
+    {
+        arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+        o_signal.shed_rows(0,o_signal.size()-N);
+
+        arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal.insert_rows(0,o_signal);
+
+        Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+        n_ecg->filter_baseline(filter_params);
+
+        arma::vec good_signal = n_ecg->get_signal_filtered();
+        good_signal.shed_rows(0,o_signal.size()-1);
+//        qInfo() << "good_signal.size()" << good_signal.size();
+        m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+        delete n_ecg;
+
+        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    }
+    else if(current_it == 1)
+    {
+        // current_it-1
+        arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+
+        arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal = n_signal(arma::span(0,N-1));
+        o_signal.insert_rows(o_signal.size()-1,n_signal);
+
+        Ecg_Baseline *o_ecg = new Ecg_Baseline(o_signal,fs);
+        o_ecg->filter_baseline(filter_params);
+        arma::vec signal0 = o_ecg->get_signal_filtered();
+        signal0.shed_rows(signal0.size()-N,signal0.size()-1);
+        m_ecg_baseline[current_it-1]->set_signal_filtered(signal0);
+
+        delete o_ecg;
+        emit ecg_signal_filtered(m_ecg_baseline[current_it-1]);
+        m_ecg_baseline[current_it-1]->write_to_file(current_it-1);
+
+        // current_it
+        o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+        o_signal.shed_rows(0,o_signal.size()-N);
+
+        n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal.insert_rows(0,o_signal);
+
+        Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+        n_ecg->filter_baseline(filter_params);
+
+        arma::vec good_signal = n_ecg->get_signal_filtered();
+        good_signal.shed_rows(0,o_signal.size()-1);
+
+        m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+        delete n_ecg;
+        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    }
+    else
+    {
+        m_ecg_baseline[current_it]->filter_baseline(filter_params);
+//        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+        signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    }
+
+    int K = 20000;
+    QVector<double> x(K), y(K); // initialize with entries 0..100
+    signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+    arma::vec time_cropped = time(arma::span(0,K-1));
     x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,K-1)));
         ecgPlot2->setData(x,y);
-    current_it++;
+//        qInfo() << "Filtering it" << current_it;
+
+//    m_ecg_baseline[current_it]->write_to_file(current_it);
+    if(current_it++ < m_ecg_baseline.size()-1)
+        emit still_loading();
 
       }
 
 
 void ECGbaseline_gui::filter4()
     {
+
+    double fs = m_ecg_baseline[current_it]->get_sampling_freq();
+    int N = int(10*fs); // 10 s nakładka
+
     Filter_Params filter_params;
     filter_params.set_filter_type(SAVITZKY_GOLAY);
     ui->spinBox_filOrder->setMaximum(99);
@@ -212,16 +361,85 @@ void ECGbaseline_gui::filter4()
               }else{ length_s=7;}
         filter_params.set_filter_params(34, 2, order_s, length_s, 0.2);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 20000;
-    QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
-    arma::vec time_cropped = time(arma::span(0,N-1));
+    arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
+
+    if(current_it > 1)
+    {
+        arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+        o_signal.shed_rows(0,o_signal.size()-N);
+
+        arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal.insert_rows(0,o_signal);
+
+        Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+        n_ecg->filter_baseline(filter_params);
+
+        arma::vec good_signal = n_ecg->get_signal_filtered();
+        good_signal.shed_rows(0,o_signal.size()-1);
+//        qInfo() << "good_signal.size()" << good_signal.size();
+        m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+        delete n_ecg;
+
+        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    }
+    else if(current_it == 1)
+    {
+        // current_it-1
+        arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+
+        arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal = n_signal(arma::span(0,N-1));
+        o_signal.insert_rows(o_signal.size()-1,n_signal);
+
+        Ecg_Baseline *o_ecg = new Ecg_Baseline(o_signal,fs);
+        o_ecg->filter_baseline(filter_params);
+        arma::vec signal0 = o_ecg->get_signal_filtered();
+        signal0.shed_rows(signal0.size()-N,signal0.size()-1);
+        m_ecg_baseline[current_it-1]->set_signal_filtered(signal0);
+
+        delete o_ecg;
+        emit ecg_signal_filtered(m_ecg_baseline[current_it-1]);
+        m_ecg_baseline[current_it-1]->write_to_file(current_it-1);
+
+        // current_it
+        o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+        o_signal.shed_rows(0,o_signal.size()-N);
+
+        n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+        n_signal.insert_rows(0,o_signal);
+
+        Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+        n_ecg->filter_baseline(filter_params);
+
+        arma::vec good_signal = n_ecg->get_signal_filtered();
+        good_signal.shed_rows(0,o_signal.size()-1);
+
+        m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+        delete n_ecg;
+        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    }
+    else
+    {
+        m_ecg_baseline[current_it]->filter_baseline(filter_params);
+//        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+        signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    }
+
+    int K = 20000;
+    QVector<double> x(K), y(K); // initialize with entries 0..100
+    signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+    arma::vec time_cropped = time(arma::span(0,K-1));
     x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
+    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,K-1)));
         ecgPlot2->setData(x,y);
-    current_it++;
+//        qInfo() << "Filtering it" << current_it;
+
+//    m_ecg_baseline[current_it]->write_to_file(current_it);
+    if(current_it++ < m_ecg_baseline.size()-1)
+        emit still_loading();
       }
 
 void ECGbaseline_gui::filter1()
@@ -329,6 +547,10 @@ void ECGbaseline_gui::filter1()
 
 void ECGbaseline_gui::filter5()
     {
+
+    double fs = m_ecg_baseline[current_it]->get_sampling_freq();
+    int N = int(10*fs); // 10 s nakładka
+
     Filter_Params filter_params;
     filter_params.set_filter_type(LMS);
     unsigned int length_l;
@@ -338,16 +560,85 @@ void ECGbaseline_gui::filter5()
                length_l=length_gui_l;
               }else{ length_l=97;}
         filter_params.set_filter_params(34, 2, 25, length_l, 0.2);
-    m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 20000;
-    QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
-    arma::vec time_cropped = time(arma::span(0,N-1));
-    x = examination::convert_vec_qvector(time_cropped);
-    y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
-        ecgPlot2->setData(x,y);
+        arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
+
+        if(current_it > 1)
+        {
+            arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+            o_signal.shed_rows(0,o_signal.size()-N);
+
+            arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+            n_signal.insert_rows(0,o_signal);
+
+            Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+            n_ecg->filter_baseline(filter_params);
+
+            arma::vec good_signal = n_ecg->get_signal_filtered();
+            good_signal.shed_rows(0,o_signal.size()-1);
+    //        qInfo() << "good_signal.size()" << good_signal.size();
+            m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+            delete n_ecg;
+
+            emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+        }
+        else if(current_it == 1)
+        {
+            // current_it-1
+            arma::vec o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+
+            arma::vec n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+            n_signal = n_signal(arma::span(0,N-1));
+            o_signal.insert_rows(o_signal.size()-1,n_signal);
+
+            Ecg_Baseline *o_ecg = new Ecg_Baseline(o_signal,fs);
+            o_ecg->filter_baseline(filter_params);
+            arma::vec signal0 = o_ecg->get_signal_filtered();
+            signal0.shed_rows(signal0.size()-N,signal0.size()-1);
+            m_ecg_baseline[current_it-1]->set_signal_filtered(signal0);
+
+            delete o_ecg;
+            emit ecg_signal_filtered(m_ecg_baseline[current_it-1]);
+            m_ecg_baseline[current_it-1]->write_to_file(current_it-1);
+
+            // current_it
+            o_signal = m_ecg_baseline[current_it-1]->get_signal_raw();
+            o_signal.shed_rows(0,o_signal.size()-N);
+
+            n_signal = m_ecg_baseline[current_it]->get_signal_raw();
+            n_signal.insert_rows(0,o_signal);
+
+            Ecg_Baseline *n_ecg = new Ecg_Baseline(n_signal, fs);
+            n_ecg->filter_baseline(filter_params);
+
+            arma::vec good_signal = n_ecg->get_signal_filtered();
+            good_signal.shed_rows(0,o_signal.size()-1);
+
+            m_ecg_baseline[current_it]->set_signal_filtered(good_signal);
+
+            delete n_ecg;
+            emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+        }
+        else
+        {
+            m_ecg_baseline[current_it]->filter_baseline(filter_params);
+    //        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+            signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+        }
+
+        int K = 20000;
+        QVector<double> x(K), y(K); // initialize with entries 0..100
+        signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+        arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+        arma::vec time_cropped = time(arma::span(0,K-1));
+        x = examination::convert_vec_qvector(time_cropped);
+        y = examination::convert_vec_qvector(signal_filtered(arma::span(0,K-1)));
+            ecgPlot2->setData(x,y);
+    //        qInfo() << "Filtering it" << current_it;
+
+    //    m_ecg_baseline[current_it]->write_to_file(current_it);
+        if(current_it++ < m_ecg_baseline.size()-1)
+            emit still_loading();
     }
 
 void ECGbaseline_gui::on_pushButton_clicked()

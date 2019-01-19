@@ -167,6 +167,8 @@ void Ecg_Baseline::filter_butterworth(Filter_Values gui_parameters)
     params[0] = sampling_frequency; // sample rate
     params[1] = filter_values.filter_order; // order
     params[2] = w; // center frequency
+    qInfo()<<"to jest cut off"<<filter_values.high_cutoff_freq;
+    qInfo()<<"to jest filter order"<<filter_values.filter_order;
     f->setParams(params);
     double *signal_tab[1];
     signal_tab[0] = vec2tab(signal_filtered);
