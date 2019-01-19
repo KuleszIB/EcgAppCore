@@ -26,6 +26,7 @@ replot();
 hrv2histplot::~hrv2histplot()
 {
     delete signal;
+    delete histogram;
 }
 
 //void hrv2histplot::setDataHISTOGRAM(const QVector<QwtIntervalSample> &samples )
@@ -40,6 +41,7 @@ hrv2histplot::~hrv2histplot()
 
 void hrv2histplot::setValues( int numValues, QVector<double> values )
 {
+
     QVector<QwtIntervalSample> samples( numValues );
     for ( uint i = 0; i < numValues; i++ )
     {

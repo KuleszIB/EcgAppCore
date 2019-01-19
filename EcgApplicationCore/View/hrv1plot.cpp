@@ -125,23 +125,22 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
 
     QVector<QPointF> ulf2;
 
-    for (int i = 0; i < ulff.size(); ++i)
+    for (int i = 0; i < ulff.size(); i++)
     {
         ulf2.push_back(QPointF(float(ulff[i]), float(y[i])));
     }
-
     QVector<QPointF> vlf2;
-    for (int i = 0; i < vlff.size(); ++i)
+    for (int i = 0; i < vlff.size(); i++)
     {
         vlf2.push_back(QPointF(float(vlff[i]), float(y[i+ulff.size()])));
     }
     QVector<QPointF> lf2;
-    for (int i = 0; i < lff.size(); ++i)
+    for (int i = 0; i < lff.size(); i++)
     {
         lf2.push_back(QPointF(float(lff[i]), float(y[i+ulff.size()+vlff.size()])));
     }
     QVector<QPointF> hf2;
-    for (int i = 0; i < hff.size(); ++i)
+    for (int i = 0; i < hff.size(); i++)
     {
         hf2.push_back(QPointF(float(hff[i]), float(y[i+lff.size()+ulff.size()+vlff.size()])));
     }

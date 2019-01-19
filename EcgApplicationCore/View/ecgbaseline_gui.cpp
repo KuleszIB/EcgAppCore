@@ -113,10 +113,10 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
 }
 void ECGbaseline_gui::nofilter()
 {
-    arma::vec signal_raw = m_ecg_baseline[current_it]->get_signal_raw();
-    int N = 7200;
+    arma::vec signal_raw = m_ecg_baseline[0]->get_signal_raw();
+    int N = 20000;
     QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(current_it);
+    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_raw(arma::span(0,N-1)));
@@ -145,11 +145,11 @@ void ECGbaseline_gui::filter2()
     Filter_Params filter_params;
     filter_params.set_filter_type(BUTTERWORTH);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
     emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 7200;
+    int N = 20000;
     QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(current_it);
+    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
@@ -163,10 +163,11 @@ void ECGbaseline_gui::filter3()
     Filter_Params filter_params;
     filter_params.set_filter_type(CHEBYSHEV);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
-    int N = 7200;
+    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
+    emit ecg_signal_filtered(m_ecg_baseline[current_it]);
+    int N = 20000;
     QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(current_it);
+    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
@@ -181,16 +182,16 @@ void ECGbaseline_gui::filter4()
     Filter_Params filter_params;
     filter_params.set_filter_type(SAVITZKY_GOLAY);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
     emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 7200;
+    int N = 20000;
     QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(current_it);
+    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
         ecgPlot2->setData(x,y);
-        current_it++;
+    current_it++;
       }
 
 void ECGbaseline_gui::filter1()
@@ -263,12 +264,13 @@ void ECGbaseline_gui::filter1()
     {
         m_ecg_baseline[current_it]->filter_baseline(filter_params);
 //        emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-        signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
+        signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
     }
 
-    int K = 7200;
+    int K = 20000;
     QVector<double> x(K), y(K); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
+    signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
     arma::vec time_cropped = time(arma::span(0,K-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_filtered(arma::span(0,K-1)));
@@ -285,11 +287,11 @@ void ECGbaseline_gui::filter5()
     Filter_Params filter_params;
     filter_params.set_filter_type(LMS);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
-    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
     emit ecg_signal_filtered(m_ecg_baseline[current_it]);
-    int N = 7200;
+    int N = 20000;
     QVector<double> x(N), y(N); // initialize with entries 0..100
-    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+    arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
     arma::vec time_cropped = time(arma::span(0,N-1));
     x = examination::convert_vec_qvector(time_cropped);
     y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
@@ -339,6 +341,8 @@ void ECGbaseline_gui::load_signal(examination *file)
 //    m_ecg_baseline.push_back(ecg_baseline);
 //    current_it = 0;
     ui->plainTextEdit->setPlainText("Sygnał załadowano");
+
+
     ui->pushButton->setDisabled(false);
     emit signal_loaded();
 //    loading_finished = true;

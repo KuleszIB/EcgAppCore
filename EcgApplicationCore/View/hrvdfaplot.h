@@ -18,7 +18,7 @@ class hrvdfaplot : public QwtPlot
 public:
     hrvdfaplot(QWidget *parent = 0);
     ~hrvdfaplot();
-    void setDataHRVDFA(QVector<double>, QVector<double>);//,QVector<double>, QVector<double>);
+    void setDataHRVDFA(QVector<double>, QVector<double>,QVector<double>, QVector<double>);
 private:
     QwtPlot *plot;
     QwtPlotCurve *signal;

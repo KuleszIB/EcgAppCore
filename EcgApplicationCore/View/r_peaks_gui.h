@@ -45,7 +45,7 @@ private:
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
-    Waves_Points new_waves;
+
     void funkcja1();
 
     qrsplot *qrsPlot2;

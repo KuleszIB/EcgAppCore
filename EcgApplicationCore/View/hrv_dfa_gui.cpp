@@ -31,14 +31,14 @@ arma::vec logF=Out.log_F;
 arma::vec logdelta=Out.log_delta;
 arma::vec vectorshortwindows=Out.vector_short_windows;
 arma::vec vectorlongwindows=Out.vector_long_windows;
-int K=7200;
-QVector<double> log_f(K), log_d(K), v_s(K), v_l(K);
+//int K=7200;
+QVector<double> log_f(logF.size()), log_d(logdelta.size()), v_s(vectorshortwindows.size()), v_l(vectorlongwindows.size());
 log_f= examination::convert_vec_qvector(logF);
 log_d= examination::convert_vec_qvector(logdelta);
 v_s= examination::convert_vec_qvector(vectorshortwindows);
 v_l= examination::convert_vec_qvector(vectorlongwindows);
 
-hrvdfaPlot2->setDataHRVDFA(log_f, log_d);//, v_s, v_l);
+hrvdfaPlot2->setDataHRVDFA(log_f, log_d, v_s, v_l);
 }
 
 

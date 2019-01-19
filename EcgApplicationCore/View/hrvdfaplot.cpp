@@ -5,8 +5,8 @@ hrvdfaplot::hrvdfaplot(QWidget *parent) :  QwtPlot(parent)
     setMinimumHeight(10);
     setMinimumWidth(10);
 
-    setAxisTitle(QwtPlot::xBottom, "F(n)");
-    setAxisTitle(QwtPlot::yLeft, "n");
+    setAxisTitle(QwtPlot::xBottom, "n");
+    setAxisTitle(QwtPlot::yLeft, "F(n)");
 
    // setAxisScaleEngine(QwtPlot::xBottom, new QwtLogScaleEngine);
    // setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine);
@@ -57,9 +57,23 @@ replot();
 hrvdfaplot::~hrvdfaplot()
 {
     delete signal;
-}//,QVector<double> vs, QVector<double> vl
-void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y )
+}//
+void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y,QVector<double> vs, QVector<double> vl )
 {
+    QVector<QPointF> vs1;
+
+    for (int i = 0; i <= vs.size(); ++i)
+    {
+        vs1.push_back(QPointF(float(x[i]), float(vs[i])));
+    }
+
+    QVector<QPointF> vl1;
+    for (int i = 0; i <= vl.size(); ++i)
+    {
+        vl1.push_back(QPointF(float(x[i+vs.size()]), float(vl[i])));
+    }
+
+
 //    int sizevs=vs.size();
 //    int sizevl=vl.size();
 //    QVector<double>x1(sizevs);
@@ -77,5 +91,8 @@ void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y )
 //    vectorshort->setSamples(x1,vs);
 //    vectorlong->setSamples(x2,vl);
     signal->setSamples(x,y);
+    vectorshort->setSamples(vs1);
+    vectorlong->setSamples(vl1);
+
     replot();
 }
