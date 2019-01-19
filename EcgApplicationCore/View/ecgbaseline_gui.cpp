@@ -194,13 +194,13 @@ void ECGbaseline_gui::filter4()
     current_it++;
       }
 
-void ECGbaseline_gui::filter1()
+void ECGbaseline_gui::filter1(Filter_Type filter_type_set)
 {
     double fs = m_ecg_baseline[current_it]->get_sampling_freq();
     int N = int(10*fs); // 10 s nakładka
 
     Filter_Params filter_params;
-    filter_params.set_filter_type(MOVING_AVERAGE);
+    filter_params.set_filter_type(filter_type_set);
     arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
 
     if(current_it > 1)
@@ -307,27 +307,27 @@ void ECGbaseline_gui::on_pushButton_clicked()
     }
     if(ui->comboBox_filter->currentIndex() == 1)
     {
-        filter1(); //Moving Average
+        filter1(MOVING_AVERAGE); //Moving Average
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 2)
     {
-        filter2(); //Butterworth
+        filter1(BUTTERWORTH); //Butterworth
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 3)
     {
-        filter3(); //Chebyshev
+        filter1(CHEBYSHEV); //Chebyshev
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 4)
     {
-        filter4(); //Savitzky_Golay
+        filter1(SAVITZKY_GOLAY); //Savitzky_Golay
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 5)
     {
-        filter5(); //LMS
+        filter1(LMS); //LMS
         // emituj sygnał do R_Peaks
     }
     ui->pushButton->setDisabled(true);
@@ -371,29 +371,34 @@ void ECGbaseline_gui::load_info(examination_info *info)
 
 void ECGbaseline_gui::continue_processing()
 {
+    if(ui->comboBox_filter->currentIndex() == 0)
+    {
+        nofilter(); //raw signal
+        // emituj sygnał do R_Peaks
+    }
     if(ui->comboBox_filter->currentIndex() == 1)
     {
-        filter1();
+        filter1(MOVING_AVERAGE); //Moving Average
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 2)
     {
-        filter2();
+        filter1(BUTTERWORTH); //Butterworth
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 3)
     {
-        filter3();
+        filter1(CHEBYSHEV); //Chebyshev
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 4)
     {
-        filter4();
+        filter1(SAVITZKY_GOLAY); //Savitzky_Golay
         // emituj sygnał do R_Peaks
     }
     if(ui->comboBox_filter->currentIndex() == 5)
     {
-        filter5();
+        filter1(LMS); //LMS
         // emituj sygnał do R_Peaks
     }
 }

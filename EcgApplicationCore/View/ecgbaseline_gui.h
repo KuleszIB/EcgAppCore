@@ -42,7 +42,7 @@ private:
     Ui::ECGbaseline_gui *ui;
     ecgplot *ecgPlot2;
     void nofilter();
-    void filter1();
+    void filter1(Filter_Type filter_type_set);
     void filter2();
     void filter3();
     void filter4();
