@@ -56,10 +56,18 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_ALT1"/>
+      <widget class="QLineEdit" name="line_ALT1">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_Alt2"/>
+      <widget class="QLineEdit" name="line_Alt2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

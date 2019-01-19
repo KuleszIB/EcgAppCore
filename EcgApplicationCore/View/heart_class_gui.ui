@@ -50,7 +50,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="edit_QRS_CLASS_MONITOR"/>
+        <widget class="QLineEdit" name="edit_QRS_CLASS_MONITOR">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -72,7 +76,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="edit_QRS_MORPHOLOGY_MONITOR"/>
+        <widget class="QLineEdit" name="edit_QRS_MORPHOLOGY_MONITOR">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
