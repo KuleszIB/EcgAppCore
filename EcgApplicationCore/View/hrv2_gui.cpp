@@ -39,31 +39,35 @@ void HRV2_gui::addGraph()
     double centroidx=PoincareGraph.centroid;
     double centroidy=PoincareGraph.centroid2;
 
+
     arma::vec intervals_ox=PoincareGraph.intervals_ox;
     arma::vec intervals_oy=PoincareGraph.intervals_oy;
     arma::vec straight_xyxy=PoincareGraph.straight_xy;
     arma::vec sd1_axis_oxx=PoincareGraph.sd1_axis_ox;
     arma::vec sd1_axis_oyy=PoincareGraph.sd1_axis_oy;
     arma::vec sd2_axis_=PoincareGraph.sd2_axis;
-
+    arma::vec xellipse=PoincareGraph.ellipse_ox;
+    arma::vec yellipse=PoincareGraph.ellipse_oy;
     int K=7200;
-    QVector<double> int_ox(K), int_oy(K), sd1_axis_ox(K), sd1_axis_oy(K), sd2_axis(K);
+    QVector<double> int_ox(intervals_ox.size()), int_oy(intervals_oy.size()), sd1_axis_ox(sd1_axis_oxx.size()), sd1_axis_oy(sd1_axis_oyy.size()), sd2_axis(sd2_axis_.size()),ellipse_ox(xellipse.size()), ellipse_oy(yellipse.size());
     int_ox= examination::convert_vec_qvector(intervals_ox);
     int_oy= examination::convert_vec_qvector(intervals_oy);
     sd1_axis_ox= examination::convert_vec_qvector(sd1_axis_oxx);
     sd1_axis_oy= examination::convert_vec_qvector(sd1_axis_oyy);
     sd2_axis=examination::convert_vec_qvector(sd2_axis_);
-//sd1_axis_ox, sd1_axis_oy,sd1_axis_ox, sd2_axis,
-    hrv2poincarePlot2->setDataHRVPOINCARE(int_ox,int_oy,  sd1, sd2,centroidx, centroidy);
+    ellipse_ox= examination::convert_vec_qvector(xellipse);
+    ellipse_oy=examination::convert_vec_qvector(yellipse);
+//
+    hrv2poincarePlot2->setDataHRVPOINCARE(int_ox,int_oy, sd1_axis_ox, sd1_axis_oy,sd1_axis_ox, sd2_axis,ellipse_ox, ellipse_oy, centroidx, centroidy);
 }
 
 
 void HRV2_gui::addHistogram(){
     histogram_hrv2 Hist=m_hrv2[0]->get_hist();
-    arma::ivec values=Hist.values;
+    arma::vec values=Hist.values;
     int K=7200;
     QVector<double> Values(K);
-    Values=examination::convert_ivec_qvector(values);
+    Values=examination::convert_vec_qvector(values);
     int size_val=Values.size();
 //    hrv2histPlot2->setDataHISTOGRAM(values);
     hrv2histPlot2->setValues(size_val,Values);

@@ -18,7 +18,7 @@ class hrv2poincareplot : public QwtPlot
 public:
     hrv2poincareplot(QWidget *parent = 0);
     ~hrv2poincareplot();
-    void setDataHRVPOINCARE(QVector<double> x, QVector<double> y,double,  double , double, double);
+    void setDataHRVPOINCARE(QVector<double> x, QVector<double> y,QVector<double> sd1axisx, QVector<double> sd1axisy,QVector<double> sd2axisx, QVector<double> sd2axisy,  QVector<double> , QVector<double> ,double centroidx, double centroidy);
 //QVector<double>, QVector<double>,  QVector<double>, QVector<double>,
 public slots:
 

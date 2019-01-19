@@ -124,7 +124,7 @@ void Hrv2::calc_histogram()
 
     histogram.max_value = tmp_max_value;       //dla mnie - maks liczba zliczen w hist; najwyzszy slupek
     histogram.bins = edges;     //wartosci przedzialow
-    histogram.values = values;  //ilosc zliczen w kazdym koszu
+    histogram.values = intervals;  //ilosc zliczen w kazdym koszu
 
     calc_tinn();
     calc_triangular_index();
@@ -177,6 +177,7 @@ void Hrv2::calc_poincare()
     calc_centroid();
     calc_centroid2();
     calc_poincare_axises();
+    calc_ellipse();
 }
 
 
@@ -203,6 +204,26 @@ void Hrv2::calc_SD2()
     }
     double sd2 = arma::stddev(tmp_cumulative_vec)/sqrt(2);
     poincare.sd2 = sd2;
+}
+void Hrv2::calc_ellipse(){
+    double pi = 3.14159265359;
+    double sd1 = poincare.sd1;
+    double sd2 = poincare.sd2;
+    double centre = poincare.centroid;
+    double angle = pi/4;
+    int N = 100;                //quantity of points in ellipse vector
+    arma::vec th = arma::linspace<arma::vec>(0, 2*pi, N); //wektor 100 próbek z zakresu 0-360
+    arma::vec x_ellipse(N);
+    arma::vec y_ellipse(N);
+
+//  Ellipse parametric formula
+    for(int i = 0; i < N; i++){
+        x_ellipse[i] = centre + sd2*cos(th[i])*cos(angle) - sd1*sin(th[i])*sin(angle);
+        y_ellipse[i] = centre + sd2*cos(th[i])*sin(angle) + sd1*sin(th[i])*cos(angle);
+    }
+
+    poincare.ellipse_ox = x_ellipse;
+    poincare.ellipse_oy = y_ellipse;
 }
 
 

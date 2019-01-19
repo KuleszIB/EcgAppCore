@@ -19,6 +19,7 @@ class HRV_dfa_gui : public QWidget
 public:
     explicit HRV_dfa_gui(QWidget *parent = 0);
     ~HRV_dfa_gui();
+    void AddGraph();
 
 public slots:
     void load_R_Peaks_vector3(R_Peaks*,Waves*);
@@ -32,7 +33,7 @@ private:
     QVector<R_Peaks*> m_r_peaks;
     QVector<HrvDfa*> m_hrv_dfa;
     unsigned int current_it;
-    void AddGraph();
+
 };
 
 #endif // HRV_DFA_GUI_H

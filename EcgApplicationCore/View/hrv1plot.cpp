@@ -10,26 +10,26 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
 
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin(true);
-    grid->setPen(QPen(Qt::gray, 0, Qt::DotLine));
+    grid->setPen(QPen(Qt::gray, 1.0, Qt::DotLine));
     grid->attach(this);
 
     hf = new QwtPlotCurve();
    // hf->setStyle(QwtPlotCurve::Sticks);
-    hf->setPen(QPen(Qt::green, 0, Qt::DashLine));
+    hf->setPen(QPen(Qt::green, 1.0, Qt::DashLine));
     hf->attach(this);
     ulf = new QwtPlotCurve();
   //  ulf->setStyle(QwtPlotCurve::Sticks);
-    ulf->setPen(QPen(Qt::darkGray, 0, Qt::DashLine));
+    ulf->setPen(QPen(Qt::darkGray, 1.0, Qt::DashLine));
     ulf->attach(this);
 
     vlf = new QwtPlotCurve();
     //vlf->setStyle(QwtPlotCurve::Sticks);
-    vlf->setPen(QPen(Qt::red, 0, Qt::DashLine));
+    vlf->setPen(QPen(Qt::red, 1.0, Qt::DashLine));
     vlf->attach(this);
 
     lf = new QwtPlotCurve();
     //lf->setStyle(QwtPlotCurve::Sticks);
-    lf->setPen(QPen(Qt::blue, 0, Qt::DashLine));
+    lf->setPen(QPen(Qt::blue, 1.0, Qt::DashLine));
     lf->attach(this);
 
 
@@ -125,23 +125,22 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
 
     QVector<QPointF> ulf2;
 
-    for (int i = 0; i < ulff.size(); ++i)
+    for (int i = 0; i < ulff.size(); i++)
     {
         ulf2.push_back(QPointF(float(ulff[i]), float(y[i])));
     }
-
     QVector<QPointF> vlf2;
-    for (int i = 0; i < vlff.size(); ++i)
+    for (int i = 0; i < vlff.size(); i++)
     {
         vlf2.push_back(QPointF(float(vlff[i]), float(y[i+ulff.size()])));
     }
     QVector<QPointF> lf2;
-    for (int i = 0; i < lff.size(); ++i)
+    for (int i = 0; i < lff.size(); i++)
     {
         lf2.push_back(QPointF(float(lff[i]), float(y[i+ulff.size()+vlff.size()])));
     }
     QVector<QPointF> hf2;
-    for (int i = 0; i < hff.size(); ++i)
+    for (int i = 0; i < hff.size(); i++)
     {
         hf2.push_back(QPointF(float(hff[i]), float(y[i+lff.size()+ulff.size()+vlff.size()])));
     }

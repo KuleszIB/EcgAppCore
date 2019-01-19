@@ -17,7 +17,7 @@ public:
     explicit qrsplot(QWidget *parent = 0);
     ~qrsplot();
     void setData2(QVector<double> x, QVector<double> y);
-    void setData3(QVector<double> x, QVector<double> y ,QVector<double> ,QVector<double> ,QVector<double> ,QVector<double>,QVector<double> ,QVector<double> ,QVector<double> ,QVector<double>, double );
+    void setData3(QVector<double> x, QVector<double> y ,QVector<double> ,QVector<double> ,QVector<double> ,QVector<double>, double );
 
 
 public slots:

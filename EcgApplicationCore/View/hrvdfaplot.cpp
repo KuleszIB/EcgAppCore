@@ -5,26 +5,24 @@ hrvdfaplot::hrvdfaplot(QWidget *parent) :  QwtPlot(parent)
     setMinimumHeight(10);
     setMinimumWidth(10);
 
-    setAxisTitle(QwtPlot::xBottom, "F(n)");
-    setAxisTitle(QwtPlot::yLeft, "n");
+    setAxisTitle(QwtPlot::xBottom, "n");
+    setAxisTitle(QwtPlot::yLeft, "F(n)");
 
    // setAxisScaleEngine(QwtPlot::xBottom, new QwtLogScaleEngine);
    // setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine);
 
     signal = new QwtPlotCurve("Curve");
     signal->setStyle(QwtPlotCurve::NoCurve);
-    signal->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, Qt::NoBrush, QPen(Qt::blue), QSize(5, 5)));
+    signal->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, Qt::NoBrush, QPen(Qt::black), QSize(5, 5)));
     signal->attach(this);
 
 
     vectorshort = new QwtPlotCurve("Short");
-   // vectorshort->setStyle(QwtPlotCurve::NoCurve);
-   // vectorshort->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, Qt::NoBrush, QPen(Qt::red), QSize(5, 5)));
+    vectorshort->setPen(Qt::red, 0.0, Qt::SolidLine);
     vectorshort->attach(this);
 
     vectorlong = new QwtPlotCurve("Long");
-  //  vectorlong->setStyle(QwtPlotCurve::CurveStyle());
-  //  vectorlong->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, Qt::NoBrush, QPen(Qt::yellow), QSize(5, 5)));
+    vectorlong->setPen(Qt::black, 0.0, Qt::SolidLine);
     vectorlong->attach(this);
 
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -51,31 +49,34 @@ hrvdfaplot::hrvdfaplot(QWidget *parent) :  QwtPlot(parent)
     ( void ) new QwtPlotMagnifier( canvas );
 
 
-replot();
+
 }
 
 hrvdfaplot::~hrvdfaplot()
 {
     delete signal;
-}//,QVector<double> vs, QVector<double> vl
-void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y )
+    delete vectorshort;
+    delete vectorlong;
+}//
+void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y, QVector<double> vl, QVector<double> vs)
 {
-//    int sizevs=vs.size();
-//    int sizevl=vl.size();
-//    QVector<double>x1(sizevs);
-//    QVector<double>x2(sizevl);
-//    for(int i=0;i<sizevs;i++)
-//    {
-//        x1[i]=x[i];
-//    }
+    QVector<QPointF> vs1;
 
-//    for(int i=sizevs;i<(sizevs+sizevl);i++)
-//    {
-//        x2[i]=x[i];
-//    }
+    for (int i = 0; i < vs.size(); i++)
+    {
+        vs1.push_back(QPointF(float(x[i]), float(vs[i])));
+    }
 
-//    vectorshort->setSamples(x1,vs);
-//    vectorlong->setSamples(x2,vl);
+    QVector<QPointF> vl1(vl.size()-vs.size());
+    for (int i = 0; i < vl.size(); i++)
+    {
+        if(vl[i]!=0)
+        vl1.push_back(QPointF(float(x[i+vs.size()]), float(vl[i])));
+    }
+
     signal->setSamples(x,y);
+    vectorshort->setSamples(vs1);
+    vectorlong->setSamples(vl1);
+
     replot();
 }

@@ -57,26 +57,26 @@ qrsplot::qrsplot(QWidget *parent) :
 //    t_wave->attach(this);
     qrsOnSetCurve = new QwtPlotCurve("qrsOnSet");
     qrsOnSetCurve->setYAxis(QwtPlot::yLeft);
-    qrsOnSetCurve->setStyle(QwtPlotCurve::NoCurve);
+    qrsOnSetCurve->setStyle(QwtPlotCurve::Sticks);
     qrsOnSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,255,0), QColor(0,255,0), QSize(6, 6)));
     qrsOnSetCurve->attach(this);
 
 
     qrsEndSetCurve = new QwtPlotCurve("qrsEndSet");
     qrsEndSetCurve->setYAxis(QwtPlot::yLeft);
-    qrsEndSetCurve->setStyle(QwtPlotCurve::NoCurve);
+    qrsEndSetCurve->setStyle(QwtPlotCurve::Sticks);
     qrsEndSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,150,0), QColor(0,150,0), QSize(6, 6)));
     qrsEndSetCurve->attach(this);
 
     pOnSetCurve = new QwtPlotCurve("pOnSet");
     pOnSetCurve->setYAxis(QwtPlot::yLeft);
-    pOnSetCurve->setStyle(QwtPlotCurve::NoCurve);
+    pOnSetCurve->setStyle(QwtPlotCurve::Sticks);
     pOnSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,0,255), QColor(0,0,255), QSize(6, 6)));
     pOnSetCurve->attach(this);
 
     pEndSetCurve = new QwtPlotCurve("pEndSet");
     pEndSetCurve->setYAxis(QwtPlot::yLeft);
-    pEndSetCurve->setStyle(QwtPlotCurve::NoCurve);
+    pEndSetCurve->setStyle(QwtPlotCurve::Sticks);
     pEndSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,94,185), QColor(0,94,185), QSize(6, 6)));
     pEndSetCurve->attach(this);
 
@@ -128,8 +128,12 @@ void qrsplot::setData2(QVector<double> x, QVector<double> y)
 }
 
 
-void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xponest,QVector<double> yponest,QVector<double> xpend,QVector<double> ypend,QVector<double> xqrsonset,QVector<double> yqrsonset,QVector<double> xqrsend,QVector<double> yqrsend, double freq)
+void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xponset,QVector<double> xpend,QVector<double> xqrsonset,QVector<double> xqrsend,double freq)
 {
+    QVector<double>yponset(xponset.size());
+    QVector<double>yqrsonset(xqrsonset.size());
+    QVector<double>ypend(xpend.size());
+    QVector<double>yqrsend(xqrsend.size());
 
     signal->setSamples(x, y);
 //    for(int i=0;i<qrsonset.size();i++){
@@ -159,15 +163,26 @@ void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xpon
     for(int i=0;i<xqrsend.size();i++)
         xqrsend[i]=xqrsend[i]/freq;
 
-    for(int i=0;i<xponest.size();i++)
-        xponest[i]=xponest[i]/freq;
+    for(int i=0;i<xponset.size();i++)
+        xponset[i]=xponset[i]/freq;
 
     for(int i=0;i<xpend.size();i++)
         xpend[i]=xpend[i]/freq;
 
+    for(int i=0;i<xpend.size();i++)
+        ypend[i]=y[xpend[i]];
+    for(int i=0;i<xponset.size();i++)
+        yponset[i]=y[xponset[i]];
+    for(int i=0;i<xpend.size();i++)
+        ypend[i]=y[xpend[i]];
+    for(int i=0;i<xqrsonset.size();i++)
+        yqrsonset[i]=y[xqrsonset[i]];
+    for(int i=0;i<xqrsend.size();i++)
+        yqrsend[i]=y[xqrsend[i]];
+
     qrsOnSetCurve->setSamples(xqrsonset,yqrsonset);
     qrsEndSetCurve->setSamples(xqrsend,yqrsend);;
-    pOnSetCurve->setSamples(xponest,yponest);;
+    pOnSetCurve->setSamples(xponset,yponset);;
     pEndSetCurve->setSamples(xpend,ypend);;
     replot();
 

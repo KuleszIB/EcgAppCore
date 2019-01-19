@@ -188,8 +188,8 @@
      <widget class="QWidget" name="ecgPlot" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>280</y>
+        <x>160</x>
+        <y>220</y>
         <width>780</width>
         <height>310</height>
        </rect>

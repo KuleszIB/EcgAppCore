@@ -5,7 +5,7 @@
 
 struct histogram_hrv2
 {
-    arma::ivec values; // typ danych do sprawdzenia -> zmienilam
+    arma::vec values; // typ danych do sprawdzenia -> zmienilam
     // To miała być oś x histogramu
     arma::vec bins; // do czego to ma sie odnosic?  do zmiany albo wyrzucenia -> Monika bedzie potrzebowac do histogramu
     int max_value;
@@ -21,6 +21,8 @@ struct poincare_graph
     arma::vec sd1_axis_ox;
     arma::vec sd1_axis_oy;
     arma::vec sd2_axis;
+    arma::vec ellipse_ox;
+    arma::vec ellipse_oy;
     double centroid;
     double centroid2;
     double sd1;
@@ -53,6 +55,7 @@ public:
     Hrv2(arma::vec r_peaks);
     // To ma wywołać wszystkie funkcje do analizy w tym module
     void calc_params(); //co to ? ja to dodalam?
+    void calc_ellipse();
     histogram_hrv2 get_hist();
     double get_tinn();
     double get_triang_index();
