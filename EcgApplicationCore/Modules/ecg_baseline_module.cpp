@@ -24,7 +24,7 @@ void Filter_Params::set_filter_type(Filter_Type filter_type_set)
     filter_type = filter_type_set;
 }
 
-void Filter_Params::set_filter_params(double high=34, double low=2, unsigned int order=25, unsigned int length=97, double step=0.2)
+void Filter_Params::set_filter_params(double high, double low, unsigned int order, unsigned int length, double step)
 {
     filter_values.high_cutoff_freq = high;
     filter_values.low_cutoff_freq = low;
@@ -84,17 +84,22 @@ void Ecg_Baseline::filter_bandpass()
     signal_filtered = conv(coeffs, signal_raw);
 }
 
-void Ecg_Baseline::filter_moving_average()
+void Ecg_Baseline::filter_moving_average(Filter_Values gui_parameters)
 {
     filter_noise();
+
+    //Filter_Params filter_params;
+    //filter_params.set_filter_params(34, 2, 25, 97, 0.2);
+    Filter_Values filter_values = gui_parameters;
+
     qInfo() << "filter moving average";
-    double windowSize = 97;
-    arma::vec A(windowSize);
+    //double windowSize = 97;
+    arma::vec A(filter_values.filter_length);
     A.ones();
-    arma::vec b(windowSize);
-    for (int i = 0; i<windowSize; i++)
+    arma::vec b(filter_values.filter_length);
+    for (int i = 0; i<filter_values.filter_length; i++)
     {
-        b[i] = (1/windowSize) * A[i];
+        b[i] = (1/filter_values.filter_length) * A[i];
     }
 
 
@@ -152,17 +157,22 @@ arma::vec tab2vec(double *signal_vec)
     return signal;
 }
 
-void Ecg_Baseline::filter_butterworth()
-{	
+void Ecg_Baseline::filter_butterworth(Filter_Values pies)
+{
     filter_noise();
-    double w = 35;
-    w = w / (sampling_frequency / 2);
+
+    //Filter_Params filter_params;
+    //filter_params.set_filter_params(dupa, 34, 1, 1, 0.2);
+    Filter_Values filter_values = pies;
+    //w=34,order=1
+    double w = filter_values.high_cutoff_freq;
+    w = w/(sampling_frequency / 2);
     int numSamples = signal_filtered.size();
     Dsp::Filter* f = new Dsp::SmoothedFilterDesign
         <Dsp::Butterworth::Design::HighPass <1>, 1, Dsp::DirectFormII>(sampling_frequency);
     Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
-    params[1] = 1; // order
+    params[1] = filter_values.filter_order; // order
     params[2] = w; // center frequency
     f->setParams(params);
     double *signal_tab[1];
@@ -171,10 +181,15 @@ void Ecg_Baseline::filter_butterworth()
     signal_filtered = -1*tab2vec(*signal_tab);
 }
 
-void Ecg_Baseline::filter_chebyshev()
+void Ecg_Baseline::filter_chebyshev(Filter_Values gui_parameters)
 {
 
     filter_noise();
+
+    //Filter_Params filter_params;
+    //filter_params.set_filter_params(2, 2, 2, 97, 0.2);
+    Filter_Values filter_values = gui_parameters;
+
     int numSamples = signal_filtered.size();
   /*
     // Create a Chebyshev type I Band Stop filter of order 3
@@ -187,12 +202,14 @@ void Ecg_Baseline::filter_chebyshev()
         1);   // ripple dB
     f.process(numSamples, signal_buff);
   */
+
+    //param2=2,params1=2
     Dsp::Filter* f = new Dsp::FilterDesign
         <Dsp::ChebyshevII::Design::LowShelf <2>, 1>;
     Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
-    params[1] = 2; // order
-    params[2] = 2/(sampling_frequency/2); // corner frequency
+    params[1] = filter_values.filter_order; // order
+    params[2] = filter_values.low_cutoff_freq/(sampling_frequency/2); // corner frequency
     params[3] = 6; // shelf gain
     params[4] = 10; // passband ripple
     f->setParams(params);
@@ -202,11 +219,16 @@ void Ecg_Baseline::filter_chebyshev()
     signal_filtered = tab2vec(*signal_tab);
 }
 
-void Ecg_Baseline::filter_savitzky_golay()
+void Ecg_Baseline::filter_savitzky_golay(Filter_Values gui_parameters)
 {
     filter_noise();
-    int w = 9;
-    int deg = 3;
+
+    //Filter_Params filter_params;
+    //filter_params.set_filter_params(34, 2, 3, 7, 0.2);
+    Filter_Values filter_values = gui_parameters;
+    //w=7, deg =3
+    int w = filter_values.filter_length;
+    int deg = filter_values.filter_order;
     int numSamples = signal_filtered.size();
     std::vector<double> sig_buff= arma2std(signal_filtered);
     signal_filtered = sg_smooth (sig_buff, w, deg);
@@ -216,10 +238,14 @@ void Ecg_Baseline::filter_savitzky_golay()
     signal_filtered = conv(coeffs, signal_filtered);
 }
 
-void Ecg_Baseline::filter_lms()
+void Ecg_Baseline::filter_lms(Filter_Values gui_parameters)
 {
     arma::vec x = signal_raw;
     filter_bandpass();
+
+    //Filter_Params filter_params;
+    //filter_params.set_filter_params(34, 2, 25, 97, 0.2);
+    Filter_Values filter_values = gui_parameters;
 
     qInfo() << "LMS";
     int N = x.size();
@@ -227,8 +253,9 @@ void Ecg_Baseline::filter_lms()
     qInfo() << N;
     qInfo() << "dlugosc filtrowanego: ";
     qInfo() << signal_filtered.size();
-    int M = 15;
-    double mu = 0.2;
+    //M=15, mu=0.2
+    int M = filter_values.filter_length;
+    double mu = filter_values.step_size;
     sp::FIR_filt<double,double,double> G;
     sp::FIR_filt<double,double,double> Ghat;
     arma::vec y(N);  y.zeros();
@@ -258,10 +285,10 @@ void Ecg_Baseline::filter_lms()
     qInfo() << Wlog.size();
         signal_filtered = conv(Wlog.col(649999), signal_raw);
 
-            for (int i=1; i<signal_filtered.size(); i++)
-            {
-                qInfo() << signal_filtered[i];
-            }
+            //for (int i=1; i<signal_filtered.size(); i++)
+            //{
+            //    qInfo() << signal_filtered[i];
+           // }
 
 
 
@@ -324,25 +351,26 @@ void Ecg_Baseline::filter_lms()
 void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
 {
  //ustalamy ktora funkcje filtracji odpalic  i z jakimi parametrami o ile sa
+
     switch(filter_params.get_filter_type())
         {
         case MOVING_AVERAGE:
-            filter_moving_average();
+            filter_moving_average(filter_params.get_filter_values());
             break;
         case BUTTERWORTH:
-            filter_butterworth();
+            filter_butterworth(filter_params.get_filter_values());
             break;
         case CHEBYSHEV:
-            filter_chebyshev();
+            filter_chebyshev(filter_params.get_filter_values());
             break;
         case SAVITZKY_GOLAY:
-            filter_savitzky_golay();
+            filter_savitzky_golay(filter_params.get_filter_values());
             break;
         case LMS:
-            filter_lms();
+            filter_lms(filter_params.get_filter_values());
             break;
         default:
-            filter_moving_average();
+            filter_moving_average(filter_params.get_filter_values());
             break;
         }
 }
