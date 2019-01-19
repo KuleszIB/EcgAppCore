@@ -42,7 +42,10 @@ SOURCES += \
     Modules/t_wave_alt_module.cpp \
     Modules/t_peaks.cpp \
     Modules/ecg_io.cpp \
-    Modules/report_creator.cpp
+    Modules/hrv2_poincare_renderer.cpp \
+    Modules/hrv2_histogram_renderer.cpp \
+    Modules/hrv1_plot_renderer.cpp \
+    Modules/new_report.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -69,8 +72,13 @@ HEADERS += \
     Modules/t_wave_alt_module.h \
     Modules/t_peaks.h \
     Modules/ecg_io.h \
-    Modules/custom_renderer.h \
-    Modules/report_creator.h
+    Modules/new_report.h \
+    Modules/hrv1_plot_renderer.h \
+    Modules/hrv2_plot_renderer.h \
+    Modules/ecg_renderer.h \
+    Modules/hrv2_histogram_renderer.h \
+    Modules/hrv2_poincare_renderer.h \
+    Modules/hrv2_poincare_renderer.h
 
 FORMS += \
     View/mainview.ui \

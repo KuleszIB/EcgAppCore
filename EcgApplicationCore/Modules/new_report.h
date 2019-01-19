@@ -1,45 +1,61 @@
 #ifndef NEW_REPORT_H
 #define NEW_REPORT_H
-#include "custom_renderer.h"
-//#include "Modules/new_report.h"
+
+//import rendererów do wykresów ??
+#include "ecg_renderer.h"
+#include "hrv1_plot_renderer.h"
+#include "hrv2_plot_renderer.h"
+#include "hrv2_histogram_renderer.h"
+
+
+
+
 #include <QPainter>
 #include <QPrinter>
+#include <QDebug>
+
+
 
 class NewReport{
 
+private:
+    // wykresy
+    ecgplot * ecg_ptr = nullptr;
+    hrv1plot * hrv1_ptr = nullptr;
+    hrv2histplot * hrv2hist_ptr = nullptr;
+    hrv2poincareplot * hrv2_poincare_ptr = nullptr;
+    hrvdfaplot * hrv_dfa_ptr = nullptr;
+    //qrsplot * qrs_ptr = nullptr;
+
+    //st segment i inne na podstawie qrsplot?
+
+
+    // obliczone wartości
+    Frequency_Params * frequency_params_ptr = nullptr;
+    Time_Params * time_params_ptr = nullptr;
+
+
+
 public:
-    ecgplot * ecg_ptr;
-    hrv1plot * hrv1_ptr;
-    hrv2plot * hrv2_ptr;
 
-    void set_ecgplot(ecgplot * plot){
-        ecg_ptr = plot;
-    }
 
-    void set_hrv1plot(hrv1plot * plot){
-        hrv1_ptr = plot;
-    }
+// settery dla wykresów
+    void set_ecgplot(ecgplot * plot){ecg_ptr = plot;}
 
-    void set_hrv2plot(hrv2plot * plot){
-        hrv2_ptr = plot;
-    }
+    void set_hrv1plot(hrv1plot * plot){hrv1_ptr = plot;}
 
-    void print_all()
-    {
-        QString filename = "C:/Users/Dominika/Desktop/test_new_report_set.pdf";
-        QPrinter printer(QPrinter::PrinterResolution);
-        printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setPaperSize(QPrinter::A4);
-        printer.setOutputFileName(filename);
-        printer.setPageMargins(25, 25, 25, 25, QPrinter::Millimeter);
-        QPainter painter(&printer);
-        painter.drawText(10, 5, "Raport z przeprowadzonej analizy");
-        painter.drawText(10,10, "test");
-        CustomRenderer renderer;
-        renderer.renderTo(ecg_ptr, printer, painter);
-        painter.drawText(10, 400, "Koniec");
-        painter.end();
-    }
+    void set_hrv2histplot(hrv2histplot * plot){hrv2_ptr = plot;}
+
+    void set_hrv2poincareplot(hrv2poincareplot * plot){hrv2_poincare_ptr = plot;}
+
+    void set_hrvdfaplot(hrvdfaplot * plot){hrv_dfa_ptr = plot;}
+
+    void set_qrsplot(qrsplot * plot) {qrs_ptr = plot;}
+
+
+    //całość musi być w jednej funkcji, bo inaczej QPainter umiera
+    void print_all();
+
 };
 
 
