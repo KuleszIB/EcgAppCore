@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include "Modules/ecg_baseline_module.h"
 #include "Modules/waves_module.h"
+#include "Modules/t_wave_alt_module.h"
 namespace Ui {
 class T_alt_class_gui;
 }
@@ -22,6 +23,8 @@ public:
 private slots:
     void addRandomGraph();
     void filtered_signal_loaded_Taltclass(Ecg_Baseline *signal);
+    void load_waves_vector(R_Peaks *signal1,Waves *signal2);
+    void on_pushButton_clicked();
 
 private:
     Ui::T_alt_class_gui *ui;
@@ -29,6 +32,7 @@ private:
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
+    QVector<T_Wave_Alt*> t_waves;
     Waves_Points new_waves;
 };
 
