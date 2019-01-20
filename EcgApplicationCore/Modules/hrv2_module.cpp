@@ -30,7 +30,7 @@ void Hrv2::remove_outliers()
 {
     //PART1
     //  Remove outliers under the threshold
-    double threshold = 0.79;
+    double threshold = 0.6;
     int size = 0;
 
     //  How many numbers are under above the threshold
@@ -67,7 +67,7 @@ void Hrv2::remove_outliers()
     }
 
     //  Threshold will be assessed later - could be not so perfect ;)
-    double thres2 = 0.03;
+    double thres2 = 0.14;
     int vec_size = 0;
     for(int i = 0; i < differences.size(); i++){
         if (differences[i] < thres2){

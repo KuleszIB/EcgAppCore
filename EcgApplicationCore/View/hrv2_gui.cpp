@@ -58,6 +58,14 @@ void HRV2_gui::addGraph()
     ellipse_oy=examination::convert_vec_qvector(yellipse);
 //
     hrv2poincarePlot2->setDataHRVPOINCARE(int_ox,int_oy, sd1_axis_ox, sd1_axis_oy,sd1_axis_ox, sd2_axis,ellipse_ox, ellipse_oy, centroidx, centroidy);
+
+    double tinn_gui = m_hrv2[0]->get_tinn();
+    QString tinn_qui_qs = QString::number(tinn_gui);
+    ui->lineEditSD1->setText(tinn_qui_qs);
+
+    double triangle_index_gui = m_hrv2[0]->get_triang_index();
+    QString triangle_index_gui_qs = QString::number(triangle_index_gui);
+    ui->lineEditSD2->setText(triangle_index_gui_qs);
 }
 
 
