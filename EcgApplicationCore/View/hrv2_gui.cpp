@@ -39,7 +39,6 @@ void HRV2_gui::addGraph()
     double centroidx=PoincareGraph.centroid;
     double centroidy=PoincareGraph.centroid2;
 
-
     arma::vec intervals_ox=PoincareGraph.intervals_ox;
     arma::vec intervals_oy=PoincareGraph.intervals_oy;
     arma::vec straight_xyxy=PoincareGraph.straight_xy;

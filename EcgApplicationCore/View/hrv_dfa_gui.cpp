@@ -27,6 +27,14 @@ void HRV_dfa_gui::AddGraph(){
 Out_DFA Out=m_hrv_dfa[0]->get_out_DFA();
 //double alpha1=Out.alpha1;
 //double alpha2=Out.alpha2;
+QTableWidgetItem *theItem = new QTableWidgetItem();
+    theItem->setData(Qt::EditRole, Out.alpha1);
+    ui->tableWidget->setItem(1, 0, theItem);
+    QTableWidgetItem *theItem1 = new QTableWidgetItem();
+    theItem1->setData(Qt::EditRole, Out.alpha2);
+    ui->tableWidget->setItem(1, 1, theItem1);
+    qInfo()<<Out.alpha2;
+
 arma::vec logF=Out.log_F;
 arma::vec logdelta=Out.log_delta;
 arma::vec vectorshortwindows=Out.vector_short_windows;
