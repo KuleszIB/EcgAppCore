@@ -89,14 +89,16 @@ void Ecg_Baseline::filter_moving_average(Filter_Values gui_parameters)
 {
     filter_noise();
     Filter_Values filter_values = gui_parameters;
-    //double windowSize = 97;
+
+    qInfo() << "filter moving average";
     qInfo()<<"to jest dlugosc filtra"<<filter_values.filter_length;
-    arma::vec A(filter_values.filter_length);
+    double windowSize = filter_values.filter_length;
+    arma::vec A(windowSize);
     A.ones();
-    arma::vec b(filter_values.filter_length);
-    for (int i = 0; i<filter_values.filter_length; i++)
+    arma::vec b(windowSize);
+    for (int i = 0; i<windowSize; i++)
     {
-        b[i] = (1/filter_values.filter_length) * A[i];
+        b[i] = (1/windowSize) * A[i];
     }
 
 
@@ -104,19 +106,9 @@ void Ecg_Baseline::filter_moving_average(Filter_Values gui_parameters)
     coefficient.set_coeffs(b);
     arma::vec signal_buff = coefficient.filter(signal_filtered);
     signal_filtered = signal_filtered-signal_buff;
-
-    //za pomoca funkcji conv
-    //arma::vec signal_buff= arma::conv(signal_filtered,b);
-    //signal_filtered = signal_filtered(signal_buff.size())-signal_buff;
-    //signal_filtered= arma::conv(signal_filtered,b);
-
-
-//    qInfo() << "po filtracji moving average";
-//    for (int i=1; i<signal_filtered.size(); i++)
-//    {
-//        qInfo() << signal_filtered[i];
-//    }
 }
+
+
 
 std::vector<double> arma2std(arma::vec signal_vec)
 {
@@ -138,49 +130,53 @@ double* vec2tab(arma::vec signal_vec)
 
 arma::vec tab2vec(double *signal_vec)
 {
-    arma::vec signal(650000);
-    //int arraySize = sizeof(signal_vec)/sizeof(double);
-    //qInfo() << "arraySize";
-    //qInfo() << arraySize;
+    arma::vec signal(30000);
     qInfo() << "signal size";
     qInfo() << signal.size();
-    double arraySize = 650000;
+    double arraySize = signal.size();
     for(int ii = 0; ii < arraySize; ii++)
         {
         signal(ii) = signal_vec[ii];
         }
-    qInfo() << "po petli ";
     return signal;
 }
 
-void Ecg_Baseline::filter_butterworth(Filter_Values gui_parameters)
-{	
+void Ecg_Baseline::filter_butterworth()
+{
     filter_noise();
-    Filter_Values filter_values = gui_parameters;
+    //Filter_Values filter_values = gui_parameters;
 
-    double w = filter_values.high_cutoff_freq;
-    w = w/(sampling_frequency/2);
+    //double w = filter_values.high_cutoff_freq;
+    //w=34,order=1
+    double w = 34;
+    w = w/(sampling_frequency / 2);
     int numSamples = signal_filtered.size();
+    qInfo() <<"signal filtered size";
+    qInfo() << signal_filtered.size();
     Dsp::Filter* f = new Dsp::SmoothedFilterDesign
         <Dsp::Butterworth::Design::HighPass <1>, 1, Dsp::DirectFormII>(sampling_frequency);
     Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
-    params[1] = filter_values.filter_order; // order
+    params[1] = 1; // order
     params[2] = w; // center frequency
-    qInfo()<<"to jest cut off"<<filter_values.high_cutoff_freq;
-    qInfo()<<"to jest filter order"<<filter_values.filter_order;
     f->setParams(params);
     double *signal_tab[1];
     signal_tab[0] = vec2tab(signal_filtered);
     f->process(numSamples, signal_tab);
+
+    qInfo()<< "lalala1";
+    //for (int i=0; i<signal_filtered.size(); i++)
+       // qInfo()<< *(signal_tab[0]+i);
+
     signal_filtered = -1*tab2vec(*signal_tab);
+    qInfo()<< "2";
 }
 
-void Ecg_Baseline::filter_chebyshev(Filter_Values gui_parameters)
+void Ecg_Baseline::filter_chebyshev()
 {
 
     filter_noise();
-    Filter_Values filter_values = gui_parameters;
+    //Filter_Values filter_values = gui_parameters;
     int numSamples = signal_filtered.size();
   /*
     // Create a Chebyshev type I Band Stop filter of order 3
@@ -197,8 +193,9 @@ void Ecg_Baseline::filter_chebyshev(Filter_Values gui_parameters)
         <Dsp::ChebyshevII::Design::LowShelf <2>, 1>;
     Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
-    params[1] = filter_values.filter_order; // order
-    params[2] = filter_values.low_cutoff_freq/(sampling_frequency/2); // corner frequency
+    params[1] = 2; // order
+    params[2] = 2/(sampling_frequency/2);
+    //params[2] = filter_values.low_cutoff_freq/(sampling_frequency/2); // corner frequency
     params[3] = 6; // shelf gain
     params[4] = 10; // passband ripple
     f->setParams(params);
@@ -264,16 +261,19 @@ void Ecg_Baseline::filter_lms(Filter_Values gui_parameters)
             // Save to log
             Wlog.col(n) = Ghat.get_coeffs();
         }
-    qInfo() << "rozmiar Wlog";
-    qInfo() << Wlog.size();
-        signal_filtered = conv(Wlog.col(649999), signal_raw);
+
+    signal_filtered = conv(Wlog.col(29999), signal_raw);
+    //double potega = pow(10 , 2);
 
             for (int i=1; i<signal_filtered.size(); i++)
             {
-                qInfo() << signal_filtered[i];
+                 signal_filtered[i]= signal_filtered[i]* 10 ;
             }
 
-
+            /*for (int i=1; i<signal_filtered.size(); i++)
+            {
+                 qInfo() << signal_filtered[i] ;
+            }/*
 
 
     /*std::cout << "Estimated coeffs: " << Ghat.get_coeffs().t() << std::endl;
@@ -292,7 +292,12 @@ void Ecg_Baseline::filter_lms(Filter_Values gui_parameters)
         else
     }*/
 
-    /*long T, n = 0;
+
+
+
+
+    /*
+    int T, n = 0;
     double D, Y, E;
     double * W = new double[M];
     double * X = new double[M];
@@ -318,7 +323,7 @@ void Ecg_Baseline::filter_lms(Filter_Values gui_parameters)
             W[i] = W[i] + (mu * E * X[i]);		//update filter coefficients
         signal_filtered[T] = Y; //signal_filtered = Y[T]
 
-    }*/
+    }
 
     /*qInfo() << "po filtracji LMS";
     for (int i=1; i<signal_filtered.size(); i++)
@@ -340,10 +345,10 @@ void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
             filter_moving_average(filter_params.get_filter_values());
             break;
         case BUTTERWORTH:
-            filter_butterworth(filter_params.get_filter_values());
+            filter_butterworth();
             break;
         case CHEBYSHEV:
-            filter_chebyshev(filter_params.get_filter_values());
+            filter_chebyshev();
             break;
         case SAVITZKY_GOLAY:
             filter_savitzky_golay(filter_params.get_filter_values());
