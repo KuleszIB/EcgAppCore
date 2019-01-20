@@ -42,6 +42,7 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_2_gui, SLOT(load_R_Peaks_vector2(R_Peaks*,Waves*)));
     connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_dfa_gui, SLOT(load_R_Peaks_vector3(R_Peaks*,Waves*)));
     connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),t_alt_class_gui, SLOT(load_waves_vector(R_Peaks*,Waves*)));
+    connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),stSegment_gui, SLOT(load_waves_vector(R_Peaks*,Waves*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),stSegment_gui,SLOT(filtered_signal_loaded_Stsegment(Ecg_Baseline*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),heart_class_gui,SLOT(filtered_signal_loaded_Heart(Ecg_Baseline*)));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),t_alt_class_gui,SLOT(filtered_signal_loaded_Taltclass(Ecg_Baseline*)));
