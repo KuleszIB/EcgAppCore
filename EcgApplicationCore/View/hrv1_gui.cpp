@@ -48,17 +48,17 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 
     //
     hrv_r_peaks[current_it]->calc_params();
-    int W = 7200;
-
+    int W = 20000;
+    qInfo() << "W size " << W;
     QVector<double> periodogram(W), freq(W); // initialize with entries 0..100
-    arma::vec period =hrv_r_peaks[0]->get_periodogram();
+    arma::vec period =hrv_r_peaks[current_it]->get_periodogram();
     periodogram = examination::convert_vec_qvector(period);
 
-    arma::vec ti = hrv_r_peaks[0]->get_freq_vec();
+    arma::vec ti = hrv_r_peaks[current_it]->get_freq_vec();
     freq = examination::convert_vec_qvector(ti);
 
-    timeParams = hrv_r_peaks[0]->get_time_params();
-    freq_params = hrv_r_peaks[0]->get_freq_params();
+    timeParams = hrv_r_peaks[current_it]->get_time_params();
+    freq_params = hrv_r_peaks[current_it]->get_freq_params();
 
 
  //       double hff = freq_params.hf;
@@ -70,8 +70,7 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
     arma:: vec ulff = freq_params.freq_ulf;
     arma:: vec vlff = freq_params.freq_vlf;
     arma:: vec lff = freq_params.freq_lf;
-    int K=7200;
-    QVector<double> hf(K), ulf(K), vlf(K), lf(K);
+    QVector<double> hf(W), ulf(W), vlf(W), lf(W);
     hf= examination::convert_vec_qvector(hff);
     ulf= examination::convert_vec_qvector(ulff);
     vlf= examination::convert_vec_qvector(vlff);
