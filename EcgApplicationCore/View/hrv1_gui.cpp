@@ -26,21 +26,21 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
    // hrv_r_peaks[0]->calc_periodogram();
    // hrv_r_peaks[0]->calc_freq_vec();
    // hrv_r_peaks[current_it]->calc_params();
-    if(current_it > 1)
-    {
-        arma::vec o_signal = m_r_peaks[current_it-1]->get_r_peaks();
-        o_signal.shed_rows(0,o_signal.size()-1);
 
-        arma::vec n_signal = hrv_r_peaks[current_it]->get_r_peaks();
-        n_signal.insert_rows(0,o_signal);
+    //    if(current_it > 1)
+    //    {
+    //        arma::vec o_signal = m_r_peaks[current_it-1]->get_r_peaks();
+    //        o_signal.shed_rows(0,o_signal.size()-1);
+
+    //        arma::vec n_signal = hrv_r_peaks[current_it]->get_r_peaks();
+    //        n_signal.insert_rows(0,o_signal);
 
 
-        //Hrv1 *hrv1 = new Hrv1(n_signal);
-        //hrv1->calc_params();
-        hrv_r_peaks[current_it]->set_r_peaks(n_signal);
+    //        //Hrv1 *hrv1 = new Hrv1(n_signal);
+    //        //hrv1->calc_params();
+    //        hrv_r_peaks[current_it]->set_r_peaks(n_signal);
 
-    }
-
+    //    }
 
 
 
@@ -83,7 +83,16 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 void HRV1_gui::load_R_Peaks_vector(R_Peaks *r_peaks_signal, Waves *waves)
 {
     m_r_peaks.push_back(r_peaks_signal);
-    Hrv1 *hrv1_r_peaks = new Hrv1(m_r_peaks[current_it]->get_r_peaks());
+    Hrv1 *hrv1_r_peaks;
+    if(current_it > 0)
+    {
+        arma::vec o_peaks = m_r_peaks[current_it-1]->get_r_peaks();
+        arma::vec n_peaks = r_peaks_signal->get_r_peaks();
+        n_peaks.insert_rows(0,o_peaks);
+        hrv1_r_peaks = new Hrv1(n_peaks);
+    }
+    else
+        hrv1_r_peaks = new Hrv1(m_r_peaks[current_it]->get_r_peaks());
     hrv_r_peaks.push_back(hrv1_r_peaks);
     qInfo() << "hrv_r_peaks.size()" << hrv_r_peaks.size();
     if(current_it > 0)
