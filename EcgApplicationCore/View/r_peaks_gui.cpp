@@ -20,16 +20,7 @@ R_peaks_gui::R_peaks_gui(QWidget *parent) :
 
 
 
-void R_peaks_gui::addRandomGraph() //Przykładowy wykres
-{
-    QVector<double> x(1001), y(1001); // initialize with entries 0..100
-    for (int i=0; i<1001; ++i)
-    {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = (x[i]); // let's plot a quadratic function
-    }
-    qrsPlot2->setData2(x,y);
-}
+
 R_peaks_gui::~R_peaks_gui()
 {
     delete ui;
@@ -54,7 +45,7 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
 
 void R_peaks_gui::on_pushButton_clicked()
 {
-    filter1();
+
     emit still_loading();
 
 }
@@ -65,227 +56,40 @@ void R_peaks_gui::filter1()
     int N = 20000;
         QVector<double> x(N), y(N); // initialize with entries 0..100
 
-        arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
-        arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+        arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
+        arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
 
         arma::vec time_cropped = time(arma::span(0,N-1));
         x = examination::convert_vec_qvector(time_cropped);
         y = examination::convert_vec_qvector(signal_filtered(arma::span(0,N-1)));
         qrsPlot2->setData2(x,y);
 
+    Waves_Points new_waves=m_waves[current_it]->get_waves();
 
-        Waves *m_waves2 = new Waves(m_ecg_baseline[0]->get_signal_filtered(),m_r_peaks[0]->get_r_peaks(), m_ecg_baseline[0]->get_sampling_freq());
-        m_waves.push_back(m_waves2);
-
-    Waves_Points new_waves=m_waves[0]->get_waves();
+    if(current_it>0)
+        waves2plot(&new_waves);
 
         double freq=m_ecg_baseline[0]->get_sampling_freq();
-//        arma::vec new_qrs_onset= new_waves.qrs_onset;//freq;
-//        arma::vec new_qrs_end= new_waves.qrs_end;//freq;
-//        arma::vec new_p_onset= new_waves.p_onset;//freq;
-//        arma::vec new_p_end= new_waves.p_end;//freq;
-//        arma::vec y_ponest(new_p_onset);
-//        arma::vec y_pend(new_p_end);
-//        arma::vec y_qrsend(new_qrs_end);
-//        arma::vec y_qrsonset(new_qrs_onset);
-   //     qInfo()<<"Tu jestem";
-        //SPOSÓB 1
-//        for(int i = 0; i<(new_waves.qrs_onset).size()-1;i++)
-//        {
-//            y_qrsonset(i) = y(uint(new_waves.qrs_onset(i)));
-//        //    qInfo()<<i;
-//        }
-//        for(int i = 0; i<(new_waves.qrs_end).size()-1;i++)
-//        {
-//            y_qrsend(i) = y(uint(new_waves.qrs_end(i)));
-//           // qInfo()<<i;
-//        }
-//        for(int i = 0; i<(new_waves.p_onset).size()-1;i++)
-//            y_ponest(i) = y(uint(new_waves.p_onset(i)));
-//        for(int i = 0; i<(new_waves.p_end).size()-1;i++)
-//            y_pend(i) = y(uint(new_waves.p_end(i)));
-
-    //    SPOSÓB 2
-//        for(int i=0;i<(new_waves.qrs_onset).size();i++){
-//            if((new_waves.qrs_onset)(i)==x(i)){
-//                y_qrsonset(i)=y(i);
-//            }
-//        }
-//        for(int i=0;i<(new_waves.qrs_end).size();i++){
-//            if((new_waves.qrs_end)(i)==x(i)){
-//                y_qrsend(i)=y(i);
-//            }
-//        }
-//        for(int i=0;i<(new_waves.p_onset).size();i++){
-//            if((new_waves.p_onset)(i)==x(i)){
-//                 y_ponest(i)=y(i);
-//            }
-//        }
-
-//        for(int i=0;i<(new_waves.p_end).size();i++){
-//            if((new_waves.p_end)(i)==x(i)){
-//              y_pend(i)=y(i);
-//            }
-//        }
-//int K=new_qrs_onset.size();
-//     //       int K=5000;
-//        QVector<double> xx(K), yy(K),yponest(K), ypend(K), yqrsonset(K), yqrsend(K);
-//        yponest=examination::convert_vec_qvector(y_ponest);
-//        ypend=examination::convert_vec_qvector(y_pend);
-//        yqrsonset=examination::convert_vec_qvector(y_qrsonset);
-//        yqrsend=examination::convert_vec_qvector(y_qrsend);
-
-//    int M=7200;
-//        arma::vec time_cropped = x(arma::span(0,M-1));
-//        xx = examination::convert_vec_qvector(time_cropped);
-//        yy = examination::convert_vec_qvector(y(arma::span(0,M-1)));
-//        qrsPlot2->setData2(xx,yy);
-
-
-
-//    //    funkcja
 
         arma::vec xnew_qrs_onset = new_waves.qrs_onset;
         arma::vec xnew_qrs_end = new_waves.qrs_end;
         arma::vec xnew_p_onset = new_waves.p_onset;
         arma::vec xnew_p_end = new_waves.p_end;
+        arma::vec xnew_t_end = new_waves.t_end;
 
-        QVector<double> xponest(xnew_p_onset.size()), xpend(xnew_p_end.size()), xqrsonset(xnew_qrs_onset.size()), xqrsend(xnew_qrs_end.size());
+        QVector<double> xponest, xpend, xqrsonset, xqrsend, xtend;
         xponest=examination::convert_vec_qvector(xnew_p_onset);
         xpend=examination::convert_vec_qvector(xnew_p_end);
         xqrsonset=examination::convert_vec_qvector(xnew_qrs_onset);
         xqrsend=examination::convert_vec_qvector(xnew_qrs_end);
+        xtend=examination::convert_vec_qvector(xnew_t_end);
 
 
-
-       // qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xqrsend, freq);
-
-//        Waves *m_waves2 = new Waves(signal_filtered, m_r_peaks[0]->get_r_peaks(), m_ecg_baseline[0]->get_sampling_freq());
-//        m_waves.push_back(m_waves2);
-//        int K=7200;
-//        new_waves= m_waves[0]->get_waves();
-//        arma::vec new_qrs_onset = new_waves.qrs_onset;
-//        arma::vec new_qrs_end = new_waves.qrs_end;
-//        arma::vec new_p_onset = new_waves.p_onset;
-//        arma::vec new_p_end = new_waves.p_end;
-
-        //funkcja
+        qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xqrsend, xtend, freq);
 
 
-//        QVector<double> ponest(K), pend(K), qrsonset(K), qrsend(K);
-//        ponest=examination::convert_vec_qvector(new_p_onset);
-//        pend=examination::convert_vec_qvector(new_p_end);
-//        qrsonset=examination::convert_vec_qvector(new_qrs_onset);
-//        qrsend=examination::convert_vec_qvector(new_qrs_end);
-
-
-
-       // qrsPlot2->setData3(x,  y, ponest, pend,qrsonset,qrsend);
       }
 
-
-void R_peaks_gui::funkcja1(){
-//    arma::vec y = m_ecg_baseline[0]->get_signal_filtered();
-//    arma::vec x = m_ecg_baseline[0]->get_time_vec(0);
-//                   new_waves= m_waves[0]->get_waves();
-//    new_waves= m_waves[0]->get_waves();
-//    double freq=m_ecg_baseline[0]->get_sampling_freq();
-//    arma::vec new_qrs_onset= new_waves.qrs_onset;//freq;
-//    arma::vec new_qrs_end= new_waves.qrs_end;//freq;
-//    arma::vec new_p_onset= new_waves.p_onset;//freq;
-//    arma::vec new_p_end= new_waves.p_end;//freq;
-//    arma::vec y_ponest(new_p_onset);
-//    arma::vec y_pend(new_p_end);
-//    arma::vec y_qrsend(new_qrs_end);
-//    arma::vec y_qrsonset(new_qrs_onset);
-//    qInfo()<<"Tu jestem";
-    //SPOSÓB 1
-/*    for(int i = 0; i<(new_waves.qrs_onset).size()-1;i++)
-    {
-        y_qrsonset(i) = y(uint(new_waves.qrs_onset(i)));
-    //    qInfo()<<i;
-    }
-    for(int i = 0; i<(new_waves.qrs_end).size()-1;i++)
-    {
-        y_qrsend(i) = y(uint(new_waves.qrs_end(i)));
-       // qInfo()<<i;
-    }
-    for(int i = 0; i<(new_waves.p_onset).size()-1;i++)
-        y_ponest(i) = y(uint(new_waves.p_onset(i)));
-    for(int i = 0; i<(new_waves.p_end).size()-1;i++)
-        y_pend(i) = y(uint(new_waves.p_end(i)));*/
-
-//    SPOSÓB 2
-//    for(int i=0;i<(new_waves.qrs_onset).size();i++){
-//        if((new_waves.qrs_onset)(i)==x(i)){
-//            y_qrsonset(i)=y(i);
-//        }
-//    }
-//    for(int i=0;i<(new_waves.qrs_end).size();i++){
-//        if((new_waves.qrs_end)(i)==x(i)){
-//            y_qrsend(i)=y(i);
-//        }
-//    }
-//    for(int i=0;i<(new_waves.p_onset).size();i++){
-//        if((new_waves.p_onset)(i)==x(i)){
-//             y_ponest(i)=y(i);
-//        }
-//    }
-
-//    for(int i=0;i<(new_waves.p_end).size();i++){
-//        if((new_waves.p_end)(i)==x(i)){
-//          y_pend(i)=y(i);
-//        }
-//    }
-
-//        int K=5000;
-//    QVector<double> xx(K), yy(K),yponest(K), ypend(K), yqrsonset(K), yqrsend(K);
-//    yponest=examination::convert_vec_qvector(y_ponest);
-//    ypend=examination::convert_vec_qvector(y_pend);
-//    yqrsonset=examination::convert_vec_qvector(y_qrsonset);
-//    yqrsend=examination::convert_vec_qvector(y_qrsend);
-
-//int N=7200;
-//    arma::vec time_cropped = x(arma::span(0,N-1));
-//    xx = examination::convert_vec_qvector(time_cropped);
-//    yy = examination::convert_vec_qvector(y(arma::span(0,N-1)));
-//    qrsPlot2->setData2(xx,yy);
-
-
-
-//    funkcja
-
-//    arma::vec xnew_qrs_onset = new_waves.qrs_onset;
-//    arma::vec xnew_qrs_end = new_waves.qrs_end;
-//    arma::vec xnew_p_onset = new_waves.p_onset;
-//    arma::vec xnew_p_end = new_waves.p_end;
-
-//    QVector<double> xponest(K), xpend(K), xqrsonset(K), xqrsend(K);
-//    xponest=examination::convert_vec_qvector(xnew_p_onset);
-//    xpend=examination::convert_vec_qvector(xnew_p_end);
-//    xqrsonset=examination::convert_vec_qvector(xnew_qrs_onset);
-//    xqrsend=examination::convert_vec_qvector(xnew_qrs_end);
-
-
-
-//    qrsPlot2->setData3(xx,  yy, xponest, yponest, xpend,ypend, xqrsonset,yqrsonset, xqrsend, yqrsend, freq);
-
-
-}
-
-void R_peaks_gui::filter2()
-    {
-
-    QVector<double> x(1001), y(1001); // initialize with entries 0..100
-    for (int i=0; i<1001; ++i)
-    {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = exp(x[i]); // let's plot a quadratic function
-    }
-    qrsPlot2->setData2(x,y);
-
-
-}
 
 void R_peaks_gui::renumber_r_peaks(int direction)
 {
@@ -391,6 +195,7 @@ void R_peaks_gui::run_waves()
     Waves *waves = new Waves(m_ecg_baseline[current_it]->get_signal_filtered(),m_r_peaks[current_it]->get_r_peaks(),m_r_peaks[current_it]->get_sampling_freq());
     m_waves.push_back(waves);
     find_waves();
+    filter1();
 }
 
 void R_peaks_gui::find_waves()
@@ -452,6 +257,10 @@ void R_peaks_gui::find_waves()
         // przenumerowanie wavesów związane z wklejeniem sygnału
         renumber_waves(-int(old_signal.size()));
 
+        //przeklejenie ujemnych wartości do poprzedniego fragmentu
+        distribute_waves();
+
+
         // powrócenie r peaków do stanu początkowego
         m_waves[current_it]->set_r_peaks(new_r_peaks_copy);
 
@@ -471,6 +280,116 @@ void R_peaks_gui::find_waves()
     if(current_it>0)
         renumber_r_peaks();
     emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
+}
+void R_peaks_gui::distribute_waves()
+{
+    Waves_Points n_waves = m_waves[current_it]->get_waves();
+    Waves_Points o_waves = m_waves[current_it-1]->get_waves();
+    int N = (m_waves[current_it-1]->get_signal_filtered()).size();
+    bool finished = false;
+
+    arma::vec n_p_onset = n_waves.p_onset;
+    arma::vec n_p_end = n_waves.p_end;
+    arma::vec n_qrs_onset = n_waves.qrs_onset;
+    arma::vec n_qrs_end = n_waves.qrs_end;
+    arma::vec n_t_end = n_waves.t_end;
+
+    arma::vec o_p_onset = o_waves.p_onset;
+    arma::vec o_p_end = o_waves.p_end;
+    arma::vec o_qrs_onset = o_waves.qrs_onset;
+    arma::vec o_qrs_end = o_waves.qrs_end;
+    arma::vec o_t_end = o_waves.t_end;
+
+    arma::vec p_onset(1);
+    arma::vec p_end(1);
+    arma::vec qrs_onset(1);
+    arma::vec qrs_end(1);
+    arma::vec t_end(1);
+
+    while(finished == false)
+    {
+        finished = true;
+        if(n_p_onset(0) < 0)
+        {
+            p_onset = N + n_p_onset(0);
+            o_p_onset.insert_rows(o_p_onset.size()-1,p_onset);
+            n_p_onset.shed_row(0);
+            finished = false;
+        }
+        if(n_p_end(0) < 0)
+        {
+            p_end = N + n_p_end(0);
+            o_p_end.insert_rows(o_p_end.size()-1,p_end);
+            n_p_end.shed_row(0);
+            finished = false;
+        }
+        if(n_qrs_onset(0) < 0)
+        {
+            qrs_onset = N + n_qrs_onset(0);
+            o_qrs_onset.insert_rows(o_qrs_onset.size()-1,qrs_onset);
+            n_qrs_onset.shed_row(0);
+            finished = false;
+        }
+        if(n_qrs_end(0) < 0)
+        {
+            qrs_end = N + n_qrs_end(0);
+            o_qrs_end.insert_rows(o_qrs_end.size()-1,qrs_end);
+            n_qrs_end.shed_row(0);
+            finished = false;
+        }
+        if(n_t_end(0) < 0)
+        {
+            t_end = N + n_t_end(0);
+            o_t_end.insert_rows(o_t_end.size()-1,t_end);
+            n_t_end.shed_row(0);
+            finished = false;
+        }
+    }
+
+    o_waves.p_onset = o_p_onset;
+    o_waves.p_end = o_p_end;
+    o_waves.qrs_onset = o_qrs_onset;
+    o_waves.qrs_end = o_qrs_end;
+    o_waves.t_end = o_t_end;
+
+    n_waves.p_onset = n_p_onset;
+    n_waves.p_end = n_p_end;
+    n_waves.qrs_onset = n_qrs_onset;
+    n_waves.qrs_end = n_qrs_end;
+    n_waves.t_end = n_t_end;
+
+    qInfo() << "n_waves.p_onset(0)" << n_waves.p_onset(0);
+    m_waves[current_it-1]->set_waves(o_waves);
+    m_waves[current_it]->set_waves(n_waves);
+}
+
+void R_peaks_gui::waves2plot(Waves_Points* n_waves)
+{
+    int N = (m_waves[current_it-1]->get_signal_filtered()).size();
+
+    arma::vec p_onset = n_waves->p_onset;
+    arma::vec p_end = n_waves->p_end;
+    arma::vec qrs_onset = n_waves->qrs_onset;
+    arma::vec qrs_end = n_waves->qrs_end;
+    arma::vec t_end = n_waves->t_end;
+
+    arma::vec tmp_p_onset(p_onset.size());
+    arma::vec tmp_p_end(p_end.size());
+    arma::vec tmp_qrs_onset(qrs_onset.size());
+    arma::vec tmp_qrs_end(qrs_end.size());
+    arma::vec tmp_t_end(t_end.size());
+
+    tmp_p_onset.fill(-N*current_it);
+    tmp_p_end.fill(-N*current_it);
+    tmp_qrs_onset.fill(-N*current_it);
+    tmp_qrs_end.fill(-N*current_it);
+    tmp_t_end.fill(-N*current_it);
+
+    n_waves->p_onset = p_onset + tmp_p_onset;
+    n_waves->p_end = p_end + tmp_p_end;
+    n_waves->qrs_onset = qrs_onset + tmp_qrs_onset;
+    n_waves->qrs_end = qrs_end + tmp_qrs_end;
+    n_waves->t_end = t_end + tmp_t_end;
 }
 
 void R_peaks_gui::signal_loaded()

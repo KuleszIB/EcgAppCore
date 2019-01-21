@@ -64,15 +64,13 @@ void HRV2_gui::addGraph()
 
 void HRV2_gui::addHistogram(){
     histogram_hrv2 Hist=m_hrv2[0]->get_hist();
-    arma::vec values=Hist.values;
-    int K=7200;
-    QVector<double> Values(K);
-    Values=examination::convert_vec_qvector(values);
-    int size_val=Values.size();
-//    hrv2histPlot2->setDataHISTOGRAM(values);
-    hrv2histPlot2->setValues(size_val,Values);
-
-
+    arma::ivec values=Hist.values;
+    arma::vec bins=Hist.bins;
+    int maxx=Hist.max_value;
+    QVector<double> Values, Bins;
+    Values=examination::convert_ivec_qvector(values);
+    Bins=examination::convert_vec_qvector(bins);
+    hrv2histPlot2->setValues2(Bins,Values);
 }
 void HRV2_gui::load_R_Peaks_vector2(R_Peaks *r_peaks_signal, Waves *waves)
 {

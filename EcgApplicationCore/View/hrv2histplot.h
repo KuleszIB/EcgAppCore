@@ -9,7 +9,10 @@
 #include "qwt_column_symbol.h"
 #include "qwt_scale_map.h"
 #include <qpainter.h>
-
+#include <algorithm>
+#include <qwt_plot_item.h>
+#include <qwt_interval.h>
+#include <qwt_compat.h>
 
 
 class hrv2histplot : public QwtPlot
@@ -19,7 +22,8 @@ public:
     hrv2histplot(QWidget *parent=0);
     ~hrv2histplot();
 //    void setDataHISTOGRAM(const QVector<QwtIntervalSample> &samples);
-    void setValues( int numValues, QVector<double>values );
+    void setValues(int, const QwtIntervalData &values );
+    void setValues2(QVector<double>, QVector<double>);
 
 public slots:
 
