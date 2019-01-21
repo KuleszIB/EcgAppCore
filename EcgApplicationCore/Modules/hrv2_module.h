@@ -5,7 +5,7 @@
 
 struct histogram_hrv2
 {
-    arma::vec values; // typ danych do sprawdzenia -> zmienilam
+    arma::ivec values; // typ danych do sprawdzenia -> zmienilam
     // To miała być oś x histogramu
     arma::vec bins; // do czego to ma sie odnosic?  do zmiany albo wyrzucenia -> Monika bedzie potrzebowac do histogramu
     int max_value;

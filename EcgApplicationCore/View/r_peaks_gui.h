@@ -23,10 +23,10 @@ public:
     void renumber_r_peaks(int direction = -1);
     void renumber_waves(); 
     void renumber_waves(int old_signal_size);
-
+    void waves2plot(Waves_Points* n_waves);
+    void distribute_waves();
 private slots:
     void peakDetection();
-    void addRandomGraph();
     void on_pushButton_clicked();
 
 public slots:

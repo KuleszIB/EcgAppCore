@@ -10,6 +10,7 @@
 #include <qwt_plot_panner.h>
 #include <qwt_plot_magnifier.h>
 #include <qwt_scale_engine.h>
+#include <qwt_abstract_scale.h>
 class hrv1plot : public QwtPlot
 {
     Q_OBJECT

@@ -29,7 +29,6 @@ private slots:
 
 public slots:
     void load_R_Peaks_vector(R_Peaks*,Waves*);
-    void continue_processing();
 
 signals:
     void still_loading();

@@ -55,32 +55,39 @@ qrsplot::qrsplot(QWidget *parent) :
 //    t_wave->setLabel(tr("T Wave Alt"));
 //    t_wave->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
 //    t_wave->attach(this);
-    qrsOnSetCurve = new QwtPlotCurve("qrsOnSet");
-    qrsOnSetCurve->setYAxis(QwtPlot::yLeft);
-    qrsOnSetCurve->setStyle(QwtPlotCurve::Sticks);
-    qrsOnSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,255,0), QColor(0,255,0), QSize(6, 6)));
-    qrsOnSetCurve->attach(this);
+    qrsOnSet = new QwtPlotCurve("qrsOnSet");
+    qrsOnSet->setYAxis(QwtPlot::yLeft);
+    qrsOnSet->setStyle(QwtPlotCurve::Sticks);
+    qrsOnSet->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,255,0), QColor(0,255,0), QSize(6, 6)));
+    qrsOnSet->attach(this);
 
 
-    qrsEndSetCurve = new QwtPlotCurve("qrsEndSet");
-    qrsEndSetCurve->setYAxis(QwtPlot::yLeft);
-    qrsEndSetCurve->setStyle(QwtPlotCurve::Sticks);
-    qrsEndSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,150,0), QColor(0,150,0), QSize(6, 6)));
-    qrsEndSetCurve->attach(this);
+    qrsEndSet = new QwtPlotCurve("qrsEndSet");
+    qrsEndSet->setYAxis(QwtPlot::yLeft);
+    qrsEndSet->setStyle(QwtPlotCurve::Sticks);
+    qrsEndSet->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,150,0), QColor(0,150,0), QSize(6, 6)));
+    qrsEndSet->attach(this);
 
-    pOnSetCurve = new QwtPlotCurve("pOnSet");
-    pOnSetCurve->setYAxis(QwtPlot::yLeft);
-    pOnSetCurve->setStyle(QwtPlotCurve::Sticks);
-    pOnSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,0,255), QColor(0,0,255), QSize(6, 6)));
-    pOnSetCurve->attach(this);
+    pOnSet = new QwtPlotCurve("pOnSet");
+    pOnSet->setYAxis(QwtPlot::yLeft);
+    pOnSet->setStyle(QwtPlotCurve::Sticks);
+    pOnSet->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,0,255), QColor(0,0,255), QSize(6, 6)));
+    pOnSet->attach(this);
 
-    pEndSetCurve = new QwtPlotCurve("pEndSet");
-    pEndSetCurve->setYAxis(QwtPlot::yLeft);
-    pEndSetCurve->setStyle(QwtPlotCurve::Sticks);
-    pEndSetCurve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,94,185), QColor(0,94,185), QSize(6, 6)));
-    pEndSetCurve->attach(this);
+    pEndSet = new QwtPlotCurve("pEndSet");
+    pEndSet->setYAxis(QwtPlot::yLeft);
+    pEndSet->setStyle(QwtPlotCurve::Sticks);
+    pEndSet->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,94,185), QColor(0,94,185), QSize(6, 6)));
+    pEndSet->attach(this);
 
-    setAxisScale( xBottom, 0.0, 20.0 );
+    tEnd = new QwtPlotCurve("pEndSet");
+    tEnd->setYAxis(QwtPlot::yLeft);
+    tEnd->setStyle(QwtPlotCurve::Sticks);
+    tEnd->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(185,94,0), QColor(185,94,0), QSize(6, 6)));
+    tEnd->attach(this);
+
+
+    setAxisScale( xBottom, 0.0, 20.0);
     setAxisScale( yLeft, -1.0, 1.0 );
 
 
@@ -108,17 +115,18 @@ replot();
 qrsplot::~qrsplot()
 {
     delete signal;
-//    delete qrs_onset;
+    delete qrs_onset;
 //    delete qrs_end;
 //    delete t_end;
 //    delete p_onset;
 //    delete p_end;
 //    delete t_wave;
 
-    delete qrsOnSetCurve;
-    delete qrsEndSetCurve;
-    delete pOnSetCurve;
-    delete pEndSetCurve;
+    delete qrsOnSet;
+    delete qrsEndSet;
+    delete pOnSet;
+    delete pEndSet;
+    delete tEnd;
 }
 
 void qrsplot::setData2(QVector<double> x, QVector<double> y)
@@ -128,12 +136,12 @@ void qrsplot::setData2(QVector<double> x, QVector<double> y)
 }
 
 
-void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xponset,QVector<double> xpend,QVector<double> xqrsonset,QVector<double> xqrsend,double freq)
+void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xponset,QVector<double> xpend,QVector<double> xqrsonset,QVector<double> xqrsend,QVector<double> xtend,double freq)
 {
-    QVector<double>yponset(xponset.size());
-    QVector<double>yqrsonset(xqrsonset.size());
-    QVector<double>ypend(xpend.size());
-    QVector<double>yqrsend(xqrsend.size());
+//    QVector<double>yponset(xponset.size());
+//    QVector<double>yqrsonset(xqrsonset.size());
+//    QVector<double>ypend(xpend.size());
+//    QVector<double>yqrsend(xqrsend.size());
 
     signal->setSamples(x, y);
 //    for(int i=0;i<qrsonset.size();i++){
@@ -169,21 +177,42 @@ void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xpon
     for(int i=0;i<xpend.size();i++)
         xpend[i]=xpend[i]/freq;
 
-    for(int i=0;i<xpend.size();i++)
-        ypend[i]=y[xpend[i]];
-    for(int i=0;i<xponset.size();i++)
-        yponset[i]=y[xponset[i]];
-    for(int i=0;i<xpend.size();i++)
-        ypend[i]=y[xpend[i]];
-    for(int i=0;i<xqrsonset.size();i++)
-        yqrsonset[i]=y[xqrsonset[i]];
-    for(int i=0;i<xqrsend.size();i++)
-        yqrsend[i]=y[xqrsend[i]];
+    for(int i=0;i<xtend.size();i++)
+        xtend[i]=xtend[i]/freq;
+//    for(int i=0;i<xpend.size();i++)
+//        ypend[i]=y[xpend[i]];
+//    for(int i=0;i<xponset.size();i++)
+//        yponset[i]=y[xponset[i]];
 
-    qrsOnSetCurve->setSamples(xqrsonset,yqrsonset);
-    qrsEndSetCurve->setSamples(xqrsend,yqrsend);;
-    pOnSetCurve->setSamples(xponset,yponset);;
-    pEndSetCurve->setSamples(xpend,ypend);;
+//    for(int i=0;i<xqrsonset.size();i++)
+//        yqrsonset[i]=y[xqrsonset[i]];
+//    for(int i=0;i<xqrsend.size();i++)
+//        yqrsend[i]=y[xqrsend[i]];
+
+QVector<QPointF> pend;
+
+for(int i=0; i<xpend.size();i++)
+{pend.append(QPointF(xpend[i], y[xpend[i]]));}
+    QVector<QPointF> ponset;
+for(int i=0; i<xponset.size();i++)
+{ponset.append(QPointF(xponset[i], y[xponset[i]]));}
+QVector<QPointF> qrsend;
+for(int i=0; i<xqrsend.size();i++)
+{qrsend.append(QPointF(xqrsend[i], y[xqrsend[i]]));}
+QVector<QPointF> qrsonset;
+for(int i=0; i<xqrsonset.size();i++)
+{qrsonset.append(QPointF(xqrsonset[i], y[xqrsonset[i]]));
+}
+QVector<QPointF> tend;
+for(int i=0; i<xtend.size();i++)
+{tend.append(QPointF(xtend[i], y[xtend[i]]));
+}
+
+    qrsOnSet ->setSamples(qrsonset);
+    qrsEndSet->setSamples(qrsend);
+    pOnSet->setSamples(ponset);
+    pEndSet->setSamples(pend);
+    tEnd->setSamples(tend);
     replot();
 
  //   QVector<QPointF> data;

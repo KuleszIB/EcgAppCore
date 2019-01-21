@@ -16,13 +16,17 @@ hrvdfaplot::hrvdfaplot(QWidget *parent) :  QwtPlot(parent)
     signal->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, Qt::NoBrush, QPen(Qt::black), QSize(5, 5)));
     signal->attach(this);
 
+    signal2 = new QwtPlotCurve("Curve");
+    signal2->setStyle(QwtPlotCurve::NoCurve);
+    signal2->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, Qt::NoBrush, QPen(Qt::blue), QSize(5, 5)));
+    signal2->attach(this);
 
     vectorshort = new QwtPlotCurve("Short");
     vectorshort->setPen(Qt::red, 0.0, Qt::SolidLine);
     vectorshort->attach(this);
 
     vectorlong = new QwtPlotCurve("Long");
-    vectorlong->setPen(Qt::black, 0.0, Qt::SolidLine);
+    vectorlong->setPen(Qt::blue, 0.0, Qt::SolidLine);
     vectorlong->attach(this);
 
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -55,6 +59,7 @@ hrvdfaplot::hrvdfaplot(QWidget *parent) :  QwtPlot(parent)
 hrvdfaplot::~hrvdfaplot()
 {
     delete signal;
+    delete signal2;
     delete vectorshort;
     delete vectorlong;
 }//
@@ -67,7 +72,7 @@ void hrvdfaplot::setDataHRVDFA(QVector<double> x, QVector<double> y, QVector<dou
         vs1.push_back(QPointF(float(x[i]), float(vs[i])));
     }
 
-    QVector<QPointF> vl1(vl.size()-vs.size());
+    QVector<QPointF> vl1;
     for (int i = 0; i < vl.size(); i++)
     {
         if(vl[i]!=0)

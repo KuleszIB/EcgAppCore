@@ -22,6 +22,7 @@ public:
 private:
     QwtPlot *plot;
     QwtPlotCurve *signal;
+    QwtPlotCurve *signal2;
     QwtPlotCurve *vectorshort;
     QwtPlotCurve *vectorlong;
 
