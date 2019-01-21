@@ -126,26 +126,32 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
 
 
     QVector<QPointF> ulf2;
-
     for (int i = 0; i < ulff.size(); i++)
     {
         ulf2.push_back(QPointF(float(ulff[i]), float(y[i])));
     }
+    ulf2.push_back(QPointF(float(vlff[0]), float(y[ulff.size()])));
+
     QVector<QPointF> vlf2;
     for (int i = 0; i <vlff.size(); i++)
     {
         vlf2.push_back(QPointF(float(vlff[i]), float(y[i+ulff.size()])));
     }
+    vlf2.push_back(QPointF(float(lff[0]), float(y[ulff.size()+vlff.size()])));
+
     QVector<QPointF> lf2;
     for (int i = 0; i < lff.size(); i++)
     {
         lf2.push_back(QPointF(float(lff[i]), float(y[i+ulff.size()+vlff.size()])));
     }
+    lf2.push_back(QPointF(float(hff[0]), float(y[lff.size()+ulff.size()+vlff.size()])));
+
     QVector<QPointF> hf2;
     for (int i = 0; i < hff.size(); i++)
     {
         hf2.push_back(QPointF(float(hff[i]), float(y[i+lff.size()+ulff.size()+vlff.size()])));
     }
+    hf2.push_back(QPointF(float(x[lff.size()+ulff.size()+vlff.size()+hff.size()]), float(y[lff.size()+ulff.size()+vlff.size()+hff.size()])));
 
     QVector<QPointF> x2;
     for (int i = 0; i < (y.size()-hff.size()-lff.size()-vlff.size()-ulff.size()); i++)
