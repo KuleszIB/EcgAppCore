@@ -14,12 +14,12 @@ qrsplot::qrsplot(QWidget *parent) :
     setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");
 
 
-    qrs_onset = new QwtPlotMarker();
-    qrs_onset->setLineStyle(QwtPlotMarker::NoLine);
-    qrs_onset->setSymbol(new QwtSymbol(QwtSymbol::Ellipse));
-    qrs_onset->setLabel(tr("QRS onset"));
-    qrs_onset->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
-    qrs_onset->attach(this);
+//    qrs_onset = new QwtPlotMarker();
+//    qrs_onset->setLineStyle(QwtPlotMarker::NoLine);
+//    qrs_onset->setSymbol(new QwtSymbol(QwtSymbol::Ellipse));
+//    qrs_onset->setLabel(tr("QRS onset"));
+//    qrs_onset->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
+//    qrs_onset->attach(this);
 
 //    qrs_end = new QwtPlotMarker();
 //    qrs_end->setLineStyle(QwtPlotMarker::NoLine);

@@ -15,21 +15,21 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
 
     hf = new QwtPlotCurve();
    // hf->setStyle(QwtPlotCurve::Sticks);
-    hf->setPen(QPen(Qt::green, 1.0, Qt::DashLine));
+    hf->setPen(QPen(Qt::green, 2.0));
     hf->attach(this);
     ulf = new QwtPlotCurve();
   //  ulf->setStyle(QwtPlotCurve::Sticks);
-    ulf->setPen(QPen(Qt::darkGray, 1.0, Qt::DashLine));
+    ulf->setPen(QPen(Qt::yellow, 2.0));
     ulf->attach(this);
 
     vlf = new QwtPlotCurve();
     //vlf->setStyle(QwtPlotCurve::Sticks);
-    vlf->setPen(QPen(Qt::red, 1.0, Qt::DashLine));
+    vlf->setPen(QPen(Qt::red, 2.0));
     vlf->attach(this);
 
     lf = new QwtPlotCurve();
     //lf->setStyle(QwtPlotCurve::Sticks);
-    lf->setPen(QPen(Qt::blue, 1.0, Qt::DashLine));
+    lf->setPen(QPen(Qt::blue, 2.0));
     lf->attach(this);
 
 
@@ -61,10 +61,16 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
  //   setAxisScale( xBottom, 0.0, 20.0 );
  //   setAxisScale( yLeft, -1.0, 10.0 );
 
+//    setAxisScale( xBottom, 0.01, 1.0 );
+//    setAxisScale( yLeft, 0.000, 0.0188 );
+
 
     setAxisTitle(QwtPlot::xBottom, "Frequency [Hz]");
     setAxisTitle(QwtPlot::yLeft, "Power [dB/Hz]");
-    setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine());
+    setAxisScaleEngine(QwtPlot::xBottom, new QwtLogScaleEngine());
+//    setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine());
+  //  setAxisAutoScale(QwtPlot::xBottom, true);
+
     // canvas
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
     canvas->setLineWidth( 1 );
@@ -115,11 +121,7 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
 //        peaks2.append(QPointF(float(*i), 0));
 //
 //    }
-    signal->setSamples(x,y);
-    QVector<double> yhf(hff);
-    QVector<double> yulf(ulff);
-    QVector<double> yvlf(vlff);
-    QVector<double> ylf(lff);
+
 
 
 
@@ -130,7 +132,7 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
         ulf2.push_back(QPointF(float(ulff[i]), float(y[i])));
     }
     QVector<QPointF> vlf2;
-    for (int i = 0; i < vlff.size(); i++)
+    for (int i = 0; i <vlff.size(); i++)
     {
         vlf2.push_back(QPointF(float(vlff[i]), float(y[i+ulff.size()])));
     }
@@ -145,6 +147,11 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
         hf2.push_back(QPointF(float(hff[i]), float(y[i+lff.size()+ulff.size()+vlff.size()])));
     }
 
+    QVector<QPointF> x2;
+    for (int i = 0; i < (y.size()-hff.size()-lff.size()-vlff.size()-ulff.size()); i++)
+    {
+        x2.push_back(QPointF(float(x[i+lff.size()+ulff.size()+vlff.size()+hff.size()]), float(y[i+lff.size()+ulff.size()+vlff.size()+hff.size()])));
+    }
 
 
 //    for(int i=0; i<hff.size() ; i++){
@@ -171,7 +178,7 @@ void hrv1plot::setDataHRV(QVector<double> x, QVector<double>y,QVector<double>ulf
 //    for(int i=0;i<hff.size();i++)
 //    yhf[i]=y[i];
 
-
+    signal->setSamples(x2);
     ulf->setSamples(ulf2);
     vlf->setSamples(vlf2);
     lf->setSamples(lf2);
