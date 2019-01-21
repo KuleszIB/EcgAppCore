@@ -147,6 +147,8 @@ void Hrv1::calc_freq_params()
         }
     }
 
+
+
     freq_params.freq_ulf = temp_freq_ulf;                                     //parameters' vectors
     freq_params.freq_vlf = temp_freq_vlf;
     freq_params.freq_lf = temp_freq_lf;

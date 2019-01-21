@@ -124,7 +124,7 @@ void Hrv2::calc_histogram()
 
     histogram.max_value = tmp_max_value;       //dla mnie - maks liczba zliczen w hist; najwyzszy slupek
     histogram.bins = edges;     //wartosci przedzialow
-    histogram.values = intervals;  //ilosc zliczen w kazdym koszu
+    histogram.values = values;  //ilosc zliczen w kazdym koszu
 
     calc_tinn();
     calc_triangular_index();

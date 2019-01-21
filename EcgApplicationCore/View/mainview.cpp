@@ -58,7 +58,7 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     connect(ecg_io->get_file(),SIGNAL(part_loaded(arma::vec*)),ecgBaseline_gui,SLOT(load_part(arma::vec*)));
     connect(ecgBaseline_gui,SIGNAL(still_loading()),ecgBaseline_gui,SLOT(continue_processing()));
     connect(rPeaks_gui,SIGNAL(still_loading()),rPeaks_gui,SLOT(continue_processing()));
-    connect(hrv_1_gui,SIGNAL(still_loading()),hrv_1_gui,SLOT(continue_processing()));
+    //connect(hrv_1_gui,SIGNAL(still_loading()),hrv_1_gui,SLOT(continue_processing()));
 
 }
 

@@ -17,7 +17,7 @@ public:
     explicit qrsplot(QWidget *parent = 0);
     ~qrsplot();
     void setData2(QVector<double> x, QVector<double> y);
-    void setData3(QVector<double> x, QVector<double> y ,QVector<double> ,QVector<double> ,QVector<double> ,QVector<double>, double );
+    void setData3(QVector<double> x, QVector<double> y ,QVector<double> ,QVector<double> ,QVector<double> ,QVector<double>,QVector<double>, double );
 
 
 public slots:
@@ -25,28 +25,18 @@ public slots:
 private:
     QwtPlot *plot;
     QwtPlotCurve *signal;
-//    QwtPlotMarker *qrs_onset;
+    QwtPlotMarker *qrs_onset;
 //    QwtPlotMarker *qrs_end;
 //    QwtPlotMarker *t_end;
 //    QwtPlotMarker *p_onset;
 //    QwtPlotMarker *p_end;
 //    QwtPlotMarker *t_wave;
 
-    QwtPlotCurve* qrsOnSetCurve;
-    QwtPlotCurve* qrsEndSetCurve;
-    QwtPlotCurve* pOnSetCurve;
-    QwtPlotCurve* pEndSetCurve;
+    QwtPlotCurve* qrsOnSet;
+    QwtPlotCurve* qrsEndSet;
+    QwtPlotCurve* pOnSet;
+    QwtPlotCurve* pEndSet;
+    QwtPlotCurve* tEnd;
 };
 
-class VectorInt
-{
-public:
- VectorInt (QVector<int> * signal = NULL);
-  ~VectorInt ();
-
-  int get(size_t it);
-  void set(size_t it, int value);
-
-  QVector<int> * signal;
-};
 #endif // QRSPLOT_H

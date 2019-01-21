@@ -2,17 +2,16 @@
 #define T_WAVE_ALT_H
 
 #include "t_peaks.h"
-#include "vector"
 
 struct T_Wave_Alt_Struct
 {
     arma::vec odd_T;
     arma::vec even_T;
     arma::vec time_vec_alt;
-    arma::vec even_array;
-    arma::vec odd_array;
-    arma::vec even_t_array;
-    arma::vec odd_t_array;
+    arma::mat even_array;
+    arma::mat odd_array;
+    arma::mat even_t_array;
+    arma::mat odd_t_array;
     double alt;
 };
 
@@ -24,12 +23,11 @@ private:
     int STp_min;                //ZMIANA (vec na int)
     int TpTe_min;               //ZMIANA (vec na int)
     double alt;
-    int N_peak;
     arma::vec time_vec_alt;     //DODANE (do wygenerowania wykresu załamków zastępczych)
-    arma::vec even_array;       //DODANE (do wygenerowania wykresu)
-    arma::vec odd_array;        //DODANE (do wygenerowania wykresu)
-    arma::vec even_t_array;     //DODANE (do wygenerowania wykresu)
-    arma::vec odd_t_array;      //DODANE (do wygenerowania wykresu)
+    arma::mat even_array;       //DODANE (do wygenerowania wykresu)
+    arma::mat odd_array;        //DODANE (do wygenerowania wykresu)
+    arma::mat even_t_array;     //DODANE (do wygenerowania wykresu)
+    arma::mat odd_t_array;      //DODANE (do wygenerowania wykresu)
     T_Wave_Alt_Struct t_wave_alt_struct; //DODANE (do ostatecznej funkcji get)
     void filter_t_wave_alt();   // filter_lowpass z Waves też może być
     void preprocessing_t_wave_alt();
@@ -45,12 +43,12 @@ public:
     arma::vec get_odd_t();          //DODANE
     arma::vec get_even_t();         //DODANE
     arma::vec get_time_vec_alt();   //DODANE
-    arma::vec get_even_array();     //DODANE
-    arma::vec get_odd_array();      //DODANE
-    arma::vec get_even_t_array();   //DODANE
-    arma::vec get_odd_t_array();    //DODANE
+    arma::mat get_even_array();     //DODANE
+    arma::mat get_odd_array();      //DODANE
+    arma::mat get_even_t_array();   //DODANE
+    arma::mat get_odd_t_array();    //DODANE
     double get_alt();
-    T_Wave_Alt_Struct get_t_wave_alt(); //DODANE
+    T_Wave_Alt_Struct get_t_wave_alt(); //DODANE (opis zmiennych w .cpp)
 
 };
 
