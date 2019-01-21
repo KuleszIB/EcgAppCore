@@ -27,6 +27,11 @@ St_Segment::St_Segment(arma::vec signal,Waves_Points waves)
     //Filippo to je dobre?
     waves_points = waves;
     St_Points.sig = signal;
+    St_Gui_Values.offset_Threshold_Min = -0.15;
+    St_Gui_Values.offset_Threshold_Max = 0.15;
+    St_Gui_Values.type_Detection_Threshold = 0.04;
+    St_Gui_Values.segment_Linearity_Min = -0.05;
+    St_Gui_Values.segment_Linearity_Max = 0.05;
 }
 
 //metoda wyznaczania szczytu załamka T
