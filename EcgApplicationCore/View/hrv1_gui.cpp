@@ -56,6 +56,28 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
     vlf= examination::convert_vec_qvector(vlff);
     lf= examination::convert_vec_qvector(lff);
     hrv1Plot2->setDataHRV(freq, periodogram,ulf,vlf, lf,hf);
+
+    QString hf_str = QString("%1").arg(freq_params.hf); //showing frequency parameters
+        QString ulf_str = QString("%1").arg(freq_params.ulf);
+        QString vlf_str = QString("%1").arg(freq_params.vlf);
+        QString lf_str = QString("%1").arg(freq_params.lf);
+        QString tp_str = QString("%1").arg(freq_params.tp);
+        ui->lineEditHF->setText(hf_str);
+        ui->lineEditULF->setText(ulf_str);
+        ui->lineEditVLF->setText(vlf_str);
+        ui->lineEditLF->setText(lf_str);
+        ui->lineEditTP->setText(tp_str);
+        QString mean_str = QString("%1").arg(timeParams.rr_mean); //showing time parameters
+        QString sdnn_str = QString("%1").arg(timeParams.sdnn);
+        QString rmsdd_str = QString("%1").arg(timeParams.rmssd);
+        QString pnn50_str = QString("%1").arg(timeParams.pnn50);
+        QString nn50_str = QString("%1").arg(timeParams.nn50);
+        ui->lineEditMean->setText(mean_str);
+        ui->lineEditSDNN->setText(sdnn_str);
+        ui->lineEditRMSSD->setText(rmsdd_str);
+        ui->lineEditPNN50->setText(pnn50_str);
+        ui->lineEditNN50->setText(nn50_str);
+
    // qInfo()<<hf.size();
 }
 
