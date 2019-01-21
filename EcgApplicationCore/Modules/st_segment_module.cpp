@@ -21,6 +21,14 @@ St_Segment::St_Segment(){
     St_Gui_Values.segment_Linearity_Max = 0.05;
 };
 
+//konstruktor z sygnalami
+St_Segment::St_Segment(arma::vec signal,Waves_Points waves)
+{
+    //Filippo to je dobre?
+    waves_points = waves;
+    St_Points.sig = signal;
+}
+
 //metoda wyznaczania szczytu załamka T
 void St_Segment::find_t_peaks(){
 

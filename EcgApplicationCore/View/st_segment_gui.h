@@ -22,7 +22,8 @@ private slots:
     void addRandomGraph();
     void filtered_signal_loaded_Stsegment(Ecg_Baseline*);
     void load_waves_vector(R_Peaks *signal1,Waves *signal2);
-    void on_pushButton_clicked();
+
+    void on_button_clicked();
 
 private:
     Ui::St_segment_gui *ui;

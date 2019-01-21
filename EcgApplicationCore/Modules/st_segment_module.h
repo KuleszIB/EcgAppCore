@@ -40,6 +40,7 @@ St_Points St_Points;
 
 public:
     St_Segment();
+    St_Segment(arma::vec signal,Waves_Points waves);
     void analyze();
     void set_St_Params(double offsetmin, double offsetmax, double detectionthreshold, double linearitymin, double linearitymax);
     St_Gui_Values St_Gui_Values;

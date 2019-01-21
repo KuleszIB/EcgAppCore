@@ -1,5 +1,6 @@
 #include "st_segment_gui.h"
 #include "ui_st_segment_gui.h"
+#include "Modules/st_segment_module.h"
 
 St_segment_gui::St_segment_gui(QWidget *parent) :
     QWidget(parent),
@@ -11,7 +12,7 @@ St_segment_gui::St_segment_gui(QWidget *parent) :
     ecgPlot2 = new ecgplot(this);
     layout->addWidget(ecgPlot2);
     ui->ecgPlot->setLayout(layout);
-    connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
+    //connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
 
 }
 St_segment_gui::~St_segment_gui()
@@ -24,6 +25,7 @@ void St_segment_gui::filtered_signal_loaded_Stsegment(Ecg_Baseline *signal)
     //tutaj odbierasz signalfiltered
 //    Ecg_Baseline *ecg_signal_filtered = new Ecg_Baseline(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_ecg_baseline.push_back(signal);
+
     //R_Peaks *r_peaks = new R_Peaks(signal->get_signal_raw());
     //m_r_peaks.push_back(r_peaks);
 
@@ -36,7 +38,6 @@ void St_segment_gui::load_waves_vector(R_Peaks *signal1,Waves *signal2)
 {
     //tutaj odbierasz wavesy
     m_waves.push_back(signal2);
-    //T_Wave_Alt *t_wave_alt = new T_Wave_Alt(m_ecg_baseline[0]->get_signal_filtered(),m_ecg_baseline[0]->get_sampling_freq(),m_waves[0]->get_waves());
     //chyba tak to mialo byc? tutaj masz pelny obiekt t_waves.
     //t_waves.push_back(t_wave_alt);
 }
@@ -51,7 +52,9 @@ void St_segment_gui::addRandomGraph() //Przykładowy wykres
     ecgPlot2->setData(x,y);
   }
 
-void St_segment_gui::on_pushButton_clicked()
+void St_segment_gui::on_button_clicked()
 {
-    //Filip tutaj wywolanie funkcji
+    St_Segment *st_segment = new St_Segment(m_ecg_baseline[0]->get_signal_filtered(),m_waves[0]->get_waves());
+   st_segment->analyze();
+   //Filip tutaj wywolanie funkcji
 }
