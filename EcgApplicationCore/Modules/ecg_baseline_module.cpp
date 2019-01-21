@@ -141,14 +141,14 @@ arma::vec tab2vec(double *signal_vec)
     return signal;
 }
 
-void Ecg_Baseline::filter_butterworth()
+void Ecg_Baseline::filter_butterworth(Filter_Values gui_parameters)
 {
     filter_noise();
-    //Filter_Values filter_values = gui_parameters;
+    Filter_Values filter_values = gui_parameters;
 
-    //double w = filter_values.high_cutoff_freq;
+    double w = filter_values.high_cutoff_freq;
     //w=34,order=1
-    double w = 34;
+    //double w = 34;
     w = w/(sampling_frequency / 2);
     int numSamples = signal_filtered.size();
     qInfo() <<"signal filtered size";
@@ -172,11 +172,11 @@ void Ecg_Baseline::filter_butterworth()
     qInfo()<< "2";
 }
 
-void Ecg_Baseline::filter_chebyshev()
+void Ecg_Baseline::filter_chebyshev(Filter_Values gui_parameters)
 {
 
     filter_noise();
-    //Filter_Values filter_values = gui_parameters;
+    Filter_Values filter_values = gui_parameters;
     int numSamples = signal_filtered.size();
   /*
     // Create a Chebyshev type I Band Stop filter of order 3
@@ -194,8 +194,8 @@ void Ecg_Baseline::filter_chebyshev()
     Dsp::Params params;
     params[0] = sampling_frequency; // sample rate
     params[1] = 2; // order
-    params[2] = 2/(sampling_frequency/2);
-    //params[2] = filter_values.low_cutoff_freq/(sampling_frequency/2); // corner frequency
+    //params[2] = 2/(sampling_frequency/2);
+    params[2] = filter_values.low_cutoff_freq/(sampling_frequency/2); // corner frequency
     params[3] = 6; // shelf gain
     params[4] = 10; // passband ripple
     f->setParams(params);
@@ -345,10 +345,10 @@ void Ecg_Baseline::filter_baseline(Filter_Params filter_params)
             filter_moving_average(filter_params.get_filter_values());
             break;
         case BUTTERWORTH:
-            filter_butterworth();
+            filter_butterworth(filter_params.get_filter_values());
             break;
         case CHEBYSHEV:
-            filter_chebyshev();
+            filter_chebyshev(filter_params.get_filter_values());
             break;
         case SAVITZKY_GOLAY:
             filter_savitzky_golay(filter_params.get_filter_values());

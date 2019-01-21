@@ -78,7 +78,7 @@
          </item>
          <item>
           <property name="text">
-           <string>LSM_algorithm</string>
+           <string>LMS_algorithm</string>
           </property>
          </item>
         </widget>

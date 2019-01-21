@@ -149,13 +149,13 @@ void ECGbaseline_gui::filter2()
 
     Filter_Params filter_params;
     filter_params.set_filter_type(BUTTERWORTH);
-    /*double highFreq_b;
+    double highFreq_b;
         double centerFreq = ui->spinBox_highFreq->value();
         if(centerFreq != 0)
              {
                highFreq_b=centerFreq;
               }else{ highFreq_b=34;}
-    filter_params.set_filter_params(highFreq_b, 34, 1, 1, 0.2);*/
+    filter_params.set_filter_params(highFreq_b, 34, 1, 1, 0.2);
     m_ecg_baseline[0]->filter_baseline(filter_params);
     arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
 
@@ -247,13 +247,13 @@ void ECGbaseline_gui::filter3()
 
     Filter_Params filter_params;
     filter_params.set_filter_type(CHEBYSHEV);
-    /*double lowFreq_c;
+    double lowFreq_c;
     double cornerFreq = ui->spinBox_lowFreq->value();
         if(cornerFreq != 0)
              {
                lowFreq_c=cornerFreq;
               }else{ lowFreq_c=2;}
-    filter_params.set_filter_params(2, lowFreq_c, 1, 1, 0.2);*/
+    filter_params.set_filter_params(2, lowFreq_c, 1, 1, 0.2);
     m_ecg_baseline[current_it]->filter_baseline(filter_params);
     arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());
 

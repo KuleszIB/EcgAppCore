@@ -41,8 +41,8 @@ class Ecg_Baseline
 private: //funkcje pomocnicze, wydaje mi się, że jak to jest rozdzielone, to po prostu ładniej wygląda ;p
     void filter_bandpass();
     void filter_moving_average(Filter_Values xxx);
-    void filter_butterworth();
-    void filter_chebyshev();
+    void filter_butterworth(Filter_Values xxx);
+    void filter_chebyshev(Filter_Values xxx);
     void filter_savitzky_golay(Filter_Values xxx);
     void filter_lms(Filter_Values xxx);
 
