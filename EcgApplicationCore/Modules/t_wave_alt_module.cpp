@@ -221,6 +221,7 @@ void T_Wave_Alt::sample_counter()
 //i Tpeak oraz między Tpeak i Tend.
 
     int N_true_peak = t_peaks.size();
+    //std::cout << N_true_peak << std::endl;
     arma::vec STp(N_true_peak);
     arma::vec TpTe(N_true_peak);
     for(int i=0; i<N_true_peak; i++)
@@ -247,23 +248,27 @@ void T_Wave_Alt::moving_average()
     int N_Twave_sample = STp_min+TpTe_min+1;
     //liczba załamków T
     int N_true_peak = t_peaks.size();
-    arma::mat odd_array(N_true_peak, N_Twave_sample);   //macierz załamków nieparzystych
-    arma::mat even_array(N_true_peak, N_Twave_sample);  //macierz załamków parzystych
-    arma::mat odd_array_t(N_true_peak, N_Twave_sample); //macierz chwil czasowych załamków nieparzystych
-    arma::mat even_array_t(N_true_peak, N_Twave_sample);//macierz chwil czasowych załamków parzystych
+    arma::mat tmp_odd_array(N_true_peak, N_Twave_sample);   //macierz załamków nieparzystych
+    arma::mat tmp_even_array(N_true_peak, N_Twave_sample);  //macierz załamków parzystych
+    arma::mat tmp_odd_t_array(N_true_peak, N_Twave_sample); //macierz chwil czasowych załamków nieparzystych
+    arma::mat tmp_even_t_array(N_true_peak, N_Twave_sample);//macierz chwil czasowych załamków parzystych
     for(int i=0; i<round(N_true_peak/2); i++)
     {
         for(int j=0; j<N_Twave_sample; j++)
         {
             //Wyrównanie załamków T do punktów Tpeaks
             //Podział na załamki o numerach parzystych i nieparzystych
-            even_array(i, j) = signal_filtered(t_peaks(2*i)-STp_min+j);
-            odd_array(i, j) = signal_filtered(t_peaks(2*i+1)-STp_min+j);
+            tmp_odd_array(i, j) = signal_filtered(t_peaks(2*i)-STp_min+j);
+            tmp_even_array(i, j) = signal_filtered(t_peaks(2*i+1)-STp_min+j);
             //Wybranie chwil czasowych odpowiadających załamkom parzystym i nieparzystym
-            even_array_t(i, j) = time_vec(t_peaks(2*i)-STp_min+j);
-            odd_array_t(i, j) = time_vec(t_peaks(2*i+1)-STp_min+j);
+            tmp_odd_t_array(i, j) = time_vec(t_peaks(2*i)-STp_min+j);
+            tmp_even_t_array(i, j) = time_vec(t_peaks(2*i+1)-STp_min+j);
         }
     }
+    odd_array = tmp_odd_array;
+    even_array = tmp_even_array;
+    odd_t_array = tmp_odd_t_array;
+    even_t_array = tmp_even_t_array;
 
     arma::vec tmp_even_T(N_Twave_sample);   //pomocniczy wektor przechowujący próbki pierwszego parzystego załamka T
     arma::vec tmp_odd_T(N_Twave_sample);    //pomocniczy wektor przechowujący próbki pierwszego nieparzystego załamka T
@@ -285,8 +290,8 @@ void T_Wave_Alt::moving_average()
             //załamkiem T w sygnale (osobno dla nieparzystych i parzystych).
             //W literaturze zasugerowano dzielenie różnicy przez wartość "8", która
             //została dobrana doświadczalnie.
-            delta_even(j) = (even_array(i, j) - even_T(j)) / 8;
-            delta_odd(j) = (odd_array(i, j) - odd_T(j)) / 8;
+            delta_even(j) = (even_array(i, j) - even_T(j)) / 8.0;
+            delta_odd(j) = (odd_array(i, j) - odd_T(j)) / 8.0;
             //Modyfikacja zastępczego załamka o wyznaczoną wartość delta (osobno
             //dla nieparzystych i parzystych).
             even_T(j) = even_T(j) + delta_even(j);
@@ -304,7 +309,7 @@ void T_Wave_Alt::moving_average()
     //parzystego i nieparzystego załamka zastępczego
     alt = max(delta);
     //wyznaczenie wektora czasu do narysowania załamków zastępczych
-    arma::vec time_vec_alt = time_vec.head(N_Twave_sample);
+    time_vec_alt = time_vec.head(N_Twave_sample);
     //std::cout << alt*1000 << std::endl;
 }
 
@@ -339,32 +344,32 @@ arma::vec T_Wave_Alt::get_time_vec_alt()
 {
     return time_vec_alt;
 }
-arma::vec T_Wave_Alt::get_even_array()
+arma::mat T_Wave_Alt::get_even_array()
 {
     return even_array;
 }
-arma::vec T_Wave_Alt::get_odd_array()
+arma::mat T_Wave_Alt::get_odd_array()
 {
     return odd_array;
 }
-arma::vec T_Wave_Alt::get_even_t_array()
+arma::mat T_Wave_Alt::get_even_t_array()
 {
     return even_t_array;
 }
-arma::vec T_Wave_Alt::get_odd_t_array()
+arma::mat T_Wave_Alt::get_odd_t_array()
 {
     return odd_t_array;
 }
 
 T_Wave_Alt_Struct T_Wave_Alt::get_t_wave_alt()
 {
-    t_wave_alt_struct.odd_T = odd_T;
-    t_wave_alt_struct.even_T = even_T;
-    t_wave_alt_struct.time_vec_alt = time_vec_alt;
-    t_wave_alt_struct.even_array = even_array;
-    t_wave_alt_struct.odd_array = odd_array;
-    t_wave_alt_struct.even_t_array = even_t_array;
-    t_wave_alt_struct.odd_t_array = odd_t_array;
-    t_wave_alt_struct.alt = alt;
+    t_wave_alt_struct.odd_T = odd_T;                //zastępczy załamek nieparzysty
+    t_wave_alt_struct.even_T = even_T;              //zastępczy załamek parzysty
+    t_wave_alt_struct.time_vec_alt = time_vec_alt;  //wektor czasu dla załamków zastępczych
+    t_wave_alt_struct.even_array = even_array;      //tablica próbek załamków parzystych
+    t_wave_alt_struct.odd_array = odd_array;        //tablica próbek załamków nieparzystych
+    t_wave_alt_struct.even_t_array = even_t_array;  //chwile czasowe próbek załamków parzystych
+    t_wave_alt_struct.odd_t_array = odd_t_array;    //chwile czasowe próbek załamków nieparzystych
+    t_wave_alt_struct.alt = alt;                    //wartość alternansu
     return t_wave_alt_struct;
 }
