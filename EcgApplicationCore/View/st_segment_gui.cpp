@@ -64,4 +64,26 @@ void St_segment_gui::on_button_clicked()
    st_segment->analyze();
     ui->button->setDisabled(true);
    //Filip tutaj wywolanie funkcji
+
+    QString first_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,0));
+    ui->lineEdit_ischemia1->setText(first_ischema_gui);
+
+    QString second_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,1));
+    ui->lineEdit_ischemia2->setText(second_ischema_gui);
+
+    QString third_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,2));
+    ui->lineEdit_ischemia3->setText(third_ischema_gui);
+
+    QString fourth_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,3));
+    ui->lineEdit_ischemia4->setText(fourth_ischema_gui);
+
+    QString severe_gui = QString::number(st_segment->St_Points.diagnose(0,4));
+    ui->lineEdit_severe->setText(severe_gui);
+
+    QString acute_gui = QString::number(st_segment->St_Points.diagnose(0,5));
+    ui->lineEdit_acute->setText(acute_gui);
+
+    QString no_gui = QString::number(st_segment->St_Points.diagnose(0,6));
+    ui->lineEdit_nopathologies->setText(no_gui);
+
 }

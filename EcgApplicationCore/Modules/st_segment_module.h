@@ -6,6 +6,7 @@
 
 struct St_Points
 {
+public:
     arma::uvec t_peak;
     arma::uvec t_on;
     arma::uvec t_end;
@@ -35,10 +36,10 @@ private:
     void find_t_peaks();
     void classify();
 protected:
-St_Points St_Points;
 
 
 public:
+    St_Points St_Points;
     St_Segment();
     St_Segment(arma::vec signal,Waves_Points waves);
     void analyze();
