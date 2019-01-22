@@ -90,5 +90,6 @@ void HRV2_gui::on_pushButton_RUN_clicked()
 {
 addHistogram();
 addGraph();
+ui->pushButton_RUN->setDisabled(true);
 
 }

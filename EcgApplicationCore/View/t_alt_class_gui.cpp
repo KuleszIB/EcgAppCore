@@ -43,6 +43,9 @@ void T_alt_class_gui::load_waves_vector(R_Peaks *signal1,Waves *signal2)
     T_Wave_Alt *t_wave_alt = new T_Wave_Alt(m_ecg_baseline[0]->get_signal_filtered(),m_ecg_baseline[0]->get_sampling_freq(),m_waves[0]->get_waves());
     //chyba tak to mialo byc? tutaj masz pelny obiekt t_waves.
     t_waves.push_back(t_wave_alt);
+    //double alt = t_wave_alt->get_alt(); //wyświetlanie alternansu
+   // QString alternans = QString("%1").arg(alt);
+    //ui->line_ALT1->setText(alternans);
 }
 
 
@@ -75,5 +78,6 @@ void T_alt_class_gui::addRandomGraph() //Przykładowy wykres
 
 void T_alt_class_gui::on_button_clicked()
 {
+    ui->button->setDisabled(true);
     //Monika tutaj wywolanie funkcji
 }

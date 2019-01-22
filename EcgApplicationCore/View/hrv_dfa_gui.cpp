@@ -60,6 +60,7 @@ void HRV_dfa_gui::load_R_Peaks_vector3(R_Peaks *r_peaks_signal, Waves *waves)
 void HRV_dfa_gui::on_pushButton_clicked()
 {
     AddGraph();
+    ui->pushButton->setDisabled(true);
 }
 
 

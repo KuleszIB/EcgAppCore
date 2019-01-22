@@ -77,6 +77,7 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
         ui->lineEditRMSSD->setText(rmsdd_str);
         ui->lineEditPNN50->setText(pnn50_str);
         ui->lineEditNN50->setText(nn50_str);
+            ui->button->setDisabled(true);
 
    // qInfo()<<hf.size();
 }
@@ -92,7 +93,6 @@ void HRV1_gui::load_R_Peaks_vector(R_Peaks *r_peaks_signal, Waves *waves)
 void HRV1_gui::on_pushButton_clicked()
 {
     addRandomGraph();
-
     //tutaj chyba calculate periodogram
 
     //KN:fabian sprawdz czy to jest dobrze bo ja nie kumaty z tych rzeczy albo osoba od hrv1 co tu ma byc .
