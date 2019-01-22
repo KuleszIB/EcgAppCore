@@ -55,6 +55,13 @@ void St_segment_gui::addRandomGraph() //Przykładowy wykres
 void St_segment_gui::on_button_clicked()
 {
     St_Segment *st_segment = new St_Segment(m_ecg_baseline[0]->get_signal_filtered(),m_waves[0]->get_waves());
+    double tresholdOFFMin = ui->Treshold_Offset_Min->value(); //geting parameters from GUI
+    double tresholdOFFMax = ui->Treshold_Offset_Max->value();
+    double tresholdLINMin = ui->Treshold_Linearity_Min->value();
+    double tresholdLINMax = ui->Treshold_Linearity_Max->value();
+    double tresholdDETType = ui->Treshold_Detection_Type->value();
+    st_segment->set_St_Params(tresholdOFFMin, tresholdOFFMax, tresholdDETType, tresholdLINMin, tresholdLINMax);
    st_segment->analyze();
+    ui->button->setDisabled(true);
    //Filip tutaj wywolanie funkcji
 }
