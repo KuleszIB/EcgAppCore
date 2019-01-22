@@ -115,7 +115,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_highFreq"/>
+          <widget class="QSpinBox" name="spinBox_highFreq">
+           <property name="maximum">
+            <number>400</number>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
