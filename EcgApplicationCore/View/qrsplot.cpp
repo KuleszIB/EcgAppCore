@@ -188,11 +188,11 @@ void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xpon
 //        yqrsonset[i]=y[xqrsonset[i]];
 //    for(int i=0;i<xqrsend.size();i++)
 //        yqrsend[i]=y[xqrsend[i]];
-
 QVector<QPointF> pend;
 
 for(int i=0; i<xpend.size();i++)
-{pend.append(QPointF(xpend[i], y[xpend[i]]));}
+{pend.append(QPointF(xpend[i], y[xpend[i]]));
+}
     QVector<QPointF> ponset;
 for(int i=0; i<xponset.size();i++)
 {ponset.append(QPointF(xponset[i], y[xponset[i]]));}

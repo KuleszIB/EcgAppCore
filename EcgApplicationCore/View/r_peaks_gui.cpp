@@ -55,8 +55,8 @@ void R_peaks_gui::filter1()
     int N = 20000;
         QVector<double> x(N), y(N); // initialize with entries 0..100
 
-        arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-        arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
+        arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+        arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
 
         arma::vec time_cropped = time(arma::span(0,N-1));
         x = examination::convert_vec_qvector(time_cropped);
@@ -69,7 +69,7 @@ void R_peaks_gui::filter1()
         waves2plot(&new_waves);
 
         double freq=m_ecg_baseline[0]->get_sampling_freq();
-
+        //new_waves = m_waves[0]->get_waves();
         arma::vec xnew_qrs_onset = new_waves.qrs_onset;
         arma::vec xnew_qrs_end = new_waves.qrs_end;
         arma::vec xnew_p_onset = new_waves.p_onset;
