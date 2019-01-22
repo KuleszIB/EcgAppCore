@@ -9,8 +9,8 @@ ECGbaseline_gui::ECGbaseline_gui(QWidget *parent) :
     QVBoxLayout *layout;
     layout = new QVBoxLayout;
     ecgPlot2 = new ecgplot(this);
-    ui->spinBox_highFreq->setSuffix(" kHz");
-    ui->spinBox_lowFreq->setSuffix(" kHz");
+    ui->spinBox_highFreq->setSuffix(" Hz");
+    ui->spinBox_lowFreq->setSuffix(" Hz");
     layout->addWidget(ecgPlot2);
     ui->ecgPlot->setLayout(layout);
     m_signal.reserve(20);
@@ -83,7 +83,7 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->plainTextEdit->setPlainText("Butterworth");
 
     } else if (filter=="Chebyshev_filter") {
-        ui->spinBox_lowFreq->setDisabled(false);
+        ui->spinBox_lowFreq->setDisabled(true);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(true);
@@ -154,7 +154,7 @@ void ECGbaseline_gui::filter2()
         if(centerFreq != 0)
              {
                highFreq_b=centerFreq;
-              }else{ highFreq_b=34;}
+              }else{ highFreq_b=200;}
     filter_params.set_filter_params(highFreq_b, 34, 1, 1, 0.2);
     m_ecg_baseline[0]->filter_baseline(filter_params);
     arma::vec signal_filtered((m_ecg_baseline[current_it]->get_signal_raw()).size());

@@ -98,8 +98,8 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>140</y>
+        <x>10</x>
+        <y>130</y>
         <width>152</width>
         <height>136</height>
        </rect>
@@ -152,7 +152,7 @@
          <item>
           <widget class="QLabel" name="label_filLenght">
            <property name="text">
-            <string>filter length</string>
+            <string>Filter length</string>
            </property>
           </widget>
          </item>
