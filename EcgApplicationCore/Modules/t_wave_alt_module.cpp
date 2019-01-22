@@ -274,8 +274,8 @@ void T_Wave_Alt::moving_average()
     arma::vec tmp_odd_T(N_Twave_sample);    //pomocniczy wektor przechowujący próbki pierwszego nieparzystego załamka T
     for(int i=0; i<N_Twave_sample; i++)
     {
-        tmp_even_T(i) = even_array(0, i);
-        tmp_odd_T(i) = odd_array(0,i);
+        tmp_even_T(i) = tmp_even_array(0, i);
+        tmp_odd_T(i) = tmp_odd_array(0,i);
     }
     even_T = tmp_even_T;
     odd_T = tmp_odd_T;
@@ -290,8 +290,8 @@ void T_Wave_Alt::moving_average()
             //załamkiem T w sygnale (osobno dla nieparzystych i parzystych).
             //W literaturze zasugerowano dzielenie różnicy przez wartość "8", która
             //została dobrana doświadczalnie.
-            delta_even(j) = (even_array(i, j) - even_T(j)) / 8.0;
-            delta_odd(j) = (odd_array(i, j) - odd_T(j)) / 8.0;
+            delta_even(j) = (tmp_even_array(i, j) - even_T(j)) / 8.0;
+            delta_odd(j) = (tmp_odd_array(i, j) - odd_T(j)) / 8.0;
             //Modyfikacja zastępczego załamka o wyznaczoną wartość delta (osobno
             //dla nieparzystych i parzystych).
             even_T(j) = even_T(j) + delta_even(j);

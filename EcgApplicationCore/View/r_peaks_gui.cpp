@@ -142,43 +142,43 @@ void R_peaks_gui::renumber_waves() // w zależności od numeru iteracji
 
 void R_peaks_gui::renumber_waves(int old_signal_size) // cofnięcie o ilość próbek we wklejonym fragmencie
 {
-//    Waves_Points new_waves = m_waves[current_it]->get_waves();
-//    arma::vec new_p_onset = new_waves.p_onset;
-//    arma::vec new_p_end = new_waves.p_end;
-//    arma::vec new_qrs_onset = new_waves.qrs_onset;
-//    arma::vec new_r_peaks = new_waves.r_peaks;
-//    arma::vec new_qrs_end = new_waves.qrs_end;
-//    arma::vec new_t_end = new_waves.t_end;
+    Waves_Points new_waves = m_waves[current_it]->get_waves();
+    arma::vec new_p_onset = new_waves.p_onset;
+    arma::vec new_p_end = new_waves.p_end;
+    arma::vec new_qrs_onset = new_waves.qrs_onset;
+    arma::vec new_r_peaks = new_waves.r_peaks;
+    arma::vec new_qrs_end = new_waves.qrs_end;
+    arma::vec new_t_end = new_waves.t_end;
 
-//    arma::vec tmp_p_onset(new_p_onset.size());
-//    arma::vec tmp_p_end(new_p_end.size());
-//    arma::vec tmp_qrs_onset(new_qrs_onset.size());
-//    arma::vec tmp_r_peaks(new_r_peaks.size());
-//    arma::vec tmp_qrs_end(new_qrs_end.size());
-//    arma::vec tmp_t_end(new_t_end.size());
+    arma::vec tmp_p_onset(new_p_onset.size());
+    arma::vec tmp_p_end(new_p_end.size());
+    arma::vec tmp_qrs_onset(new_qrs_onset.size());
+    arma::vec tmp_r_peaks(new_r_peaks.size());
+    arma::vec tmp_qrs_end(new_qrs_end.size());
+    arma::vec tmp_t_end(new_t_end.size());
 
-//    tmp_p_onset.fill(old_signal_size);
-//    tmp_p_end.fill(old_signal_size);
-//    tmp_qrs_onset.fill(old_signal_size);
-//    tmp_r_peaks.fill(old_signal_size);
-//    tmp_qrs_end.fill(old_signal_size);
-//    tmp_t_end.fill(old_signal_size);
+    tmp_p_onset.fill(old_signal_size);
+    tmp_p_end.fill(old_signal_size);
+    tmp_qrs_onset.fill(old_signal_size);
+    tmp_r_peaks.fill(old_signal_size);
+    tmp_qrs_end.fill(old_signal_size);
+    tmp_t_end.fill(old_signal_size);
 
-//    new_p_onset = new_p_onset + tmp_p_onset;
-//    new_p_end = new_p_end + tmp_p_end;
-//    new_qrs_onset = new_qrs_onset + tmp_qrs_onset;
-//    new_r_peaks = new_r_peaks + tmp_r_peaks;
-//    new_qrs_end = new_qrs_end + tmp_qrs_end;
-//    new_t_end = new_t_end + tmp_t_end;
+    new_p_onset = new_p_onset + tmp_p_onset;
+    new_p_end = new_p_end + tmp_p_end;
+    new_qrs_onset = new_qrs_onset + tmp_qrs_onset;
+    new_r_peaks = new_r_peaks + tmp_r_peaks;
+    new_qrs_end = new_qrs_end + tmp_qrs_end;
+    new_t_end = new_t_end + tmp_t_end;
 
-//    new_waves.p_onset = new_p_onset;
-//    new_waves.p_end = new_p_end;
-//    new_waves.qrs_onset = new_qrs_onset;
-//    new_waves.r_peaks = new_r_peaks;
-//    new_waves.qrs_end = new_qrs_end;
-//    new_waves.t_end = new_t_end;
+    new_waves.p_onset = new_p_onset;
+    new_waves.p_end = new_p_end;
+    new_waves.qrs_onset = new_qrs_onset;
+    new_waves.r_peaks = new_r_peaks;
+    new_waves.qrs_end = new_qrs_end;
+    new_waves.t_end = new_t_end;
 
-//    m_waves[current_it]->set_waves(new_waves);
+    m_waves[current_it]->set_waves(new_waves);
 }
 
 void R_peaks_gui::continue_processing()

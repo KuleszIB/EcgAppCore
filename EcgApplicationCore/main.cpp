@@ -14,6 +14,7 @@
 #include "Modules/hrv1_module.h"
 #include "Modules/hrv2_module.h" //dodałam
 #include "Modules/hrv_dfa_module.h"  //dodałam
+#include "Modules/t_wave_alt_module.h"  //dodałam
 int main(int argc, char *argv[])
 {
 

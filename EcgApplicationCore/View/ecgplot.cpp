@@ -14,7 +14,10 @@ ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
     setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");
     setAxisScale( xBottom, 0.0, 20.0 );
     setAxisScale( yLeft, -1.0, 1.0 );
-
+    odd=new QwtPlotCurve("Odd");
+    odd->setPen(QPen(Qt::red, 2.0));
+    even=new QwtPlotCurve("Even");
+    even->setPen(QPen(Qt::blue, 2.0));
 
     // canvas
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
@@ -48,6 +51,15 @@ void ecgplot::setData(QVector<double> x, QVector<double> y)
     signal->setSamples(x, y);
     replot();
 }
+
+
+void ecgplot::setData2(QVector<double> x, QVector<double> y,  QVector<double> z)
+{
+    odd->setSamples(x, y);
+    even->setSamples(x, z);
+    replot();
+}
+
 QSize ecgplot::sizeHint() const
 {
     return QSize( 540, 400 );
