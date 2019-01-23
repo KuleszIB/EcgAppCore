@@ -56,6 +56,8 @@ private:
     void find_waves();
     void run_waves();
 
+    arma::vec rpeaks2plot();
+
 };
 
 #endif // R_PEAKS_H
