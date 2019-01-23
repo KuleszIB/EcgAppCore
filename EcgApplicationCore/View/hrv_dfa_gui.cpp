@@ -24,6 +24,9 @@ HRV_dfa_gui::~HRV_dfa_gui()
 void HRV_dfa_gui::AddGraph(){
 
 //m_hrv_dfa[0]->calculate_DFA();
+    int deltaMaxValue = ui->deltaMax->value();
+        int deltaMinValue = ui->deltaMin->value();
+m_hrv_dfa[0]->set_delta(deltaMaxValue,deltaMinValue);
 Out_DFA Out=m_hrv_dfa[0]->get_out_DFA();
 //double alpha1=Out.alpha1;
 //double alpha2=Out.alpha2;

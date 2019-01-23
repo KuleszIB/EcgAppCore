@@ -26,6 +26,7 @@ private:
     int first_delta;
     int last_delta;
 public:
+    void set_delta(int last_delta, int first_delta);
     HrvDfa();
     HrvDfa(arma::vec r_peaks);
     // jesli chcemy sami wpisac srodek analizy czasowej (middle), najmniejsze okienko (pierwsza_delta), najwieksze okienko (ostatnia_delta)
