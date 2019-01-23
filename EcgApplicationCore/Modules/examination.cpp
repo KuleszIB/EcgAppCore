@@ -84,7 +84,6 @@ void examination::get_data()
   QStringList name_parts = filename.split(QRegExp("[\\.]"));
   QString info_filename = name_parts[0]+"_info.txt";
   qInfo() << "Wczytany plik naglowkowy" <<  info_filename;
-  // elo, wybraliśmy plik, teraz liczymy na to że info do niego ma prawilną nazwę czyli num_info.txt
   QFile file_info(info_filename);
   if (!file_info.open(QIODevice::ReadOnly)){
 

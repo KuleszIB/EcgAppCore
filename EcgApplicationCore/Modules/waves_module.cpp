@@ -9,24 +9,29 @@ using namespace std;
 
 Waves::Waves()
 {
-    r_peaks_vec = R_Peaks::get_r_peaks();
-    signal_filtered = R_Peaks::signal_raw;
+    r_peaks_vec = R_Peaks::get_r_peaks();               // Wektor zalamkow R
+    signal_filtered = R_Peaks::signal_raw;              // Sygnal po filtracji
     signal_raw = R_Peaks::signal_raw;
-    sampling_frequency = R_Peaks::sampling_frequency;
+    sampling_frequency = R_Peaks::sampling_frequency;   // Czestotliwosc probkowania
 }
 
 Waves::Waves(arma::vec signal, arma::vec r_peaks, double fs)
 {
-    signal_filtered = signal;
+    signal_filtered = signal;   // Sygnal wejsciowy
     signal_raw = signal;
-    r_peaks_vec = r_peaks;
-    sampling_frequency = fs;
-    calc_time_vec();
+    r_peaks_vec = r_peaks;      // Wektor zalamkow R
+    sampling_frequency = fs;    // Czestotliwosc probkowania
+    calc_time_vec();            // Obliczenie wektora czasu
 }
 
 void Waves::find_qrs_onset_end()
 {
-    // sprawdzenie czy sygnal jest "odwrocony"
+    /*****************************************************************************
+    * Funkcja realizuje wyszukiwanie punktow charakterystycznych QRS-onset i QRS-end
+    * i zapisuje je do struktury waves_points.
+    *****************************************************************************/
+
+    // Sprawdzenie czy sygnal jest "odwrocony"
     bool inverted = false;
     if ((signal_raw[int(r_peaks_vec[0])] + signal_raw[int(r_peaks_vec[1])]) / 2 < 0)
     {
@@ -34,14 +39,15 @@ void Waves::find_qrs_onset_end()
         inverted = true;
     }
 
+    // Zdefiniowanie zmiennych pomocniczych
     bool goLeft, decreasingL, firstMinReached;
     bool goRight, decreasingR;
     arma::vec qrsOnset(r_peaks_vec.size()), qrsEnd(r_peaks_vec.size());
 
     for(int i=0; i<r_peaks_vec.size(); i++)
     {
-        // Poszukiwanie QRS-onset
-        // Idac w lewo, poszukiwane sa nastepujace po sobie minimum oraz maksimum
+        // POSZUKIWANIE QRS-ONSET
+        // Idac w lewo od zalamka R, poszukiwane sa nastepujace po sobie minimum oraz maksimum
         goLeft = true;
         decreasingL = false;
         firstMinReached = false;
@@ -62,8 +68,8 @@ void Waves::find_qrs_onset_end()
             j--;
         }
 
-        // Poszukiwanie QRS-end
-        // Idac w prawo, poszukiwane sa nastepujace po sobie minimum oraz maksimum
+        // POSZUKIWANIE QRS-end
+        // Idac w prawo od zalamka R, poszukiwane sa nastepujace po sobie minimum oraz maksimum
         goRight = true;
         decreasingR = false;
         firstMinReached = false;
@@ -85,21 +91,29 @@ void Waves::find_qrs_onset_end()
         }
     }
 
+    // Ponowne odwrocenie sygnalu, jesli to konieczne
     if (inverted)
         signal_filtered = -signal_filtered;
 
+    // Wpisanie znalezionych punktow charakterystycznych do odpowiednich pol struktury
     waves_points.qrs_onset = qrsOnset;
     waves_points.qrs_end = qrsEnd;
 }
 
 void Waves::find_p_onset_end()
 {
-    // sprawdzenie czy sygnal jest "odwrocony"
+    /*****************************************************************************
+    * Funkcja realizuje wyszukiwanie punktow charakterystycznych P-onset i P-end
+    * i zapisuje je do struktury waves_points.
+    *****************************************************************************/
+
+    // Sprawdzenie czy sygnal jest "odwrocony"
     if ((signal_raw[int(r_peaks_vec[0])] + signal_raw[int(r_peaks_vec[1])]) / 2 < 0)
         signal_filtered = -signal_filtered;
 
     // WSTEPNE PRZETWARZANIE
-    // usuniecie zespolow QRS
+
+    // Usuniecie zespolow QRS i zastapienie ich wartoscia srednia
     int min_len = std::min(waves_points.qrs_onset.size(),waves_points.qrs_end.size());
     for (int i=0; i<min_len; i++)
     {
@@ -107,27 +121,29 @@ void Waves::find_p_onset_end()
         for (int j=int(waves_points.qrs_onset[i]); j<=waves_points.qrs_end[i]; j++)
             signal_filtered[j] = meanValue;
     }
-    filter_lowpass(5,20);   // wygladzenie sygnalu
-    differentiate();        // rozniczkowanie
-    filter_lowpass(15,20);  // ponowna filtracja
+    filter_lowpass(5,20);   // Filtracja dolnoprzepustowa - wygladzenie sygnalu
+    differentiate();        // Rozniczkowanie
+    filter_lowpass(15,20);  // Ponowna filtracja i wygladzenie
 
-    // WYSZUKIWANIE PONSETS I PENDS
-    arma::vec Ponset(r_peaks_vec.size()), Pend(r_peaks_vec.size());
-    int noOfSamples = int(floor(0.25/(1/sampling_frequency)));
+    // WYSZUKIWANIE P-ONSETS I P-ENDS
+
+    arma::vec Ponset(r_peaks_vec.size()), Pend(r_peaks_vec.size()); // Wektory pomocnicze przechowujace P-onsets i P-ends
+    int noOfSamples = int(floor(0.25/(1/sampling_frequency)));      // Ilosc probek odpowiadajaca 250 ms
 
     for (int i=0; i<r_peaks_vec.size(); i++)
     {
-        // SZUKANIE P END
+        // SZUKANIE P-END
+
         // Szukane jest minimum pochodnej, znajdujace sie na lewo od punktu QRS-onset
         int startPoint = int(waves_points.qrs_onset[i]) - noOfSamples;   // Punkt startowy
         if (startPoint < 0)
             startPoint = 0;
         int endPoint = int(waves_points.qrs_onset[i]);                   // Punkt koncowy
         int minPos = int(arma::index_min(signal_filtered.subvec(startPoint,endPoint)));
-        minPos += startPoint;
+        minPos += startPoint;                                            // Znalezione minimum
 
         // Szukany jest punkt za znalezionym minimum, w ktorym wartosc
-        // pochodnej jest wieksza od zadanej wartosci. Jest to p. P-end
+        // pochodnej jest wieksza od zadanej wartosci (-0.0003). Jest to punkt P-end.
         bool lookingForZero = true;
         int j = minPos;
         while (lookingForZero)
@@ -135,7 +151,7 @@ void Waves::find_p_onset_end()
             if (signal_filtered[j] >= -0.0003)
             {
                 lookingForZero = false;
-                // Sprawdzenie, czy p. P-end znajduje sie przez QRS-onset
+                // Sprawdzenie, czy p. P-end znajduje sie przez QRS-onset o co najmniej 10 probek
                 if (j >= waves_points.qrs_onset[i] || abs(int(waves_points.qrs_onset[i])-j)<10)
                 {
                     if (j>9 && waves_points.qrs_onset[i]>9)
@@ -149,13 +165,15 @@ void Waves::find_p_onset_end()
             j++;
         }
 
-        // SZUKANIE P ONSET
+        // SZUKANIE P-ONSET
+
         // Szukane jest maksimum pochodnej, znajdujace sie przed wczesniej znalezionym minimum
-        endPoint = minPos;
+        endPoint = minPos;      // Punkt koncowy
         int maxPos = int(arma::index_max(signal_filtered.subvec(startPoint,endPoint)));
-        maxPos += startPoint;
+        maxPos += startPoint;   // Znalezione maksimum
+
         // Szukany jest punkt przed znalezionym maksimum, w ktorym wartosc
-        // pochodnej jest mniejsza od zadanej wartosci. Jest to p. P-onset
+        // pochodnej jest mniejsza od zadanej wartosci (0.0003). Jest to punkt P-onset.
         lookingForZero = true;
         j = maxPos;
         while (lookingForZero && j>=0)
@@ -163,11 +181,13 @@ void Waves::find_p_onset_end()
             if (signal_filtered[j] <= 0.0003)
             {
                 lookingForZero = false;
+                // Sprawdzenie, czy P-onset znajduje sie przed P-end
                 if (j > Pend[i])
                     Ponset[i] = Pend[i];
                 else
                     Ponset[i] = j;
             }
+            // Jezeli znajdujemy sie na samym poczatku sygnalu, to tam oznaczamy P-onset
             if (j == 0)
             {
                 Ponset[i] = j;
@@ -177,20 +197,27 @@ void Waves::find_p_onset_end()
         }
     }
 
+    // Powrot do sygnalu "przed przetworzeniem"
     signal_filtered = signal_raw;
 
+    // Wpisanie do struktury znalezionych numerow probek P-onset i P-end
     waves_points.p_end = Pend;
     waves_points.p_onset = Ponset;
 }
 
 void Waves::find_t_end()
 {
-    // sprawdzenie czy sygnal jest "odwrocony"
+    /*****************************************************************************
+    * Funkcja realizuje wyszukiwanie punktow charakterystycznych T-end
+    * i zapisuje je do struktury waves_points.
+    *****************************************************************************/
+
+    // Sprawdzenie czy sygnal jest "odwrocony"
     if ((signal_raw[int(r_peaks_vec[0])] + signal_raw[int(r_peaks_vec[1])]) / 2 < 0)
         signal_filtered = -signal_filtered;
 
     // WSTEPNE PRZETWARZANIE
-    // usuniecie zespolow QRS
+    // Usuniecie zespolow QRS
     int min_len = std::min(waves_points.qrs_onset.size(),waves_points.qrs_end.size());
     for (int i=0; i<min_len; i++)
     {
@@ -198,24 +225,24 @@ void Waves::find_t_end()
         for (int j=int(waves_points.qrs_onset[i]); j<=waves_points.qrs_end[i]; j++)
             signal_filtered[j] = meanValue;
     }
-    filter_lowpass(5,20);   // wygladzenie sygnalu
-    differentiate();        // rozniczkowanie
-    filter_lowpass(15,20);  // ponowna filtracja
+    filter_lowpass(5,20);   // Filtracja dolnoprzepustowa i wygladzenie sygnalu
+    differentiate();        // Rozniczkowanie
+    filter_lowpass(15,20);  // Ponowna filtracja i wygladzenie
 
-    arma::vec Tend(r_peaks_vec.size());
-    int counter = 0;
+    arma::vec Tend(r_peaks_vec.size());     // Wektor pomocniczy przechowujacy punkty T-end
+    int counter = 0;                        // Licznik znalezionych punktow
     for (int i=0; i<r_peaks_vec.size(); i++)
     {
         // Poszukiwanie maksimum pochodnej wystepujacego miedzy punktem
         // ORS-end a P-onset z nastepnego uderzenia
-        int startPoint;
+        int startPoint;     // Punkt startowy
         if (waves_points.qrs_end[i] == signal_filtered.size())
             startPoint = int(waves_points.qrs_end[i]);
         else
             startPoint = int(waves_points.qrs_end[i]) + 1;
 
-        int endPoint;
-        if (i == waves_points.qrs_end.size()-1)
+        int endPoint;       // Punkt koncowy
+        if (i == waves_points.qrs_end.size()-1)     // Sprawdzenie, czy to ostatni Rpeak
             endPoint = int(signal_filtered.size()) - 1;
         else
             endPoint = int(waves_points.p_onset[i+1])-1;
@@ -228,7 +255,7 @@ void Waves::find_t_end()
         }
         else
         {
-            Tend[counter++] = waves_points.qrs_end[i]+10;   // wyszukaj cokolwiek
+            Tend[counter++] = waves_points.qrs_end[i]+10;   // Wyszukaj cokolwiek
             continue;
         }
 
@@ -243,7 +270,7 @@ void Waves::find_t_end()
         else
         {
             arma::vec b = find_peaks(-signal_filtered.subvec(maxPos,endPoint));
-            if (b.size() != 0)
+            if (b.size() != 0)      // Sprawdzenie, czy jakis pik zostal znaleziony
                 minPos = int(b[0]) + maxPos - 1;
             else
             {
@@ -253,7 +280,7 @@ void Waves::find_t_end()
         }
 
         // Szukany jest punkt za znalezionym minimum, w ktorym wartosc
-        // pochodnej jest wieksza od zadanej wartosci. Jest to p. T-end
+        // pochodnej jest wieksza od zadanej wartosci (-0.0005). Jest to punkt T-end
         bool lookingForZero = true;
         int j = minPos;
         while (lookingForZero)
@@ -263,6 +290,7 @@ void Waves::find_t_end()
                 lookingForZero = false;
                 if (i!= waves_points.qrs_end.size()-1)
                 {
+                    // Sprawdzenie, czy T-end znajduje sie przed kolejnym P-onset
                     if (j >= waves_points.p_onset[i+1])
                         Tend[counter++] = waves_points.p_onset[i+1] - 10;
                     else
@@ -282,16 +310,25 @@ void Waves::find_t_end()
         }
     }
 
+    // Powrot do "nieprzetworzonego sygnalu"
     signal_filtered = signal_raw;
+
+    // Wpisanie znalezionych punktow do struktury
     waves_points.t_end = Tend.subvec(0,counter-1);
 }
 
 void Waves::filter_lowpass(double fc, int M)
 {
-    fc = fc / sampling_frequency / 2;
-    int N = 2 * M + 1;
+    /*****************************************************************************
+    * Funkcja realizuje filtracje dolnoprzepustowa sygnalu signal_filtered
+    * za pomoca filtra o czestotliwosci odciecia fc zaprojektowanego metoda okien
+    * o dlugosci 2M+1 przy wykorzystaniu okna Bartletta.
+    *****************************************************************************/
 
-    // zdefiniowanie wspolczynnikow filtra h
+    fc = fc / sampling_frequency / 2;   // Znormalizowana czestotliwosc odciecia
+    int N = 2 * M + 1;                  // Dlugosc filtra
+
+    // Zdefiniowanie wspolczynnikow filtra h
     arma::vec h(N);
     for (int i=-M; i<0; i++)
         h[i+M] = 2*fc*pi*arma::sinc(i*2*fc*pi);
@@ -300,28 +337,36 @@ void Waves::filter_lowpass(double fc, int M)
     for (int i=1; i<=M; i++)
         h[i+M] = 2*fc*pi*arma::sinc(i*2*fc*pi);
 
-    // zdefiniowanie okna
+    // Zdefiniowanie okna
     arma::vec okno(N);
     for (int i=0; i<N; i++)
         okno[i] = 1-(2*(abs(double(i)-(double(N)-1)/2))/(double(N)-1));
 
-    // przemnozenie wspolczynnikow filtra przez okno
+    // Przemnozenie wspolczynnikow filtra przez okno
     arma::vec hw(N);
     hw = h % okno;
 
+    // Splot sygnalu i wspolczynnikow filtra
     signal_filtered = arma::conv(signal_filtered,hw,"same");
 }
 
 void Waves::find_waves()
 {
-    signal_filtered = signal_raw;
-    find_qrs_onset_end();
+    /*****************************************************************************
+    * Funkcja wyszukuje punkty charakterystyczne w sygnale signal_filtered.
+    *****************************************************************************/
+
+    signal_filtered = signal_raw;   // Praca na "nieprzetworzonym sygnale"
+    find_qrs_onset_end();           // Wyszukiwanie punktow charakterystycznych
     find_p_onset_end();
     find_t_end();
 }
 
 Waves_Points Waves::get_waves()
 {
+    /*****************************************************************************
+    * Funkcja zwraca strukture zawierajaca znalezione punkty charakterystyczne.
+    *****************************************************************************/
     return waves_points;
 }
 
