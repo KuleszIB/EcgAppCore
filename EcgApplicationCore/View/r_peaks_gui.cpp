@@ -100,6 +100,9 @@ void R_peaks_gui::filter1()
         if (ui->checkBoxPend->checkState()){
             xpend=examination::convert_vec_qvector(xnew_p_end);
            }
+        if (ui->checkBoxTend->checkState()){
+            xtend=examination::convert_vec_qvector(xnew_t_end);
+           }
         qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xrpeak, xqrsend, xtend, freq);
 
 
