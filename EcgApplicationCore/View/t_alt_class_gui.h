@@ -22,10 +22,12 @@ public:
 
 
 private slots:
-    void addGraph();
-    void filtered_signal_loaded_Taltclass(Ecg_Baseline *signal);
+
+ //   void filtered_signal_loaded_Taltclass(Ecg_Baseline *signal);
     void load_waves_vector(R_Peaks *signal1,Waves *signal2);
-    void on_button_clicked();
+ //   void on_button_clicked();
+
+    void on_button2_clicked();
 
 private:
     Ui::T_alt_class_gui *ui;
@@ -37,6 +39,8 @@ private:
     unsigned int current_it;
 //    QVector<T_Wave_Alt*> m_t_wave_alt;
 //   Waves_Points new_waves;
+   // void addGraph();
+    void AddGraph();
 };
 
 #endif // T_ALT_CLASS_H

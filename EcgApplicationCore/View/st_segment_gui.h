@@ -7,6 +7,7 @@
 #include "Modules/ecg_baseline_module.h"
 #include "Modules/waves_module.h"
 #include "Modules/examination.h"
+#include "Modules/st_segment_module.h"
 namespace Ui {
 class St_segment_gui;
 }
@@ -29,8 +30,10 @@ private:
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
+    QVector<St_Segment*> st;
     Waves_Points new_waves;
     ecgplot *ecgPlot2;
+//    St_Points m_st_points;
 };
 
 #endif // ST_SEGMENT_H

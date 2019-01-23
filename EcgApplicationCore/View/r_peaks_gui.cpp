@@ -38,7 +38,6 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
     R_Peaks *r_peaks = new R_Peaks(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_r_peaks.push_back(r_peaks);
     ui->pushButton->setDisabled(false);
-    qInfo() << "m_r_peaks.size()" << m_r_peaks.size();
     if(current_it > 0)
         emit still_loading();
 }
@@ -46,17 +45,18 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
 void R_peaks_gui::on_pushButton_clicked()
 {
     emit still_loading();
-
 }
 
 
 void R_peaks_gui::filter1()
     {
-    int N = 20000;
+    int N;
+    arma::vec signal_filtered = m_ecg_baseline[current_it]->get_signal_filtered();
+    arma::vec time = m_ecg_baseline[current_it]->get_time_vec(0);
+    N = signal_filtered.size();
         QVector<double> x(N), y(N); // initialize with entries 0..100
 
-        arma::vec signal_filtered = m_ecg_baseline[0]->get_signal_filtered();
-        arma::vec time = m_ecg_baseline[0]->get_time_vec(0);
+
 
         arma::vec time_cropped = time(arma::span(0,N-1));
         x = examination::convert_vec_qvector(time_cropped);
@@ -75,16 +75,17 @@ void R_peaks_gui::filter1()
         arma::vec xnew_p_onset = new_waves.p_onset;
         arma::vec xnew_p_end = new_waves.p_end;
         arma::vec xnew_t_end = new_waves.t_end;
+        arma::vec xnew_r_peak = rpeaks2plot();
 
-        QVector<double> xponest, xpend, xqrsonset, xqrsend, xtend;
+        QVector<double> xponest, xpend, xqrsonset, xrpeak, xqrsend, xtend;
         xponest=examination::convert_vec_qvector(xnew_p_onset);
         xpend=examination::convert_vec_qvector(xnew_p_end);
         xqrsonset=examination::convert_vec_qvector(xnew_qrs_onset);
+        xrpeak=examination::convert_vec_qvector(xnew_r_peak);
         xqrsend=examination::convert_vec_qvector(xnew_qrs_end);
         xtend=examination::convert_vec_qvector(xnew_t_end);
 
-
-        qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xqrsend, xtend, freq);
+        qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xrpeak, xqrsend, xtend, freq);
 
 
       }
@@ -226,7 +227,7 @@ void R_peaks_gui::find_waves()
         old_signal = old_signal(arma::span(M,N));
 
         // wklejenie poprzedniego fragmentu sygnału od przedostatniego r peaka
-        current_signal.insert_rows(0,old_signal);        
+        current_signal.insert_rows(0,old_signal);
 
         // przenumerowanie r peaków ze względu na wklejenie dodatkowych próbek
         arma::vec r_peaks_add_samples(new_r_peaks.size());
@@ -357,7 +358,6 @@ void R_peaks_gui::distribute_waves()
     n_waves.qrs_end = n_qrs_end;
     n_waves.t_end = n_t_end;
 
-    qInfo() << "n_waves.p_onset(0)" << n_waves.p_onset(0);
     m_waves[current_it-1]->set_waves(o_waves);
     m_waves[current_it]->set_waves(n_waves);
 }
@@ -414,4 +414,13 @@ void R_peaks_gui::signal_loaded()
 //    arma::vec r_test = m_r_peaks[0]->get_r_peaks();
 //    emit r_peaks_get(m_r_peaks[0]);
 //    qInfo() << "Znaleziono " << r_test.size() << " zespołów QRS.";
+}
+
+arma::vec R_peaks_gui::rpeaks2plot()
+{
+    arma::vec o_r_peaks = m_r_peaks[current_it]->get_r_peaks();
+    int N = (m_r_peaks[current_it]->get_signal_filtered()).size();
+    arma::vec tmp_r_peaks(o_r_peaks.size());
+    tmp_r_peaks.fill(-current_it*N);
+    return o_r_peaks + tmp_r_peaks;
 }

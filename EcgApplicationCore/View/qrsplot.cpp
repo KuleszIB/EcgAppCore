@@ -55,6 +55,13 @@ qrsplot::qrsplot(QWidget *parent) :
 //    t_wave->setLabel(tr("T Wave Alt"));
 //    t_wave->setLabelAlignment(Qt::AlignLeft | Qt::AlignTop);
 //    t_wave->attach(this);
+
+    rPeak = new QwtPlotCurve("rPeak");
+    rPeak->setYAxis(QwtPlot::yLeft);
+    rPeak->setStyle(QwtPlotCurve::Sticks);
+    rPeak->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(255,0,0), QColor(255,0,0), QSize(6, 6)));
+    rPeak->attach(this);
+
     qrsOnSet = new QwtPlotCurve("qrsOnSet");
     qrsOnSet->setYAxis(QwtPlot::yLeft);
     qrsOnSet->setStyle(QwtPlotCurve::Sticks);
@@ -80,7 +87,7 @@ qrsplot::qrsplot(QWidget *parent) :
     pEndSet->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,94,185), QColor(0,94,185), QSize(6, 6)));
     pEndSet->attach(this);
 
-    tEnd = new QwtPlotCurve("pEndSet");
+    tEnd = new QwtPlotCurve("tEndSet");
     tEnd->setYAxis(QwtPlot::yLeft);
     tEnd->setStyle(QwtPlotCurve::Sticks);
     tEnd->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(185,94,0), QColor(185,94,0), QSize(6, 6)));
@@ -115,7 +122,7 @@ replot();
 qrsplot::~qrsplot()
 {
     delete signal;
-    delete qrs_onset;
+//    delete qrs_onset;
 //    delete qrs_end;
 //    delete t_end;
 //    delete p_onset;
@@ -127,6 +134,7 @@ qrsplot::~qrsplot()
     delete pOnSet;
     delete pEndSet;
     delete tEnd;
+    delete rPeak;
 }
 
 void qrsplot::setData2(QVector<double> x, QVector<double> y)
@@ -136,7 +144,7 @@ void qrsplot::setData2(QVector<double> x, QVector<double> y)
 }
 
 
-void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xponset,QVector<double> xpend,QVector<double> xqrsonset,QVector<double> xqrsend,QVector<double> xtend,double freq)
+void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xponset,QVector<double> xpend,QVector<double> xqrsonset,QVector<double> xrpeak,QVector<double> xqrsend,QVector<double> xtend,double freq)
 {
 //    QVector<double>yponset(xponset.size());
 //    QVector<double>yqrsonset(xqrsonset.size());
@@ -164,21 +172,30 @@ void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xpon
 //    qrs_end->setXValue(qrsend[i]);
 //    qrs_end->setYValue(y[i]);}
 //    }
+    QVector<double> tponset = xponset;
+    QVector<double> tpend = xpend;
+    QVector<double> tqrsonset = xqrsonset;
+    QVector<double> trpeak = xrpeak;
+    QVector<double> tqrsend = xqrsend;
+    QVector<double> ttend = xtend;
 
     for(int i=0;i<xqrsonset.size();i++)
-        xqrsonset[i]=xqrsonset[i]/freq;
+        tqrsonset[i]=xqrsonset[i]/freq;
 
     for(int i=0;i<xqrsend.size();i++)
-        xqrsend[i]=xqrsend[i]/freq;
+        tqrsend[i]=xqrsend[i]/freq;
 
     for(int i=0;i<xponset.size();i++)
-        xponset[i]=xponset[i]/freq;
+        tponset[i]=xponset[i]/freq;
 
     for(int i=0;i<xpend.size();i++)
-        xpend[i]=xpend[i]/freq;
+        tpend[i]=xpend[i]/freq;
 
     for(int i=0;i<xtend.size();i++)
-        xtend[i]=xtend[i]/freq;
+        ttend[i]=xtend[i]/freq;
+
+    for(int i=0;i<xrpeak.size();i++)
+        trpeak[i]=xrpeak[i]/freq;
 //    for(int i=0;i<xpend.size();i++)
 //        ypend[i]=y[xpend[i]];
 //    for(int i=0;i<xponset.size();i++)
@@ -188,24 +205,28 @@ void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xpon
 //        yqrsonset[i]=y[xqrsonset[i]];
 //    for(int i=0;i<xqrsend.size();i++)
 //        yqrsend[i]=y[xqrsend[i]];
-
+//qInfo() << "y[xponset[0]] - qrsplot" << y[xponset[0]];
+//qInfo() << "y.size()" << y.size();
 QVector<QPointF> pend;
-
 for(int i=0; i<xpend.size();i++)
-{pend.append(QPointF(xpend[i], y[xpend[i]]));}
+{pend.append(QPointF(tpend[i], y[xpend[i]]));}
     QVector<QPointF> ponset;
 for(int i=0; i<xponset.size();i++)
-{ponset.append(QPointF(xponset[i], y[xponset[i]]));}
+{ponset.append(QPointF(tponset[i], y[xponset[i]]));}
 QVector<QPointF> qrsend;
 for(int i=0; i<xqrsend.size();i++)
-{qrsend.append(QPointF(xqrsend[i], y[xqrsend[i]]));}
+{qrsend.append(QPointF(tqrsend[i], y[xqrsend[i]]));}
 QVector<QPointF> qrsonset;
 for(int i=0; i<xqrsonset.size();i++)
-{qrsonset.append(QPointF(xqrsonset[i], y[xqrsonset[i]]));
+{qrsonset.append(QPointF(tqrsonset[i], y[xqrsonset[i]]));
 }
 QVector<QPointF> tend;
 for(int i=0; i<xtend.size();i++)
-{tend.append(QPointF(xtend[i], y[xtend[i]]));
+{tend.append(QPointF(ttend[i], y[int(xtend[i])]));
+}
+QVector<QPointF> rpeak;
+for(int i=0; i<xrpeak.size();i++)
+{rpeak.append(QPointF(trpeak[i], y[int(xrpeak[i])]));
 }
 
     qrsOnSet ->setSamples(qrsonset);
@@ -213,6 +234,7 @@ for(int i=0; i<xtend.size();i++)
     pOnSet->setSamples(ponset);
     pEndSet->setSamples(pend);
     tEnd->setSamples(tend);
+    rPeak->setSamples(rpeak);
     replot();
 
  //   QVector<QPointF> data;

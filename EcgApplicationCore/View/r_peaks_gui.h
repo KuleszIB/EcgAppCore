@@ -21,7 +21,7 @@ public:
     explicit R_peaks_gui(QWidget *parent = 0);
     ~R_peaks_gui();
     void renumber_r_peaks(int direction = -1);
-    void renumber_waves(); 
+    void renumber_waves();
     void renumber_waves(int old_signal_size);
     void waves2plot(Waves_Points* n_waves);
     void distribute_waves();
@@ -55,6 +55,8 @@ private:
     void filter4();
     void find_waves();
     void run_waves();
+
+    arma::vec rpeaks2plot();
 
 };
 
