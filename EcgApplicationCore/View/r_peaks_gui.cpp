@@ -78,13 +78,28 @@ void R_peaks_gui::filter1()
         arma::vec xnew_r_peak = rpeaks2plot();
 
         QVector<double> xponest, xpend, xqrsonset, xrpeak, xqrsend, xtend;
-        xponest=examination::convert_vec_qvector(xnew_p_onset);
-        xpend=examination::convert_vec_qvector(xnew_p_end);
-        xqrsonset=examination::convert_vec_qvector(xnew_qrs_onset);
-        xrpeak=examination::convert_vec_qvector(xnew_r_peak);
-        xqrsend=examination::convert_vec_qvector(xnew_qrs_end);
-        xtend=examination::convert_vec_qvector(xnew_t_end);
+        //xponest=examination::convert_vec_qvector(xnew_p_onset);
+        //xpend=examination::convert_vec_qvector(xnew_p_end);
+        //xqrsonset=examination::convert_vec_qvector(xnew_qrs_onset);
+        //xrpeak=examination::convert_vec_qvector(xnew_r_peak);
+        //xqrsend=examination::convert_vec_qvector(xnew_qrs_end);
+       // xtend=examination::convert_vec_qvector(xnew_t_end);
 
+        if (ui->checkBoxR->checkState()){
+            xrpeak=examination::convert_vec_qvector(xnew_r_peak);
+            }
+        if (ui->checkBoxQRSonset->checkState()){
+             xqrsonset=examination::convert_vec_qvector(xnew_qrs_onset);
+            }
+        if (ui->checkBoxQRSend->checkState()){
+             xqrsend=examination::convert_vec_qvector(xnew_qrs_end);
+            }
+        if (ui->checkBoxPonset->checkState()){
+             xponest=examination::convert_vec_qvector(xnew_p_onset);
+            }
+        if (ui->checkBoxPend->checkState()){
+            xpend=examination::convert_vec_qvector(xnew_p_end);
+           }
         qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xrpeak, xqrsend, xtend, freq);
 
 
