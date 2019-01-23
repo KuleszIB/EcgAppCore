@@ -79,5 +79,31 @@ void St_segment_gui::addRandomGraph() //Przykładowy wykres
 
 void St_segment_gui::on_button_clicked()
 {
+    //podpiecie parametrow do gui
+    St_Segment *st_segment = new St_Segment(m_ecg_baseline[0]->get_signal_filtered(),m_waves[0]->get_waves());
+    double tresholdOFFMin = ui->Treshold_Offset_Min->value(); //geting parameters from GUI
+    double tresholdOFFMax = ui->Treshold_Offset_Max->value();
+    double tresholdLINMin = ui->Treshold_Linearity_Min->value();
+    double tresholdLINMax = ui->Treshold_Linearity_Max->value();
+    double tresholdDETType = ui->Treshold_Detection_Type->value();
+    st_segment->set_St_Params(tresholdOFFMin, tresholdOFFMax, tresholdDETType, tresholdLINMin, tresholdLINMax);
+   st_segment->analyze();
+    ui->button->setDisabled(true);
+    QString first_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,0));
+    ui->lineEdit_ischemia1->setText(first_ischema_gui);
+    QString second_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,1));
+    ui->lineEdit_ischemia2->setText(second_ischema_gui);
+    QString third_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,2));
+    ui->lineEdit_ischemia3->setText(third_ischema_gui);
+    QString fourth_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,3));
+    ui->lineEdit_ischemia4->setText(fourth_ischema_gui);
+    QString severe_gui = QString::number(st_segment->St_Points.diagnose(0,4));
+    ui->lineEdit_severe->setText(severe_gui);
+    QString acute_gui = QString::number(st_segment->St_Points.diagnose(0,5));
+    ui->lineEdit_acute->setText(acute_gui);
+    QString no_gui = QString::number(st_segment->St_Points.diagnose(0,6));
+    ui->lineEdit_nopathologies->setText(no_gui);
+
+
     addRandomGraph();
 }
