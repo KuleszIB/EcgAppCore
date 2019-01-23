@@ -77,7 +77,7 @@ void St_segment_gui::addRandomGraph() //Przykładowy wykres
 
   }
 
-void St_segment_gui::on_pushButton_clicked()
+void St_segment_gui::on_button_clicked()
 {
-   addRandomGraph(); //Filip tutaj wywolanie funkcji
+    addRandomGraph();
 }
