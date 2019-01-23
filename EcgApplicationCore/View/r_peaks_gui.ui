@@ -43,13 +43,19 @@
      <rect>
       <x>120</x>
       <y>20</y>
-      <width>76</width>
+      <width>83</width>
       <height>134</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QCheckBox" name="checkBoxR">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>R peaks</string>
        </property>
@@ -57,6 +63,12 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxQRSonset">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>QRS onset</string>
        </property>
@@ -64,6 +76,12 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxQRSend">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>QRS end</string>
        </property>
@@ -71,6 +89,12 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxTend">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>T end</string>
        </property>
@@ -78,6 +102,12 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxPonset">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>P onset</string>
        </property>
@@ -85,6 +115,12 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxPend">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>P end</string>
        </property>

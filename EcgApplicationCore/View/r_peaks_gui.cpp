@@ -6,6 +6,12 @@ R_peaks_gui::R_peaks_gui(QWidget *parent) :
     ui(new Ui::R_peaks_gui)
 {
     ui->setupUi(this);
+    ui->checkBoxR->setStyleSheet("QCheckBox {color : rgb(255,0,0); }");
+    ui->checkBoxQRSend->setStyleSheet("QCheckBox {color : rgb(0,150,0); }");
+    ui->checkBoxQRSonset->setStyleSheet("QCheckBox {color : rgb(0,255,0); }");
+    ui->checkBoxPend->setStyleSheet("QCheckBox {color : rgb(0,94,185); }");
+    ui->checkBoxPonset->setStyleSheet("QCheckBox {color : rgb(0,0,255); }");
+    ui->checkBoxTend->setStyleSheet("QCheckBox {color : rgb(185,94,0); }");
     QVBoxLayout *layout;
     layout = new QVBoxLayout;
     qrsPlot2=new qrsplot(this);
@@ -99,6 +105,9 @@ void R_peaks_gui::filter1()
             }
         if (ui->checkBoxPend->checkState()){
             xpend=examination::convert_vec_qvector(xnew_p_end);
+           }
+        if (ui->checkBoxTend->checkState()){
+            xtend=examination::convert_vec_qvector(xnew_t_end);
            }
         qrsPlot2->setData3(x,  y, xponest, xpend, xqrsonset, xrpeak, xqrsend, xtend, freq);
 
