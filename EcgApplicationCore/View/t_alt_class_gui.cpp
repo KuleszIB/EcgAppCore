@@ -62,6 +62,9 @@ void T_alt_class_gui::AddGraph() //Przykładowy wykres
 //       // qrsPlot2->setData2(x,y);
 
     t_waves[0]->analyze();
+    double alternans=t_waves[0]->get_alt();
+    QString alter_text = QString("%1").arg(alternans);
+    ui->line_ALT1->setText(alter_text);
     T_Wave_Alt_Struct TWS=t_waves[0]->get_t_wave_alt();
     arma::vec timevec=TWS.time_vec_alt;
     arma::vec odd=TWS.odd_T; //nieparzysty

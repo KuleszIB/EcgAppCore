@@ -30,23 +30,24 @@
      <rect>
       <x>50</x>
       <y>70</y>
-      <width>135</width>
-      <height>70</height>
+      <width>131</width>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="label_Alterans">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternans&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternans [uV]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_ALT1"/>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="line_Alt2"/>
+      <widget class="QLineEdit" name="line_ALT1">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
