@@ -11,8 +11,7 @@ T_alt_class_gui::T_alt_class_gui(QWidget *parent) :
     ecgPlot2 = new ecgplot(this);
     layout->addWidget(ecgPlot2);
     ui->ecgPlot->setLayout(layout);
-    //do usuniecia na dole funkcja do on push button
- //   connect(ui->button, SIGNAL(clicked()),this, SLOT(addGraph()));
+
     m_ecg_baseline.reserve(10);
     m_waves.reserve(10);
     t_waves.reserve(10);
@@ -88,4 +87,5 @@ void T_alt_class_gui::AddGraph() //Przykładowy wykres
 void T_alt_class_gui::on_button2_clicked()
 {
     AddGraph();
+     ui->button2->setDisabled(true);
 }

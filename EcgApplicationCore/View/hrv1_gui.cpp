@@ -100,10 +100,3 @@ void HRV1_gui::on_pushButton_clicked()
 
 }
 
-//void HRV1_gui::continue_processing()
-//{
-//    hrv_r_peaks[current_it]->calc_periodogram();
-//    addRandomGraph();
-//    if(++current_it < hrv_r_peaks.size())
-//        emit still_loading();
-//}

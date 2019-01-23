@@ -122,7 +122,7 @@ void Hrv2::calc_histogram()
 
     int tmp_max_value = int(values.max());
 
-    histogram.max_value = tmp_max_value;       //dla mnie - maks liczba zliczen w hist; najwyzszy slupek
+    histogram.max_value = tmp_max_value;       // - maks liczba zliczen w hist; najwyzszy slupek
     histogram.bins = edges;     //wartosci przedzialow
     histogram.values = values;  //ilosc zliczen w kazdym koszu
 
@@ -234,7 +234,7 @@ void Hrv2::calc_centroid()
     double size = double(poincare.intervals_oy.size());
     double x_centre = tmp_sum/size;
 
-//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc git
+//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc dobrze
 //    double tmp_sum2 = arma::sum(poincare.intervals_oy);
 //    double y_centre = tmp_sum2/size;
 
@@ -248,7 +248,7 @@ void Hrv2::calc_centroid2()
     double size = double(poincare.intervals_ox.size());
     double y_centre = tmp_sum/size;
 
-//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc git
+//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc dobrze
 //    double tmp_sum2 = arma::sum(poincare.intervals_oy);
 //    double y_centre = tmp_sum2/size;
 

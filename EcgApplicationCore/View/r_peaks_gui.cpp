@@ -224,10 +224,6 @@ void R_peaks_gui::run_waves()
 
 void R_peaks_gui::find_waves()
 {
-// ------------
-// Dobry pomysł Kasi Samojeden!
-// I jeszcze lepsze wykonanie Fabiana Bogusza!
-// ------------
     int M, N;
     arma::vec new_r_peaks = m_r_peaks[current_it]->get_r_peaks();
     arma::vec new_r_peaks_copy;

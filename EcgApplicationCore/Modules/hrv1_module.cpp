@@ -1,8 +1,7 @@
 #include "hrv1_module.h"
 
-//Najpierw luknij do headera jakie masz możliwości
 
-Hrv1::Hrv1()                //usunac?
+Hrv1::Hrv1()
 {
 
 }
@@ -47,9 +46,7 @@ void Hrv1::resample()
 {  
     int length = int(cum_time_vec.size());
     uniform_time_vec = arma::linspace(0, cum_time_vec(length-1), length);    //generating linearly spaced vector
-//    std::cout << "Uniform timeline vec" << std::endl << uniform_time_vec << std::endl;                 //USUNAC!!! do testow
     arma::interp1(cum_time_vec, r_peaks_vec, uniform_time_vec, uniform_r_peaks_vec, "nearest");     //interpolation
-//    std::cout << "Uniform r peaks" << std::endl<< uniform_r_peaks_vec << std::endl;              //USUNAC!!!! do testow
     uniform_r_peaks_vec = uniform_r_peaks_vec - time_params.rr_mean;                        //removing constant signal component
 }
 

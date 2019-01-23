@@ -19,7 +19,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     View/mainview.cpp \
-    Modules/test_get_input.cpp \
     Modules/ecg_baseline_module.cpp \
     Modules/r_peaks_module.cpp \
     Modules/hrv1_module.cpp \
