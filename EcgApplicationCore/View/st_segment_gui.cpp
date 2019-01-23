@@ -48,7 +48,8 @@ void St_segment_gui::addRandomGraph() //Przykładowy wykres
 //    QVector<double> x(N), y(N); // initialize with entries 0..100
 //    x=examination::convert_vec_qvector(time);
 //    y=examination::convert_vec_qvector(signal);
-//    st[0]->analyze();
+
+        //st[0]->analyze();
 //    St_Points m_st_points;
 //    arma::uvec t_peak=m_st_points.t_peak;
 //    arma::uvec t_on=m_st_points.t_on;
@@ -87,7 +88,7 @@ void St_segment_gui::on_button_clicked()
     double tresholdLINMax = ui->Treshold_Linearity_Max->value();
     double tresholdDETType = ui->Treshold_Detection_Type->value();
     st_segment->set_St_Params(tresholdOFFMin, tresholdOFFMax, tresholdDETType, tresholdLINMin, tresholdLINMax);
-   st_segment->analyze();
+    st_segment->analyze();
     ui->button->setDisabled(true);
     QString first_ischema_gui = QString::number(st_segment->St_Points.diagnose(0,0));
     ui->lineEdit_ischemia1->setText(first_ischema_gui);
