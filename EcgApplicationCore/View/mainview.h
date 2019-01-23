@@ -30,6 +30,8 @@ private slots:
 
     void on_pushButton_report_clicked();
 
+    void on_actionAbout_triggered();
+
 signals:
     void signal_loaded(examination *file);
 

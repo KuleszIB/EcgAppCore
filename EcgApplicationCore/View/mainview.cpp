@@ -12,11 +12,13 @@
 #include "Modules/ecg_io.h"
 #include <QString>
 #include "Modules/new_report.h"
+#include <QMessageBox>
 
 MainView::MainView(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainView)
 {
+
     ui->setupUi(this);
     auto ecgBaseline_gui = new ECGbaseline_gui(this);
     ui ->loECGBaseline->addWidget(ecgBaseline_gui);
@@ -150,4 +152,15 @@ void MainView::on_actionExit_triggered()
 void MainView::on_pushButton_report_clicked()
 {
     report->print_all();
+}
+
+void MainView::on_actionAbout_triggered()
+{
+    QMessageBox::about(this,
+                         tr("ECG Analysis..."),
+                 QString::fromUtf8(
+                         "<p>Projekt realizowany w ramach przedmiotu Dedykowane Algorytmy Diagnostyki Medycznej</p>"
+                         "<p align=\"left\"> <br><i>Twórcy:<br</i> <br><i>Project Manager: Alicja Król<br</i> <br><i>Project Coordinator: Jagoda Ociesa<br</i> <br><i>Architekci: Fabian Bogusz & Konrad Nędzyński<br</i> <br><i>GUI: Maria Barnowska & Aleksandra Graboś<br</i> <br><i>Wizualizacja: Monika Banaś<br</i> <br><i>IN&OUT: Dominika Kwaśny<br</i> <br><i>ECG Baseline: Laura Al-Richane<br</i> <br><i>Rpeaks: Katarzyna Samojeden<br</br> <br><i>HRV1: Monika Andrzejczuk<br</i> <br><i>HRV2: Katarzyna Czosnyka<br</i> <br><i>HRV DFA: Paulina Kowalik<br</i> <br><i>ST Segment: Filip Jamróz<br</i> <br><i>Heart Class: Gabriela Małachowska <br</i> <br><i>T-alternans: Katarzyna Piwowarczyk <br</i></p>"
+                         "<p align=\"right\"> <br><i>2018/2019<br</i></p>")
+                 );
 }
