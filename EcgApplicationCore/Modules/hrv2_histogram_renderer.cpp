@@ -6,7 +6,7 @@ void  Hrv2HistogramRenderer::renderTo(hrv2histplot * plot, QPrinter & printer, Q
     int w = printer.width();
     int h = printer.height();
 
-    QRectF rect( 10, 530, w, h );
+    QRectF rect( 10, 35, w, h );
     double aspect = rect.width() / rect.height();
     if ( ( aspect < 1.0 ) )
         rect.setHeight( aspect * rect.width() );

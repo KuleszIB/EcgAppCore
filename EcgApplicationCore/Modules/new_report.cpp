@@ -38,27 +38,28 @@ void NewReport::print_all()
 
     // hrv1
     if (hrv1_ptr!=nullptr){
-        painter.drawText(10, 310, "HRV1");
+        painter.drawText(10, 350, "HRV1");
         Hrv1PlotRenderer hrv1_renderer;
         hrv1_renderer.renderTo(hrv1_ptr, printer, painter);
         y_cur = 500;
     }else{painter.drawText(10, 345, "HRV1 plot not available");}
-
+    painter.drawText(10, 800, "DADM, 2018/2019, AGH Kraków");
+    printer.newPage();
     // co z wyświetlaniem wartości?
     // hrv2
     if (hrv2hist_ptr!=nullptr){
-        painter.drawText(10, 510, "Histogram of HRV2");
+        painter.drawText(10, 10, "Histogram of HRV2");
         Hrv2HistogramRenderer hrv2hist_renderer;
         hrv2hist_renderer.renderTo(hrv2hist_ptr, printer, painter);
     }else{painter.drawText(10, 360, "HRV2 histogram not available");}
 
     // hrv_dfa
-    //if (hrv2_poincare_ptr!=nullptr){
-    //    painter.drawText(10, 710, "Poincare plot");
-    //    Hrv2PoincareRenderer hrv2poincare_renderer;
-     //   hrv2poincare_renderer.renderTo(hrv_poincare_ptr, printer, painter);
+    if (hrv_dfa_ptr!=nullptr){
+        painter.drawText(10, 710, "DFA plot");
+        HrvDfaRenderer hrv_dfa_renderer;
+       hrv_dfa_renderer.renderTo(hrv_dfa_ptr, printer, painter);
 
-    //}else{painter.drawText(10, 710, "Poincare plot not available");}
+    }else{painter.drawText(10, 710, "DFA plot not available");}
 
     //qrs
     // kiedy podział strony?

@@ -49,7 +49,8 @@ SOURCES += \
     Modules/examination.cpp \
     Modules/file_explorer.cpp \
     View/hrvdfaplot.cpp \
-    Modules/st_segment_module.cpp
+    Modules/st_segment_module.cpp \
+    Modules/hrv_dfa_renderer.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -82,7 +83,9 @@ HEADERS += \
     Modules/ecg_io.h \
     Modules/file_explorer.h \
     View/hrvdfaplot.h \
-    Modules/st_segment_module.h
+    Modules/st_segment_module.h \
+    Modules/hrv_dfa_renderer.h \
+    Modules/hrv2_poincare_renderer.h
 
 FORMS += \
     View/mainview.ui \

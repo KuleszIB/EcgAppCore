@@ -54,6 +54,7 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     report->set_ecgplot(ecgBaseline_gui->ecgPlot2);
     report->set_hrv1plot(hrv_1_gui->hrv1Plot2);
     report->set_hrv2histplot(hrv_2_gui->hrv2histPlot2);
+    report->set_hrvdfaplot(hrv_dfa_gui->hrvdfaPlot2);
 
 
 

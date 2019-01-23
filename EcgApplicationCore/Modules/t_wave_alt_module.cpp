@@ -316,7 +316,7 @@ void T_Wave_Alt::moving_average()
     }
     //Wyznaczenie wartości alternansu jako maksymalnej różnicy między kolejnymi próbkami
     //parzystego i nieparzystego załamka zastępczego
-    alt = max(delta);
+    alt = max(delta)*1000;
     //wyznaczenie wektora czasu do narysowania załamków zastępczych
     time_vec_alt = arma::linspace(0, N_Twave_sample/sampling_frequency, N_Twave_sample);
     //std::cout << alt*1000 << std::endl;

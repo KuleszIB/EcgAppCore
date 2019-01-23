@@ -1,6 +1,8 @@
-#include "hrv1_plot_renderer.h"
+#include "hrv_dfa_renderer.h"
 
-void Hrv1PlotRenderer::renderTo(hrv1plot * plot, QPrinter & printer, QPainter & p) const
+
+
+void HrvDfaRenderer::renderTo(hrvdfaplot * plot, QPrinter & printer, QPainter & p) const
 {
         int w = printer.width();
         int h = printer.height();
