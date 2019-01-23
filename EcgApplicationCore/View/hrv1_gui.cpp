@@ -25,11 +25,11 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 {
    // hrv_r_peaks[0]->calc_periodogram();
    // hrv_r_peaks[0]->calc_freq_vec();
-    hrv_r_peaks[current_it++]->calc_params();
+    hrv_r_peaks[current_it]->calc_params();
 
 
-    arma::vec period =hrv_r_peaks[0]->get_periodogram();
-
+    arma::vec period =hrv_r_peaks[current_it]->get_periodogram();
+    qInfo()<<"sprawdzam rozmiar:"<<hrv_r_peaks[current_it]->get_periodogram().size();
 
     arma::vec ti = hrv_r_peaks[0]->get_freq_vec();
 //int N=200;
@@ -85,17 +85,18 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 void HRV1_gui::load_R_Peaks_vector(R_Peaks *r_peaks_signal, Waves *waves)
 {
     m_r_peaks.push_back(r_peaks_signal);
-    Hrv1 *hrv1_r_peaks = new Hrv1(m_r_peaks[current_it]->get_r_peaks());
+    Hrv1 *hrv1_r_peaks = new Hrv1(r_peaks_signal->get_r_peaks());
     hrv_r_peaks.push_back(hrv1_r_peaks);
+    qInfo()<<"Przyszła paczka "<<hrv_r_peaks.size();
+
 
 
 }
 void HRV1_gui::on_pushButton_clicked()
 {
+
     addRandomGraph();
     //tutaj chyba calculate periodogram
-
-    //KN:fabian sprawdz czy to jest dobrze bo ja nie kumaty z tych rzeczy albo osoba od hrv1 co tu ma byc .
 
 }
 

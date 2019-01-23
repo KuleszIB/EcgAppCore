@@ -643,6 +643,7 @@ void ECGbaseline_gui::filter5()
 
 void ECGbaseline_gui::on_pushButton_clicked()
 {
+    current_it = 0;
     if(ui->comboBox_filter->currentIndex() == 0)
     {
         nofilter(); //raw signal
@@ -673,7 +674,7 @@ void ECGbaseline_gui::on_pushButton_clicked()
         filter5(); //LMS
         // emituj sygnał do R_Peaks
     }
-    ui->pushButton->setDisabled(true);
+    //ui->pushButton->setDisabled(true);
 
 }
 
