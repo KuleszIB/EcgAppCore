@@ -6,6 +6,7 @@
 #include <QTime>
 //#include "../Modules/examination.h"
 #include "../Modules/ecg_io.h"
+#include"Modules/new_report.h"
 //#include <QSettings>
 //#include <QRect>
 //#include <QDesktopWidget>
@@ -27,6 +28,8 @@ private slots:
     void on_actionExit_triggered();
     void on_actionOpen_triggered();
 
+    void on_pushButton_report_clicked();
+
 signals:
     void signal_loaded(examination *file);
 
@@ -34,6 +37,7 @@ private:
     Ui::MainView *ui;
     QApplication *m_app;
     Ecg_IO *ecg_io;
+    NewReport *report;
 
 };
 

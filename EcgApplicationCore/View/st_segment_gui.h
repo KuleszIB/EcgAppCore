@@ -19,6 +19,7 @@ class St_segment_gui : public QWidget
 public:
     explicit St_segment_gui(QWidget *parent = 0);
     ~St_segment_gui();
+    ecgplot *ecgPlot2;
 private slots:
     void addRandomGraph();
     void filtered_signal_loaded_Stsegment(Ecg_Baseline*);
@@ -33,7 +34,6 @@ private:
     QVector<Waves*> m_waves;
     QVector<St_Segment*> st;
     Waves_Points new_waves;
-    ecgplot *ecgPlot2;
 //    St_Points m_st_points;
 };
 

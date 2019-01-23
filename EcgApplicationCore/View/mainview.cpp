@@ -11,6 +11,7 @@
 #include "Modules/r_peaks_module.h"
 #include "Modules/ecg_io.h"
 #include <QString>
+#include "Modules/new_report.h"
 
 MainView::MainView(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
@@ -47,6 +48,10 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),heart_class_gui,SLOT(filtered_signal_loaded_Heart(Ecg_Baseline*)));
  //   connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),t_alt_class_gui,SLOT(filtered_signal_loaded_Taltclass(Ecg_Baseline*)));
 
+    report = new NewReport();
+    report->set_ecgplot(ecgBaseline_gui->ecgPlot2);
+    report->set_hrv1plot(hrv_1_gui->hrv1Plot2);
+    report->set_hrv2histplot(hrv_2_gui->hrv2histPlot2);
 
 
 
@@ -140,3 +145,8 @@ void MainView::on_actionExit_triggered()
      ui->statusBar->showMessage("Data loaded");
      ecg_io->start();
  }
+
+void MainView::on_pushButton_report_clicked()
+{
+    report->print_all();
+}

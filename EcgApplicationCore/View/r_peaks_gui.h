@@ -25,6 +25,7 @@ public:
     void renumber_waves(int old_signal_size);
     void waves2plot(Waves_Points* n_waves);
     void distribute_waves();
+    qrsplot *qrsPlot2;
 private slots:
     void peakDetection();
     void on_pushButton_clicked();
@@ -47,8 +48,6 @@ private:
     QVector<Waves*> m_waves;
 
     void funkcja1();
-
-    qrsplot *qrsPlot2;
     void filter1();
     void filter2();
     void filter3();

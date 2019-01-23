@@ -18,6 +18,7 @@ public:
     explicit ECGbaseline_gui(QWidget *parent = 0);
     void set_info(examination_info file_info);
     ~ECGbaseline_gui();
+    ecgplot *ecgPlot2;
 
 private slots:
     void addRandomGraph();
@@ -40,7 +41,6 @@ private:
     unsigned int current_it;
     bool loading_finished;
     Ui::ECGbaseline_gui *ui;
-    ecgplot *ecgPlot2;
     void nofilter();
     void filter1();
     void filter2();

@@ -26,6 +26,10 @@ SOURCES += \
     Modules/hrv2_module.cpp \
     Modules/hrv_dfa_module.cpp \
     Modules/waves_module.cpp \
+    Modules/ecg_renderer.cpp \
+    Modules/hrv1_plot_renderer.cpp \
+    Modules/hrv2_histogram_renderer.cpp \
+    Modules/new_report.cpp \
     View/ecgbaseline_gui.cpp \
     View/heart_class_gui.cpp \
     View/hrv1_gui.cpp \
@@ -56,6 +60,10 @@ HEADERS += \
     Modules/hrv2_module.h \
     Modules/hrv_dfa_module.h \
     Modules/waves_module.h \
+    Modules/ecg_renderer.h \
+    Modules/hrv1_plot_renderer.h \
+    Modules/hrv2_histogram_renderer.h \
+    Modules/new_report.h \
     View/ecgbaseline_gui.h \
     View/heart_class_gui.h \
     View/hrv1_gui.h \

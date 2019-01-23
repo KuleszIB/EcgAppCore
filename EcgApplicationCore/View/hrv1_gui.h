@@ -22,6 +22,7 @@ class HRV1_gui : public QWidget
 public:
     explicit HRV1_gui(QWidget *parent = 0);
     ~HRV1_gui();
+    hrv1plot *hrv1Plot2;
 
 private slots:
     void addRandomGraph();
@@ -34,7 +35,6 @@ signals:
     void still_loading();
 private:
     Ui::HRV1_gui *ui;
-    hrv1plot *hrv1Plot2;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Hrv1*> hrv_r_peaks;
     Time_Params timeParams;

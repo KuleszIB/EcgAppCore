@@ -19,6 +19,7 @@ class T_alt_class_gui : public QWidget
 public:
     explicit T_alt_class_gui(QWidget *parent = 0);
     ~T_alt_class_gui();
+    ecgplot *ecgPlot2;
 
 
 private slots:
@@ -31,7 +32,6 @@ private slots:
 
 private:
     Ui::T_alt_class_gui *ui;
-    ecgplot *ecgPlot2;
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
