@@ -696,7 +696,7 @@ void ECGbaseline_gui::load_part(arma::vec *part)
     m_signal.push_back(part);
     Ecg_Baseline *ecg_baseline = new Ecg_Baseline(*(m_signal.last()),m_file_info.frequency);
     m_ecg_baseline.push_back(ecg_baseline);
-    qInfo() << "ECG size" << m_ecg_baseline.size();
+//    qInfo() << "ECG size" << m_ecg_baseline.size();
     if (m_signal.length() == 1)
     {
         ui->plainTextEdit->setPlainText("Wczytano fragment");

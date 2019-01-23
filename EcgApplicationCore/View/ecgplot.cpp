@@ -2,8 +2,7 @@
 
 ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
 {   
-
-    plot = new QwtPlot();
+   plot = new QwtPlot();
     signal = new QwtPlotCurve("Signal");
     signal->attach(this);
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -12,9 +11,18 @@ ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
     grid->attach(this);
     setAxisTitle(QwtPlot::yLeft, "Amplitude [mV]");
     setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");
-    setAxisScale( xBottom, 0.0, 20.0 );
-    setAxisScale( yLeft, -1.0, 1.0 );
+ //   setAxisScale( xBottom, 0.0, 20.0 );
+ //   setAxisScale( yLeft, -1.0, 1.0 );
+    odd=new QwtPlotCurve("Odd");
+    odd->setPen(QPen(Qt::red, 2.0));
+    odd->attach(this);
+    even=new QwtPlotCurve("Even");
+    even->setPen(QPen(Qt::blue, 2.0));
+    even->attach(this);
 
+//    QwtLegend *legend = new QwtLegend;
+//       legend->setDefaultItemMode( QwtLegendData::Checkable );
+//       insertLegend( legend, QwtPlot::RightLegend );
 
     // canvas
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
@@ -46,8 +54,22 @@ ecgplot::~ecgplot()
 void ecgplot::setData(QVector<double> x, QVector<double> y)
 {
     signal->setSamples(x, y);
+    setAxisScale( xBottom, 0.0, 20.0 );
+    setAxisScale( yLeft, -1.0, 1.0 );
     replot();
 }
+
+
+void ecgplot::setData2(QVector<double> x, QVector<double> y,  QVector<double> z)
+{
+    odd->setSamples(x, y);
+    even->setSamples(x, z);
+    setAxisScale( xBottom, 0.0, 0.23 );
+    setAxisScale( yLeft, -0.1, 0.1 );
+
+    replot();
+}
+
 QSize ecgplot::sizeHint() const
 {
     return QSize( 540, 400 );

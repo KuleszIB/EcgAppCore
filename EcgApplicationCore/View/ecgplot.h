@@ -8,7 +8,9 @@
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_magnifier.h>
-
+#include <qwt_legend.h>
+#include <qwt_legend_label.h>
+#include <QObject>
 class ecgplot : public QwtPlot
 {
     Q_OBJECT
@@ -17,6 +19,7 @@ public:
     explicit ecgplot(QWidget *parent);
     ~ecgplot();
     void setData(QVector<double> x, QVector<double> y);
+    void setData2(QVector<double> x, QVector<double> y, QVector<double> z);
     void clear();
     QSize sizeHint() const;
 signals:
@@ -25,7 +28,10 @@ public slots:
 
 private:
     QwtPlotCurve *signal;
+    QwtPlotCurve *odd;
+    QwtPlotCurve *even;
     QwtPlot *plot;
+ //   QwtLegend legend;
 
 };
 

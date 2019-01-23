@@ -76,7 +76,6 @@ void Ecg_Baseline::filter_noise()
 
 void Ecg_Baseline::filter_bandpass()
 {
-    qInfo() << "filter bandpass";
     double fc1 = 34 / (sampling_frequency/2);
     double fc2 = 2 / (sampling_frequency/2);
     int M = 25;
@@ -90,8 +89,6 @@ void Ecg_Baseline::filter_moving_average(Filter_Values gui_parameters)
     filter_noise();
     Filter_Values filter_values = gui_parameters;
 
-    qInfo() << "filter moving average";
-    qInfo()<<"to jest dlugosc filtra"<<filter_values.filter_length;
     double windowSize = filter_values.filter_length;
     arma::vec A(windowSize);
     A.ones();
@@ -131,8 +128,8 @@ double* vec2tab(arma::vec signal_vec)
 arma::vec tab2vec(double *signal_vec)
 {
     arma::vec signal(30000);
-    qInfo() << "signal size";
-    qInfo() << signal.size();
+//    qInfo() << "signal size";
+//    qInfo() << signal.size();
     double arraySize = signal.size();
     for(int ii = 0; ii < arraySize; ii++)
         {
@@ -151,8 +148,8 @@ void Ecg_Baseline::filter_butterworth(Filter_Values gui_parameters)
     //double w = 34;
     w = w/(sampling_frequency / 2);
     int numSamples = signal_filtered.size();
-    qInfo() <<"signal filtered size";
-    qInfo() << signal_filtered.size();
+//    qInfo() <<"signal filtered size";
+//    qInfo() << signal_filtered.size();
     Dsp::Filter* f = new Dsp::SmoothedFilterDesign
         <Dsp::Butterworth::Design::HighPass <1>, 1, Dsp::DirectFormII>(sampling_frequency);
     Dsp::Params params;
@@ -164,12 +161,12 @@ void Ecg_Baseline::filter_butterworth(Filter_Values gui_parameters)
     signal_tab[0] = vec2tab(signal_filtered);
     f->process(numSamples, signal_tab);
 
-    qInfo()<< "lalala1";
+//    qInfo()<< "lalala1";
     //for (int i=0; i<signal_filtered.size(); i++)
        // qInfo()<< *(signal_tab[0]+i);
 
     signal_filtered = -1*tab2vec(*signal_tab);
-    qInfo()<< "2";
+//    qInfo()<< "2";
 }
 
 void Ecg_Baseline::filter_chebyshev(Filter_Values gui_parameters)
@@ -226,12 +223,12 @@ void Ecg_Baseline::filter_lms(Filter_Values gui_parameters)
     filter_bandpass();
     Filter_Values filter_values = gui_parameters;
 
-    qInfo() << "LMS";
+//    qInfo() << "LMS";
     int N = x.size();
-    qInfo() << "dlugosc x: ";
-    qInfo() << N;
-    qInfo() << "dlugosc filtrowanego: ";
-    qInfo() << signal_filtered.size();
+//    qInfo() << "dlugosc x: ";
+//    qInfo() << N;
+//    qInfo() << "dlugosc filtrowanego: ";
+//    qInfo() << signal_filtered.size();
     //int M = 15;
     int M = filter_values.filter_length;
     //double mu = 0.2;
