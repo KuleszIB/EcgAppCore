@@ -1,8 +1,6 @@
-//#define NDEBUG
 #include "t_wave_alt_module.h"
 #define pi 3.14159265358979323846
 #include <vector>
-#include <assert.h>
 
 T_Wave_Alt::T_Wave_Alt()
 {
@@ -31,11 +29,13 @@ void T_Wave_Alt::filter_t_wave_alt()
         // odpowiedź impulsowa filtra dolnoprzepustowego
         arma::vec h(N);
         for (int i=-M; i<0; i++)
-            h[i+M] = sin(i*2*fc*pi*pi)/(i*pi);
+            //h[i+M] = sin(i*2*fc*pi*pi)/(i*pi);
+            h[i+M] = 2*fc*pi*arma::sinc(i*2*fc*pi);
 
         h[M] = 2*fc;    //uwzględnienie szczególnego przypadku (N=0)
         for (int i=1; i<=M; i++)
-            h[i+M] = sin(i*2*fc*pi*pi)/(i*pi);
+            //h[i+M] = sin(i*2*fc*pi*pi)/(i*pi);
+            h[i+M] = 2*fc*pi*arma::sinc(i*2*fc*pi);
 
         // zdefiniowanie okna Barletta
         arma::vec okno(N);
@@ -48,7 +48,6 @@ void T_Wave_Alt::filter_t_wave_alt()
 
         // filtracja sygnału
         signal_filtered = arma::conv(signal_filtered,hw,"same");
-        //std::cout << signal_filtered(0) << std::endl;
 }
 
 void T_Wave_Alt::preprocessing_t_wave_alt()
@@ -64,9 +63,6 @@ void T_Wave_Alt::preprocessing_t_wave_alt()
         tmp = waves_points.t_end.tail(waves_points.t_end.size()-1); //usunięcie pierwszego Tend
         waves_points.t_end.set_size(tmp.size());                    //zmiana rozmiaru wektora t_end
         waves_points.t_end = tmp;                                   //zapisanie nowego wektora t_end
-        /*for (int i=0; i<(int)waves_points.t_end.size(); i++){
-            std::cout << waves_points.t_end(i) << std::endl;
-        }*/
     }
     if(waves_points.qrs_end(waves_points.qrs_end.size()-1) > waves_points.t_end(waves_points.t_end.size()-1))
         //gdy sygnał kończy się na QRSend
@@ -75,9 +71,6 @@ void T_Wave_Alt::preprocessing_t_wave_alt()
         tmp = waves_points.qrs_end.head(waves_points.qrs_end.size()-1); //usunięcie ostatniego QRSend
         waves_points.qrs_end.set_size(tmp.size());                      //zmiana rozmiaru wektora qrs_end
         waves_points.qrs_end = tmp;                                     //zapisanie nowego wektora qrs_end
-        /*for (int i=0; i<(int)waves_points.qrs_end.size(); i++){
-            std::cout << waves_points.qrs_end(i) << std::endl;
-        }*/
     }
     //sprawdzenie, czy liczba QRSend i Tend jest równa
     if(waves_points.t_end.size() != waves_points.qrs_end.size())
@@ -99,13 +92,6 @@ void T_Wave_Alt::preprocessing_t_wave_alt()
             waves_points.t_end = tmp1;                                      //zapisanie nowego wektora t_end
         }
     }
-    /*for (int i=0; i<(int)waves_points.qrs_end.size(); i++){
-        std::cout << waves_points.qrs_end(i) << std::endl;
-    }
-    std::cout << std::endl;
-    for (int i=0; i<(int)waves_points.t_end.size(); i++){
-        std::cout << waves_points.t_end(i) << std::endl;
-    }*/
 
 }
 
@@ -118,8 +104,6 @@ void T_Wave_Alt::remove_wrong_t_detection()
 //usuwane są wraz z załamkiem następnym, natomiast załamki o numerach
 //nieparzystych usuwane są wraz z załamkiem poprzednim.
 
-    //arma::uvec t_end_val = signal_filtered.elem(waves_points.t_end); //przechowuje wartości sygnału dla t_end
-    //arma::uvec t_peak_val = signal_filtered.elem(t_peaks);           //przechowuje wartości sygnału dla t_peaks
     arma::vec t_end_val(waves_points.t_end.size());
     arma::vec t_peak_val(t_peaks.size());
     for(int i=0; i<(int)waves_points.t_end.size(); i++)
@@ -135,8 +119,6 @@ void T_Wave_Alt::remove_wrong_t_detection()
     double t_end_std = stddev(t_end_val);     //wyznaczenie odch. stand. Tend
     double t_peak_mean = mean(t_peak_val);    //wyznaczenie średniej wartości Tpeak
     double t_peak_std = stddev(t_peak_val);   //wyznaczenie odch. stand. Tpeak
-    //std::cout << t_end_mean << std::endl << t_end_std << std::endl;
-    //std::cout << t_peak_mean << std::endl << t_peak_std << std::endl;
 
     int N_peak = t_peak_val.size(); //liczba załamków T w sygnale EKG
     std::vector<bool> flag; //bool flag[N_peak]; przechowuje inf. czy dany załamek T pozostanie w sygnale
@@ -179,7 +161,6 @@ void T_Wave_Alt::remove_wrong_t_detection()
     {
         if(flag[i]) N_true_peak++;  //gdy flaga jest true
     }
-    //std::cout << N_true_peak << std::endl;
     if(N_true_peak != N_peak){      //gdy wykryto błędne detekcje
         arma::vec sample_true_peak(N_true_peak);   //przechowuje numery poprawnie wykrytych załamków
         int j=0;
@@ -211,17 +192,6 @@ void T_Wave_Alt::remove_wrong_t_detection()
         waves_points.t_end = t_end_tmp;
         t_peaks = t_peak_tmp;
     }
-    /*for (int i=0; i<(int)waves_points.qrs_end.size(); i++){
-        std::cout << waves_points.qrs_end(i) << std::endl;
-    }
-    std::cout << std::endl;
-    for (int i=0; i<(int)waves_points.t_end.size(); i++){
-        std::cout << waves_points.t_end(i) << std::endl;
-    }
-    std::cout << std::endl;
-    for (int i=0; i<(int)t_peaks.size(); i++){
-        std::cout << t_peaks(i) << std::endl;
-    }*/
 }
 void T_Wave_Alt::sample_counter()
 {
@@ -229,7 +199,6 @@ void T_Wave_Alt::sample_counter()
 //i Tpeak oraz między Tpeak i Tend.
 
     int N_true_peak = t_peaks.size();
-    //std::cout << N_true_peak << std::endl;
     arma::vec STp(N_true_peak);
     arma::vec TpTe(N_true_peak);
     for(int i=0; i<N_true_peak; i++)
@@ -243,7 +212,6 @@ void T_Wave_Alt::sample_counter()
     STp_min = (int)STp.min() / 2;
     //Wyznaczenie minimalnej liczby próbek pomiędzy Tpeak i Tend
     TpTe_min = (int)TpTe.min();
-    //std::cout << STp_min << " " << TpTe_min << std::endl;
 }
 
 void T_Wave_Alt::moving_average()
@@ -276,8 +244,6 @@ void T_Wave_Alt::moving_average()
     }
     odd_array = tmp_odd_array;
     even_array = tmp_even_array;
-    //odd_t_array = tmp_odd_t_array;
-    //even_t_array = tmp_even_t_array;
 
     arma::vec tmp_even_T(N_Twave_sample);   //pomocniczy wektor przechowujący próbki pierwszego parzystego załamka T
     arma::vec tmp_odd_T(N_Twave_sample);    //pomocniczy wektor przechowujący próbki pierwszego nieparzystego załamka T
@@ -311,7 +277,6 @@ void T_Wave_Alt::moving_average()
     //parzystego i nieparzystego załamka zastępczego
     arma::vec delta(N_Twave_sample);
     for(int i=0; i<N_Twave_sample; i++){
-        //std::cout << even_T(i) << std::endl;
         delta(i) = abs(even_T(i) - odd_T(i));
     }
     //Wyznaczenie wartości alternansu jako maksymalnej różnicy między kolejnymi próbkami
@@ -319,7 +284,6 @@ void T_Wave_Alt::moving_average()
     alt = max(delta)*1000;
     //wyznaczenie wektora czasu do narysowania załamków zastępczych
     time_vec_alt = arma::linspace(0, N_Twave_sample/sampling_frequency, N_Twave_sample);
-    //std::cout << alt*1000 << std::endl;
 }
 
 void T_Wave_Alt::analyze()
