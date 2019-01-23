@@ -7,7 +7,7 @@
 
 #include "hrv2_histogram_renderer.h"
 //#include "hrv2_poincare_renderer.h"
-//#include "hrvdfaplot
+#include "hrv_dfa_renderer.h"
 
 
 
@@ -28,7 +28,7 @@ private:
     hrv1plot * hrv1_ptr = nullptr;
     hrv2histplot * hrv2hist_ptr = nullptr;
     //hrv2poincareplot * hrv2_poincare_ptr = nullptr;
-    //hrvdfaplot * hrv_dfa_ptr = nullptr;
+    hrvdfaplot * hrv_dfa_ptr = nullptr;
     //qrsplot * qrs_ptr = nullptr;
 
     //st segment i inne na podstawie qrsplot?
@@ -52,7 +52,7 @@ public:
 
    // void set_hrv2poincareplot(hrv2poincareplot * plot){hrv2_poincare_ptr = plot;}
 
-    //void set_hrvdfaplot(hrvdfaplot * plot){hrv_dfa_ptr = plot;}
+    void set_hrvdfaplot(hrvdfaplot * plot){hrv_dfa_ptr = plot;}
 
     //void set_qrsplot(qrsplot * plot) {qrs_ptr = plot;}
 
