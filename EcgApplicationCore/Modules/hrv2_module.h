@@ -5,14 +5,12 @@
 
 struct histogram_hrv2
 {
-    arma::ivec values; // typ danych do sprawdzenia -> zmienilam
-    // To miała być oś x histogramu
-    arma::vec bins; // do czego to ma sie odnosic?  do zmiany albo wyrzucenia -> Monika bedzie potrzebowac do histogramu
+    arma::ivec values;
+    arma::vec bins;
     int max_value;
 };
 
-//Dodalam strukture, mysle ze tak bedzie latwiej dla Moniki do wizualizacji -> bardzo dobry pomysł ;)
-//Jeszcze nie implementowalam, wiec nei wiem czy tak zostanie
+
 struct poincare_graph
 {
     arma::vec intervals_ox;
@@ -37,7 +35,7 @@ private:
     histogram_hrv2 histogram;
     double tinn;
     double triangular_index;
-    poincare_graph poincare; // tu nie wiem czy tak zostanie
+    poincare_graph poincare;
 
     void calc_histogram();
     void remove_outliers();
@@ -53,8 +51,7 @@ private:
 public:
     Hrv2();
     Hrv2(arma::vec r_peaks);
-    // To ma wywołać wszystkie funkcje do analizy w tym module
-    void calc_params(); //co to ? ja to dodalam?
+    void calc_params();
     void calc_ellipse();
     histogram_hrv2 get_hist();
     double get_tinn();

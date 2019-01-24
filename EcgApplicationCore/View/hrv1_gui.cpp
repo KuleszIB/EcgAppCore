@@ -19,6 +19,7 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
     hrv_r_peaks.reserve(10);
     current_it = 0;
+    package_it = 0;
 }
 
 HRV1_gui::~HRV1_gui()
@@ -29,19 +30,19 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 {
    // hrv_r_peaks[0]->calc_periodogram();
    // hrv_r_peaks[0]->calc_freq_vec();
-    hrv_r_peaks[current_it]->calc_params();
+//    hrv_r_peaks[current_it]->calc_params();
 
 
-    arma::vec period =hrv_r_peaks[current_it]->get_periodogram();
-    qInfo()<<"sprawdzam rozmiar:"<<hrv_r_peaks[current_it]->get_periodogram().size();
+    arma::vec period =hrv_r_peaks[current_it-2]->get_periodogram();
 
-    arma::vec ti = hrv_r_peaks[0]->get_freq_vec();
+
+    arma::vec ti = hrv_r_peaks[current_it-2]->get_freq_vec();
 //int N=200;
     QVector<double>periodogram(period.size()), freq(ti.size()); //periodogram(N), freq(N);
     periodogram = examination::convert_vec_qvector(period);
     freq = examination::convert_vec_qvector(ti);
-    timeParams = hrv_r_peaks[0]->get_time_params();
-    freq_params = hrv_r_peaks[0]->get_freq_params();
+    timeParams = hrv_r_peaks[current_it-2]->get_time_params();
+    freq_params = hrv_r_peaks[current_it-2]->get_freq_params();
 
 
  //       double hff = freq_params.hf;
@@ -88,19 +89,44 @@ void HRV1_gui::addRandomGraph() //Przykładowy wykres
 
 void HRV1_gui::load_R_Peaks_vector(R_Peaks *r_peaks_signal, Waves *waves)
 {
-    m_r_peaks.push_back(r_peaks_signal);
-    Hrv1 *hrv1_r_peaks = new Hrv1(r_peaks_signal->get_r_peaks());
+    R_Peaks *n_r_peaks = new R_Peaks;
+    arma::vec n_signal = r_peaks_signal->get_r_peaks();
+//    qInfo() << "n_signal(0)" << n_signal(0);
+    n_r_peaks->set_r_peaks(n_signal);
+    if(package_it>0)
+    {
+        arma::vec o_signal = m_r_peaks[package_it-1]->get_r_peaks();
+        n_signal.insert_rows(0,o_signal);
+        n_r_peaks->set_r_peaks(n_signal);
+    }
+    m_r_peaks.push_back(n_r_peaks);
+//    if(package_it == 21)
+//    {
+//        arma::vec r = m_r_peaks[21]->get_r_peaks();
+//        for(int i = 0; i < r.size() ;i++)
+//            qInfo() << r[i];
+//    }
+    Hrv1 *hrv1_r_peaks = new Hrv1(n_signal);
     hrv_r_peaks.push_back(hrv1_r_peaks);
-    qInfo()<<"Przyszła paczka "<<hrv_r_peaks.size();
-
-
+    package_it++;
+    if(current_it > 0)
+        emit still_loading();
 
 }
-void HRV1_gui::on_pushButton_clicked()
+
+void HRV1_gui::continue_processing()
 {
-
-    addRandomGraph();
-    //tutaj chyba calculate periodogram
+    if(++current_it < m_r_peaks.size())
+        emit still_loading();
+    else
+    {
+        hrv_r_peaks[current_it-2]->calc_params();
+        addRandomGraph();
+    }
 
 }
 
+void HRV1_gui::on_button_clicked()
+{
+    emit still_loading();
+}

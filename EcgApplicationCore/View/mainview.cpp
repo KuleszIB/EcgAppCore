@@ -40,6 +40,7 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     m_app = app; // ewentualnie do usunięcia
     // TU MA BYĆ INFO_LOADED Z CZYMŚ POŁĄCZONE
     connect(this,SIGNAL(signal_loaded(examination*)),ecgBaseline_gui,SLOT(load_signal(examination*)));
+    connect(this,SIGNAL(signal_loaded(examination*)),rPeaks_gui,SLOT(signal_loaded()));
     connect(ecgBaseline_gui,SIGNAL(ecg_signal_filtered(Ecg_Baseline*)),rPeaks_gui,SLOT(filtered_signal_loaded(Ecg_Baseline*)));
     connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_1_gui, SLOT(load_R_Peaks_vector(R_Peaks*,Waves*)));
     connect(rPeaks_gui,SIGNAL(r_peaks_waves_found(R_Peaks*,Waves*)),hrv_2_gui, SLOT(load_R_Peaks_vector2(R_Peaks*,Waves*)));
@@ -66,7 +67,7 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     connect(ecg_io->get_file(),SIGNAL(part_loaded(arma::vec*)),ecgBaseline_gui,SLOT(load_part(arma::vec*)));
     connect(ecgBaseline_gui,SIGNAL(still_loading()),ecgBaseline_gui,SLOT(continue_processing()));
     connect(rPeaks_gui,SIGNAL(still_loading()),rPeaks_gui,SLOT(continue_processing()));
-    //connect(hrv_1_gui,SIGNAL(still_loading()),hrv_1_gui,SLOT(continue_processing()));
+    connect(hrv_1_gui,SIGNAL(still_loading()),hrv_1_gui,SLOT(continue_processing()));
 
 }
 

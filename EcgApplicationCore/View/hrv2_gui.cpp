@@ -37,7 +37,7 @@ void HRV2_gui::addGraph()
     double sd1 =PoincareGraph.sd1;
     double sd2 =PoincareGraph.sd2;
     double centroidx=PoincareGraph.centroid;
-    double centroidy=PoincareGraph.centroid2;
+    double centroidy=PoincareGraph.centroid;
 
     arma::vec intervals_ox=PoincareGraph.intervals_ox;
     arma::vec intervals_oy=PoincareGraph.intervals_oy;
@@ -57,7 +57,7 @@ void HRV2_gui::addGraph()
     ellipse_ox= examination::convert_vec_qvector(xellipse);
     ellipse_oy=examination::convert_vec_qvector(yellipse);
 //
-    hrv2poincarePlot2->setDataHRVPOINCARE(int_ox,int_oy, sd1_axis_ox, sd1_axis_oy,sd1_axis_ox, sd2_axis,ellipse_ox, ellipse_oy, centroidx, centroidy);
+    hrv2poincarePlot2->setDataHRVPOINCARE(int_ox,int_oy, sd1_axis_ox, sd1_axis_oy,sd2_axis, sd2_axis,ellipse_ox, ellipse_oy, centroidx, centroidy);
 
     double tinn_gui = m_hrv2[0]->get_tinn();
     QString tinn_qui_qs = QString::number(tinn_gui);

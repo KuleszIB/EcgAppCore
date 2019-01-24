@@ -21,6 +21,7 @@ public:
     explicit R_peaks_gui(QWidget *parent = 0);
     ~R_peaks_gui();
     void renumber_r_peaks(int direction = -1);
+    void last_r_peaks();
     void renumber_waves();
     void renumber_waves(int old_signal_size);
     void waves2plot(Waves_Points* n_waves);
@@ -35,6 +36,7 @@ public slots:
     void continue_processing();
     void signal_loaded();
 
+
 signals:
     void still_loading();
     void r_peaks_waves_found(R_Peaks*,Waves*);
@@ -46,6 +48,7 @@ private:
     QVector<Ecg_Baseline*> m_ecg_baseline;
     QVector<R_Peaks*> m_r_peaks;
     QVector<Waves*> m_waves;
+    volatile bool finished;
 
     void funkcja1();
     void filter1();

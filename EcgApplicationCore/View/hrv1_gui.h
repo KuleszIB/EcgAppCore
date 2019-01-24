@@ -26,10 +26,13 @@ public:
 
 private slots:
     void addRandomGraph();
-    void on_pushButton_clicked();
+//    void on_pushButton_clicked();
+
+    void on_button_clicked();
 
 public slots:
     void load_R_Peaks_vector(R_Peaks*,Waves*);
+    void continue_processing();
 
 signals:
     void still_loading();
@@ -40,6 +43,8 @@ private:
     Time_Params timeParams;
     Frequency_Params freq_params;
     unsigned int current_it;
+    unsigned int package_it;
 };
+
 
 #endif // HRV1_GUI_H

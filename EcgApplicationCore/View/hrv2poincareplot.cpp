@@ -10,8 +10,8 @@ hrv2poincareplot::hrv2poincareplot(QWidget *parent)
 
 
 
-    setAxisTitle(QwtPlot::yLeft, "RR_n+1 [ms]");
-    setAxisTitle(QwtPlot::xBottom, "RR_n [ms]");
+    setAxisTitle(QwtPlot::yLeft, "RR_n+1 [s]");
+    setAxisTitle(QwtPlot::xBottom, "RR_n [s]");
     setAxisAutoScale(QwtPlot::xBottom, false);
     setAxisAutoScale(QwtPlot::yLeft, false);
     QwtPlotGrid *grid = new QwtPlotGrid;
