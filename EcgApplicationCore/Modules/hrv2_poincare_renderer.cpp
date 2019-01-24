@@ -1,13 +1,12 @@
-#include "hrv_dfa_renderer.h"
+#include "hrv2_poincare_renderer.h"
 
-
-
-void HrvDfaRenderer::renderTo(hrvdfaplot * plot, QPrinter & printer, QPainter & p) const
+void Hrv2PoincareRenderer::renderTo(hrv2poincareplot * plot, QPrinter & printer, QPainter & p) const
 {
+    {
         int w = printer.width();
         int h = printer.height();
-        QRectF rect( 10, 410, w, h );
-        //QRectF rect(x, y, w, h);
+
+        QRectF rect( 10, 400, w, h );
         double aspect = rect.width() / rect.height();
         if ( ( aspect < 1.0 ) )
             rect.setHeight( aspect * rect.width() );
@@ -15,3 +14,4 @@ void HrvDfaRenderer::renderTo(hrvdfaplot * plot, QPrinter & printer, QPainter & 
        // QPainter p2( &printer );
         render( plot, &p, rect );
     }
+}

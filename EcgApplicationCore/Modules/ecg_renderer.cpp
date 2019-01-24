@@ -6,7 +6,7 @@ void EcgRenderer::renderTo(ecgplot * plot, QPrinter & printer, QPainter & p) con
     int w = printer.width();
     int h = printer.height();
 
-    QRectF rect( 10, 35, w, h );
+    QRectF rect( 10, 55, w, h );
     double aspect = rect.width() / rect.height();
     if ( ( aspect < 1.0 ) )
         rect.setHeight( aspect * rect.width() );

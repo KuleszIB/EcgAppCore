@@ -49,7 +49,10 @@ SOURCES += \
     Modules/file_explorer.cpp \
     View/hrvdfaplot.cpp \
     Modules/st_segment_module.cpp \
-    Modules/hrv_dfa_renderer.cpp
+    Modules/hrv_dfa_renderer.cpp \
+    Modules/hrv2_poincare_renderer.cpp \
+    Modules/qrs_renderer.cpp \
+    Modules/t_wave_renderer.cpp
 
 HEADERS += \
     View/mainview.h \
@@ -84,7 +87,9 @@ HEADERS += \
     View/hrvdfaplot.h \
     Modules/st_segment_module.h \
     Modules/hrv_dfa_renderer.h \
-    Modules/hrv2_poincare_renderer.h
+    Modules/hrv2_poincare_renderer.h \
+    Modules/qrs_renderer.h \
+    Modules/t_wave_renderer.h
 
 FORMS += \
     View/mainview.ui \

@@ -1,12 +1,10 @@
-#include "hrv_dfa_renderer.h"
+#include "t_wave_renderer.h"
 
-
-
-void HrvDfaRenderer::renderTo(hrvdfaplot * plot, QPrinter & printer, QPainter & p) const
+void TWaveRenderer::renderTo(ecgplot * plot, QPrinter & printer, QPainter & p) const
 {
         int w = printer.width();
         int h = printer.height();
-        QRectF rect( 10, 410, w, h );
+        QRectF rect( 10, 35, w, h );
         //QRectF rect(x, y, w, h);
         double aspect = rect.width() / rect.height();
         if ( ( aspect < 1.0 ) )

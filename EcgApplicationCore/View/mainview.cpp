@@ -53,9 +53,14 @@ MainView::MainView(QApplication *app, QWidget *parent) :
 
     report = new NewReport();
     report->set_ecgplot(ecgBaseline_gui->ecgPlot2);
+    //report->set_frequencyparams(hrv_1_gui->freq_params);
     report->set_hrv1plot(hrv_1_gui->hrv1Plot2);
     report->set_hrv2histplot(hrv_2_gui->hrv2histPlot2);
+    report->set_hrv2poincareplot(hrv_2_gui->hrv2poincarePlot2);
     report->set_hrvdfaplot(hrv_dfa_gui->hrvdfaPlot2);
+    report->set_qrsplot(rPeaks_gui->qrsPlot2);
+    report->set_twaveplot(t_alt_class_gui->ecgPlot2);
+
 
 
 

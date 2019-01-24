@@ -6,10 +6,13 @@
 #include "hrv1_plot_renderer.h"
 
 #include "hrv2_histogram_renderer.h"
-//#include "hrv2_poincare_renderer.h"
+#include "hrv2_poincare_renderer.h"
 #include "hrv_dfa_renderer.h"
+#include "qrs_renderer.h"
+#include "t_wave_renderer.h"
 
-
+//#include "hrv1_module.h"
+//#include "hrv2_module.h"
 
 #include <QPainter>
 #include <QPrinter>
@@ -17,6 +20,7 @@
 #include <QFileDialog>
 #include <QWidget>
 #include <QFileInfo>
+#include <QFont>
 
 
 
@@ -27,15 +31,17 @@ private:
     ecgplot * ecg_ptr = nullptr;
     hrv1plot * hrv1_ptr = nullptr;
     hrv2histplot * hrv2hist_ptr = nullptr;
-    //hrv2poincareplot * hrv2_poincare_ptr = nullptr;
+    hrv2poincareplot * hrv2_poincare_ptr = nullptr;
     hrvdfaplot * hrv_dfa_ptr = nullptr;
-    //qrsplot * qrs_ptr = nullptr;
+    //QString * sth_ptr;
+    qrsplot * qrs_ptr = nullptr;
+    ecgplot * twave_ptr = nullptr;
 
     //st segment i inne na podstawie qrsplot?
 
 
     // obliczone wartości
-    //Frequency_Params * frequency_params_ptr = nullptr;
+    //Frequency_Params * freq_params_ptr = nullptr;
     //Time_Params * time_params_ptr = nullptr;
 
 
@@ -50,11 +56,15 @@ public:
 
     void set_hrv2histplot(hrv2histplot * plot){hrv2hist_ptr = plot;}
 
-   // void set_hrv2poincareplot(hrv2poincareplot * plot){hrv2_poincare_ptr = plot;}
+    void set_hrv2poincareplot(hrv2poincareplot * plot){hrv2_poincare_ptr = plot;}
 
     void set_hrvdfaplot(hrvdfaplot * plot){hrv_dfa_ptr = plot;}
+    //void set_sth(QString * some_ptr){sth_ptr = some_ptr;}
 
-    //void set_qrsplot(qrsplot * plot) {qrs_ptr = plot;}
+
+    //void set_frequencyparams(Frequency_Params * freq_params) {freq_params_ptr = freq_params;}
+    void set_qrsplot(qrsplot * plot) {qrs_ptr = plot;}
+    void set_twaveplot(ecgplot * plot) {twave_ptr = plot;}
 
 
     //całość musi być w jednej funkcji, bo inaczej QPainter umiera
