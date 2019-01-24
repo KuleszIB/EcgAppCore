@@ -73,6 +73,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <widget class="QLabel" name="labelHF">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>HF [ms^2]</string>
              </property>
@@ -91,6 +97,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
             <widget class="QLabel" name="labelLF">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string> LF [ms^2]</string>
              </property>
@@ -109,6 +121,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
             <widget class="QLabel" name="labelVLF">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>VLF [ms^2]</string>
              </property>
@@ -127,6 +145,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
             <widget class="QLabel" name="labelULF">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>ULF [ms^2]</string>
              </property>
@@ -145,6 +169,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
             <widget class="QLabel" name="labelTP">
+             <property name="font">
+              <font>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string>TP [ms^2]</string>
              </property>

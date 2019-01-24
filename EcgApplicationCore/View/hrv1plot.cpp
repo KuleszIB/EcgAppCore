@@ -15,11 +15,13 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
 
     hf = new QwtPlotCurve();
    // hf->setStyle(QwtPlotCurve::Sticks);
-    hf->setPen(QPen(Qt::green, 2.0));
+    QColor greenc(0,150,0);
+    hf->setPen(QPen(greenc, 2.0));
     hf->attach(this);
     ulf = new QwtPlotCurve();
   //  ulf->setStyle(QwtPlotCurve::Sticks);
-    ulf->setPen(QPen(Qt::yellow, 2.0));
+    QColor brownc(185,94,0);
+    ulf->setPen(QPen(brownc, 2.0));
     ulf->attach(this);
 
     vlf = new QwtPlotCurve();

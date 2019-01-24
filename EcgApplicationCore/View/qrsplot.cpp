@@ -237,6 +237,7 @@ for(int i=0; i<xrpeak.size();i++)
     rPeak->setSamples(rpeak);
     replot();
 
+
  //   QVector<QPointF> data;
 
 //    for (QVector<double>::iterator i = x.begin(); i < x.end(); i++)
