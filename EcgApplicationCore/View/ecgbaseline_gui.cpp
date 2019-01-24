@@ -49,14 +49,14 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
       ui->spinBox_filOrder->setDisabled(true);
       ui->spinBox_filLength->setDisabled(true);
       ui->doubleSpinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("Raw");
+        //ui->plainTextEdit->setPlainText("Raw");
     }else if (filter=="Moving_average"){
         ui->spinBox_lowFreq->setDisabled(true);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(false);
         ui->doubleSpinBox_stepSize->setDisabled(false);
-        ui->plainTextEdit->setPlainText("Moving average");
+        //ui->plainTextEdit->setPlainText("Moving average");
     }
  //   else if (filter=="lowpass_filter"){
  //     ui->spinBox_lowFreq->setDisabled(true);
@@ -80,7 +80,7 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(true);
         ui->doubleSpinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("Butterworth");
+        //ui->plainTextEdit->setPlainText("Butterworth");
 
     } else if (filter=="Chebyshev_filter") {
         ui->spinBox_lowFreq->setDisabled(true);
@@ -88,14 +88,14 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(true);
         ui->doubleSpinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("Chebyshev");
+        //ui->plainTextEdit->setPlainText("Chebyshev");
     } else if (filter=="Savitzky’_Golay_filter") {
         ui->spinBox_lowFreq->setDisabled(true);
         ui->spinBox_highFreq->setDisabled(true);
         ui->spinBox_filOrder->setDisabled(false);
         ui->spinBox_filLength->setDisabled(false);
         ui->doubleSpinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("Savitzky’_Golay");
+       // ui->plainTextEdit->setPlainText("Savitzky’_Golay");
     } //else if (filter=="Keiser_filter") {
       //  ui->spinBox_lowFreq->setDisabled(false);
       //  ui->spinBox_highFreq->setDisabled(false);
@@ -110,7 +110,7 @@ void ECGbaseline_gui::on_comboBox_filter_currentTextChanged(const QString &arg1)
         ui->spinBox_filOrder->setDisabled(true);
         ui->spinBox_filLength->setDisabled(false);
         ui->doubleSpinBox_stepSize->setDisabled(true);
-        ui->plainTextEdit->setPlainText("LSM");
+        //ui->plainTextEdit->setPlainText("LSM");
     }
 }
 void ECGbaseline_gui::nofilter()
@@ -674,7 +674,7 @@ void ECGbaseline_gui::on_pushButton_clicked()
         filter5(); //LMS
         // emituj sygnał do R_Peaks
     }
-    //ui->pushButton->setDisabled(true);
+    ui->pushButton->setDisabled(true);
 
 }
 
@@ -684,7 +684,7 @@ void ECGbaseline_gui::load_signal(examination *file)
 //    Ecg_Baseline *ecg_baseline = new Ecg_Baseline(m_file->get_channel_one(),m_file->get_freq());
 //    m_ecg_baseline.push_back(ecg_baseline);
 //    current_it = 0;
-    ui->plainTextEdit->setPlainText("Sygnał załadowano");
+    ui->plainTextEdit->setPlainText("signal loaded");
 
 
     ui->pushButton->setDisabled(false);
@@ -700,7 +700,7 @@ void ECGbaseline_gui::load_part(arma::vec *part)
 //    qInfo() << "ECG size" << m_ecg_baseline.size();
     if (m_signal.length() == 1)
     {
-        ui->plainTextEdit->setPlainText("Wczytano fragment");
+        ui->plainTextEdit->setPlainText("partially loaded");
         ui->pushButton->setDisabled(false);
     }
     if (current_it > 0)

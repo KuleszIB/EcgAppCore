@@ -43,7 +43,7 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
     m_ecg_baseline.push_back(signal);
     R_Peaks *r_peaks = new R_Peaks(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_r_peaks.push_back(r_peaks);
-    ui->pushButton->setDisabled(false);
+  // ui->pushButton->setDisabled(false);
     if(current_it > 0)
         emit still_loading();
 }
@@ -51,6 +51,7 @@ void R_peaks_gui::filtered_signal_loaded(Ecg_Baseline *signal)
 void R_peaks_gui::on_pushButton_clicked()
 {
     emit still_loading();
+    ui->pushButton->setDisabled(true);
 }
 
 

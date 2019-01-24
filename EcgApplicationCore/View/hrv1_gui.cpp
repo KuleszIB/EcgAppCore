@@ -7,6 +7,10 @@ HRV1_gui::HRV1_gui(QWidget *parent) :
     ui(new Ui::HRV1_gui)
 {
     ui->setupUi(this);
+    ui->labelHF->setStyleSheet("QLabel {color : rgb(0,150,0); }");
+    ui->labelLF->setStyleSheet("QLabel {color : blue; }");
+    ui->labelVLF->setStyleSheet("QLabel {color : red; }");
+    ui->labelULF->setStyleSheet("QLabel {color : rgb(185,94,0); }");
     QVBoxLayout *layout;
     layout = new QVBoxLayout;
     hrv1Plot2 = new hrv1plot(this);
