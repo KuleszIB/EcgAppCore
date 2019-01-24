@@ -6,6 +6,7 @@ hrv2poincareplot::hrv2poincareplot(QWidget *parent)
     signal = new QwtPlotCurve("Poincare");
     signal->attach(this);
     elipsa = new QwtPlotCurve("Ellipse");
+    elipsa->setPen(QPen(Qt::black, 3));
     elipsa->attach(this);
 
 
