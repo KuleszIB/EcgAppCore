@@ -66,7 +66,7 @@ hrv1plot::hrv1plot(QWidget *parent) :  QwtPlot(parent)
 
 
     setAxisTitle(QwtPlot::xBottom, "Frequency [Hz]");
-    setAxisTitle(QwtPlot::yLeft, "Power [dB/Hz]");
+    setAxisTitle(QwtPlot::yLeft, "Power [ms^2]");
     setAxisScaleEngine(QwtPlot::xBottom, new QwtLogScaleEngine());
 //    setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine());
   //  setAxisAutoScale(QwtPlot::xBottom, true);

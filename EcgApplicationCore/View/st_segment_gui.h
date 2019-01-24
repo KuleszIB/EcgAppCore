@@ -2,7 +2,7 @@
 #define ST_SEGMENT_H
 
 #include <QWidget>
-#include "ecgplot.h"
+#include "qrsplot.h"
 #include <QVBoxLayout>
 #include "Modules/ecg_baseline_module.h"
 #include "Modules/waves_module.h"
@@ -19,7 +19,7 @@ class St_segment_gui : public QWidget
 public:
     explicit St_segment_gui(QWidget *parent = 0);
     ~St_segment_gui();
-    ecgplot *ecgPlot2;
+    qrsplot *qrsPlot2;
 private slots:
     void addRandomGraph();
     void filtered_signal_loaded_Stsegment(Ecg_Baseline*);

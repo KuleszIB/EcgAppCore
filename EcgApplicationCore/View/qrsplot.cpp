@@ -11,7 +11,7 @@ qrsplot::qrsplot(QWidget *parent) :
     grid->setPen(QPen(Qt::gray, 0, Qt::DotLine));
     grid->attach(this);
     setAxisTitle(QwtPlot::yLeft, "Amplitude [mV]");
-    setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");
+    setAxisTitle(QwtPlot::xBottom, "Time [s]");
 
 
 //    qrs_onset = new QwtPlotMarker();
@@ -94,8 +94,39 @@ qrsplot::qrsplot(QWidget *parent) :
     tEnd->attach(this);
 
 
-    setAxisScale( xBottom, 0.0, 20.0);
-    setAxisScale( yLeft, -1.0, 1.0 );
+
+    tend = new QwtPlotCurve("tEnd1");
+    tend->setYAxis(QwtPlot::yLeft);
+    tend->setStyle(QwtPlotCurve::Sticks);
+    tend->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(185,93,0), QColor(185,93,0), QSize(6, 6)));
+    tend->attach(this);
+
+    ton = new QwtPlotCurve("tOn");
+    ton->setYAxis(QwtPlot::yLeft);
+    ton->setStyle(QwtPlotCurve::Sticks);
+    ton->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,0,254), QColor(0,0,254), QSize(6, 6)));
+    ton->attach(this);
+
+    qon = new QwtPlotCurve("qOn");
+    qon->setYAxis(QwtPlot::yLeft);
+    qon->setStyle(QwtPlotCurve::Sticks);
+    qon->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,93,185), QColor(0,93,185), QSize(6, 6)));
+    qon->attach(this);
+
+
+    qend = new QwtPlotCurve("qEnd");
+    qend->setYAxis(QwtPlot::yLeft);
+    qend->setStyle(QwtPlotCurve::Sticks);
+    qend->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(0,150,0), QColor(0,150,0), QSize(6, 6)));
+    qend->attach(this);
+
+    tpeak = new QwtPlotCurve("tPeak");
+    tpeak->setYAxis(QwtPlot::yLeft);
+    tpeak->setStyle(QwtPlotCurve::Sticks);
+    tpeak->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QColor(255,0,0), QColor(255,0,0), QSize(6, 6)));
+    tpeak->attach(this);
+
+
 
 
     // canvas
@@ -135,6 +166,11 @@ qrsplot::~qrsplot()
     delete pEndSet;
     delete tEnd;
     delete rPeak;
+    delete tpeak;
+    delete ton;
+    delete tend;
+    delete qon;
+    delete qend;
 }
 
 void qrsplot::setData2(QVector<double> x, QVector<double> y)
@@ -196,17 +232,6 @@ void qrsplot::setData3(QVector<double> x, QVector<double> y,QVector<double> xpon
 
     for(int i=0;i<xrpeak.size();i++)
         trpeak[i]=xrpeak[i]/freq;
-//    for(int i=0;i<xpend.size();i++)
-//        ypend[i]=y[xpend[i]];
-//    for(int i=0;i<xponset.size();i++)
-//        yponset[i]=y[xponset[i]];
-
-//    for(int i=0;i<xqrsonset.size();i++)
-//        yqrsonset[i]=y[xqrsonset[i]];
-//    for(int i=0;i<xqrsend.size();i++)
-//        yqrsend[i]=y[xqrsend[i]];
-//qInfo() << "y[xponset[0]] - qrsplot" << y[xponset[0]];
-//qInfo() << "y.size()" << y.size();
 QVector<QPointF> pend;
 for(int i=0; i<xpend.size();i++)
 {pend.append(QPointF(tpend[i], y[xpend[i]]));}
@@ -235,6 +260,10 @@ for(int i=0; i<xrpeak.size();i++)
     pEndSet->setSamples(pend);
     tEnd->setSamples(tend);
     rPeak->setSamples(rpeak);
+
+    setAxisScale( xBottom, 0.0, 20.0);
+    setAxisScale( yLeft, -1.0, 1.0 );
+
     replot();
 
  //   QVector<QPointF> data;
@@ -264,3 +293,69 @@ for(int i=0; i<xrpeak.size();i++)
 
 //    replot();
 }
+
+void qrsplot::setData4(QVector<double> x, QVector<double> y,QVector<double> Tpeak,QVector<double> Qon,QVector<double> Qend,QVector<double> Ton,QVector<double> Tend,double freq)
+{
+//    QVector<double> xx = x;
+//    QVector<QPointF> xy;
+//    for(int i=0; i<x.size();i++)
+//    {xy.append(QPointF(xx[y[i]], y[i]));}
+
+
+    signal->setSamples(x,y);
+
+    QVector<double> tTpeak = Tpeak;
+    QVector<double> tQon = Qon;
+    QVector<double> tQend = Qend;
+    QVector<double> tTon = Ton;
+    QVector<double> tTend = Tend;
+
+
+    for(int i=0;i<Tpeak.size();i++)
+        tTpeak[i]=Tpeak[i]/freq;
+
+    for(int i=0;i<Qon.size();i++)
+        tQon[i]=Qon[i]/freq;
+
+    for(int i=0;i<Qend.size();i++)
+        tQend[i]=Qend[i]/freq;
+
+    for(int i=0;i<Ton.size();i++)
+        tTon[i]=Ton[i]/freq;
+
+    for(int i=0;i<Tend.size();i++)
+        tTend[i]=Tend[i]/freq;
+
+QVector<QPointF> TPEAK;
+for(int i=0; i<Tpeak.size();i++)
+{TPEAK.append(QPointF(tTpeak[i], y[Tpeak[i]]));}
+QVector<QPointF> QON;
+for(int i=0; i<Qon.size();i++)
+{QON.append(QPointF(tQon[i], y[Qon[i]]));}
+QVector<QPointF> QEND;
+for(int i=0; i<Qend.size();i++)
+{QEND.append(QPointF(tQend[i], y[Qend[i]]));}
+QVector<QPointF> TON;
+for(int i=0; i<Ton.size();i++)
+{TON.append(QPointF(tTon[i], y[Ton[i]]));}
+QVector<QPointF> TEND;
+for(int i=0; i<Tend.size();i++)
+{TEND.append(QPointF(tTend[i], y[Tend[i]]));}
+
+    qon ->setSamples(QON);
+    qend->setSamples(QEND);
+    ton->setSamples(TON);
+    tend->setSamples(TEND);
+    tpeak->setSamples(TPEAK);
+  //  setAxisScale( xBottom, 0.0, 2.0);
+  //  setAxisScale( yLeft, -1.0, 1.0 );
+//    setAxisScale( xBottom, -1e-63, 0.0);
+//    setAxisScale( yLeft, -0.15, 0.15 );
+
+    setAxisScale( xBottom, 0.0, 20.0);
+    setAxisScale( yLeft, -1.0, 1.0 );
+
+    replot();
+
+}
+
