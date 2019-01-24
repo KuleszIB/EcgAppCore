@@ -24,16 +24,18 @@ public:
 
 public slots:
     void load_R_Peaks_vector3(R_Peaks*,Waves*);
-
+    void continue_processing();
 private slots:
     void on_pushButton_clicked();
 
+signals:
+    void still_loading();
 private:
     Ui::HRV_dfa_gui *ui;
     QVector<R_Peaks*> m_r_peaks;
     QVector<HrvDfa*> m_hrv_dfa;
     unsigned int current_it;
-
+    unsigned int package_it;
 };
 
 #endif // HRV_DFA_GUI_H

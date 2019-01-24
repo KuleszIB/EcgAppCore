@@ -18,7 +18,7 @@ private:
     arma::vec least_squares(arma::vec tm, arma::vec ym, int delta_m);
     double calculate_F(arma::vec tk, arma::vec x, int delta_m);
     void make_tachogram();
-    Out_DFA calculate_DFA();
+
     arma::vec cum_time_vec;
     arma::vec RR_intervals;
     arma::vec r_peaks;
@@ -26,6 +26,7 @@ private:
     int first_delta;
     int last_delta;
 public:
+    Out_DFA calculate_DFA();
     void set_delta(int last_delta, int first_delta);
     HrvDfa();
     HrvDfa(arma::vec r_peaks);

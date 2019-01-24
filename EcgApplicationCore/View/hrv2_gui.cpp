@@ -20,6 +20,7 @@ HRV2_gui::HRV2_gui(QWidget *parent) :
     m_hrv2.reserve(20);
     m_r_peaks.reserve(20);
     current_it = 0;
+    package_it = 0;
 
 }
 
@@ -33,7 +34,7 @@ void HRV2_gui::addGraph()
    // m_hrv2[0]->calc_poincare();
    // int N = 7200;
     //QVector<double> poincarex(N), poincarey(N); // initialize with entries 0..100
-    poincare_graph PoincareGraph=m_hrv2[0]->get_poincare();
+    poincare_graph PoincareGraph=m_hrv2[current_it-2]->get_poincare();
     double sd1 =PoincareGraph.sd1;
     double sd2 =PoincareGraph.sd2;
     double centroidx=PoincareGraph.centroid;
@@ -47,7 +48,7 @@ void HRV2_gui::addGraph()
     arma::vec sd2_axis_=PoincareGraph.sd2_axis;
     arma::vec xellipse=PoincareGraph.ellipse_ox;
     arma::vec yellipse=PoincareGraph.ellipse_oy;
-    int K=7200;
+    //int K=7200;
     QVector<double> int_ox(intervals_ox.size()), int_oy(intervals_oy.size()), sd1_axis_ox(sd1_axis_oxx.size()), sd1_axis_oy(sd1_axis_oyy.size()), sd2_axis(sd2_axis_.size()),ellipse_ox(xellipse.size()), ellipse_oy(yellipse.size());
     int_ox= examination::convert_vec_qvector(intervals_ox);
     int_oy= examination::convert_vec_qvector(intervals_oy);
@@ -70,7 +71,7 @@ void HRV2_gui::addGraph()
 
 
 void HRV2_gui::addHistogram(){
-    histogram_hrv2 Hist=m_hrv2[0]->get_hist();
+    histogram_hrv2 Hist=m_hrv2[current_it-2]->get_hist();
     arma::ivec values=Hist.values;
     arma::vec bins=Hist.bins;
     int maxx=Hist.max_value;
@@ -81,15 +82,51 @@ void HRV2_gui::addHistogram(){
 }
 void HRV2_gui::load_R_Peaks_vector2(R_Peaks *r_peaks_signal, Waves *waves)
 {
-    m_r_peaks.push_back(r_peaks_signal);
-    Hrv2 *hrv2_r_peaks = new Hrv2(m_r_peaks[current_it++]->get_r_peaks());
+    R_Peaks *n_r_peaks = new R_Peaks;
+    arma::vec n_signal = r_peaks_signal->get_r_peaks();
+//    qInfo() << "n_signal(0)" << n_signal(0);
+    n_r_peaks->set_r_peaks(n_signal);
+    if(package_it>0)
+    {
+        arma::vec o_signal = m_r_peaks[package_it-1]->get_r_peaks();
+        n_signal.insert_rows(0,o_signal);
+        n_r_peaks->set_r_peaks(n_signal);
+    }
+    m_r_peaks.push_back(n_r_peaks);
+//    if(package_it == 21)
+//    {
+//        arma::vec r = m_r_peaks[21]->get_r_peaks();
+//        for(int i = 0; i < r.size() ;i++)
+//            qInfo() << r[i];
+//    }
+    Hrv2 *hrv2_r_peaks = new Hrv2(n_signal);
     m_hrv2.push_back(hrv2_r_peaks);
+    package_it++;
+    if(current_it > 0)
+        emit still_loading();
+
+
+    //
+//    m_r_peaks.push_back(r_peaks_signal);
+//    Hrv2 *hrv2_r_peaks = new Hrv2(m_r_peaks[current_it++]->get_r_peaks());
+//    m_hrv2.push_back(hrv2_r_peaks);
 }
 
 void HRV2_gui::on_pushButton_RUN_clicked()
 {
-addHistogram();
-addGraph();
+     emit still_loading();
 ui->pushButton_RUN->setDisabled(true);
 
+}
+
+void HRV2_gui::continue_processing()
+{
+    if(++current_it < m_r_peaks.size())
+        emit still_loading();
+    else
+    {
+        m_hrv2[current_it-2]->calc_params();
+        addHistogram();
+        addGraph();
+    }
 }

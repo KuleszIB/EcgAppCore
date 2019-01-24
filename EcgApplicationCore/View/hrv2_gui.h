@@ -25,10 +25,11 @@ public:
 
 public slots:
     void load_R_Peaks_vector2(R_Peaks*, Waves*);
-
+     void continue_processing();
 private slots:
     void on_pushButton_RUN_clicked();
-
+signals:
+    void still_loading();
 private:
     Ui::HRV2_gui *ui;
     QVector<Hrv2*> m_hrv2;
@@ -36,6 +37,7 @@ private:
     unsigned int current_it;
     void addGraph();
     void addHistogram();
+    unsigned int package_it;
 };
 
 #endif // HRV2_GUI_H

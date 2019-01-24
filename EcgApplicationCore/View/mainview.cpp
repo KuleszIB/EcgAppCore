@@ -73,6 +73,8 @@ MainView::MainView(QApplication *app, QWidget *parent) :
     connect(ecgBaseline_gui,SIGNAL(still_loading()),ecgBaseline_gui,SLOT(continue_processing()));
     connect(rPeaks_gui,SIGNAL(still_loading()),rPeaks_gui,SLOT(continue_processing()));
     connect(hrv_1_gui,SIGNAL(still_loading()),hrv_1_gui,SLOT(continue_processing()));
+    connect(hrv_2_gui,SIGNAL(still_loading()),hrv_2_gui,SLOT(continue_processing()));
+    connect(hrv_dfa_gui,SIGNAL(still_loading()),hrv_dfa_gui,SLOT(continue_processing()));
 
 }
 

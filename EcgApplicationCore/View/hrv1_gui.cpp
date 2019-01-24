@@ -123,7 +123,6 @@ void HRV1_gui::continue_processing()
         hrv_r_peaks[current_it-2]->calc_params();
         addRandomGraph();
     }
-
 }
 
 void HRV1_gui::on_button_clicked()
