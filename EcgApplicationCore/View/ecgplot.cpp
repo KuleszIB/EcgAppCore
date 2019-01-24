@@ -10,7 +10,7 @@ ecgplot::ecgplot(QWidget *parent) : QwtPlot(parent)
     grid->setPen(QPen(Qt::gray, 0, Qt::DotLine));
     grid->attach(this);
     setAxisTitle(QwtPlot::yLeft, "Amplitude [mV]");
-    setAxisTitle(QwtPlot::xBottom, "Time [mm:ss.ms]");
+    setAxisTitle(QwtPlot::xBottom, "Time [s]");
  //   setAxisScale( xBottom, 0.0, 20.0 );
  //   setAxisScale( yLeft, -1.0, 1.0 );
     odd=new QwtPlotCurve("Odd");

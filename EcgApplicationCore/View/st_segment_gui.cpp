@@ -8,8 +8,8 @@ St_segment_gui::St_segment_gui(QWidget *parent) :
     ui->setupUi(this);
     QVBoxLayout *layout;
     layout = new QVBoxLayout;
-    ecgPlot2 = new ecgplot(this);
-    layout->addWidget(ecgPlot2);
+    qrsPlot2 = new qrsplot(this);
+    layout->addWidget(qrsPlot2);
     ui->ecgPlot->setLayout(layout);
     connect(ui->button, SIGNAL(clicked()),this, SLOT(addRandomGraph()));
 
@@ -22,7 +22,7 @@ St_segment_gui::~St_segment_gui()
 void St_segment_gui::filtered_signal_loaded_Stsegment(Ecg_Baseline *signal)
 {
     //tutaj odbierasz signalfiltered
-//    Ecg_Baseline *ecg_signal_filtered = new Ecg_Baseline(signal->get_signal_filtered(),signal->get_sampling_freq());
+    Ecg_Baseline *ecg_signal_filtered = new Ecg_Baseline(signal->get_signal_filtered(),signal->get_sampling_freq());
     m_ecg_baseline.push_back(signal);
     //R_Peaks *r_peaks = new R_Peaks(signal->get_signal_raw());
     //m_r_peaks.push_back(r_peaks);
@@ -35,51 +35,49 @@ void St_segment_gui::filtered_signal_loaded_Stsegment(Ecg_Baseline *signal)
 void St_segment_gui::load_waves_vector(R_Peaks *signal1,Waves *signal2)
 {
     //tutaj odbierasz wavesy
+    m_r_peaks.push_back(signal1);
     m_waves.push_back(signal2);
-    //T_Wave_Alt *t_wave_alt = new T_Wave_Alt(m_ecg_baseline[0]->get_signal_filtered(),m_ecg_baseline[0]->get_sampling_freq(),m_waves[0]->get_waves());
-    //chyba tak to mialo byc? tutaj masz pelny obiekt t_waves.
-    //t_waves.push_back(t_wave_alt);
+    St_Segment *st_segment1 = new St_Segment(m_waves[0]->get_signal_filtered(),m_waves[0]->get_waves());
+    st.push_back(st_segment1);
 }
 void St_segment_gui::addRandomGraph() //Przykładowy wykres
 {
-//    arma:: vec time = m_ecg_baseline[0]->get_time_vec(0);
-//    arma:: vec signal = m_ecg_baseline[0]->get_signal_filtered();
-//    int N=7200;
-//    QVector<double> x(N), y(N); // initialize with entries 0..100
-//    x=examination::convert_vec_qvector(time);
-//    y=examination::convert_vec_qvector(signal);
 
-        //st[0]->analyze();
-//    St_Points m_st_points;
-//    arma::uvec t_peak=m_st_points.t_peak;
-//    arma::uvec t_on=m_st_points.t_on;
-//    arma::uvec t_end=m_st_points.t_end;
-//    arma::uvec q_on=m_st_points.q_on;
-//    arma::uvec q_end=m_st_points.q_end;
-//    arma::vec sig=m_st_points.sig;
-//    arma::ivec offset=m_st_points.offset;
-//    arma::uvec slope=m_st_points.slope;
-//    arma::mat diagnose=m_st_points.diagnose;
-//    int M=7200;
-//       QVector<double> a(M), b(M), c(M), d(M), e(M), f(M); // initialize with entries 0..100
-//    a=examination::convert_uvec_qvector(t_peak);
-//    b=examination::convert_uvec_qvector(t_on);
-//    c=examination::convert_uvec_qvector(t_end);
-//    d=examination::convert_uvec_qvector(q_on);
-//    e=examination::convert_uvec_qvector(q_end);
-//    f=examination::convert_vec_qvector(sig);
-    QVector<double> x(1001), y(1001); // initialize with entries 0..100
-    for (int i=0; i<1001; ++i)
-    {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = x[i]*x[i]; // let's plot a quadratic function
-    }
-    ecgPlot2->setData(x,y);
+
+    st[0]->analyze();
+    arma:: vec signal = m_ecg_baseline[0]->get_signal_filtered();
+    arma:: vec time = m_ecg_baseline[0]->get_time_vec(0);
+    double freq=m_r_peaks[0]->get_sampling_freq();
+  arma::uvec t_peak=st[0]->St_Points.t_peak;
+  arma::uvec t_on=st[0]->St_Points.t_on;
+  arma::uvec t_end=st[0]->St_Points.t_end;
+  arma::uvec q_on=st[0]->St_Points.q_on;
+  arma::uvec q_end=st[0]->St_Points.q_end;
+  arma::vec sig=st[0]->St_Points.sig;
+
+  int M=1200;
+     //QVector<double> tpeak(t_peak.size()), ton(t_on.size()), tend(t_end.size()), qon(q_on.size()), qend(q_end.size()), Sig(sig.size()); // initialize with entries 0..100
+     QVector<double> tpeak(M), ton(M), tend(M), qon(M), qend(M), Sig(M); // initialize with entries 0..100
+  tpeak=examination::convert_uvec_qvector(t_peak);
+  ton=examination::convert_uvec_qvector(t_on);
+  tend=examination::convert_uvec_qvector(t_end);
+  qon=examination::convert_uvec_qvector(q_on);
+  qend=examination::convert_uvec_qvector(q_end);
+  Sig=examination::convert_vec_qvector(sig);
+int M1=7200;
+  QVector<double> xx(Sig.size()), yy(Sig.size()); // initialize with entries 0..100
+  xx=examination::convert_vec_qvector(time);
+  yy=examination::convert_vec_qvector(signal);
+ qInfo()<<"TO JEST ROZMIAR EJJJJJJJJJJ"<<yy.size()<<"A toooo jest SIG"<<Sig.size();
+
+  qrsPlot2->setData4(xx,yy,tpeak, qon,qend,ton,tend, freq);
+
 
   }
 
 void St_segment_gui::on_button_clicked()
 {
+    addRandomGraph();
     //podpiecie parametrow do gui
     St_Segment *st_segment = new St_Segment(m_ecg_baseline[0]->get_signal_filtered(),m_waves[0]->get_waves());
     double tresholdOFFMin = ui->Treshold_Offset_Min->value(); //geting parameters from GUI
@@ -106,5 +104,5 @@ void St_segment_gui::on_button_clicked()
     ui->lineEdit_nopathologies->setText(no_gui);
 
 
-    addRandomGraph();
 }
+
