@@ -3,14 +3,13 @@
 
 Hrv2::Hrv2()
 {
-    //intervals=[]; lub wyrzucenie błędu "Nie podano indeksów R"
+
 }
 
 
 Hrv2::Hrv2(arma::vec r_peaks)
 {
-    double fs = 360;
-        //r_peaks = {75,367,661,944,1230,1514,1806,2042,2401,2704,2996,3278,3555,3859,4167,4464,4763,5057,5345,5631,5914,6211,6524,6822,7104,7379,7668,7952,8243,8537,8836,9140,9429,9706,9991};
+        double fs = 360;
         int size = int(r_peaks.size()) - 1;
         arma::vec r_peaks_vec_temp(size);                                     //temporary vector for RR intervals
         for(int i=0; i<size; i++) {
@@ -19,10 +18,7 @@ Hrv2::Hrv2(arma::vec r_peaks)
         }
         intervals_original = r_peaks_vec_temp;
 
-        remove_outliers();
-        calc_histogram();
-        calc_poincare();
-
+        calc_params();
 }
 
 
@@ -122,7 +118,7 @@ void Hrv2::calc_histogram()
 
     int tmp_max_value = int(values.max());
 
-    histogram.max_value = tmp_max_value;       //dla mnie - maks liczba zliczen w hist; najwyzszy slupek
+    histogram.max_value = tmp_max_value;       // - maks liczba zliczen w hist; najwyzszy slupek
     histogram.bins = edges;     //wartosci przedzialow
     histogram.values = values;  //ilosc zliczen w kazdym koszu
 
@@ -141,7 +137,7 @@ void Hrv2::calc_tinn()
 
 void Hrv2::calc_triangular_index()
 {
-    triangular_index = int(intervals.size()) * histogram.max_value;
+    triangular_index = int(intervals.size()) / histogram.max_value;
 }
 
 
@@ -175,7 +171,6 @@ void Hrv2::calc_poincare()
     calc_SD1();
     calc_SD2();
     calc_centroid();
-    calc_centroid2();
     calc_poincare_axises();
     calc_ellipse();
 }
@@ -234,26 +229,9 @@ void Hrv2::calc_centroid()
     double size = double(poincare.intervals_oy.size());
     double x_centre = tmp_sum/size;
 
-//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc git
-//    double tmp_sum2 = arma::sum(poincare.intervals_oy);
-//    double y_centre = tmp_sum2/size;
-
     poincare.centroid = x_centre;
 }
 
-void Hrv2::calc_centroid2()
-{
-    //  Centroid as an average of points
-    double tmp_sum = arma::sum(poincare.intervals_oy);
-    double size = double(poincare.intervals_ox.size());
-    double y_centre = tmp_sum/size;
-
-//gdyby nie dzialalo to mozna y osobno wyliczyc, ale przy duzych wektorach powinno byc git
-//    double tmp_sum2 = arma::sum(poincare.intervals_oy);
-//    double y_centre = tmp_sum2/size;
-
-    poincare.centroid2 = y_centre;
-}
 
 void Hrv2::calc_poincare_axises()
 {
@@ -286,6 +264,15 @@ void Hrv2::calc_poincare_axises()
     poincare.sd2_axis = sd2_x_axis;     //x i y są takie same, bo prosta: x=y
 }
 
+void Hrv2::calc_params(){
+    remove_outliers();
+    calc_histogram();
+    calc_poincare();
+    get_hist();
+    get_tinn();
+    get_triang_index();
+    get_poincare();
+}
 
 histogram_hrv2 Hrv2::get_hist()
 {

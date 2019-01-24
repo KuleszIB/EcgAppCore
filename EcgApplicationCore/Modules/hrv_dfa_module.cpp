@@ -136,3 +136,11 @@ double HrvDfa::calculate_F(arma::vec tk, arma::vec x, int delta_m) {
     double F = sqrt(sum/(K-K%delta_m-delta_m));
     return F;
 }
+
+void HrvDfa::set_delta(int last_delta, int first_delta)
+{
+    HrvDfa::first_delta = first_delta;
+    HrvDfa::last_delta = last_delta;
+}
+
+
