@@ -15,6 +15,7 @@ R_peaks_gui::R_peaks_gui(QWidget *parent) :
     m_r_peaks.reserve(20);
     m_waves.reserve(20);
     current_it = 0;
+    finished = false;
 //    ui->pushButton->setDisabled(true);
 }
 
@@ -113,6 +114,15 @@ void R_peaks_gui::renumber_r_peaks(int direction)
     int N = (m_r_peaks[current_it+direction]->get_signal_filtered()).size();
     tmp.fill(N*(current_it+direction));
     m_r_peaks[current_it+direction]->set_r_peaks(new_r_peaks + tmp);
+}
+
+void R_peaks_gui::last_r_peaks()
+{
+    arma::vec new_r_peaks = m_r_peaks[current_it-1]->get_r_peaks();
+    arma::vec tmp(new_r_peaks.size());
+    int N = (m_r_peaks[current_it-2]->get_signal_filtered()).size();
+    tmp.fill(N*(current_it-1));
+    m_r_peaks[current_it-1]->set_r_peaks(new_r_peaks + tmp);
 }
 
 void R_peaks_gui::renumber_waves() // w zależności od numeru iteracji
@@ -294,6 +304,7 @@ void R_peaks_gui::find_waves()
 
     if(current_it>0)
         renumber_r_peaks();
+
     emit r_peaks_waves_found(m_r_peaks[current_it],m_waves[current_it]);
 }
 void R_peaks_gui::distribute_waves()
@@ -429,6 +440,8 @@ void R_peaks_gui::signal_loaded()
 //    arma::vec r_test = m_r_peaks[0]->get_r_peaks();
 //    emit r_peaks_get(m_r_peaks[0]);
 //    qInfo() << "Znaleziono " << r_test.size() << " zespołów QRS.";
+    finished = true;
+    last_r_peaks();
 }
 
 arma::vec R_peaks_gui::rpeaks2plot()

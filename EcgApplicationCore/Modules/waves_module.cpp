@@ -363,7 +363,7 @@ void Waves::write_to_file(int it)
     a.append(QString::number(it));
     a.append(".txt");
     QFile file(a);
-    qInfo() << a;
+//    qInfo() << a;
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     QTextStream out(&file);

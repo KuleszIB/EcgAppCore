@@ -110,7 +110,7 @@ void Hrv1::calc_freq_params()
     int lf_range =vlf_range+lf_end;
     int hf_range=lf_range+hf_end;
 
-    std::cout << "Amount of:ulf vlf lf hf " << ulf_end << " " << vlf_range << " " << lf_range << " " << hf_range << " " <<std::endl;
+//    std::cout << "Amount of:ulf vlf lf hf " << ulf_end << " " << vlf_range << " " << lf_range << " " << hf_range << " " <<std::endl;
     //usunac
     arma::vec temp_freq_ulf(ulf_end);                                                //creating temporary vectors for parameters
     arma::vec temp_freq_vlf(vlf_end);
